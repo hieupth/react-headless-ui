@@ -1,0 +1,37 @@
+{
+  "name": "reui",
+  "version": "0.1.0",
+  "description": "Headless React UI system inspired by Flutter patterns — composition over inheritance.",
+  "private": true,
+  "workspaces": [
+    "packages/*",
+    "examples/*"
+  ],
+  "scripts": {
+    "build": "pnpm --filter @hieupth/reui build",
+    "dev": "pnpm --filter example dev",
+    "test": "pnpm --filter @hieupth/reui test",
+    "test:e2e": "playwright test --config examples/next-demo/playwright.config.ts",
+    "typecheck": "pnpm -r run typecheck",
+    "lint": "pnpm -r run lint",
+    "clean": "rm -rf node_modules packages/*/dist examples/*/.next examples/*/out"
+  },
+  "keywords": [
+    "react",
+    "ui",
+    "headless",
+    "components",
+    "accessibility",
+    "typescript"
+  ],
+  "author": "Hieu Pham",
+  "license": "AGPL-3.0",
+  "packageManager": "pnpm@10.17.1",
+  "devDependencies": {
+    "@playwright/test": "^1.56.0",
+    "@types/node": "^24.5.2",
+    "@types/react": "^19.1.15",
+    "tsup": "^8.5.0",
+    "typescript": "^5.9.2"
+  }
+}
