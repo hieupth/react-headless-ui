@@ -1,0 +1,39 @@
+{
+  "name": "react-ui-forge",
+  "version": "1.0.0",
+  "description": "Flutter-inspired headless React UI system with composition-based architecture",
+  "private": true,
+  "workspaces": [
+    "packages/*",
+    "example/*"
+  ],
+  "scripts": {
+    "build": "pnpm -r build",
+    "dev": "pnpm -r dev",
+    "clean": "pnpm -r run clean && rm -rf node_modules",
+    "test": "pnpm -r test",
+    "typecheck": "pnpm -r run typecheck",
+    "lint": "pnpm -r run lint",
+    "changeset": "changeset",
+    "version-packages": "changeset version",
+    "release": "changeset publish"
+  },
+  "keywords": [
+    "react",
+    "ui",
+    "headless",
+    "components",
+    "accessibility",
+    "typescript",
+    "flutter"
+  ],
+  "author": "",
+  "license": "MIT",
+  "packageManager": "pnpm@10.17.1",
+  "devDependencies": {
+    "@types/node": "^24.5.2",
+    "@types/react": "^19.1.15",
+    "tsup": "^8.5.0",
+    "typescript": "^5.9.2"
+  }
+}
