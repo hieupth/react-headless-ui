@@ -42,3 +42,18 @@ lerna-debug.log*
 
 # .gitkeep files (allow empty directories)
 !.gitkeep
+__pycache__
+# Additional files for clean project
+*.log
+*.tmp
+.DS_Store
+test-page.html
+debug_*.py
+simple_test.py
+run_*.py
+IMPLEMENTATION_PLAN.md
+chromedriver*
+*.zip
+page-original.tsx
+.npmrc
+

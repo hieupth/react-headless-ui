@@ -1,20 +1,77 @@
 {
   "name": "@react-ui-forge/gateway",
   "version": "1.0.0",
-  "description": "",
+  "description": "React UI Forge - Flutter-inspired headless UI library",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
   "types": "dist/index.d.ts",
   "files": [
     "dist"
   ],
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.js"
+    },
+    "./core": {
+      "types": "../core/dist/index.d.ts",
+      "import": "../core/dist/index.mjs",
+      "require": "../core/dist/index.js"
+    },
+    "./theme": {
+      "types": "../theme/dist/index.d.ts",
+      "import": "../theme/dist/index.mjs",
+      "require": "../theme/dist/index.js"
+    },
+    "./renderer": {
+      "types": "../renderer/dist/index.d.ts",
+      "import": "../renderer/dist/index.mjs",
+      "require": "../renderer/dist/index.js"
+    },
+    "./presets": {
+      "types": "../presets/dist/index.d.ts",
+      "import": "../presets/dist/index.mjs",
+      "require": "../presets/dist/index.js"
+    }
+  },
   "scripts": {
     "build": "tsup",
     "dev": "tsup --watch",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "keywords": [
+    "react",
+    "ui",
+    "components",
+    "headless",
+    "flutter",
+    "accessibility",
+    "typescript",
+    "hooks"
+  ],
+  "author": "React UI Forge Team",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/hieupth/react-headless-ui.git"
+  },
+  "peerDependencies": {
+    "react": ">=16.8.0",
+    "react-dom": ">=16.8.0"
+  },
+  "dependencies": {
+    "@react-ui-forge/core": "workspace:*",
+    "@react-ui-forge/theme": "workspace:*",
+    "@react-ui-forge/renderer": "workspace:*",
+    "@react-ui-forge/presets": "workspace:*"
+  },
+  "devDependencies": {
+    "@types/react": "^18.0.0",
+    "@types/react-dom": "^18.0.0",
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0",
+    "typescript": "^5.0.0"
+  },
   "packageManager": "pnpm@10.17.1"
 }
