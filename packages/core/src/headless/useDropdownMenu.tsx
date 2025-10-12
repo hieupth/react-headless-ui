@@ -3,7 +3,7 @@
  * Provides menu behavior with proper positioning and accessibility.
  */
 
-import { useState, useCallback, useRef, useEffect } from 'react';
+import { useState, useCallback, useRef, useEffect, useMemo } from 'react';
 import { useSemanticMixin, useFocusableMixin, usePressableMixin } from '../mixins';
 import { composeState } from '../utils';
 import type { SemanticMixinProps, FocusableMixinProps, PressableMixinProps } from '../mixins';

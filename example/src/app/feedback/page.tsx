@@ -15,7 +15,13 @@ import {
   Dialog,
   Drawer,
   Progress,
+  SimpleProgress,
+  CircularProgress,
+  LoadingProgress,
   Spinner,
+  SimpleSpinner,
+  DotsSpinner,
+  BarsSpinner,
   Tooltip
 } from '@react-ui-forge/renderer';
 
@@ -31,7 +37,13 @@ export default function FeedbackPage() {
     { name: 'Dialog', description: 'Modal window for content overlays and user interactions', status: 'available' },
     { name: 'Drawer', description: 'Slide-out panel from edges for additional content', status: 'available' },
     { name: 'Progress', description: 'Visual indicator for task completion or loading status', status: 'available' },
+    { name: 'Simple Progress', description: 'Basic linear progress bar with minimal styling', status: 'available' },
+    { name: 'Circular Progress', description: 'Circular progress indicator for loading states', status: 'available' },
+    { name: 'Loading Progress', description: 'Progress bar with integrated loading animation', status: 'available' },
     { name: 'Spinner', description: 'Animated loading indicator for async operations', status: 'available' },
+    { name: 'Simple Spinner', description: 'Basic spinning animation with minimal styling', status: 'available' },
+    { name: 'Dots Spinner', description: 'Loading animation using bouncing dots', status: 'available' },
+    { name: 'Bars Spinner', description: 'Loading animation using animated bars', status: 'available' },
     { name: 'Tooltip', description: 'Brief contextual help appearing on hover', status: 'available' },
   ];
 
@@ -138,46 +150,87 @@ export default function FeedbackPage() {
               <h3 className="text-xl font-semibold text-gray-900 mb-4">Progress & Loading</h3>
               <div className="space-y-6">
                 <div>
-                  <h4 className="font-medium text-gray-800 mb-2">Progress Bars</h4>
+                  <h4 className="font-medium text-gray-800 mb-2">Progress Bar Variants</h4>
                   <div className="space-y-3">
                     <div>
                       <div className="flex justify-between text-sm text-gray-600 mb-1">
-                        <span>Uploading files...</span>
+                        <span>Standard Progress...</span>
                         <span>25%</span>
                       </div>
                       <Progress data-testid="progress-25" value={25} />
                     </div>
                     <div>
                       <div className="flex justify-between text-sm text-gray-600 mb-1">
-                        <span>Processing data...</span>
-                        <span>75%</span>
+                        <span>Simple Progress...</span>
+                        <span>50%</span>
                       </div>
-                      <Progress data-testid="progress-75" value={75} />
+                      <SimpleProgress data-testid="simple-progress-50" value={50} />
                     </div>
                     <div>
                       <div className="flex justify-between text-sm text-gray-600 mb-1">
-                        <span>Complete</span>
-                        <span>100%</span>
+                        <span>Loading Progress...</span>
+                        <span>75%</span>
                       </div>
-                      <Progress data-testid="progress-100" value={100} />
+                      <LoadingProgress data-testid="loading-progress-75" value={75} />
                     </div>
                   </div>
                 </div>
 
                 <div>
-                  <h4 className="font-medium text-gray-800 mb-2">Spinners</h4>
+                  <h4 className="font-medium text-gray-800 mb-2">Circular Progress</h4>
                   <div className="flex items-center gap-8">
                     <div className="flex items-center gap-2">
-                      <Spinner data-testid="spinner-small" size="sm" />
-                      <span className="text-sm text-gray-600">Small</span>
+                      <CircularProgress data-testid="circular-progress-25" value={25} size="sm" />
+                      <span className="text-sm text-gray-600">25%</span>
                     </div>
                     <div className="flex items-center gap-2">
-                      <Spinner data-testid="spinner-medium" size="md" />
-                      <span className="text-sm text-gray-600">Medium</span>
+                      <CircularProgress data-testid="circular-progress-50" value={50} size="md" />
+                      <span className="text-sm text-gray-600">50%</span>
                     </div>
                     <div className="flex items-center gap-2">
-                      <Spinner data-testid="spinner-large" size="lg" />
-                      <span className="text-sm text-gray-600">Large</span>
+                      <CircularProgress data-testid="circular-progress-75" value={75} size="lg" />
+                      <span className="text-sm text-gray-600">75%</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div>
+                  <h4 className="font-medium text-gray-800 mb-2">Spinner Variants</h4>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div className="space-y-3">
+                      <h5 className="text-sm font-medium text-gray-700">Standard Spinners</h5>
+                      <div className="flex items-center gap-4">
+                        <div className="flex items-center gap-2">
+                          <Spinner data-testid="spinner-small" size="sm" />
+                          <span className="text-sm text-gray-600">Small</span>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <Spinner data-testid="spinner-medium" size="md" />
+                          <span className="text-sm text-gray-600">Medium</span>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <Spinner data-testid="spinner-large" size="lg" />
+                          <span className="text-sm text-gray-600">Large</span>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="space-y-3">
+                      <h5 className="text-sm font-medium text-gray-700">Animation Spinners</h5>
+                      <div className="flex items-center gap-4">
+                        <div className="flex items-center gap-2">
+                          <SimpleSpinner data-testid="simple-spinner" />
+                          <span className="text-sm text-gray-600">Simple</span>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <DotsSpinner data-testid="dots-spinner" />
+                          <span className="text-sm text-gray-600">Dots</span>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <BarsSpinner data-testid="bars-spinner" />
+                          <span className="text-sm text-gray-600">Bars</span>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>

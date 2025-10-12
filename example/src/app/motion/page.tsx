@@ -9,136 +9,21 @@ import Link from 'next/link';
 import { useState } from 'react';
 import React from 'react';
 
-// Mock motion components for demonstration
-const FadeInOut = ({ show, children, duration = 300, className = '', style }: {
-  show: boolean;
-  children: React.ReactNode;
-  duration?: number;
-  className?: string;
-  style?: React.CSSProperties;
-}) => {
-  const [isVisible, setIsVisible] = useState(show);
-
-  React.useEffect(() => {
-    const timer = setTimeout(() => setIsVisible(show), 10);
-    return () => clearTimeout(timer);
-  }, [show]);
-
-  return (
-    <div
-      className={`transition-opacity ${isVisible ? 'opacity-100' : 'opacity-0'} ${className}`}
-      style={{ transitionDuration: `${duration}ms`, ...style }}
-    >
-      {isVisible && children}
-    </div>
-  );
-};
-
-const SlideIn = ({ direction = 'up', show, children, duration = 300, className = '' }: {
-  direction?: 'up' | 'down' | 'left' | 'right';
-  show: boolean;
-  children: React.ReactNode;
-  duration?: number;
-  className?: string;
-}) => {
-  const [isVisible, setIsVisible] = useState(show);
-
-  const getTransformClasses = () => {
-    const baseClasses = 'transition-transform';
-    const transformClasses = isVisible ? 'translate-x-0 translate-y-0' : {
-      up: 'translate-y-4',
-      down: '-translate-y-4',
-      left: 'translate-x-4',
-      right: '-translate-x-4'
-    }[direction];
-
-    return `${baseClasses} ${transformClasses}`;
-  };
-
-  React.useEffect(() => {
-    const timer = setTimeout(() => setIsVisible(show), 10);
-    return () => clearTimeout(timer);
-  }, [show]);
-
-  return (
-    <div
-      className={`${getTransformClasses()} ${isVisible ? 'opacity-100' : 'opacity-0'} transition-opacity ${className}`}
-      style={{ transitionDuration: `${duration}ms` }}
-    >
-      {children}
-    </div>
-  );
-};
-
-const ScaleInOut = ({ show, children, duration = 300, className = '' }: {
-  show: boolean;
-  children: React.ReactNode;
-  duration?: number;
-  className?: string;
-}) => {
-  const [isVisible, setIsVisible] = useState(show);
-
-  React.useEffect(() => {
-    const timer = setTimeout(() => setIsVisible(show), 10);
-    return () => clearTimeout(timer);
-  }, [show]);
-
-  return (
-    <div
-      className={`transition-all ${isVisible ? 'opacity-100 scale-100' : 'opacity-0 scale-95'} ${className}`}
-      style={{ transitionDuration: `${duration}ms` }}
-    >
-      {children}
-    </div>
-  );
-};
-
-const RotateIn = ({ show, children, duration = 500, className = '' }: {
-  show: boolean;
-  children: React.ReactNode;
-  duration?: number;
-  className?: string;
-}) => {
-  const [isVisible, setIsVisible] = useState(show);
-
-  React.useEffect(() => {
-    const timer = setTimeout(() => setIsVisible(show), 10);
-    return () => clearTimeout(timer);
-  }, [show]);
-
-  return (
-    <div
-      className={`transition-all ${isVisible ? 'opacity-100 rotate-0' : 'opacity-0 rotate-12'} ${className}`}
-      style={{ transitionDuration: `${duration}ms` }}
-    >
-      {children}
-    </div>
-  );
-};
-
-const Bounce = ({ children, trigger, className = '' }: {
-  children: React.ReactNode;
-  trigger?: boolean;
-  className?: string;
-}) => {
-  const [isBouncing, setIsBouncing] = useState(false);
-
-  React.useEffect(() => {
-    if (trigger) {
-      setIsBouncing(true);
-      const timer = setTimeout(() => setIsBouncing(false), 600);
-      return () => clearTimeout(timer);
-    }
-  }, [trigger]);
-
-  return (
-    <div
-      className={`inline-block ${isBouncing ? 'animate-bounce' : ''} ${className}`}
-    >
-      {children}
-    </div>
-  );
-};
+// Import real motion components from renderer package
+import {
+  FadeInOut,
+  SlideIn,
+  Pulse,
+  ScaleInOut,
+  RotateIn,
+  Bounce,
+  BlurInOut,
+  StaggerChildren,
+  ParallaxScroll,
+  RevealOnScroll,
+  HoverLift,
+  MagneticHover
+} from '@react-ui-forge/renderer';
 
 const Shake = ({ children, trigger, className = '' }: {
   children: React.ReactNode;
@@ -172,14 +57,7 @@ const Shake = ({ children, trigger, className = '' }: {
   );
 };
 
-const Pulse = ({ children, className = '' }: {
-  children: React.ReactNode;
-  className?: string;
-}) => (
-  <div className={`inline-block animate-pulse ${className}`}>
-    {children}
-  </div>
-);
+// Pulse component is now imported from @react-ui-forge/renderer
 
 const Flip = ({ show, children, duration = 600, className = '' }: {
   show: boolean;
@@ -208,167 +86,11 @@ const Flip = ({ show, children, duration = 600, className = '' }: {
   );
 };
 
-const BlurInOut = ({ show, children, duration = 300, className = '' }: {
-  show: boolean;
-  children: React.ReactNode;
-  duration?: number;
-  className?: string;
-}) => {
-  const [isVisible, setIsVisible] = useState(show);
 
-  React.useEffect(() => {
-    const timer = setTimeout(() => setIsVisible(show), 10);
-    return () => clearTimeout(timer);
-  }, [show]);
 
-  return (
-    <div
-      className={`transition-all ${isVisible ? 'opacity-100 blur-none' : 'opacity-0 blur-md'} ${className}`}
-      style={{ transitionDuration: `${duration}ms` }}
-    >
-      {children}
-    </div>
-  );
-};
 
-const StaggerChildren = ({ show, children, staggerDelay = 100, className = '' }: {
-  show: boolean;
-  children: React.ReactNode;
-  staggerDelay?: number;
-  className?: string;
-}) => {
-  const childrenArray = React.Children.toArray(children);
 
-  return (
-    <div className={className}>
-      {childrenArray.map((child, index) => (
-        <FadeInOut
-          key={index}
-          show={show}
-          duration={300}
-          style={{ transitionDelay: `${index * staggerDelay}ms` }}
-        >
-          {child}
-        </FadeInOut>
-      ))}
-    </div>
-  );
-};
 
-const ParallaxScroll = ({ children, speed = 0.5, className = '' }: {
-  children: React.ReactNode;
-  speed?: number;
-  className?: string;
-}) => {
-  const [scrollY, setScrollY] = useState(0);
-
-  React.useEffect(() => {
-    const handleScroll = () => setScrollY(window.scrollY);
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
-  return (
-    <div
-      className={className}
-      style={{ transform: `translateY(${scrollY * speed}px)` }}
-    >
-      {children}
-    </div>
-  );
-};
-
-const RevealOnScroll = ({ children, className = '' }: {
-  children: React.ReactNode;
-  className?: string;
-}) => {
-  const [isVisible, setIsVisible] = useState(false);
-  const ref = React.useRef<HTMLDivElement>(null);
-
-  React.useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true);
-          observer.unobserve(entry.target);
-        }
-      },
-      { threshold: 0.1 }
-    );
-
-    if (ref.current) {
-      observer.observe(ref.current);
-    }
-
-    return () => {
-      if (ref.current) {
-        observer.unobserve(ref.current);
-      }
-    };
-  }, []);
-
-  return (
-    <div ref={ref} className={className}>
-      <SlideIn direction="up" show={isVisible} duration={600}>
-        {children}
-      </SlideIn>
-    </div>
-  );
-};
-
-const HoverLift = ({ children, className = '' }: {
-  children: React.ReactNode;
-  className?: string;
-}) => {
-  const [isHovered, setIsHovered] = useState(false);
-
-  return (
-    <div
-      className={`transition-transform ${isHovered ? '-translate-y-2' : 'translate-y-0'} ${className}`}
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
-      style={{ transitionDuration: '200ms' }}
-    >
-      {children}
-    </div>
-  );
-};
-
-const MagneticHover = ({ children, strength = 20, className = '' }: {
-  children: React.ReactNode;
-  strength?: number;
-  className?: string;
-}) => {
-  const [position, setPosition] = useState({ x: 0, y: 0 });
-
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    const rect = e.currentTarget.getBoundingClientRect();
-    const centerX = rect.left + rect.width / 2;
-    const centerY = rect.top + rect.height / 2;
-    const deltaX = (e.clientX - centerX) / strength;
-    const deltaY = (e.clientY - centerY) / strength;
-
-    setPosition({ x: deltaX, y: deltaY });
-  };
-
-  const handleMouseLeave = () => {
-    setPosition({ x: 0, y: 0 });
-  };
-
-  return (
-    <div
-      className={`transition-transform ${className}`}
-      onMouseMove={handleMouseMove}
-      onMouseLeave={handleMouseLeave}
-      style={{
-        transform: `translate(${position.x}px, ${position.y}px)`,
-        transitionDuration: '200ms'
-      }}
-    >
-      {children}
-    </div>
-  );
-};
 
 export default function MotionPage() {
   const [activeTab, setActiveTab] = useState('showcase');
@@ -376,10 +98,10 @@ export default function MotionPage() {
   const [slideShow, setSlideShow] = useState(true);
   const [scaleShow, setScaleShow] = useState(true);
   const [rotateShow, setRotateShow] = useState(true);
+  const [bounceShow, setBounceShow] = useState(true);
   const [flipShow, setFlipShow] = useState(true);
   const [blurShow, setBlurShow] = useState(true);
   const [staggerShow, setStaggerShow] = useState(true);
-  const [bounceTrigger, setBounceTrigger] = useState(false);
   const [shakeTrigger, setShakeTrigger] = useState(false);
 
   const motionComponents = [
@@ -388,9 +110,9 @@ export default function MotionPage() {
     { name: 'Scale In/Out', description: 'Scale animations with smooth transitions', status: 'available' },
     { name: 'Rotate In', description: 'Rotating entrance animations', status: 'available' },
     { name: 'Bounce', description: 'Bouncing animation effects', status: 'available' },
-    { name: 'Shake', description: 'Shake animation for attention', status: 'available' },
+    { name: 'Shake', description: 'Shake animation for attention', status: 'planned' },
     { name: 'Pulse', description: 'Gentle pulsing animation', status: 'available' },
-    { name: 'Flip', description: '3D flip animations', status: 'available' },
+    { name: 'Flip', description: '3D flip animations', status: 'planned' },
     { name: 'Blur In/Out', description: 'Blur transitions for elements', status: 'available' },
     { name: 'Stagger Children', description: 'Sequential animations for multiple elements', status: 'available' },
     { name: 'Parallax Scroll', description: 'Parallax effects on scroll', status: 'available' },
@@ -486,6 +208,20 @@ export default function MotionPage() {
         {/* Component Showcase */}
         {activeTab === 'showcase' && (
           <div className="space-y-12 mb-12">
+            {/* Development Notice */}
+            <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-6">
+              <div className="flex items-center gap-2 mb-2">
+                <svg className="w-5 h-5 text-yellow-600" fill="currentColor" viewBox="0 0 20 20">
+                  <path fillRule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
+                </svg>
+                <span className="text-yellow-800 font-medium">Motion Components - Coming Soon</span>
+              </div>
+              <p className="text-yellow-700 text-sm">
+                The motion components shown below are currently in development.
+                These mockups demonstrate the planned functionality and animation patterns.
+                The actual components will be powered by Framer Motion and available in the renderer package once implementation is complete.
+              </p>
+            </div>
             {/* Basic Animations */}
             <div>
               <h3 className="text-xl font-semibold text-gray-900 mb-6">Basic Animations</h3>
@@ -493,7 +229,10 @@ export default function MotionPage() {
                 <div className="bg-white rounded-lg border border-gray-200 p-6">
                   <h4 className="font-medium text-gray-800 mb-4">Fade In/Out</h4>
                   <div className="flex justify-center mb-4">
-                    <FadeInOut show={fadeShow}>
+                    <FadeInOut
+                      visible={fadeShow}
+                      duration={300}
+                    >
                       <div className="w-20 h-20 bg-blue-500 rounded-lg"></div>
                     </FadeInOut>
                   </div>
@@ -508,7 +247,11 @@ export default function MotionPage() {
                 <div className="bg-white rounded-lg border border-gray-200 p-6">
                   <h4 className="font-medium text-gray-800 mb-4">Slide In</h4>
                   <div className="flex justify-center mb-4">
-                    <SlideIn direction="up" show={slideShow}>
+                    <SlideIn
+                      direction="up"
+                      trigger={slideShow}
+                      duration={300}
+                    >
                       <div className="w-20 h-20 bg-green-500 rounded-lg"></div>
                     </SlideIn>
                   </div>
@@ -523,7 +266,12 @@ export default function MotionPage() {
                 <div className="bg-white rounded-lg border border-gray-200 p-6">
                   <h4 className="font-medium text-gray-800 mb-4">Scale In/Out</h4>
                   <div className="flex justify-center mb-4">
-                    <ScaleInOut show={scaleShow}>
+                    <ScaleInOut
+                      initialActive={scaleShow}
+                      duration={400}
+                      initialScale={0.8}
+                      finalScale={1}
+                    >
                       <div className="w-20 h-20 bg-purple-500 rounded-lg"></div>
                     </ScaleInOut>
                   </div>
@@ -532,6 +280,26 @@ export default function MotionPage() {
                     className="w-full px-4 py-2 bg-gray-600 text-white rounded hover:bg-gray-700"
                   >
                     Toggle Scale
+                  </button>
+                </div>
+
+                <div className="bg-white rounded-lg border border-gray-200 p-6">
+                  <h4 className="font-medium text-gray-800 mb-4">Bounce</h4>
+                  <div className="flex justify-center mb-4">
+                    <Bounce
+                      initialActive={bounceShow}
+                      duration={600}
+                      direction="up"
+                      intensity={1.2}
+                    >
+                      <div className="w-20 h-20 bg-teal-500 rounded-lg"></div>
+                    </Bounce>
+                  </div>
+                  <button
+                    onClick={() => setBounceShow(!bounceShow)}
+                    className="w-full px-4 py-2 bg-gray-600 text-white rounded hover:bg-gray-700"
+                  >
+                    Toggle Bounce
                   </button>
                 </div>
               </div>
@@ -544,7 +312,12 @@ export default function MotionPage() {
                 <div className="bg-white rounded-lg border border-gray-200 p-6">
                   <h4 className="font-medium text-gray-800 mb-4">Rotate In</h4>
                   <div className="flex justify-center mb-4">
-                    <RotateIn show={rotateShow}>
+                    <RotateIn
+                      initialActive={rotateShow}
+                      duration={500}
+                      initialAngle={0}
+                      finalAngle={360}
+                    >
                       <div className="w-20 h-20 bg-orange-500 rounded-lg"></div>
                     </RotateIn>
                   </div>
@@ -574,7 +347,12 @@ export default function MotionPage() {
                 <div className="bg-white rounded-lg border border-gray-200 p-6">
                   <h4 className="font-medium text-gray-800 mb-4">Blur In/Out</h4>
                   <div className="flex justify-center mb-4">
-                    <BlurInOut show={blurShow}>
+                    <BlurInOut
+                      initialActive={blurShow}
+                      duration={400}
+                      initialBlur={0}
+                      finalBlur={8}
+                    >
                       <div className="w-20 h-20 bg-indigo-500 rounded-lg"></div>
                     </BlurInOut>
                   </div>
@@ -639,7 +417,12 @@ export default function MotionPage() {
               <h3 className="text-xl font-semibold text-gray-900 mb-6">Stagger Children</h3>
               <div className="bg-white rounded-lg border border-gray-200 p-6">
                 <div className="flex justify-center mb-4">
-                  <StaggerChildren show={staggerShow} staggerDelay={150}>
+                  <StaggerChildren
+                    initialActive={staggerShow}
+                    duration={300}
+                    staggerDelay={150}
+                    direction="normal"
+                  >
                     <div className="flex gap-2">
                       <div className="w-8 h-8 bg-blue-500 rounded"></div>
                       <div className="w-8 h-8 bg-green-500 rounded"></div>
@@ -736,7 +519,14 @@ export default function MotionPage() {
                   <h4 className="font-medium text-gray-800 mb-4">Bounce Loading</h4>
                   <div className="flex justify-center gap-2">
                     {[1, 2, 3].map((i) => (
-                      <Bounce key={i} trigger={true}>
+                      <Bounce
+                        key={i}
+                        initialActive={true}
+                        duration={400}
+                        direction="up"
+                        intensity={0.8}
+                        repeat={0} // infinite repeat
+                      >
                         <div className="w-4 h-4 bg-blue-500 rounded-full"></div>
                       </Bounce>
                     ))}
@@ -746,7 +536,13 @@ export default function MotionPage() {
                 <div className="bg-white rounded-lg border border-gray-200 p-6">
                   <h4 className="font-medium text-gray-800 mb-4">Rotate Loading</h4>
                   <div className="flex justify-center">
-                    <RotateIn show={true}>
+                    <RotateIn
+                      initialActive={true}
+                      duration={800}
+                      initialAngle={0}
+                      finalAngle={360}
+                      repeat={0} // infinite repeat
+                    >
                       <div className="w-12 h-12 bg-gradient-to-br from-purple-500 to-pink-600 rounded-lg"></div>
                     </RotateIn>
                   </div>

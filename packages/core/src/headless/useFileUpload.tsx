@@ -320,17 +320,49 @@ export function useFileUpload(props: UseFileUploadProps = {}) {
     onBrowse?.();
   }, [disabled, onBrowse]);
 
+  const handleClear = useCallback(() => {
+    if (disabled || required) return;
+    handleFileSelect(null);
+  }, [disabled, required, handleFileSelect]);
+
+  // Compose mixins for file upload behavior
+  const focusableMixin = useFocusableMixin({
+    defaultFocused,
+    focusable: focusable && !disabled,
+    focusStrategy
+  });
+
+  const semantic = useSemanticMixin({
+    role,
+    label,
+    labelledBy,
+    describedBy: error || describedBy,
+    ...semanticProps
+  });
+
+  // Event handlers that depend on mixins (defined after mixins)
+  const handleFileRemove = useCallback((index: number) => {
+    if (disabled) return;
+
+    const newFiles = files.filter((_, i) => i !== index);
+    if (!isControlled) {
+      setInternalFiles(newFiles);
+    }
+    onChange?.(multiple ? newFiles : (newFiles[0] || null));
+    setError(undefined);
+  }, [disabled, files, multiple, isControlled, onChange]);
+
   const handleFocus = useCallback((event: React.FocusEvent) => {
     if (!focusable || disabled) return;
 
     setFocused(true);
-    focusableMixin.handleFocus(event);
-  }, [focusable, disabled, focusableMixin.handleFocus]);
+    focusableMixin.handleFocus?.(event);
+  }, [focusable, disabled, focusableMixin]);
 
   const handleBlur = useCallback((event: React.FocusEvent) => {
     setFocused(false);
-    focusableMixin.handleBlur(event);
-  }, [focusableMixin.handleBlur]);
+    focusableMixin.handleBlur?.(event);
+  }, [focusableMixin]);
 
   const handleKeyDown = useCallback((event: React.KeyboardEvent) => {
     if (!focusable || disabled) return;
@@ -350,39 +382,8 @@ export function useFileUpload(props: UseFileUploadProps = {}) {
     }
 
     // Delegate to focusable mixin for standard navigation
-    focusableMixin.handleKeyDown(event);
-  }, [focusable, disabled, handleClickBrowse, files.length, required, handleFileSelect, focusableMixin.handleKeyDown]);
-
-  const handleClear = useCallback(() => {
-    if (disabled || required) return;
-    handleFileSelect(null);
-  }, [disabled, required, handleFileSelect]);
-
-  const handleFileRemove = useCallback((index: number) => {
-    if (disabled) return;
-
-    const newFiles = files.filter((_, i) => i !== index);
-    if (!isControlled) {
-      setInternalFiles(newFiles);
-    }
-    onChange?.(multiple ? newFiles : (newFiles[0] || null));
-    setError(undefined);
-  }, [disabled, files, multiple, isControlled, onChange]);
-
-  // Compose mixins for file upload behavior
-  const focusableMixin = useFocusableMixin({
-    defaultFocused,
-    focusable: focusable && !disabled,
-    focusStrategy
-  });
-
-  const semantic = useSemanticMixin({
-    role,
-    label,
-    labelledBy,
-    describedBy: error || describedBy,
-    ...semanticProps
-  });
+    focusableMixin.handleKeyDown?.(event);
+  }, [focusable, disabled, handleClickBrowse, files.length, required, handleFileSelect, focusableMixin]);
 
   // Generate semantic attributes
   const semanticAttributes = useMemo(() => ({

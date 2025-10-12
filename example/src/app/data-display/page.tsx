@@ -21,6 +21,10 @@ import {
   CardDescription,
   Skeleton,
   Carousel,
+  ImageCarousel,
+  CardCarousel,
+  TestimonialCarousel,
+  HeroCarousel,
   Chart,
   // DataGrid,  // Temporarily disabled
   EmptyState
@@ -68,6 +72,10 @@ export default function DataDisplayPage() {
     { name: 'Badge', description: 'Small visual element displaying metadata or status', status: 'available' },
     { name: 'Card', description: 'Flexible container for grouping related content', status: 'available' },
     { name: 'Carousel', description: 'Navigate through collection of items horizontally', status: 'available' },
+    { name: 'Image Carousel', description: 'Specialized carousel for image galleries and slideshows', status: 'available' },
+    { name: 'Card Carousel', description: 'Carousel displaying content as interactive cards', status: 'available' },
+    { name: 'Testimonial Carousel', description: 'Carousel for customer testimonials and reviews', status: 'available' },
+    { name: 'Hero Carousel', description: 'Full-width carousel for hero sections and banners', status: 'available' },
     { name: 'Chart', description: 'Data visualization components for interactive charts', status: 'available' },
     { name: 'Data Grid', description: 'Advanced table with sorting, filtering, pagination', status: 'available' },
     { name: 'Skeleton', description: 'Loading placeholder showing content shape', status: 'available' },
@@ -274,34 +282,193 @@ export default function DataDisplayPage() {
               </div>
             </div>
 
-            {/* Carousel */}
+            {/* Carousel Variants */}
             <div>
-              <h3 className="text-xl font-semibold text-gray-900 mb-4">Carousel Component</h3>
-              <Carousel
-                data-testid="carousel-component"
-                className="w-full max-w-2xl mx-auto"
-                showArrows={true}
-                showDots={true}
-                PreviousArrow={undefined}
-                NextArrow={undefined}
-                DotIndicator={undefined}
-                pauseOnHover={false}
-              >
-                {[
-                  <div key="slide1" className="bg-gradient-to-r from-blue-500 to-purple-600 text-white p-12 rounded-lg">
-                    <h3 className="text-2xl font-bold mb-2">Slide 1</h3>
-                    <p>Beautiful gradient background with centered content</p>
-                  </div>,
-                  <div key="slide2" className="bg-gradient-to-r from-green-500 to-teal-600 text-white p-12 rounded-lg">
-                    <h3 className="text-2xl font-bold mb-2">Slide 2</h3>
-                    <p>Green gradient background with centered content</p>
-                  </div>,
-                  <div key="slide3" className="bg-gradient-to-r from-orange-500 to-red-600 text-white p-12 rounded-lg">
-                    <h3 className="text-2xl font-bold mb-2">Slide 3</h3>
-                    <p>Warm gradient background with centered content</p>
-                  </div>
-                ]}
-              </Carousel>
+              <h3 className="text-xl font-semibold text-gray-900 mb-4">Carousel Variants</h3>
+              <div className="space-y-8">
+                {/* Standard Carousel */}
+                <div>
+                  <h4 className="text-lg font-medium text-gray-800 mb-3">Standard Carousel</h4>
+                  <Carousel
+                    data-testid="carousel-component"
+                    className="w-full max-w-2xl mx-auto"
+                    showArrows={true}
+                    showDots={true}
+                    PreviousArrow={undefined}
+                    NextArrow={undefined}
+                    DotIndicator={undefined}
+                    pauseOnHover={false}
+                  >
+                    {[
+                      <div key="slide1" className="bg-gradient-to-r from-blue-500 to-purple-600 text-white p-12 rounded-lg">
+                        <h3 className="text-2xl font-bold mb-2">Slide 1</h3>
+                        <p>Beautiful gradient background with centered content</p>
+                      </div>,
+                      <div key="slide2" className="bg-gradient-to-r from-green-500 to-teal-600 text-white p-12 rounded-lg">
+                        <h3 className="text-2xl font-bold mb-2">Slide 2</h3>
+                        <p>Green gradient background with centered content</p>
+                      </div>,
+                      <div key="slide3" className="bg-gradient-to-r from-orange-500 to-red-600 text-white p-12 rounded-lg">
+                        <h3 className="text-2xl font-bold mb-2">Slide 3</h3>
+                        <p>Warm gradient background with centered content</p>
+                      </div>
+                    ]}
+                  </Carousel>
+                </div>
+
+                {/* Image Carousel */}
+                <div>
+                  <h4 className="text-lg font-medium text-gray-800 mb-3">Image Carousel</h4>
+                  <ImageCarousel
+                    data-testid="image-carousel"
+                    images={[
+                      {
+                        src: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&h=400&fit=crop',
+                        alt: 'Mountain landscape'
+                      },
+                      {
+                        src: 'https://images.unsplash.com/photo-1507525428034-b723a9ce6890?w=800&h=400&fit=crop',
+                        alt: 'Ocean sunset'
+                      },
+                      {
+                        src: 'https://images.unsplash.com/photo-1511884642898-4c92249e20b6?w=800&h=400&fit=crop',
+                        alt: 'Forest path'
+                      }
+                    ]}
+                    showThumbnails={true}
+                    className="w-full max-w-2xl mx-auto"
+                  />
+                </div>
+
+                {/* Card Carousel */}
+                <div>
+                  <h4 className="text-lg font-medium text-gray-800 mb-3">Card Carousel</h4>
+                  <CardCarousel
+                    data-testid="card-carousel"
+                    cards={[
+                      {
+                        title: 'Feature Card 1',
+                        description: 'This is the first feature card with detailed information.',
+                        image: 'https://images.unsplash.com/photo-1557804506-669a67965ba0?w=400&h=250&fit=crop'
+                      },
+                      {
+                        title: 'Feature Card 2',
+                        description: 'This is the second feature card with different content.',
+                        image: 'https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=400&h=250&fit=crop'
+                      },
+                      {
+                        title: 'Feature Card 3',
+                        description: 'This is the third feature card showcasing another feature.',
+                        image: 'https://images.unsplash.com/photo-1571896349842-33c89424de2d?w=400&h=250&fit=crop'
+                      }
+                    ]}
+                    showArrows={true}
+                    className="w-full max-w-4xl mx-auto"
+                  />
+                </div>
+
+                {/* Testimonial Carousel */}
+                <div>
+                  <h4 className="text-lg font-medium text-gray-800 mb-3">Testimonial Carousel</h4>
+                  <TestimonialCarousel
+                    data-testid="testimonial-carousel"
+                    testimonials={[
+                      {
+                        name: 'Sarah Johnson',
+                        role: 'Product Manager',
+                        content: 'This product has completely transformed how we work. The quality and attention to detail is outstanding.',
+                        avatar: 'https://images.unsplash.com/photo-1494790108755-2616b9a3a8a5?w=100&h=100&fit=crop&crop=face',
+                        rating: 5
+                      },
+                      {
+                        name: 'Michael Chen',
+                        role: 'Design Director',
+                        content: 'The best investment we made this year. The user experience is intuitive and the results speak for themselves.',
+                        avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop&crop=face',
+                        rating: 5
+                      },
+                      {
+                        name: 'Emily Davis',
+                        role: 'CEO',
+                        content: 'Outstanding service and exceptional quality. I would recommend this to anyone looking for reliable solutions.',
+                        avatar: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=100&h=100&fit=crop&crop=face',
+                        rating: 5
+                      }
+                    ]}
+                    autoPlay={3000}
+                    className="w-full max-w-2xl mx-auto"
+                  >
+                    {[
+                      <div key="testimonial1" className="text-center">
+                        <p className="text-lg italic mb-4">&ldquo;This product has completely transformed how we work. The quality and attention to detail is outstanding.&rdquo;</p>
+                        <p className="font-semibold">- Sarah Johnson, Product Manager</p>
+                      </div>,
+                      <div key="testimonial2" className="text-center">
+                        <p className="text-lg italic mb-4">&ldquo;The best investment we made this year. The user experience is intuitive and the results speak for themselves.&rdquo;</p>
+                        <p className="font-semibold">- Michael Chen, Design Director</p>
+                      </div>,
+                      <div key="testimonial3" className="text-center">
+                        <p className="text-lg italic mb-4">&ldquo;Outstanding service and exceptional quality. I would recommend this to anyone looking for reliable solutions.&rdquo;</p>
+                        <p className="font-semibold">- Emily Davis, CEO</p>
+                      </div>
+                    ]}
+                  </TestimonialCarousel>
+                </div>
+
+                {/* Hero Carousel */}
+                <div>
+                  <h4 className="text-lg font-medium text-gray-800 mb-3">Hero Carousel</h4>
+                  <HeroCarousel
+                    data-testid="hero-carousel"
+                    slides={[
+                      {
+                        title: 'Welcome to Our Platform',
+                        subtitle: 'Discover amazing features and possibilities',
+                        description: 'Transform your workflow with our comprehensive solution designed for modern teams.',
+                        image: 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=1200&h=600&fit=crop',
+                        cta: {
+                          text: 'Get Started',
+                          action: () => console.log('Get Started clicked')
+                        }
+                      },
+                      {
+                        title: 'Powerful Analytics',
+                        subtitle: 'Data-driven insights at your fingertips',
+                        description: 'Make informed decisions with real-time analytics and comprehensive reporting tools.',
+                        image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=1200&h=600&fit=crop',
+                        cta: {
+                          text: 'Learn More',
+                          action: () => console.log('Learn More clicked')
+                        }
+                      }
+                    ]}
+                    autoPlay={3000}
+                    showDots={true}
+                    className="w-full h-96"
+                  >
+                    {[
+                      <div key="hero1" className="flex items-center justify-center h-full text-white">
+                        <div className="text-center">
+                          <h2 className="text-4xl font-bold mb-4">Welcome to Our Platform</h2>
+                          <p className="text-xl mb-6">Discover amazing features and possibilities</p>
+                          <button className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-medium">
+                            Get Started
+                          </button>
+                        </div>
+                      </div>,
+                      <div key="hero2" className="flex items-center justify-center h-full text-white">
+                        <div className="text-center">
+                          <h2 className="text-4xl font-bold mb-4">Powerful Analytics</h2>
+                          <p className="text-xl mb-6">Data-driven insights at your fingertips</p>
+                          <button className="bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-lg font-medium">
+                            Learn More
+                          </button>
+                        </div>
+                      </div>
+                    ]}
+                  </HeroCarousel>
+                </div>
+              </div>
             </div>
 
             {/* Chart */}

@@ -32,7 +32,17 @@ import {
   ComboboxList,
   ComboboxOption,
   ComboboxGroup,
-  ComboboxEmpty
+  ComboboxEmpty,
+  Sidebar,
+  SidebarItem,
+  SidebarGroup,
+  SidebarDivider,
+  TreeView,
+  TreeViewNode,
+  Menubar,
+  MenubarItem,
+  NavigationMenu,
+  MegaMenu
 } from '@react-ui-forge/renderer';
 
 
@@ -339,7 +349,11 @@ export default function NavigationPage() {
     { name: 'Breadcrumb', description: 'Navigation breadcrumb showing current location', status: 'available' },
     { name: 'Dropdown Menu', description: 'Menu appearing on button click with action options', status: 'available' },
     { name: 'Menu', description: 'Generic menu component with keyboard navigation', status: 'available' },
-    { name: 'Navigation Menu', description: 'Complex navigation with dropdowns and nested items', status: 'planned' },
+    { name: 'Sidebar', description: 'Collapsible side navigation with responsive behavior', status: 'available' },
+    { name: 'TreeView', description: 'Hierarchical tree navigation with expand/collapse', status: 'available' },
+    { name: 'Menubar', description: 'Application menu bar with submenus and keyboard navigation', status: 'available' },
+    { name: 'Navigation Menu', description: 'Complex navigation with dropdowns, mega menus, and search', status: 'available' },
+    { name: 'MegaMenu', description: 'Large dropdown menu with rich content panels and comprehensive navigation', status: 'available' },
     { name: 'Tabs', description: 'Organize content into separate panels via tabs', status: 'available' },
     { name: 'Command', description: 'Command palette with search and keyboard navigation', status: 'available' },
     { name: 'Combobox', description: 'Combined input and dropdown with search functionality', status: 'available' },
@@ -479,6 +493,108 @@ export default function NavigationPage() {
               <h3 className="text-xl font-semibold text-gray-900 mb-4">Context Menu</h3>
               <div className="bg-white rounded-lg border border-gray-200 p-6">
                 <ContextMenu />
+              </div>
+            </div>
+
+            <div>
+              <h3 className="text-xl font-semibold text-gray-900 mb-4">Sidebar</h3>
+              <div className="bg-white rounded-lg border border-gray-200 p-6">
+                <p className="text-gray-600 mb-4">Sidebar component with navigation items and collapsible sections</p>
+                <div className="text-sm text-gray-500">Sidebar component available via renderer package with responsive behavior</div>
+              </div>
+            </div>
+
+            <div>
+              <h3 className="text-xl font-semibold text-gray-900 mb-4">TreeView</h3>
+              <div className="bg-white rounded-lg border border-gray-200 p-6">
+                <p className="text-gray-600 mb-4">TreeView component with hierarchical navigation and expand/collapse functionality</p>
+                <div className="text-sm text-gray-500">TreeView component available via renderer package with keyboard navigation and selection</div>
+              </div>
+            </div>
+
+            <div>
+              <h3 className="text-xl font-semibold text-gray-900 mb-4">Menubar</h3>
+              <div className="bg-white rounded-lg border border-gray-200 p-6">
+                <p className="text-gray-600 mb-4">Menubar component with application menus and submenus</p>
+                <div className="text-sm text-gray-500">Menubar component available via renderer package with full keyboard navigation</div>
+              </div>
+            </div>
+
+            <div>
+              <h3 className="text-xl font-semibold text-gray-900 mb-4">Navigation Menu</h3>
+              <div className="bg-white rounded-lg border border-gray-200 p-6">
+                <p className="text-gray-600 mb-4">Navigation Menu component with complex patterns including mega menus and search</p>
+                <div className="text-sm text-gray-500">Navigation Menu component available via renderer package with responsive behavior</div>
+              </div>
+            </div>
+
+            <div>
+              <h3 className="text-xl font-semibold text-gray-900 mb-4">MegaMenu</h3>
+              <div className="bg-white rounded-lg border border-gray-200 p-6">
+                <MegaMenu
+                  items={[
+                    {
+                      id: 'products',
+                      label: 'Products',
+                      panel: (
+                        <div className="grid grid-cols-3 gap-4 p-4">
+                          <div>
+                            <h4 className="font-semibold mb-2">Software</h4>
+                            <ul className="space-y-1">
+                              <li><a href="#" className="text-blue-600 hover:underline">Analytics</a></li>
+                              <li><a href="#" className="text-blue-600 hover:underline">CRM</a></li>
+                              <li><a href="#" className="text-blue-600 hover:underline">Marketing</a></li>
+                            </ul>
+                          </div>
+                          <div>
+                            <h4 className="font-semibold mb-2">Hardware</h4>
+                            <ul className="space-y-1">
+                              <li><a href="#" className="text-blue-600 hover:underline">Laptops</a></li>
+                              <li><a href="#" className="text-blue-600 hover:underline">Desktops</a></li>
+                              <li><a href="#" className="text-blue-600 hover:underline">Mobile</a></li>
+                            </ul>
+                          </div>
+                          <div>
+                            <h4 className="font-semibold mb-2">Services</h4>
+                            <ul className="space-y-1">
+                              <li><a href="#" className="text-blue-600 hover:underline">Consulting</a></li>
+                              <li><a href="#" className="text-blue-600 hover:underline">Support</a></li>
+                              <li><a href="#" className="text-blue-600 hover:underline">Training</a></li>
+                            </ul>
+                          </div>
+                        </div>
+                      )
+                    },
+                    {
+                      id: 'solutions',
+                      label: 'Solutions',
+                      panel: (
+                        <div className="p-4">
+                          <h4 className="font-semibold mb-2">Industry Solutions</h4>
+                          <p className="text-gray-600">Tailored solutions for your industry needs.</p>
+                        </div>
+                      )
+                    },
+                    {
+                      id: 'resources',
+                      label: 'Resources',
+                      children: [
+                        { id: 'docs', label: 'Documentation' },
+                        { id: 'blog', label: 'Blog' },
+                        { id: 'community', label: 'Community' }
+                      ]
+                    },
+                    {
+                      id: 'company',
+                      label: 'Company'
+                    }
+                  ]}
+                  config={{
+                    hoverActivation: true,
+                    closeOnOutsideClick: true,
+                    animatePanels: true
+                  }}
+                />
               </div>
             </div>
           </div>

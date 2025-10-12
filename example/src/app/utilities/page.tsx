@@ -7,124 +7,27 @@
 
 import Link from 'next/link';
 import { useState } from 'react';
-import React from 'react';
-import { createPortal } from 'react-dom';
 
-// Mock utility components for demonstration
-const AccessibleIcon = ({ icon, label, className = '' }: {
-  icon: React.ReactNode;
-  label: string;
-  className?: string;
-}) => (
-  <span className={`inline-flex items-center justify-center ${className}`} role="img" aria-label={label}>
-    {icon}
-  </span>
-);
-
-const DirectionProvider = ({ direction = 'ltr', children, className = '' }: {
-  direction?: 'ltr' | 'rtl';
-  children: React.ReactNode;
-  className?: string;
-}) => (
-  <div dir={direction} className={className}>
-    {children}
-  </div>
-);
-
-const Item = ({ children, as: Component = 'div', className = '', ...props }: {
-  children: React.ReactNode;
-  as?: React.ElementType;
-  className?: string;
-  [key: string]: unknown;
-}) => (
-  <Component className={className} {...props}>
-    {children}
-  </Component>
-);
-
-const Kbd = ({ children, className = '' }: {
-  children: React.ReactNode;
-  className?: string;
-}) => (
-  <kbd className={`px-2 py-1 text-xs font-semibold text-gray-800 bg-gray-100 border border-gray-200 rounded ${className}`}>
-    {children}
-  </kbd>
-);
-
-const Portal = ({ children, container, className = '' }: {
-  children: React.ReactNode;
-  container?: HTMLElement | null;
-  className?: string;
-}) => {
-  const [mounted, setMounted] = useState(false);
-
-  React.useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  if (!mounted) return null;
-
-  const targetContainer = container || document.body;
-
-  return createPortal(
-    <div className={className}>
-      {children}
-    </div>,
-    targetContainer
-  );
-};
-
-const Slot = ({ children, className = '' }: {
-  children: React.ReactNode;
-  className?: string;
-}) => {
-  const childrenArray = React.Children.toArray(children);
-  const child = childrenArray[0] as React.ReactElement;
-
-  if (React.isValidElement(child)) {
-    return React.cloneElement(child as React.ReactElement<{ className?: string }>, {
-      className: `${(child.props as { className?: string }).className || ''} ${className}`.trim(),
-    });
-  }
-
-  return <>{children}</>;
-};
-
-const VisuallyHidden = ({ children, className = '' }: {
-  children: React.ReactNode;
-  className?: string;
-}) => (
-  <span
-    className={`sr-only ${className}`}
-    style={{
-      position: 'absolute',
-      width: '1px',
-      height: '1px',
-      padding: 0,
-      margin: '-1px',
-      overflow: 'hidden',
-      clip: 'rect(0, 0, 0, 0)',
-      whiteSpace: 'nowrap',
-      border: 0,
-    }}
-  >
-    {children}
-  </span>
-);
+// Import actual utility components from renderer package
+import {
+  AspectRatio,
+  Breadcrumb,
+  Label,
+  Separator,
+  Skeleton,
+  Tooltip
+} from '@react-ui-forge/renderer';
 
 export default function UtilitiesPage() {
   const [activeTab, setActiveTab] = useState('showcase');
-  const [direction, setDirection] = useState<'ltr' | 'rtl'>('ltr');
-  const [portalOpen, setPortalOpen] = useState(false);
 
   const utilityComponents = [
-    { name: 'Accessible Icon', description: 'Icon with proper ARIA labeling for screen readers', status: 'available' },
-    { name: 'Direction Provider', description: 'Context provider for text direction (LTR/RTL)', status: 'available' },
-    { name: 'Item', description: 'Flexible component wrapper with customizable element type', status: 'available' },
-    { name: 'Kbd', description: 'Keyboard key styling component for shortcuts', status: 'available' },
-    { name: 'Portal', description: 'Renders children into a different part of the DOM', status: 'available' },
-    { name: 'Slot', description: 'Merges props and classnames from parent to child', status: 'available' },
-    { name: 'Visually Hidden', description: 'Hides content visually but keeps it accessible', status: 'available' },
+    { name: 'Aspect Ratio', description: 'Maintain consistent aspect ratios for embedded content', status: 'available' },
+    { name: 'Breadcrumb', description: 'Navigation breadcrumb showing user location', status: 'available' },
+    { name: 'Label', description: 'Accessible label for form controls', status: 'available' },
+    { name: 'Separator', description: 'Visual separator between content sections', status: 'available' },
+    { name: 'Skeleton', description: 'Loading placeholder showing content shape', status: 'available' },
+    { name: 'Tooltip', description: 'Contextual help text on hover/focus', status: 'available' },
   ];
 
   const getStatusColor = (status: string) => {
@@ -162,11 +65,11 @@ export default function UtilitiesPage() {
         {/* Header */}
         <div className="mb-8">
           <h1 className="text-3xl font-bold text-gray-900 mb-2">
-            Utility Components
+            Utilities Components
           </h1>
           <p className="text-lg text-gray-600">
-            Utility and helper components for common UI patterns and accessibility.
-            Built with semantic HTML and developer experience in mind.
+            Utility components for common layout and presentation needs.
+            Low-level components that provide specific functionality.
           </p>
         </div>
 
@@ -214,163 +117,142 @@ export default function UtilitiesPage() {
         {/* Component Showcase */}
         {activeTab === 'showcase' && (
           <div className="space-y-8 mb-12">
-            {/* Accessible Icon */}
+            {/* Aspect Ratio */}
             <div>
-              <h3 className="text-xl font-semibold text-gray-900 mb-4">Accessible Icon Component</h3>
-              <div className="flex flex-wrap gap-6">
-                <AccessibleIcon
-                  icon={
-                    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <h3 className="text-xl font-semibold text-gray-900 mb-4">Aspect Ratio Component</h3>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div>
+                  <p className="text-sm text-gray-600 mb-2">16:9 Aspect Ratio</p>
+                  <AspectRatio data-testid="aspect-ratio-16-9" ratio={16/9} className="bg-blue-100 rounded-lg">
+                    <div className="p-4 text-center text-blue-800 font-medium">
+                      16:9 Content
+                    </div>
+                  </AspectRatio>
+                </div>
+                <div>
+                  <p className="text-sm text-gray-600 mb-2">4:3 Aspect Ratio</p>
+                  <AspectRatio data-testid="aspect-ratio-4-3" ratio={4/3} className="bg-green-100 rounded-lg">
+                    <div className="p-4 text-center text-green-800 font-medium">
+                      4:3 Content
+                    </div>
+                  </AspectRatio>
+                </div>
+                <div>
+                  <p className="text-sm text-gray-600 mb-2">1:1 Aspect Ratio</p>
+                  <AspectRatio data-testid="aspect-ratio-1-1" ratio={1} className="bg-purple-100 rounded-lg">
+                    <div className="p-4 text-center text-purple-800 font-medium">
+                      Square Content
+                    </div>
+                  </AspectRatio>
+                </div>
+              </div>
+            </div>
+
+            {/* Breadcrumb */}
+            <div>
+              <h3 className="text-xl font-semibold text-gray-900 mb-4">Breadcrumb Component</h3>
+              <div className="space-y-4">
+                <Breadcrumb data-testid="breadcrumb-basic">
+                  <Breadcrumb.Item href="/">Home</Breadcrumb.Item>
+                  <Breadcrumb.Item href="/utilities">Utilities</Breadcrumb.Item>
+                  <Breadcrumb.Item current>Breadcrumb</Breadcrumb.Item>
+                </Breadcrumb>
+
+                <Breadcrumb data-testid="breadcrumb-long">
+                  <Breadcrumb.Item href="/">Home</Breadcrumb.Item>
+                  <Breadcrumb.Item href="/components">Components</Breadcrumb.Item>
+                  <Breadcrumb.Item href="/utilities">Utilities</Breadcrumb.Item>
+                  <Breadcrumb.Item href="/layout">Layout</Breadcrumb.Item>
+                  <Breadcrumb.Item current>Current Page</Breadcrumb.Item>
+                </Breadcrumb>
+              </div>
+            </div>
+
+            {/* Label */}
+            <div>
+              <h3 className="text-xl font-semibold text-gray-900 mb-4">Label Component</h3>
+              <div className="space-y-4">
+                <div>
+                  <Label data-testid="label-basic" htmlFor="example-input">
+                    Basic Label
+                  </Label>
+                  <input
+                    id="example-input"
+                    type="text"
+                    className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                    placeholder="Example input"
+                  />
+                </div>
+
+                <div>
+                  <Label data-testid="label-required" htmlFor="required-input" required>
+                    Required Field
+                  </Label>
+                  <input
+                    id="required-input"
+                    type="text"
+                    className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                    placeholder="This field is required"
+                  />
+                </div>
+              </div>
+            </div>
+
+            {/* Separator */}
+            <div>
+              <h3 className="text-xl font-semibold text-gray-900 mb-4">Separator Component</h3>
+              <div className="space-y-6">
+                <div>
+                  <p className="text-gray-600 mb-2">Content above separator</p>
+                  <Separator data-testid="separator-horizontal" className="my-4" />
+                  <p className="text-gray-600">Content below separator</p>
+                </div>
+
+                <div className="flex items-center gap-4">
+                  <span className="text-gray-600">Left content</span>
+                  <Separator data-testid="separator-vertical" orientation="vertical" className="h-8" />
+                  <span className="text-gray-600">Right content</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Skeleton */}
+            <div>
+              <h3 className="text-xl font-semibold text-gray-900 mb-4">Skeleton Component</h3>
+              <div className="space-y-4">
+                <div className="space-y-2">
+                  <Skeleton data-testid="skeleton-title" className="h-6 w-3/4" />
+                  <Skeleton data-testid="skeleton-text" className="h-4 w-full" />
+                  <Skeleton data-testid="skeleton-text-short" className="h-4 w-5/6" />
+                  <Skeleton data-testid="skeleton-text-medium" className="h-4 w-4/6" />
+                </div>
+
+                <div className="flex items-center space-x-4">
+                  <Skeleton data-testid="skeleton-avatar" className="h-12 w-12 rounded-full" />
+                  <div className="space-y-2 flex-1">
+                    <Skeleton data-testid="skeleton-line-1" className="h-4 w-1/3" />
+                    <Skeleton data-testid="skeleton-line-2" className="h-3 w-1/2" />
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Tooltip */}
+            <div>
+              <h3 className="text-xl font-semibold text-gray-900 mb-4">Tooltip Component</h3>
+              <div className="flex flex-wrap gap-4">
+                <Tooltip data-testid="tooltip-basic" content="This is a tooltip message">
+                  <button className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700">
+                    Hover for tooltip
+                  </button>
+                </Tooltip>
+                <Tooltip data-testid="tooltip-help" content="Click here for more information">
+                  <button className="px-4 py-2 bg-gray-600 text-white rounded-md hover:bg-gray-700">
+                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                     </svg>
-                  }
-                  label="Information"
-                />
-                <AccessibleIcon
-                  icon={
-                    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.732-.833-2.5 0L4.314 16.5c-.77.833.192 2.5 1.732 2.5z" />
-                    </svg>
-                  }
-                  label="Warning"
-                />
-                <AccessibleIcon
-                  icon={
-                    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                    </svg>
-                  }
-                  label="Close"
-                />
-                <AccessibleIcon
-                  icon={
-                    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
-                    </svg>
-                  }
-                  label="Download"
-                />
-              </div>
-              <p className="text-sm text-gray-600 mt-4">
-                Icons with proper ARIA labels for screen readers. Each icon announces its purpose to assistive technology.
-              </p>
-            </div>
-
-            {/* Direction Provider */}
-            <div>
-              <h3 className="text-xl font-semibold text-gray-900 mb-4">Direction Provider Component</h3>
-              <div className="space-y-4">
-                <div className="flex gap-4">
-                  <button
-                    onClick={() => setDirection('ltr')}
-                    className={`px-4 py-2 rounded ${direction === 'ltr' ? 'bg-blue-600 text-white' : 'bg-gray-200 text-gray-700'}`}
-                  >
-                    LTR (Left to Right)
                   </button>
-                  <button
-                    onClick={() => setDirection('rtl')}
-                    className={`px-4 py-2 rounded ${direction === 'rtl' ? 'bg-blue-600 text-white' : 'bg-gray-200 text-gray-700'}`}
-                  >
-                    RTL (Right to Left)
-                  </button>
-                </div>
-                <DirectionProvider direction={direction}>
-                  <div className="bg-white rounded-lg border border-gray-200 p-6">
-                    <p className="mb-4">Current direction: <strong>{direction.toUpperCase()}</strong></p>
-                    <div className="space-y-2">
-                      <p>This text respects the text direction setting.</p>
-                      <p className="flex items-center gap-2">
-                        <span>Previous</span>
-                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-                        </svg>
-                        <span>Next</span>
-                      </p>
-                    </div>
-                  </div>
-                </DirectionProvider>
-              </div>
-            </div>
-
-            {/* Kbd */}
-            <div>
-              <h3 className="text-xl font-semibold text-gray-900 mb-4">Keyboard Component</h3>
-              <div className="bg-white rounded-lg border border-gray-200 p-6">
-                <div className="space-y-4">
-                  <div>
-                    <h4 className="font-medium text-gray-800 mb-2">Keyboard Shortcuts:</h4>
-                    <div className="space-y-2">
-                      <div className="flex items-center gap-2">
-                        <Kbd>Ctrl</Kbd>
-                        <span>+</span>
-                        <Kbd>C</Kbd>
-                        <span className="text-gray-600">Copy</span>
-                      </div>
-                      <div className="flex items-center gap-2">
-                        <Kbd>Ctrl</Kbd>
-                        <span>+</span>
-                        <Kbd>V</Kbd>
-                        <span className="text-gray-600">Paste</span>
-                      </div>
-                      <div className="flex items-center gap-2">
-                        <Kbd>Ctrl</Kbd>
-                        <span>+</span>
-                        <Kbd>Z</Kbd>
-                        <span className="text-gray-600">Undo</span>
-                      </div>
-                      <div className="flex items-center gap-2">
-                        <Kbd>⌘</Kbd>
-                        <span>+</span>
-                        <Kbd>Space</Kbd>
-                        <span className="text-gray-600">Command Palette</span>
-                      </div>
-                      <div className="flex items-center gap-2">
-                        <Kbd>Enter</Kbd>
-                        <span className="text-gray-600">Submit</span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Item */}
-            <div>
-              <h3 className="text-xl font-semibold text-gray-900 mb-4">Item Component</h3>
-              <div className="space-y-4">
-                <Item as="button" className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">
-                  Button Item
-                </Item>
-                <Item as="a" href="#" className="text-blue-600 hover:text-blue-800 underline">
-                  Link Item
-                </Item>
-                <Item as="div" className="p-4 bg-gray-100 rounded-lg">
-                  Div Item with custom content
-                </Item>
-                <Item as="span" className="text-sm text-gray-600">
-                  Span Item for inline content
-                </Item>
-              </div>
-            </div>
-
-            {/* Visually Hidden */}
-            <div>
-              <h3 className="text-xl font-semibold text-gray-900 mb-4">Visually Hidden Component</h3>
-              <div className="bg-white rounded-lg border border-gray-200 p-6">
-                <p className="mb-4">
-                  The &quot;Skip to main content&quot; link below is hidden visually but accessible to screen readers:
-                </p>
-                <VisuallyHidden>
-                  <a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 px-4 py-2 bg-blue-600 text-white rounded">
-                    Skip to main content
-                  </a>
-                </VisuallyHidden>
-                <div className="p-4 bg-blue-50 border border-blue-200 rounded">
-                  <p className="text-sm text-blue-800">
-                    💡 Screen reader users can hear the &quot;Skip to main content&quot; option,
-                    but sighted users cannot see it unless they focus it with keyboard navigation.
-                  </p>
-                </div>
+                </Tooltip>
               </div>
             </div>
           </div>
@@ -379,114 +261,93 @@ export default function UtilitiesPage() {
         {/* Interactive Examples */}
         {activeTab === 'examples' && (
           <div className="space-y-8 mb-12">
-            {/* Portal Example */}
-            <div>
-              <h3 className="text-xl font-semibold text-gray-900 mb-4">Portal Component</h3>
+            <div className="bg-white rounded-lg border border-gray-200 p-6">
+              <h3 className="text-lg font-semibold text-gray-900 mb-4">Practical Example: Form with Labels</h3>
               <div className="space-y-4">
-                <button
-                  onClick={() => setPortalOpen(!portalOpen)}
-                  className="px-4 py-2 bg-purple-600 text-white rounded hover:bg-purple-700"
-                >
-                  {portalOpen ? 'Close' : 'Open'} Portal Modal
-                </button>
+                <div>
+                  <Label htmlFor="fullname">Full Name</Label>
+                  <input
+                    id="fullname"
+                    type="text"
+                    className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                    placeholder="Enter your full name"
+                  />
+                </div>
 
-                {portalOpen && (
-                  <Portal>
-                    <div className="fixed inset-0 z-50 flex items-center justify-center">
-                      <div className="fixed inset-0 bg-black/50" onClick={() => setPortalOpen(false)} />
-                      <div className="relative bg-white rounded-lg shadow-lg p-6 max-w-md w-full mx-4">
-                        <h3 className="text-lg font-semibold text-gray-900 mb-2">Portal Modal</h3>
-                        <p className="text-gray-600 mb-4">
-                          This modal is rendered using React Portal, which means it appears
-                          outside the normal component hierarchy but is still managed by React.
-                        </p>
-                        <button
-                          onClick={() => setPortalOpen(false)}
-                          className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
-                        >
-                          Close
-                        </button>
-                      </div>
-                    </div>
-                  </Portal>
-                )}
-              </div>
-            </div>
+                <Separator />
 
-            {/* Slot Example */}
-            <div>
-              <h3 className="text-xl font-semibold text-gray-900 mb-4">Slot Component</h3>
-              <div className="space-y-4">
-                <Slot className="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700">
-                  <button>Styled Button via Slot</button>
-                </Slot>
-                <Slot className="text-blue-600 hover:text-blue-800 underline">
-                  <a href="#">Styled Link via Slot</a>
-                </Slot>
-                <Slot className="p-4 bg-gray-100 rounded-lg border border-gray-300">
-                  <div>Styled Div via Slot</div>
-                </Slot>
-                <div className="p-4 bg-gray-50 rounded-lg">
-                  <p className="text-sm text-gray-600">
-                    The Slot component merges props and classnames from itself to its child,
-                    allowing for flexible composition patterns.
-                  </p>
+                <div>
+                  <Label htmlFor="email">Email Address</Label>
+                  <input
+                    id="email"
+                    type="email"
+                    className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                    placeholder="your@email.com"
+                  />
                 </div>
               </div>
             </div>
 
-            {/* Comprehensive Example */}
-            <div>
-              <h3 className="text-xl font-semibold text-gray-900 mb-4">Comprehensive Utility Example</h3>
-              <div className="bg-white rounded-lg border border-gray-200 p-6">
-                <div className="space-y-6">
-                  {/* Accessible toolbar */}
-                  <div className="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
-                    <div className="flex items-center gap-4">
-                      <AccessibleIcon
-                        icon={
-                          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-                          </svg>
-                        }
-                        label="Menu"
-                      />
-                      <span className="font-medium">Toolbar</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <Kbd>Alt</Kbd>
-                      <span>+</span>
-                      <Kbd>T</Kbd>
-                      <span className="text-sm text-gray-600">Toggle</span>
-                    </div>
-                  </div>
+            <div className="bg-white rounded-lg border border-gray-200 p-6">
+              <h3 className="text-lg font-semibold text-gray-900 mb-4">Loading State Example</h3>
+              <div className="space-y-4">
+                <Skeleton className="h-32 w-full" />
+                <Skeleton className="h-4 w-3/4" />
+                <Skeleton className="h-4 w-1/2" />
+              </div>
+            </div>
 
-                  {/* Direction-aware content */}
-                  <DirectionProvider direction={direction}>
-                    <div className="p-4 bg-blue-50 rounded-lg">
-                      <h4 className="font-medium text-blue-900 mb-2">Direction-Aware Content</h4>
-                      <p className="text-blue-800">
-                        This section respects the {direction.toUpperCase()} text direction setting.
-                      </p>
+            <div className="bg-white rounded-lg border border-gray-200 p-6">
+              <h3 className="text-lg font-semibold text-gray-900 mb-4">Media Gallery Example</h3>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                  <p className="text-sm text-gray-600 mb-2">16:9 Video</p>
+                  <AspectRatio ratio={16/9} className="bg-gray-200 rounded-lg">
+                    <div className="flex items-center justify-center h-full">
+                      <svg className="w-12 h-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" />
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                      </svg>
                     </div>
-                  </DirectionProvider>
-
-                  {/* Action buttons */}
-                  <div className="flex gap-4">
-                    <Slot className="px-4 py-2 bg-gray-600 text-white rounded hover:bg-gray-700">
-                      <button>Cancel</button>
-                    </Slot>
-                    <Slot className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">
-                      <button>Submit</button>
-                    </Slot>
-                  </div>
-
-                  {/* Hidden accessibility info */}
-                  <VisuallyHidden>
-                    <div aria-live="polite">
-                      Form contains direction-aware controls and accessible action buttons
+                  </AspectRatio>
+                </div>
+                <div>
+                  <p className="text-sm text-gray-600 mb-2">4:3 Image</p>
+                  <AspectRatio ratio={4/3} className="bg-gray-200 rounded-lg">
+                    <div className="flex items-center justify-center h-full">
+                      <svg className="w-12 h-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                      </svg>
                     </div>
-                  </VisuallyHidden>
+                  </AspectRatio>
+                </div>
+              </div>
+            </div>
+
+            <div className="bg-white rounded-lg border border-gray-200 p-6">
+              <h3 className="text-lg font-semibold text-gray-900 mb-4">Navigation Example</h3>
+              <div className="space-y-4">
+                <Breadcrumb>
+                  <Breadcrumb.Item href="/">Home</Breadcrumb.Item>
+                  <Breadcrumb.Item href="/utilities">Utilities</Breadcrumb.Item>
+                  <Breadcrumb.Item current>Examples</Breadcrumb.Item>
+                </Breadcrumb>
+
+                <div className="flex gap-4">
+                  <Tooltip content="Go back to previous page">
+                    <button className="p-2 text-gray-600 hover:text-gray-800">
+                      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                      </svg>
+                    </button>
+                  </Tooltip>
+                  <Tooltip content="Refresh current page">
+                    <button className="p-2 text-gray-600 hover:text-gray-800">
+                      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                      </svg>
+                    </button>
+                  </Tooltip>
                 </div>
               </div>
             </div>
@@ -494,29 +355,29 @@ export default function UtilitiesPage() {
         )}
 
         {/* Features Section */}
-        <div className="bg-gray-100 rounded-lg p-6">
-          <h3 className="text-lg font-semibold text-gray-900 mb-3">Utility Features</h3>
-          <ul className="space-y-2 text-gray-800">
+        <div className="bg-blue-50 rounded-lg p-6">
+          <h3 className="text-lg font-semibold text-blue-900 mb-3">Utility Features</h3>
+          <ul className="space-y-2 text-blue-800">
             <li className="flex items-center gap-2">
-              <svg className="w-5 h-5 text-gray-600" fill="currentColor" viewBox="0 0 20 20">
+              <svg className="w-5 h-5 text-blue-600" fill="currentColor" viewBox="0 0 20 20">
                 <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
               </svg>
-              Accessibility-first design patterns
+              Lightweight and focused utility components
             </li>
             <li className="flex items-center gap-2">
-              <svg className="w-5 h-5 text-gray-600" fill="currentColor" viewBox="0 0 20 20">
+              <svg className="w-5 h-5 text-blue-600" fill="currentColor" viewBox="0 0 20 20">
                 <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
               </svg>
-              Semantic HTML with proper ARIA attributes
+              Composable with other components
             </li>
             <li className="flex items-center gap-2">
-              <svg className="w-5 h-5 text-gray-600" fill="currentColor" viewBox="0 0 20 20">
+              <svg className="w-5 h-5 text-blue-600" fill="currentColor" viewBox="0 0 20 20">
                 <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
               </svg>
-              Internationalization support (RTL/LTR)
+              Accessible by default
             </li>
             <li className="flex items-center gap-2">
-              <svg className="w-5 h-5 text-gray-600" fill="currentColor" viewBox="0 0 20 20">
+              <svg className="w-5 h-5 text-blue-600" fill="currentColor" viewBox="0 0 20 20">
                 <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
               </svg>
               Flutter-inspired composition patterns

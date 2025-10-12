@@ -42,10 +42,7 @@ export type {
   ProgressRenderProps,
   ProgressTrackRenderProps,
   ProgressFillRenderProps,
-  ProgressLabelRenderProps,
-  SimpleProgressProps,
-  CircularProgressProps,
-  LoadingProgressProps
+  ProgressLabelRenderProps
 } from './Progress';
 
 export { Spinner, SimpleSpinner, DotsSpinner, BarsSpinner } from './Spinner';
@@ -122,6 +119,21 @@ export type { ChartProps, ChartPointProps, ChartLineProps, ChartBarProps } from 
 export { DataGrid } from './DataGrid';
 export type { DataGridProps } from './DataGrid';
 
+export { Table } from './Table';
+export type { TableProps } from './Table';
+
+export { Stepper } from './Stepper';
+export type { StepperProps } from './Stepper';
+
+export { Rating } from './Rating';
+export type { RatingProps } from './Rating';
+
+export { Resizable } from './Resizable';
+export type { ResizableProps } from './Resizable';
+
+export { Chip } from './Chip';
+export type { ChipProps } from './Chip';
+
 // Additional components
 export { Alert } from './Alert';
 export type { AlertProps } from './Alert';
@@ -141,4 +153,131 @@ export type { MenuProps } from './Menu';
 export { Tooltip } from './Tooltip';
 export type { TooltipProps } from './Tooltip';
 
-// TODO: Export remaining renderer components as they are implemented
+export { HoverCard } from './HoverCard';
+export type { HoverCardProps } from './HoverCard';
+
+export { Item, ItemCheckbox, ItemRadio } from './Item';
+export type { ItemProps } from './Item';
+
+export { Kbd, KbdShortcut, KbdModifier } from './Kbd';
+export type { KbdProps } from './Kbd';
+
+export { List, ListTimeline, ListCompact } from './List';
+export type { ListProps } from './List';
+
+export { Offcanvas, OffcanvasTrigger } from './Offcanvas';
+export type { OffcanvasProps } from './Offcanvas';
+
+export { Panel, PanelCard, PanelGroup } from './Panel';
+export type { PanelProps } from './Panel';
+
+export { InputOTP } from './InputOTP';
+export type { InputOTPProps, OTPSlotProps } from './InputOTP';
+
+export { PasswordMeter } from './PasswordMeter';
+export type { PasswordMeterProps } from './PasswordMeter';
+
+export { InputGroup } from './InputGroup';
+export type { InputGroupProps } from './InputGroup';
+
+export { Form } from './Form';
+export type { FormProps } from './Form';
+
+export { Popover } from './Popover';
+export type { PopoverProps } from './Popover';
+
+export { RadioGroup } from './RadioGroup';
+export type { RadioGroupProps } from './RadioGroup';
+
+export { Toast, ToastProvider } from './Toast';
+export type { ToastProps } from './Toast';
+
+// Navigation components
+export { Pagination, CompactPagination, JumpPagination } from './Pagination';
+export type { PaginationProps } from './Pagination';
+
+export { Sidebar, SidebarItem, SidebarGroup, SidebarDivider } from './Sidebar';
+export type { SidebarProps, SidebarItemProps, SidebarGroupProps, SidebarDividerProps } from './Sidebar';
+
+export { TreeView, TreeViewNode } from './TreeView';
+export type { TreeViewProps, TreeViewNodeProps } from './TreeView';
+
+export { Menubar, MenubarItem } from './Menubar';
+export type { MenubarProps, MenubarItemProps } from './Menubar';
+
+export { NavigationMenu } from './NavigationMenu';
+export { Scrollspy, ScrollspySection } from './Scrollspy';
+export type { NavigationMenuProps } from './NavigationMenu';
+export type { ScrollspyProps, ScrollspySectionProps } from './Scrollspy';
+
+// Motion components
+export { FadeInOut } from './FadeInOut';
+export type { FadeInOutProps } from './FadeInOut';
+
+export { SlideIn } from './SlideIn';
+export type { SlideInProps } from './SlideIn';
+
+export { Pulse } from './Pulse';
+export type { PulseProps } from './Pulse';
+
+export { ScaleInOut } from './ScaleInOut';
+export type { ScaleInOutProps } from './ScaleInOut';
+
+export { RotateIn } from './RotateIn';
+export type { RotateInProps } from './RotateIn';
+
+export { Bounce } from './Bounce';
+export type { BounceProps } from './Bounce';
+
+export { Shake } from './Shake';
+export type { ShakeProps } from './Shake';
+
+export { Flip } from './Flip';
+export type { FlipProps } from './Flip';
+
+export { BlurInOut } from './BlurInOut';
+export type { BlurInOutProps } from './BlurInOut';
+
+export { StaggerChildren } from './StaggerChildren';
+export type { StaggerChildrenProps } from './StaggerChildren';
+
+export { ParallaxScroll } from './ParallaxScroll';
+export type { ParallaxScrollProps } from './ParallaxScroll';
+
+export { RevealOnScroll } from './RevealOnScroll';
+export type { RevealOnScrollProps } from './RevealOnScroll';
+
+export { HoverLift } from './HoverLift';
+export type { HoverLiftProps } from './HoverLift';
+
+export { MagneticHover } from './MagneticHover';
+export type { MagneticHoverProps } from './MagneticHover';
+
+// Advanced Navigation components
+export { MegaMenu } from './MegaMenu';
+export type { MegaMenuProps } from './MegaMenu';
+
+// Utility components
+export { Slot, SlotClone, SlotWrapper, SlotPortal, SlotRadioGroup } from './Slot';
+export type { SlotProps } from './Slot';
+
+export { AccessibleIcon } from './AccessibleIcon';
+export type { AccessibleIconProps } from './AccessibleIcon';
+
+export { Portal, PortalBackdrop, PortalOverlay } from './Portal';
+export type { PortalProps } from './Portal';
+
+export { VisuallyHidden, VisuallyHiddenFocusable, VisuallyHiddenLiveRegion, VisuallyHiddenSkipLink, VisuallyHiddenAnnouncer } from './VisuallyHidden';
+export type { VisuallyHiddenProps } from './VisuallyHidden';
+
+export { DirectionProvider, DirectionalText, DirectionalFlex, DirectionalSpacer, DirectionToggle } from './DirectionProvider';
+export type { DirectionProviderProps } from './DirectionProvider';
+
+export { Sortable } from './Sortable';
+export type { SortableProps } from './Sortable';
+
+export { Toolbar } from './Toolbar';
+export type { ToolbarProps } from './Toolbar';
+
+// All 85 components implemented and exported
+// React UI Forge component library complete

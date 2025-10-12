@@ -8,196 +8,12 @@
 import Link from 'next/link';
 import { useState } from 'react';
 
-// Mock pagination components for demonstration
-const Pagination = ({ currentPage, totalPages, onPageChange, showFirstLast = true, showPrevNext = true, className = '' }: {
-  currentPage: number;
-  totalPages: number;
-  onPageChange?: (page: number) => void;
-  showFirstLast?: boolean;
-  showPrevNext?: boolean;
-  className?: string;
-}) => {
-  const getVisiblePages = () => {
-    const delta = 2;
-    const range = [];
-    const rangeWithDots: (number | string)[] = [];
-    let l: number | undefined;
-
-    for (let i = 1; i <= totalPages; i++) {
-      if (i === 1 || i === totalPages || (i >= currentPage - delta && i <= currentPage + delta)) {
-        range.push(i);
-      }
-    }
-
-    range.forEach((i) => {
-      if (l) {
-        if (i - l === 2) {
-          rangeWithDots.push(l + 1);
-        } else if (i - l !== 1) {
-          rangeWithDots.push('...');
-        }
-      }
-      rangeWithDots.push(i);
-      l = i;
-    });
-
-    return rangeWithDots;
-  };
-
-  const visiblePages = getVisiblePages();
-
-  return (
-    <nav className={`flex items-center justify-center ${className}`} aria-label="Pagination">
-      {showFirstLast && (
-        <button
-          onClick={() => onPageChange?.(1)}
-          disabled={currentPage === 1}
-          className="p-2 text-gray-500 hover:text-gray-700 disabled:opacity-50 disabled:cursor-not-allowed"
-          aria-label="First page"
-        >
-          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 19l-7-7 7-7m8 14l-7-7 7-7" />
-          </svg>
-        </button>
-      )}
-
-      {showPrevNext && (
-        <button
-          onClick={() => onPageChange?.(currentPage - 1)}
-          disabled={currentPage === 1}
-          className="p-2 text-gray-500 hover:text-gray-700 disabled:opacity-50 disabled:cursor-not-allowed"
-          aria-label="Previous page"
-        >
-          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-          </svg>
-        </button>
-      )}
-
-      <div className="flex items-center gap-1 mx-2">
-        {visiblePages.map((page, index) => (
-          page === '...' ? (
-            <span key={`dots-${index}`} className="px-3 py-2 text-gray-500">
-              ...
-            </span>
-          ) : (
-            <button
-              key={page}
-              onClick={() => onPageChange?.(page as number)}
-              className={`px-3 py-2 rounded-md text-sm font-medium transition-colors ${
-                page === currentPage
-                  ? 'bg-blue-600 text-white'
-                  : 'text-gray-700 hover:bg-gray-100'
-              }`}
-              aria-current={page === currentPage ? 'page' : undefined}
-            >
-              {page}
-            </button>
-          )
-        ))}
-      </div>
-
-      {showPrevNext && (
-        <button
-          onClick={() => onPageChange?.(currentPage + 1)}
-          disabled={currentPage === totalPages}
-          className="p-2 text-gray-500 hover:text-gray-700 disabled:opacity-50 disabled:cursor-not-allowed"
-          aria-label="Next page"
-        >
-          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-          </svg>
-        </button>
-      )}
-
-      {showFirstLast && (
-        <button
-          onClick={() => onPageChange?.(totalPages)}
-          disabled={currentPage === totalPages}
-          className="p-2 text-gray-500 hover:text-gray-700 disabled:opacity-50 disabled:cursor-not-allowed"
-          aria-label="Last page"
-        >
-          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 5l7 7-7 7M5 5l7 7-7 7" />
-          </svg>
-        </button>
-      )}
-    </nav>
-  );
-};
-
-const CompactPagination = ({ currentPage, totalPages, onPageChange, className = '' }: {
-  currentPage: number;
-  totalPages: number;
-  onPageChange?: (page: number) => void;
-  className?: string;
-}) => (
-  <div className={`flex items-center gap-4 ${className}`}>
-    <button
-      onClick={() => onPageChange?.(currentPage - 1)}
-      disabled={currentPage === 1}
-      className="px-3 py-1 text-sm text-gray-600 hover:text-gray-900 disabled:opacity-50 disabled:cursor-not-allowed"
-    >
-      Previous
-    </button>
-    <span className="text-sm text-gray-700">
-      Page {currentPage} of {totalPages}
-    </span>
-    <button
-      onClick={() => onPageChange?.(currentPage + 1)}
-      disabled={currentPage === totalPages}
-      className="px-3 py-1 text-sm text-gray-600 hover:text-gray-900 disabled:opacity-50 disabled:cursor-not-allowed"
-    >
-      Next
-    </button>
-  </div>
-);
-
-const JumpPagination = ({ currentPage, totalPages, onPageChange, className = '' }: {
-  currentPage: number;
-  totalPages: number;
-  onPageChange?: (page: number) => void;
-  className?: string;
-}) => {
-  const [jumpTo, setJumpTo] = useState('');
-
-  const handleJump = () => {
-    const page = parseInt(jumpTo);
-    if (page >= 1 && page <= totalPages) {
-      onPageChange?.(page);
-      setJumpTo('');
-    }
-  };
-
-  return (
-    <div className={`flex items-center gap-4 ${className}`}>
-      <Pagination
-        currentPage={currentPage}
-        totalPages={totalPages}
-        onPageChange={onPageChange}
-        showFirstLast={false}
-      />
-      <div className="flex items-center gap-2">
-        <span className="text-sm text-gray-600">Go to page:</span>
-        <input
-          type="number"
-          min={1}
-          max={totalPages}
-          value={jumpTo}
-          onChange={(e) => setJumpTo(e.target.value)}
-          onKeyPress={(e) => e.key === 'Enter' && handleJump()}
-          className="w-16 px-2 py-1 text-sm border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
-        />
-        <button
-          onClick={handleJump}
-          className="px-3 py-1 text-sm bg-blue-600 text-white rounded hover:bg-blue-700"
-        >
-          Go
-        </button>
-      </div>
-    </div>
-  );
-};
+// Import actual pagination components from renderer package
+import {
+  Pagination,
+  CompactPagination,
+  JumpPagination
+} from '@react-ui-forge/renderer';
 
 export default function PaginationPage() {
   const [activeTab, setActiveTab] = useState('showcase');
@@ -323,32 +139,35 @@ export default function PaginationPage() {
                 <div>
                   <h4 className="font-medium text-gray-800 mb-3">Basic Pagination (10 pages)</h4>
                   <Pagination
-                    currentPage={currentPage1}
                     totalPages={totalPages1}
+                    defaultPage={currentPage1}
                     onPageChange={setCurrentPage1}
+                    data-testid="pagination-basic"
                   />
-                  <p className="text-sm text-gray-600 mt-2">Current page: {currentPage1}</p>
+                  <p className="text-sm text-gray-600 mt-2">Interactive pagination with numbered pages</p>
                 </div>
 
                 <div>
                   <h4 className="font-medium text-gray-800 mb-3">Large Dataset (25 pages)</h4>
                   <Pagination
-                    currentPage={currentPage2}
                     totalPages={totalPages2}
+                    defaultPage={currentPage2}
                     onPageChange={setCurrentPage2}
+                    data-testid="pagination-large"
                   />
-                  <p className="text-sm text-gray-600 mt-2">Current page: {currentPage2}</p>
+                  <p className="text-sm text-gray-600 mt-2">Pagination with ellipsis for large datasets</p>
                 </div>
 
                 <div>
                   <h4 className="font-medium text-gray-800 mb-3">Minimal Pagination (7 pages)</h4>
                   <Pagination
-                    currentPage={currentPage3}
                     totalPages={totalPages3}
+                    defaultPage={currentPage3}
                     onPageChange={setCurrentPage3}
                     showFirstLast={false}
+                    data-testid="pagination-minimal"
                   />
-                  <p className="text-sm text-gray-600 mt-2">Current page: {currentPage3}</p>
+                  <p className="text-sm text-gray-600 mt-2">Compact pagination without first/last buttons</p>
                 </div>
               </div>
             </div>
@@ -360,9 +179,10 @@ export default function PaginationPage() {
                 <div>
                   <h4 className="font-medium text-gray-800 mb-3">Previous/Next Style</h4>
                   <CompactPagination
-                    currentPage={currentPage1}
                     totalPages={totalPages1}
+                    defaultPage={currentPage1}
                     onPageChange={setCurrentPage1}
+                    data-testid="compact-pagination"
                   />
                 </div>
                 <p className="text-sm text-gray-600">
@@ -378,9 +198,10 @@ export default function PaginationPage() {
                 <div>
                   <h4 className="font-medium text-gray-800 mb-3">With Jump Input</h4>
                   <JumpPagination
-                    currentPage={currentPage4}
                     totalPages={totalPages4}
+                    defaultPage={currentPage4}
                     onPageChange={setCurrentPage4}
+                    data-testid="jump-pagination"
                   />
                 </div>
                 <p className="text-sm text-gray-600">
@@ -434,8 +255,8 @@ export default function PaginationPage() {
                 </div>
                 <div className="px-6 py-4 border-t border-gray-200 bg-gray-50">
                   <Pagination
-                    currentPage={currentPage1}
                     totalPages={totalPages1}
+                    defaultPage={currentPage1}
                     onPageChange={setCurrentPage1}
                   />
                 </div>
@@ -481,8 +302,8 @@ export default function PaginationPage() {
                 </div>
 
                 <CompactPagination
-                  currentPage={currentPage2}
                   totalPages={totalPages2}
+                  defaultPage={currentPage2}
                   onPageChange={setCurrentPage2}
                 />
               </div>
@@ -500,8 +321,8 @@ export default function PaginationPage() {
                   ))}
                 </div>
                 <Pagination
-                  currentPage={currentPage4}
                   totalPages={totalPages4}
+                  defaultPage={currentPage4}
                   onPageChange={setCurrentPage4}
                 />
               </div>
