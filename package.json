@@ -30,10 +30,18 @@
   "author": "",
   "license": "MIT",
   "packageManager": "pnpm@10.17.1",
+  "pnpm": {
+    "shamefully-hoist": true,
+    "peerDependencyRules": {
+      "ignoreMissing": ["styled-jsx"]
+    }
+  },
   "devDependencies": {
     "@types/node": "^24.5.2",
     "@types/react": "^19.1.15",
     "tsup": "^8.5.0",
-    "typescript": "^5.9.2"
+    "typescript": "^5.9.2",
+    "styled-jsx": "^5.1.7",
+    "resolve-from": "^5.0.0"
   }
 }

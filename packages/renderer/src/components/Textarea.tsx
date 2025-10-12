@@ -4,7 +4,7 @@
  */
 
 import React from 'react';
-import { useTextarea, type UseTextareaProps } from '../../core/src/headless/useTextarea';
+import { useTextarea, type UseTextareaProps } from '@react-ui-forge/core';
 import { useTheme } from '../providers/ThemeProvider';
 
 export interface TextareaProps extends UseTextareaProps {

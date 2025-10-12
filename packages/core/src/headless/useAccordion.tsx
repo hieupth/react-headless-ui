@@ -36,6 +36,8 @@ export interface UseAccordionProps extends
   onOpenChange?: (openItems: string[]) => void;
   /** Item toggle handler */
   onItemToggle?: (itemId: string, isOpen: boolean) => void;
+  /** Whether accordion is disabled */
+  disabled?: boolean;
 }
 
 export interface UseAccordionState {
@@ -135,6 +137,49 @@ export const useAccordion = (props: UseAccordionProps): UseAccordionReturns => {
     onOpenChange?.(newOpenItems);
   }, [controlledOpenItems, onOpenChange]);
 
+  // Focus navigation helpers (declared before use to fix forward reference)
+  const focusNextItem = useCallback((currentItemId: string) => {
+    const currentIndex = items.findIndex(item => item.id === currentItemId);
+    const nextIndex = currentIndex + 1;
+
+    if (nextIndex < items.length) {
+      const nextItem = items[nextIndex];
+      if (!nextItem.disabled) {
+        setFocusedItemId(nextItem.id);
+      } else {
+        focusNextItem(nextItem.id);
+      }
+    }
+  }, [items]);
+
+  const focusPreviousItem = useCallback((currentItemId: string) => {
+    const currentIndex = items.findIndex(item => item.id === currentItemId);
+    const prevIndex = currentIndex - 1;
+
+    if (prevIndex >= 0) {
+      const prevItem = items[prevIndex];
+      if (!prevItem.disabled) {
+        setFocusedItemId(prevItem.id);
+      } else {
+        focusPreviousItem(prevItem.id);
+      }
+    }
+  }, [items]);
+
+  const focusFirstItem = useCallback(() => {
+    const firstItem = items.find(item => !item.disabled);
+    if (firstItem) {
+      setFocusedItemId(firstItem.id);
+    }
+  }, [items]);
+
+  const focusLastItem = useCallback(() => {
+    const lastItem = [...items].reverse().find(item => !item.disabled);
+    if (lastItem) {
+      setFocusedItemId(lastItem.id);
+    }
+  }, [items]);
+
   // Toggle item open state
   const toggleItem = useCallback((itemId: string) => {
     const item = items.find(i => i.id === itemId);
@@ -229,49 +274,7 @@ export const useAccordion = (props: UseAccordionProps): UseAccordionReturns => {
     }
   }, [items, orientation, toggleItem, focusNextItem, focusPreviousItem, focusFirstItem, focusLastItem]);
 
-  // Focus navigation helpers
-  const focusNextItem = useCallback((currentItemId: string) => {
-    const currentIndex = items.findIndex(item => item.id === currentItemId);
-    const nextIndex = currentIndex + 1;
-
-    if (nextIndex < items.length) {
-      const nextItem = items[nextIndex];
-      if (!nextItem.disabled) {
-        setFocusedItemId(nextItem.id);
-      } else {
-        focusNextItem(nextItem.id);
-      }
-    }
-  }, [items]);
-
-  const focusPreviousItem = useCallback((currentItemId: string) => {
-    const currentIndex = items.findIndex(item => item.id === currentItemId);
-    const prevIndex = currentIndex - 1;
-
-    if (prevIndex >= 0) {
-      const prevItem = items[prevIndex];
-      if (!prevItem.disabled) {
-        setFocusedItemId(prevItem.id);
-      } else {
-        focusPreviousItem(prevItem.id);
-      }
-    }
-  }, [items]);
-
-  const focusFirstItem = useCallback(() => {
-    const firstItem = items.find(item => !item.disabled);
-    if (firstItem) {
-      setFocusedItemId(firstItem.id);
-    }
-  }, [items]);
-
-  const focusLastItem = useCallback(() => {
-    const lastItem = [...items].reverse().find(item => !item.disabled);
-    if (lastItem) {
-      setFocusedItemId(lastItem.id);
-    }
-  }, [items]);
-
+  
   // Get item state
   const getItemState = useCallback((itemId: string) => {
     const item = items.find(i => i.id === itemId);

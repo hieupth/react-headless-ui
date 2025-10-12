@@ -133,8 +133,8 @@ export const Select = forwardRef<HTMLElement, SelectProps>(({
       <li
         key={option.key}
         className={`${baseClasses} ${disabledClasses} ${highlightedClasses} ${selectedClasses}`}
-        onClick={!option.disabled ? props.onClick : undefined}
-        onMouseEnter={!option.disabled ? props.onMouseEnter : undefined}
+        {...(!option.disabled ? { onClick: props.onClick } : {})}
+        {...(!option.disabled ? { onMouseEnter: props.onMouseEnter } : {})}
         {...select.getOptionAttributes(option, props.index)}
       >
         {/* Icon */}
@@ -171,7 +171,7 @@ export const Select = forwardRef<HTMLElement, SelectProps>(({
         ref={props.triggerRef}
         className={`select-trigger w-full text-left flex items-center justify-between ${sizeClasses} ${variantClasses} rounded-md shadow-sm transition-colors ${className || ''} ${select.disabled ? 'opacity-50 cursor-not-allowed bg-gray-100' : 'bg-white'}`}
         style={style}
-        onClick={props.handleTriggerClick}
+        {...(props.handleTriggerClick ? { onClick: props.handleTriggerClick } : {})}
         onKeyDown={props.handleKeyDown}
         disabled={select.disabled}
         {...props.triggerAttributes}
@@ -197,10 +197,12 @@ export const Select = forwardRef<HTMLElement, SelectProps>(({
           <button
             type="button"
             className="ml-2 flex-shrink-0 text-gray-400 hover:text-gray-600 focus:outline-none"
-            onClick={(e) => {
-              e.stopPropagation();
-              props.clearSelection();
-            }}
+            {...(props.clearSelection ? {
+              onClick: (e: any) => {
+                e.stopPropagation();
+                props.clearSelection();
+              }
+            } : {})}
             aria-label="Clear selection"
           >
             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -244,8 +246,8 @@ export const Select = forwardRef<HTMLElement, SelectProps>(({
                 className="w-full px-3 py-1 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                 placeholder="Search..."
                 value={props.inputValue}
-                onChange={(e) => props.handleInputChange(e.target.value)}
-                onClick={(e) => e.stopPropagation()}
+                {...(props.handleInputChange ? { onChange: (e: any) => props.handleInputChange(e.target.value) } : {})}
+                {...({ onClick: (e: any) => e.stopPropagation() })}
                 aria-label="Search options"
               />
             </li>

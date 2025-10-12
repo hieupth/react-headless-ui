@@ -4,7 +4,7 @@
  */
 
 import React from 'react';
-import { useCarousel, type UseCarouselProps } from '../../core/src/headless/useCarousel';
+import { useCarousel, type UseCarouselProps } from '@react-ui-forge/core';
 import { useTheme } from '../providers/ThemeProvider';
 
 export interface CarouselProps extends UseCarouselProps {
@@ -85,7 +85,7 @@ export const Carousel: React.FC<CarouselProps> = ({
 
   const arrowsClassName = [
     'carousel-arrows',
-    theme?.extensions?.spacing?.component margin
+    theme?.extensions?.spacing?.component?.margin
   ].filter(Boolean).join(' ');
 
   const dotsClassName = [
@@ -98,7 +98,7 @@ export const Carousel: React.FC<CarouselProps> = ({
   const DefaultPreviousArrow = ({ onClick, disabled }: { onClick: () => void; disabled: boolean }) => (
     <button
       {...arrowProps.previous}
-      onClick={onClick}
+      {...(onClick ? { onClick } : {})}
       disabled={disabled}
       className="carousel-arrow carousel-arrow-previous"
       type="button"
@@ -112,7 +112,7 @@ export const Carousel: React.FC<CarouselProps> = ({
   const DefaultNextArrow = ({ onClick, disabled }: { onClick: () => void; disabled: boolean }) => (
     <button
       {...arrowProps.next}
-      onClick={onClick}
+      {...(onClick ? { onClick } : {})}
       disabled={disabled}
       className="carousel-arrow carousel-arrow-next"
       type="button"
@@ -127,6 +127,7 @@ export const Carousel: React.FC<CarouselProps> = ({
   const DefaultDotIndicator = ({ index, isActive, onClick }: { index: number; isActive: boolean; onClick: () => void }) => (
     <button
       {...getDotProps(index)}
+      {...(onClick ? { onClick } : {})}
       className={`carousel-dot ${isActive ? 'carousel-dot-active' : ''}`}
       type="button"
     />
@@ -158,11 +159,11 @@ export const Carousel: React.FC<CarouselProps> = ({
       {props.showArrows && (
         <div className={arrowsClassName}>
           <Previous
-            onClick={actions.previous}
+            {...(actions.previous ? { onClick: actions.previous } : {})}
             disabled={!props.loop && state.isAtStart}
           />
           <Next
-            onClick={actions.next}
+            {...(actions.next ? { onClick: actions.next } : {})}
             disabled={!props.loop && state.isAtEnd}
           />
         </div>
@@ -176,7 +177,7 @@ export const Carousel: React.FC<CarouselProps> = ({
               key={index}
               index={index}
               isActive={index === state.currentSlide}
-              onClick={() => actions.goToSlide(index)}
+              {...(actions.goToSlide ? { onClick: () => actions.goToSlide(index) } : {})}
             />
           ))}
         </div>
@@ -193,9 +194,11 @@ export const Carousel: React.FC<CarouselProps> = ({
 };
 
 // Carousel variants for specific use cases
-export const ImageCarousel: React.FC<Omit<CarouselProps, 'children'>> & {
+interface ImageCarouselProps extends Omit<CarouselProps, 'children'> {
   images: React.ReactNode[];
-}> = ({ images, ...props }) => (
+}
+
+export const ImageCarousel: React.FC<ImageCarouselProps> = ({ images, ...props }) => (
   <Carousel {...props}>
     {images.map((image, index) => (
       <div key={index} className="carousel-slide-image">

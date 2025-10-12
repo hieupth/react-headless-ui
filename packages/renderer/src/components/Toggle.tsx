@@ -4,7 +4,7 @@
  */
 
 import React from 'react';
-import { useToggle, type UseToggleProps } from '../../core/src/headless/useToggle';
+import { useToggle, type UseToggleProps } from '@react-ui-forge/core';
 import { useTheme } from '../providers/ThemeProvider';
 
 export interface ToggleProps extends UseToggleProps {

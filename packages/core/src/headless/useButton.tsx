@@ -105,7 +105,7 @@ export const useButton = (props: UseButtonProps = {}): UseButtonReturns => {
   } = props;
 
   // Compose mixins for button behavior
-  const focusable = useFocusableMixin({
+  const focusableMixin = useFocusableMixin({
     defaultFocused,
     focusable: focusable && !loading && !disabled,
     focusStrategy
@@ -134,14 +134,14 @@ export const useButton = (props: UseButtonProps = {}): UseButtonReturns => {
   // Compose button state
   const state = useMemo(() => composeState<UseButtonState>({
     pressed: pressable.pressed,
-    focused: focusable.focused,
+    focused: focusableMixin.focused,
     disabled: pressable.disabled,
     loading,
     variant,
     size,
     fullWidth,
     pressCount: pressable.pressCount
-  }), [pressable.pressed, pressable.disabled, pressable.pressCount, focusable.focused, loading, variant, size, fullWidth]);
+  }), [pressable.pressed, pressable.disabled, pressable.pressCount, focusableMixin.focused, loading, variant, size, fullWidth]);
 
   // Compose handlers
   const handleClick = useCallback((event: React.MouseEvent) => {
@@ -156,9 +156,9 @@ export const useButton = (props: UseButtonProps = {}): UseButtonReturns => {
     if (loading || disabled) return;
 
     // Combine focusable and pressable key handlers
-    focusable.handleKeyDown(event);
+    focusableMixin.handleKeyDown(event);
     pressable.handleKeyDown(event);
-  }, [loading, disabled, focusable.handleKeyDown, pressable.handleKeyDown]);
+  }, [loading, disabled, focusableMixin.handleKeyDown, pressable.handleKeyDown]);
 
   const composedHandlers = useMemo(() => composeHandlers(
     pressable.handleMouseDown,

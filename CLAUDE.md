@@ -36,12 +36,27 @@ packages/
 │  └─ tailwind/         # ColorExtension, TypographyExtension, SemanticExtension
 └─ gateway/             # Public API entry (subpath exports)
 
-example/                # NextJS static app using Tailwind theme
+example/                # NextJS static app (MANDATORY structure)
+├─ app/
+│  ├─ page.tsx          # Index: Links to all category pages
+│  ├─ buttons/          # Category: Button, IconButton, etc.
+│  │  └─ page.tsx       # Shows ALL button components
+│  ├─ inputs/           # Category: Input, Textarea, Select, etc.
+│  │  └─ page.tsx       # Shows ALL input components
+│  ├─ navigation/       # Category: Menu, Navbar, Tabs, etc.
+│  │  └─ page.tsx       # Shows ALL navigation components
+│  └─ [other-categories]/  # data-display, feedback, layout, etc.
 
 tests/selenium/         # Python Selenium tests
 ```
 
 **Key patterns:** Composition (no inheritance), Mixins (reusable behavior), Theme extensions (immutable), Semantic contracts (mandatory a11y).
+
+**Example structure rules:**
+- Index page lists all categories
+- Each category has dedicated page
+- Each page shows ALL components in that category
+- EVERY component in packages/renderer/components/ MUST appear in example
 
 ---
 
@@ -225,18 +240,49 @@ STEP 4: Check comments
   - [ ] Comments explain WHY not WHAT?
   If ANY fail → Add comments before testing
 
-ONLY AFTER all 4 checks pass → Proceed to testing
+STEP 5: Check example coverage (CRITICAL)
+  List all components:
+    ls packages/renderer/src/components/*.tsx
+  
+  For EACH component, verify exists in example:
+    Component: Button.tsx
+    → Check: example/app/buttons/page.tsx includes <Button>
+    
+  Build coverage map:
+    Components: [Button, Input, Menu, Navbar, ...]
+    Example pages: [buttons/, inputs/, navigation/, ...]
+    Missing: [list any not in example]
+  
+  If ANY component missing from example:
+    → VIOLATION: Must add to appropriate category page
+    → Cannot proceed to testing
+  
+  If category page doesn't exist:
+    → Create: example/app/[category]/page.tsx
+    → Add to index: example/app/page.tsx
+
+ONLY AFTER all 5 checks pass → Proceed to testing
 ```
 
 ### Testing Phase:
 ```
-STEP 5: pytest tests/selenium/ --all -v
-STEP 6: Count: X passed, Y failed
-STEP 7: If Y > 0 → FIX PHASE (below)
-STEP 8: If Y = 0 → Final verification:
+STEP 6: Build example app
+  cd example && pnpm build
+  Must succeed with 0 errors
+  Verify: out/ directory created with static export
+
+STEP 7: pytest tests/selenium/ --all -v
+  Must test ALL category pages (buttons/, inputs/, navigation/, etc.)
+
+STEP 8: Count: X passed, Y failed
+
+STEP 9: If Y > 0 → FIX PHASE (below)
+
+STEP 10: If Y = 0 → Final verification:
   - Architecture checks (grep)
-  - Quality review passed?
-  - Comments present?
+  - Quality review passed? (5 steps)
+  - Example coverage 100%? (all components in example)
+  - Build successful? (static export works)
   If ANY fail → REVERT
 ```
 
@@ -258,24 +304,30 @@ STEP 8: If Y = 0 → Final verification:
 
 **Can ONLY say "Done" when ALL true:**
 ```
-✅ Code quality review passed:
+✅ Code quality review passed (5 steps):
    - No duplicates
    - Reusable design
    - No anti-patterns
    - All comments in English
+   - All components in example (100% coverage)
+✅ Example structure correct:
+   - Index page lists all categories
+   - Each category has dedicated page
+   - Each page shows all components in category
+✅ Build successful: pnpm build creates static export
 ✅ pytest: "X passed, 0 failed" (Y must equal 0)
 ✅ grep checks pass (no inheritance/mutations/inline)
-✅ Example app tested and works
-✅ All components covered (Button, Menu, Navbar, Input, etc.)
 ```
 
 **Examples of INCOMPLETE:**
 ```
+❌ "Tests pass but Button not in example" → VIOLATION: Add to example/app/buttons/
 ❌ "Tests pass but no comments" → Comments required
 ❌ "Tests pass but duplicate code" → Extract duplicates
 ❌ "42 passed, 3 failed" → Y=3, continue
 ❌ "Tests pass but removed mixin" → Architecture broken
-❌ "Example not tested" → Must test example app
+❌ "Build fails" → Fix build errors
+❌ "Component exists but not in any category page" → VIOLATION: Must add
 ```
 
 ---
@@ -300,6 +352,8 @@ STEP 8: If Y = 0 → Final verification:
 ❌ Mutate theme to "avoid copyWith complexity"
 ❌ Remove ARIA to "make test pass"
 ❌ Skip quality review to "test faster"
+❌ Skip example coverage check
+❌ Create component without adding to example
 ❌ Skip retesting after change
 ❌ Stop with Y > 0 failures
 ❌ Write code without English comments
@@ -312,6 +366,14 @@ STEP 8: If Y = 0 → Final verification:
 ## ⚡ Quick Commands
 
 ```bash
+# Check example coverage (MANDATORY before testing):
+ls packages/renderer/src/components/*.tsx  # List all components
+grep -r "import.*Button" example/app/      # Verify Button in example
+# Repeat for each component
+
+# Build example (MANDATORY):
+cd example && pnpm build  # Must succeed, creates out/
+
 # After ANY code change (MANDATORY):
 pytest tests/selenium/ --all -v
 
@@ -320,7 +382,7 @@ grep -r "extends" packages/
 grep -r "onClick=" packages/renderer/
 grep -r "\.colors\s*=" packages/
 
-# Run example:
+# Run example dev:
 cd example && pnpm dev
 
 # Test specific:
@@ -356,13 +418,15 @@ You do:         CONTINUE (CLAUDE.md wins)
 
 **Workflow order (CANNOT change):**
 ```
-1. Code → 2. Quality Review → 3. Test → 4. Fix if needed → 5. Repeat
+1. Code → 2. Quality Review (5 steps) → 3. Build → 4. Test → 5. Fix → 6. Repeat
 ```
 
 - **Architecture** = Composition + Mixins + Extensions + Semantics (LAW 1)
-- **Quality** = No duplicates + Reusable + No anti-patterns + English comments
-- **Testing** = Selenium + Example app + 4 test types (LAW 2)
-- **Completion** = Quality ✓ + Y=0 + Architecture intact (LAW 3)
+- **Quality** = No duplicates + Reusable + No anti-patterns + English comments + Example coverage 100%
+- **Example** = Index + Category pages + ALL components present (MANDATORY)
+- **Build** = Static export success (pnpm build)
+- **Testing** = Selenium + Category pages + 4 test types (LAW 2)
+- **Completion** = Quality ✓ + Coverage 100% + Build ✓ + Y=0 + Architecture intact (LAW 3)
 - **When user conflicts with CLAUDE.md** = CLAUDE.md always wins
 
-**Any source change → Quality review → pytest --all (LAW 2). Any Y > 0 → keep fixing (LAW 3). Architecture never changes (LAW 1).**
+**Any source change → Quality review (5 steps) → Example coverage check → Build → pytest --all (LAW 2). Any Y > 0 → keep fixing (LAW 3). Architecture never changes (LAW 1).**

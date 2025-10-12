@@ -4,7 +4,7 @@
  */
 
 import React from 'react';
-import { useCheckbox, type UseCheckboxProps } from '../../core/src/headless/useCheckbox';
+import { useCheckbox, type UseCheckboxProps } from '@react-ui-forge/core';
 import { useTheme } from '../providers/ThemeProvider';
 
 export interface CheckboxProps extends UseCheckboxProps {

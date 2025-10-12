@@ -95,8 +95,8 @@ export const Menu = forwardRef<HTMLElement, MenuProps>(({
         key={item.key}
         role="menuitem"
         className={`${baseClasses} ${disabledClasses} ${highlightedClasses} ${selectedClasses}`}
-        onClick={!item.disabled ? props.onClick : undefined}
-        onMouseEnter={!item.disabled ? props.onMouseEnter : undefined}
+        {...(!item.disabled ? { onClick: props.onClick } : {})}
+        {...(!item.disabled ? { onMouseEnter: props.onMouseEnter } : {})}
         tabIndex={-1}
         aria-disabled={item.disabled}
         aria-selected={props.selected}
@@ -138,15 +138,15 @@ export const Menu = forwardRef<HTMLElement, MenuProps>(({
       ...props.triggerAttributes,
       onClick: (e: React.MouseEvent) => {
         props.children.props.onClick?.(e);
-        props.handleTriggerClick();
+        props.handleTriggerClick?.();
       },
       onMouseEnter: (e: React.MouseEvent) => {
         props.children.props.onMouseEnter?.(e);
-        props.handleTriggerEnter();
+        props.handleTriggerEnter?.();
       },
       onMouseLeave: (e: React.MouseEvent) => {
         props.children.props.onMouseLeave?.(e);
-        props.handleTriggerLeave();
+        props.handleTriggerLeave?.();
       }
     });
 
@@ -330,8 +330,8 @@ export const ContextMenu = forwardRef<HTMLElement, DropdownMenuProps>(({
   const contextMenu = useMenu({
     items,
     trigger: 'context',
-    closeOnSelection={true},
-    closeOnOutsideClick={true,
+    closeOnSelection: true,
+    closeOnOutsideClick: true,
     triggerRef: ref as React.RefObject<HTMLElement>
   });
 

@@ -4,7 +4,7 @@
  */
 
 import React from 'react';
-import { useCalendar, type UseCalendarProps, type CalendarDate } from '../../core/src/headless/useCalendar';
+import { useCalendar, type UseCalendarProps, type CalendarDate } from '@react-ui-forge/core';
 import { useTheme } from '../providers/ThemeProvider';
 
 export interface CalendarProps extends UseCalendarProps {

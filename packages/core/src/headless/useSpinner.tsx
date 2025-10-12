@@ -126,7 +126,7 @@ export interface SpinnerReturns {
 /**
  * Enhanced useState hook with better type safety and validation
  */
-const useSpinnerState = <T>(initialValue: T, validator?: (value: T) => boolean) => {
+const useSpinnerState = <T,>(initialValue: T, validator?: (value: T) => boolean) => {
   const [state, setState] = useState(initialValue);
 
   const setValidatedState = useCallback((value: T | ((prev: T) => T)) => {

@@ -4,7 +4,7 @@
  */
 
 import React from 'react';
-import { useCollapsible, type UseCollapsibleProps } from '../../core/src/headless/useCollapsible';
+import { useCollapsible, type UseCollapsibleProps } from '@react-ui-forge/core';
 import { useTheme } from '../providers/ThemeProvider';
 
 export interface CollapsibleProps extends UseCollapsibleProps {

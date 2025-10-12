@@ -4,8 +4,8 @@
  */
 
 import React, { forwardRef } from 'react';
-import { useButtonGroup } from '@react-ui/core/headless';
-import type { UseButtonGroupProps } from '@react-ui/core/headless';
+import { useButtonGroup } from '@react-ui-forge/core';
+import type { UseButtonGroupProps } from '@react-ui-forge/core';
 
 export interface ButtonGroupProps extends
   Omit<UseButtonGroupProps, 'totalItems'> {
