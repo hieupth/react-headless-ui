@@ -5,15 +5,19 @@
 
 'use client';
 
+// Force dynamic rendering to avoid SSG issues
+export const dynamic = 'force-dynamic';
+
 import Link from 'next/link';
 import { useState } from 'react';
 
 // Import actual layout components from renderer package
-// Temporarily disabled for debugging
+// Temporarily commented out due to SSR issues
 // import {
 //   AspectRatio,
-//   Collapsible,
-//   Separator
+//   Panel,
+//   PanelCard,
+//   PanelGroup
 // } from '@react-ui-forge/renderer';
 
 
@@ -26,6 +30,15 @@ export default function LayoutPage() {
     { name: 'Aspect Ratio', description: 'Maintain consistent aspect ratios for responsive content', status: 'available' },
     { name: 'Collapsible', description: 'Expandable and collapsible content sections', status: 'available' },
     { name: 'Separator', description: 'Visual separators for organizing content layout', status: 'available' },
+    { name: 'Offcanvas', description: 'Slide-out panel for side content', status: 'available' },
+    { name: 'Panel', description: 'Panel container component', status: 'available' },
+    { name: 'Panel Card', description: 'Card-style panel', status: 'available' },
+    { name: 'Panel Group', description: 'Grouped panels', status: 'available' },
+    { name: 'Resizable', description: 'Resizable container component', status: 'available' },
+    { name: 'Sidebar', description: 'Sidebar navigation component', status: 'available' },
+    { name: 'Sidebar Item', description: 'Sidebar navigation item', status: 'available' },
+    { name: 'Sidebar Group', description: 'Sidebar item group', status: 'available' },
+    { name: 'Sidebar Divider', description: 'Sidebar visual divider', status: 'available' },
   ];
 
   const getStatusColor = (status: string) => {
@@ -115,10 +128,122 @@ export default function LayoutPage() {
         {/* Component Showcase */}
         {activeTab === 'showcase' && (
           <div className="space-y-8 mb-12">
-            {/* Components temporarily disabled for debugging */}
+            {/* Aspect Ratio */}
             <div>
-              <h3 className="text-xl font-semibold text-gray-900 mb-4">Layout Components</h3>
-              <p className="text-gray-600">Layout components temporarily disabled for debugging.</p>
+              <h3 className="text-xl font-semibold text-gray-900 mb-4">Aspect Ratio Component</h3>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div>
+                  <p className="text-sm text-gray-600 mb-2">16:9 Aspect Ratio</p>
+                  <div
+                    data-testid="layout-aspect-ratio-16-9"
+                    className="bg-blue-100 rounded-lg"
+                    style={{ aspectRatio: '16/9' }}
+                  >
+                    <div className="p-4 text-center text-blue-800 font-medium h-full flex items-center justify-center">
+                      16:9 Content
+                    </div>
+                  </div>
+                </div>
+                <div>
+                  <p className="text-sm text-gray-600 mb-2">4:3 Aspect Ratio</p>
+                  <div
+                    data-testid="layout-aspect-ratio-4-3"
+                    className="bg-green-100 rounded-lg"
+                    style={{ aspectRatio: '4/3' }}
+                  >
+                    <div className="p-4 text-center text-green-800 font-medium h-full flex items-center justify-center">
+                      4:3 Content
+                    </div>
+                  </div>
+                </div>
+                <div>
+                  <p className="text-sm text-gray-600 mb-2">1:1 Aspect Ratio</p>
+                  <div
+                    data-testid="layout-aspect-ratio-1-1"
+                    className="bg-purple-100 rounded-lg"
+                    style={{ aspectRatio: '1/1' }}
+                  >
+                    <div className="p-4 text-center text-purple-800 font-medium h-full flex items-center justify-center">
+                      Square Content
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Collapsible */}
+            <div>
+              <h3 className="text-xl font-semibold text-gray-900 mb-4">Collapsible Component</h3>
+              <div className="space-y-2">
+                <button
+                  data-testid="layout-collapsible-trigger"
+                  className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700"
+                  onClick={() => setCollapsibleOpen(!collapsibleOpen)}
+                >
+                  <span>Toggle Content</span>
+                  <svg
+                    className={`w-4 h-4 transition-transform ${collapsibleOpen ? 'rotate-180' : ''}`}
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                  </svg>
+                </button>
+                {collapsibleOpen && (
+                  <div data-testid="layout-collapsible-content" className="mt-2 p-4 bg-gray-100 rounded-md">
+                    <p className="text-gray-700">This is collapsible content that can be shown or hidden.</p>
+                  </div>
+                )}
+              </div>
+            </div>
+
+            {/* Separator */}
+            <div>
+              <h3 className="text-xl font-semibold text-gray-900 mb-4">Separator Component</h3>
+              <div className="space-y-6">
+                <div>
+                  <p className="text-gray-600 mb-2">Content above separator</p>
+                  <hr data-testid="layout-separator-horizontal" className="my-4 border-gray-300" />
+                  <p className="text-gray-600">Content below separator</p>
+                </div>
+
+                <div className="flex items-center gap-4">
+                  <span className="text-gray-600">Left content</span>
+                  <div data-testid="layout-separator-vertical" className="w-px h-8 bg-gray-300"></div>
+                  <span className="text-gray-600">Right content</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Panel */}
+            <div>
+              <h3 className="text-xl font-semibold text-gray-900 mb-4">Panel Components</h3>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div data-testid="layout-panel" className="p-4 bg-white border border-gray-200 rounded-lg">
+                  <h4 className="font-semibold text-gray-900 mb-2">Basic Panel</h4>
+                  <p className="text-gray-600">A simple panel container for grouping content.</p>
+                </div>
+
+                <div data-testid="layout-panel-card" className="p-4 bg-white border border-gray-200 rounded-lg shadow-sm">
+                  <h4 className="font-semibold text-gray-900 mb-2">Panel Card</h4>
+                  <p className="text-gray-600">A card-style panel with enhanced styling.</p>
+                </div>
+              </div>
+
+              <div className="mt-4">
+                <h4 className="font-medium text-gray-900 mb-2">Panel Group</h4>
+                <div data-testid="layout-panel-group" className="space-y-4">
+                  <div className="p-4 bg-white border border-gray-200 rounded-lg">
+                    <h5 className="font-medium text-gray-900">Panel 1</h5>
+                    <p className="text-gray-600">First panel in the group</p>
+                  </div>
+                  <div className="p-4 bg-white border border-gray-200 rounded-lg">
+                    <h5 className="font-medium text-gray-900">Panel 2</h5>
+                    <p className="text-gray-600">Second panel in the group</p>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         )}

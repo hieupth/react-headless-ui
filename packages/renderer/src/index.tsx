@@ -146,7 +146,21 @@ export type {
   VisuallyHiddenProps,
   DirectionProviderProps,
   SortableProps,
-  ToolbarProps
+  ToolbarProps,
+  FadeInOutProps,
+  SlideInProps,
+  ScaleInOutProps,
+  RotateInProps,
+  BounceProps,
+  ShakeProps,
+  PulseProps,
+  FlipProps,
+  BlurInOutProps,
+  StaggerChildrenProps,
+  ParallaxScrollProps,
+  RevealOnScrollProps,
+  HoverLiftProps,
+  MagneticHoverProps
 } from './components';
 
 export {
@@ -307,5 +321,19 @@ export {
   DirectionalSpacer,
   DirectionToggle,
   Sortable,
-  Toolbar
+  Toolbar,
+  FadeInOut,
+  SlideIn,
+  ScaleInOut,
+  RotateIn,
+  Bounce,
+  Shake,
+  Pulse,
+  Flip,
+  BlurInOut,
+  StaggerChildren,
+  ParallaxScroll,
+  RevealOnScroll,
+  HoverLift,
+  MagneticHover
 } from './components';

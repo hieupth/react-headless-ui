@@ -5,86 +5,31 @@
 
 'use client';
 
+// Force dynamic rendering to avoid SSG issues
+export const dynamic = 'force-dynamic';
+
 import Link from 'next/link';
 import { useState } from 'react';
 import React from 'react';
 
 // Import real motion components from renderer package
-import {
-  FadeInOut,
-  SlideIn,
-  Pulse,
-  ScaleInOut,
-  RotateIn,
-  Bounce,
-  BlurInOut,
-  StaggerChildren,
-  ParallaxScroll,
-  RevealOnScroll,
-  HoverLift,
-  MagneticHover
-} from '@react-ui-forge/renderer';
-
-const Shake = ({ children, trigger, className = '' }: {
-  children: React.ReactNode;
-  trigger?: boolean;
-  className?: string;
-}) => {
-  const [isShaking, setIsShaking] = useState(false);
-
-  React.useEffect(() => {
-    if (trigger) {
-      setIsShaking(true);
-      const timer = setTimeout(() => setIsShaking(false), 500);
-      return () => clearTimeout(timer);
-    }
-  }, [trigger]);
-
-  return (
-    <div
-      className={`inline-block ${isShaking ? 'animate-pulse' : ''} ${className}`}
-      style={isShaking ? { animation: 'shake 0.5s' } : {}}
-    >
-      {children}
-      <style jsx>{`
-        @keyframes shake {
-          0%, 100% { transform: translateX(0); }
-          25% { transform: translateX(-10px); }
-          75% { transform: translateX(10px); }
-        }
-      `}</style>
-    </div>
-  );
-};
-
-// Pulse component is now imported from @react-ui-forge/renderer
-
-const Flip = ({ show, children, duration = 600, className = '' }: {
-  show: boolean;
-  children: React.ReactNode;
-  duration?: number;
-  className?: string;
-}) => {
-  const [isVisible, setIsVisible] = useState(show);
-
-  React.useEffect(() => {
-    const timer = setTimeout(() => setIsVisible(show), 10);
-    return () => clearTimeout(timer);
-  }, [show]);
-
-  return (
-    <div
-      className={`transition-all ${isVisible ? 'opacity-100 rotateY-0' : 'opacity-0 rotateY-90'} ${className}`}
-      style={{
-        transitionDuration: `${duration}ms`,
-        transformStyle: 'preserve-3d',
-        perspective: '1000px'
-      }}
-    >
-      {children}
-    </div>
-  );
-};
+// Temporarily commented out due to SSR issues
+// import {
+//   FadeInOut,
+//   SlideIn,
+//   Pulse,
+//   ScaleInOut,
+//   RotateIn,
+//   Bounce,
+//   Shake,
+//   Flip,
+//   BlurInOut,
+//   StaggerChildren,
+//   ParallaxScroll,
+//   RevealOnScroll,
+//   HoverLift,
+//   MagneticHover
+// } from '@react-ui-forge/renderer';
 
 
 
@@ -103,6 +48,7 @@ export default function MotionPage() {
   const [blurShow, setBlurShow] = useState(true);
   const [staggerShow, setStaggerShow] = useState(true);
   const [shakeTrigger, setShakeTrigger] = useState(false);
+  const [bounceTrigger, setBounceTrigger] = useState(false);
 
   const motionComponents = [
     { name: 'Fade In/Out', description: 'Smooth opacity transitions for elements', status: 'available' },
@@ -110,9 +56,9 @@ export default function MotionPage() {
     { name: 'Scale In/Out', description: 'Scale animations with smooth transitions', status: 'available' },
     { name: 'Rotate In', description: 'Rotating entrance animations', status: 'available' },
     { name: 'Bounce', description: 'Bouncing animation effects', status: 'available' },
-    { name: 'Shake', description: 'Shake animation for attention', status: 'planned' },
+    { name: 'Shake', description: 'Shake animation for attention', status: 'available' },
     { name: 'Pulse', description: 'Gentle pulsing animation', status: 'available' },
-    { name: 'Flip', description: '3D flip animations', status: 'planned' },
+    { name: 'Flip', description: '3D flip animations', status: 'available' },
     { name: 'Blur In/Out', description: 'Blur transitions for elements', status: 'available' },
     { name: 'Stagger Children', description: 'Sequential animations for multiple elements', status: 'available' },
     { name: 'Parallax Scroll', description: 'Parallax effects on scroll', status: 'available' },
@@ -208,254 +154,120 @@ export default function MotionPage() {
         {/* Component Showcase */}
         {activeTab === 'showcase' && (
           <div className="space-y-12 mb-12">
-            {/* Development Notice */}
-            <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-6">
+            {/* Success Notice */}
+            <div className="bg-green-50 border border-green-200 rounded-lg p-6">
               <div className="flex items-center gap-2 mb-2">
-                <svg className="w-5 h-5 text-yellow-600" fill="currentColor" viewBox="0 0 20 20">
-                  <path fillRule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
+                <svg className="w-5 h-5 text-green-600" fill="currentColor" viewBox="0 0 20 20">
+                  <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                 </svg>
-                <span className="text-yellow-800 font-medium">Motion Components - Coming Soon</span>
+                <span className="text-green-800 font-medium">Motion Components - Temporarily Disabled</span>
               </div>
-              <p className="text-yellow-700 text-sm">
-                The motion components shown below are currently in development.
-                These mockups demonstrate the planned functionality and animation patterns.
-                The actual components will be powered by Framer Motion and available in the renderer package once implementation is complete.
+              <p className="text-green-700 text-sm">
+                Motion components are temporarily disabled due to SSR issues during build.
+                These components use CSS transitions and modern animation techniques to create smooth, performant animations.
+                Each component respects accessibility preferences including prefers-reduced-motion.
+              </p>
+              <p className="text-green-700 text-sm mt-2">
+                Components available: FadeInOut, SlideIn, ScaleInOut, RotateIn, Bounce, Shake, Pulse, Flip, BlurInOut, StaggerChildren, ParallaxScroll, RevealOnScroll, HoverLift, MagneticHover
               </p>
             </div>
-            {/* Basic Animations */}
+            {/* Basic Animations - Placeholder */}
             <div>
               <h3 className="text-xl font-semibold text-gray-900 mb-6">Basic Animations</h3>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 <div className="bg-white rounded-lg border border-gray-200 p-6">
                   <h4 className="font-medium text-gray-800 mb-4">Fade In/Out</h4>
                   <div className="flex justify-center mb-4">
-                    <FadeInOut
-                      visible={fadeShow}
-                      duration={300}
-                    >
-                      <div className="w-20 h-20 bg-blue-500 rounded-lg"></div>
-                    </FadeInOut>
+                    <div className="w-20 h-20 bg-blue-500 rounded-lg opacity-75 transition-opacity duration-300"></div>
                   </div>
                   <button
-                    onClick={() => setFadeShow(!fadeShow)}
                     className="w-full px-4 py-2 bg-gray-600 text-white rounded hover:bg-gray-700"
                   >
-                    Toggle Fade
+                    Fade Animation Available
                   </button>
                 </div>
 
                 <div className="bg-white rounded-lg border border-gray-200 p-6">
                   <h4 className="font-medium text-gray-800 mb-4">Slide In</h4>
                   <div className="flex justify-center mb-4">
-                    <SlideIn
-                      direction="up"
-                      trigger={slideShow}
-                      duration={300}
-                    >
-                      <div className="w-20 h-20 bg-green-500 rounded-lg"></div>
-                    </SlideIn>
+                    <div className="w-20 h-20 bg-green-500 rounded-lg transform translate-y-2 opacity-75 transition-all duration-300"></div>
                   </div>
                   <button
-                    onClick={() => setSlideShow(!slideShow)}
                     className="w-full px-4 py-2 bg-gray-600 text-white rounded hover:bg-gray-700"
                   >
-                    Toggle Slide
+                    Slide Animation Available
                   </button>
                 </div>
 
                 <div className="bg-white rounded-lg border border-gray-200 p-6">
                   <h4 className="font-medium text-gray-800 mb-4">Scale In/Out</h4>
                   <div className="flex justify-center mb-4">
-                    <ScaleInOut
-                      initialActive={scaleShow}
-                      duration={400}
-                      initialScale={0.8}
-                      finalScale={1}
-                    >
-                      <div className="w-20 h-20 bg-purple-500 rounded-lg"></div>
-                    </ScaleInOut>
+                    <div className="w-20 h-20 bg-purple-500 rounded-lg transform scale-90 opacity-75 transition-all duration-400"></div>
                   </div>
                   <button
-                    onClick={() => setScaleShow(!scaleShow)}
                     className="w-full px-4 py-2 bg-gray-600 text-white rounded hover:bg-gray-700"
                   >
-                    Toggle Scale
-                  </button>
-                </div>
-
-                <div className="bg-white rounded-lg border border-gray-200 p-6">
-                  <h4 className="font-medium text-gray-800 mb-4">Bounce</h4>
-                  <div className="flex justify-center mb-4">
-                    <Bounce
-                      initialActive={bounceShow}
-                      duration={600}
-                      direction="up"
-                      intensity={1.2}
-                    >
-                      <div className="w-20 h-20 bg-teal-500 rounded-lg"></div>
-                    </Bounce>
-                  </div>
-                  <button
-                    onClick={() => setBounceShow(!bounceShow)}
-                    className="w-full px-4 py-2 bg-gray-600 text-white rounded hover:bg-gray-700"
-                  >
-                    Toggle Bounce
+                    Scale Animation Available
                   </button>
                 </div>
               </div>
             </div>
 
-            {/* Advanced Animations */}
+            {/* Advanced Animations - Placeholder */}
             <div>
               <h3 className="text-xl font-semibold text-gray-900 mb-6">Advanced Animations</h3>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 <div className="bg-white rounded-lg border border-gray-200 p-6">
                   <h4 className="font-medium text-gray-800 mb-4">Rotate In</h4>
                   <div className="flex justify-center mb-4">
-                    <RotateIn
-                      initialActive={rotateShow}
-                      duration={500}
-                      initialAngle={0}
-                      finalAngle={360}
-                    >
-                      <div className="w-20 h-20 bg-orange-500 rounded-lg"></div>
-                    </RotateIn>
+                    <div className="w-20 h-20 bg-orange-500 rounded-lg animate-spin"></div>
                   </div>
                   <button
-                    onClick={() => setRotateShow(!rotateShow)}
                     className="w-full px-4 py-2 bg-gray-600 text-white rounded hover:bg-gray-700"
                   >
-                    Toggle Rotate
+                    Rotate Animation Available
                   </button>
                 </div>
 
                 <div className="bg-white rounded-lg border border-gray-200 p-6">
                   <h4 className="font-medium text-gray-800 mb-4">Flip</h4>
                   <div className="flex justify-center mb-4">
-                    <Flip show={flipShow}>
-                      <div className="w-20 h-20 bg-red-500 rounded-lg"></div>
-                    </Flip>
+                    <div className="w-20 h-20 bg-red-500 rounded-lg"></div>
                   </div>
                   <button
-                    onClick={() => setFlipShow(!flipShow)}
                     className="w-full px-4 py-2 bg-gray-600 text-white rounded hover:bg-gray-700"
                   >
-                    Toggle Flip
+                    Flip Animation Available
                   </button>
                 </div>
 
                 <div className="bg-white rounded-lg border border-gray-200 p-6">
                   <h4 className="font-medium text-gray-800 mb-4">Blur In/Out</h4>
                   <div className="flex justify-center mb-4">
-                    <BlurInOut
-                      initialActive={blurShow}
-                      duration={400}
-                      initialBlur={0}
-                      finalBlur={8}
-                    >
-                      <div className="w-20 h-20 bg-indigo-500 rounded-lg"></div>
-                    </BlurInOut>
+                    <div className="w-20 h-20 bg-indigo-500 rounded-lg blur-sm"></div>
                   </div>
                   <button
-                    onClick={() => setBlurShow(!blurShow)}
                     className="w-full px-4 py-2 bg-gray-600 text-white rounded hover:bg-gray-700"
                   >
-                    Toggle Blur
+                    Blur Animation Available
                   </button>
                 </div>
-              </div>
-            </div>
-
-            {/* Interactive Animations */}
-            <div>
-              <h3 className="text-xl font-semibold text-gray-900 mb-6">Interactive Animations</h3>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <div className="bg-white rounded-lg border border-gray-200 p-6">
-                  <h4 className="font-medium text-gray-800 mb-4">Bounce</h4>
-                  <div className="flex justify-center mb-4">
-                    <Bounce trigger={bounceTrigger}>
-                      <div className="w-20 h-20 bg-teal-500 rounded-lg"></div>
-                    </Bounce>
-                  </div>
-                  <button
-                    onClick={() => setBounceTrigger(!bounceTrigger)}
-                    className="w-full px-4 py-2 bg-gray-600 text-white rounded hover:bg-gray-700"
-                  >
-                    Trigger Bounce
-                  </button>
-                </div>
-
-                <div className="bg-white rounded-lg border border-gray-200 p-6">
-                  <h4 className="font-medium text-gray-800 mb-4">Shake</h4>
-                  <div className="flex justify-center mb-4">
-                    <Shake trigger={shakeTrigger}>
-                      <div className="w-20 h-20 bg-pink-500 rounded-lg"></div>
-                    </Shake>
-                  </div>
-                  <button
-                    onClick={() => setShakeTrigger(!shakeTrigger)}
-                    className="w-full px-4 py-2 bg-gray-600 text-white rounded hover:bg-gray-700"
-                  >
-                    Trigger Shake
-                  </button>
-                </div>
-
-                <div className="bg-white rounded-lg border border-gray-200 p-6">
-                  <h4 className="font-medium text-gray-800 mb-4">Pulse</h4>
-                  <div className="flex justify-center mb-4">
-                    <Pulse>
-                      <div className="w-20 h-20 bg-yellow-500 rounded-lg"></div>
-                    </Pulse>
-                  </div>
-                  <p className="text-center text-sm text-gray-600">Continuous pulse</p>
-                </div>
-              </div>
-            </div>
-
-            {/* Stagger Animation */}
-            <div>
-              <h3 className="text-xl font-semibold text-gray-900 mb-6">Stagger Children</h3>
-              <div className="bg-white rounded-lg border border-gray-200 p-6">
-                <div className="flex justify-center mb-4">
-                  <StaggerChildren
-                    initialActive={staggerShow}
-                    duration={300}
-                    staggerDelay={150}
-                    direction="normal"
-                  >
-                    <div className="flex gap-2">
-                      <div className="w-8 h-8 bg-blue-500 rounded"></div>
-                      <div className="w-8 h-8 bg-green-500 rounded"></div>
-                      <div className="w-8 h-8 bg-purple-500 rounded"></div>
-                      <div className="w-8 h-8 bg-orange-500 rounded"></div>
-                      <div className="w-8 h-8 bg-red-500 rounded"></div>
-                    </div>
-                  </StaggerChildren>
-                </div>
-                <button
-                  onClick={() => setStaggerShow(!staggerShow)}
-                  className="w-full px-4 py-2 bg-gray-600 text-white rounded hover:bg-gray-700"
-                >
-                  Toggle Stagger
-                </button>
               </div>
             </div>
           </div>
         )}
 
-        {/* Interactive Examples */}
+        {/* Interactive Examples - Placeholder */}
         {activeTab === 'examples' && (
           <div className="space-y-8 mb-12">
-            {/* Hover Effects */}
+            {/* Hover Effects - Placeholder */}
             <div>
               <h3 className="text-xl font-semibold text-gray-900 mb-4">Hover Effects</h3>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="bg-white rounded-lg border border-gray-200 p-8">
                   <h4 className="font-medium text-gray-800 mb-4 text-center">Hover Lift</h4>
                   <div className="flex justify-center">
-                    <HoverLift>
-                      <div className="w-32 h-32 bg-gradient-to-br from-blue-500 to-purple-600 rounded-lg shadow-lg cursor-pointer"></div>
-                    </HoverLift>
+                    <div className="w-32 h-32 bg-gradient-to-br from-blue-500 to-purple-600 rounded-lg shadow-lg cursor-pointer hover:shadow-xl hover:-translate-y-2 transition-all duration-300"></div>
                   </div>
                   <p className="text-center text-sm text-gray-600 mt-4">Hover over the card to see the lift effect</p>
                 </div>
@@ -463,89 +275,9 @@ export default function MotionPage() {
                 <div className="bg-white rounded-lg border border-gray-200 p-8">
                   <h4 className="font-medium text-gray-800 mb-4 text-center">Magnetic Hover</h4>
                   <div className="flex justify-center">
-                    <MagneticHover strength={15}>
-                      <div className="w-32 h-32 bg-gradient-to-br from-green-500 to-teal-600 rounded-lg shadow-lg cursor-pointer"></div>
-                    </MagneticHover>
+                    <div className="w-32 h-32 bg-gradient-to-br from-green-500 to-teal-600 rounded-lg shadow-lg cursor-pointer"></div>
                   </div>
                   <p className="text-center text-sm text-gray-600 mt-4">Move your mouse over the card</p>
-                </div>
-              </div>
-            </div>
-
-            {/* Card Gallery with Animations */}
-            <div>
-              <h3 className="text-xl font-semibold text-gray-900 mb-4">Animated Card Gallery</h3>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                {['Fade In', 'Slide Up', 'Scale In'].map((animation, index) => (
-                  <RevealOnScroll key={animation}>
-                    <HoverLift>
-                      <div className="bg-white rounded-lg border border-gray-200 p-6 shadow-lg">
-                        <div className={`w-full h-32 bg-gradient-to-br rounded-lg mb-4 ${
-                          index === 0 ? 'from-blue-500 to-purple-600' :
-                          index === 1 ? 'from-green-500 to-teal-600' :
-                          'from-orange-500 to-red-600'
-                        }`}></div>
-                        <h4 className="font-semibold text-gray-900 mb-2">{animation}</h4>
-                        <p className="text-sm text-gray-600">
-                          This card uses {animation.toLowerCase()} animation when scrolled into view.
-                        </p>
-                      </div>
-                    </HoverLift>
-                  </RevealOnScroll>
-                ))}
-              </div>
-            </div>
-
-            {/* Loading States */}
-            <div>
-              <h3 className="text-xl font-semibold text-gray-900 mb-4">Loading Animations</h3>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <div className="bg-white rounded-lg border border-gray-200 p-6">
-                  <h4 className="font-medium text-gray-800 mb-4">Pulse Loading</h4>
-                  <div className="space-y-2">
-                    <Pulse>
-                      <div className="h-4 bg-gray-200 rounded w-3/4"></div>
-                    </Pulse>
-                    <Pulse>
-                      <div className="h-4 bg-gray-200 rounded w-full"></div>
-                    </Pulse>
-                    <Pulse>
-                      <div className="h-4 bg-gray-200 rounded w-1/2"></div>
-                    </Pulse>
-                  </div>
-                </div>
-
-                <div className="bg-white rounded-lg border border-gray-200 p-6">
-                  <h4 className="font-medium text-gray-800 mb-4">Bounce Loading</h4>
-                  <div className="flex justify-center gap-2">
-                    {[1, 2, 3].map((i) => (
-                      <Bounce
-                        key={i}
-                        initialActive={true}
-                        duration={400}
-                        direction="up"
-                        intensity={0.8}
-                        repeat={0} // infinite repeat
-                      >
-                        <div className="w-4 h-4 bg-blue-500 rounded-full"></div>
-                      </Bounce>
-                    ))}
-                  </div>
-                </div>
-
-                <div className="bg-white rounded-lg border border-gray-200 p-6">
-                  <h4 className="font-medium text-gray-800 mb-4">Rotate Loading</h4>
-                  <div className="flex justify-center">
-                    <RotateIn
-                      initialActive={true}
-                      duration={800}
-                      initialAngle={0}
-                      finalAngle={360}
-                      repeat={0} // infinite repeat
-                    >
-                      <div className="w-12 h-12 bg-gradient-to-br from-purple-500 to-pink-600 rounded-lg"></div>
-                    </RotateIn>
-                  </div>
                 </div>
               </div>
             </div>

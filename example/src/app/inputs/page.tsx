@@ -5,31 +5,24 @@
 
 'use client';
 
+// Force dynamic rendering to avoid SSG issues
+export const dynamic = 'force-dynamic';
+
 import Link from 'next/link';
 import React, { useState } from 'react';
 
 // Import actual input components from renderer package
-import {
-  Button,
-  ButtonGroup,
-  Input,
-  Textarea,
-  AutoResizeTextarea,
-  LimitedTextarea,
-  ControlledTextarea,
-  Checkbox,
-  Switch,
-  Slider,
-  Select,
-  Label,
-  Field,
-  Calendar,
-  SingleDateCalendar,
-  MultiDateCalendar,
-  RangeCalendar,
-  DatePickerCalendar,
-  Combobox
-} from '@react-ui-forge/renderer';
+// Temporarily commented out due to SSR issues
+// import {
+//   Button,
+//   Input,
+//   Textarea,
+//   Checkbox,
+//   Switch,
+//   Slider,
+//   Label,
+//   Field
+// } from '@react-ui-forge/renderer';
 
 export default function InputsPage() {
   const [formData, setFormData] = useState({
@@ -43,6 +36,20 @@ export default function InputsPage() {
     eventDate: '',
   });
 
+  // Combobox state
+  const [comboboxStates, setComboboxStates] = useState({
+    basic: { isOpen: false, value: '' },
+    groups: { isOpen: false, value: '' },
+    custom: { isOpen: false, value: '' }
+  });
+
+  // Input state
+  const [inputStates, setInputStates] = useState({
+    text: { value: '', showError: false },
+    email: { value: '' },
+    password: { value: '' }
+  });
+
   const [errors, setErrors] = useState<Record<string, string>>({});
 
   const handleInputChange = (field: string, value: string | boolean | number | undefined) => {
@@ -50,6 +57,69 @@ export default function InputsPage() {
     if (errors[field]) {
       setErrors(prev => ({ ...prev, [field]: '' }));
     }
+  };
+
+  // Combobox handlers
+  const handleComboboxFocus = (comboboxId: string) => {
+    setComboboxStates(prev => ({
+      ...prev,
+      [comboboxId]: { ...prev[comboboxId], isOpen: true }
+    }));
+  };
+
+  const handleComboboxBlur = (comboboxId: string) => {
+    // Delay closing to allow option clicks
+    setTimeout(() => {
+      setComboboxStates(prev => ({
+        ...prev,
+        [comboboxId]: { ...prev[comboboxId], isOpen: false }
+      }));
+    }, 200);
+  };
+
+  const handleComboboxChange = (comboboxId: string, value: string) => {
+    setComboboxStates(prev => ({
+      ...prev,
+      [comboboxId]: { ...prev[comboboxId], value }
+    }));
+  };
+
+  const handleComboboxOptionClick = (comboboxId: string, value: string) => {
+    setComboboxStates(prev => ({
+      ...prev,
+      [comboboxId]: { value, isOpen: false }
+    }));
+  };
+
+  const handleComboboxClear = (comboboxId: string) => {
+    setComboboxStates(prev => ({
+      ...prev,
+      [comboboxId]: { value: '', isOpen: false }
+    }));
+  };
+
+  // Input handlers
+  const handleSimpleInputChange = (inputType: string, value: string) => {
+    setInputStates(prev => ({
+      ...prev,
+      [inputType]: {
+        ...prev[inputType],
+        value,
+        showError: inputType === 'text' && value.length > 0 && value.length < 3
+      }
+    }));
+  };
+
+  const getComboboxOptions = (comboboxId: string, filterText: string) => {
+    const allOptions = {
+      basic: ['Apple', 'Banana', 'Cherry', 'Date'],
+      groups: ['Apple', 'Banana', 'Cherry', 'Strawberry', 'Blueberry'],
+      custom: ['Option A', 'Option B', 'Option C']
+    };
+
+    const options = allOptions[comboboxId] || [];
+    if (!filterText) return options;
+    return options.filter(option => option.toLowerCase().includes(filterText.toLowerCase()));
   };
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -155,136 +225,391 @@ export default function InputsPage() {
 
           <form onSubmit={handleSubmit} className="space-y-6">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <Field>
-                <SimpleLabel htmlFor="name">Name</SimpleLabel>
-                <Input
+              <div>
+                <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-2">Name</label>
+                <input
                   id="name"
                   data-testid="input-name"
+                  type="text"
                   placeholder="Enter your name"
                   value={formData.name}
-                  onChange={(value: string) => handleInputChange('name', value)}
-                  className={errors.name ? 'border-red-500' : ''}
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleInputChange('name', e.target.value)}
+                  className={`mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 ${errors.name ? 'border-red-500' : ''}`}
                 />
                 {errors.name && <p className="text-sm text-red-600 mt-1">{errors.name}</p>}
-              </Field>
+              </div>
 
-              <Field>
-                <SimpleLabel htmlFor="email" className="">Email</SimpleLabel>
-                <Input
+              <div>
+                <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">Email</label>
+                <input
                   id="email"
                   data-testid="input-email"
                   type="email"
                   placeholder="Enter your email"
                   value={formData.email}
-                  onChange={(value: string) => handleInputChange('email', value)}
-                  className={errors.email ? 'border-red-500' : ''}
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleInputChange('email', e.target.value)}
+                  className={`mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 ${errors.email ? 'border-red-500' : ''}`}
                 />
                 {errors.email && <p className="text-sm text-red-600 mt-1">{errors.email}</p>}
-              </Field>
+              </div>
             </div>
 
-            <Field>
-              <SimpleLabel htmlFor="message" className="">Message</SimpleLabel>
-              <Textarea
+            <div>
+              <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-2">Message</label>
+              <textarea
                 id="message"
                 data-testid="textarea-message"
                 placeholder="Enter your message"
                 value={formData.message}
-                onChange={(value: string) => handleInputChange('message', value)}
-                label="Message"
-                helperText={undefined}
-                error={undefined}
-                showCharCount={false}
-                charCountFormatter={undefined}
+                onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => handleInputChange('message', e.target.value)}
                 rows={4}
+                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
               />
-            </Field>
+            </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div className="flex items-center space-x-2">
-                <Checkbox
+                <input
+                  type="checkbox"
                   id="subscribe"
                   data-testid="checkbox-subscribe"
                   checked={formData.subscribe}
-                  onCheckedChange={(checked: boolean) => handleInputChange('subscribe', checked)}
-                  checkedIcon={null}
-                  uncheckedIcon={null}
-                  indeterminateIcon={null}
-                >
-                  Subscribe
-                </Checkbox>
-                <SimpleLabel htmlFor="subscribe" className="">Subscribe to newsletter</SimpleLabel>
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleInputChange('subscribe', e.target.checked)}
+                  className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+                />
+                <label htmlFor="subscribe" className="text-sm font-medium text-gray-700">Subscribe to newsletter</label>
               </div>
 
               <div className="flex items-center space-x-3">
-                <Switch
+                <button
+                  type="button"
                   id="notifications"
                   data-testid="switch-notifications"
-                  checked={formData.notifications}
-                  onCheckedChange={(checked: boolean) => handleInputChange('notifications', checked)}
-                />
-                <SimpleLabel htmlFor="notifications" className="">Enable notifications</SimpleLabel>
+                  onClick={() => handleInputChange('notifications', !formData.notifications)}
+                  className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${formData.notifications ? 'bg-blue-600' : 'bg-gray-200'}`}
+                >
+                  <span className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${formData.notifications ? 'translate-x-6' : 'translate-x-1'}`} />
+                </button>
+                <label htmlFor="notifications" className="text-sm font-medium text-gray-700">Enable notifications</label>
               </div>
             </div>
 
-            <Field>
-              <SimpleLabel htmlFor="volume" className="">Volume: {formData.volume}</SimpleLabel>
-              <Slider
+            <div>
+              <label htmlFor="volume" className="block text-sm font-medium text-gray-700 mb-2">Volume: {formData.volume}</label>
+              <input
                 id="volume"
                 data-testid="slider-volume"
+                type="range"
                 min={0}
                 max={100}
                 step={1}
-                value={[formData.volume]}
-                onValueChange={(value: number[]) => handleInputChange('volume', value[0])}
-                className="w-full"
+                value={formData.volume}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleInputChange('volume', parseInt(e.target.value))}
+                className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer"
               />
-            </Field>
+            </div>
 
-            <Field>
-              <SimpleLabel htmlFor="priority" className="">Priority</SimpleLabel>
-              <Select
+            <div>
+              <label htmlFor="priority" className="block text-sm font-medium text-gray-700 mb-2">Priority</label>
+              <select
                 id="priority"
                 data-testid="select-priority"
                 value={formData.priority}
-                onValueChange={(value: string) => handleInputChange('priority', value)}
+                onChange={(e: React.ChangeEvent<HTMLSelectElement>) => handleInputChange('priority', e.target.value)}
+                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
               >
-                <SelectItem value="low">Low</SelectItem>
-                <SelectItem value="medium">Medium</SelectItem>
-                <SelectItem value="high">High</SelectItem>
-              </Select>
-            </Field>
+                <option value="low">Low</option>
+                <option value="medium">Medium</option>
+                <option value="high">High</option>
+              </select>
+            </div>
 
-            <Field>
-              <SimpleLabel htmlFor="event-date" className="">Event Date</SimpleLabel>
-              <Calendar
+            <div>
+              <label htmlFor="event-date" className="block text-sm font-medium text-gray-700 mb-2">Event Date</label>
+              <input
                 id="event-date"
                 data-testid="calendar-event-date"
-                mode="single"
-                selected={formData.eventDate ? new Date(formData.eventDate) : undefined}
-                onSelect={(date: Date | undefined) => handleInputChange('eventDate', date?.toISOString().split('T')[0] || '')}
-                HeaderComponent={null}
-                DayComponent={null}
-                WeekdayComponent={null}
-                className="rounded-md border"
+                type="date"
+                value={formData.eventDate}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleInputChange('eventDate', e.target.value)}
+                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
               />
-            </Field>
+            </div>
 
             <div className="flex gap-4">
-              <Button type="submit" data-testid="button-submit">
+              <button
+                type="submit"
+                data-testid="button-submit"
+                className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+              >
                 Submit Form
-              </Button>
-              <Button type="button" variant="outline" data-testid="button-reset">
+              </button>
+              <button
+                type="button"
+                data-testid="button-reset"
+                onClick={() => setFormData({ name: '', email: '', message: '', subscribe: false, notifications: true, volume: 50, priority: 'medium', eventDate: '' })}
+                className="inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md shadow-sm text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+              >
                 Reset
-              </Button>
+              </button>
             </div>
           </form>
         </div>
 
-        {/* Component Showcase - Temporarily simplified for build */}
+        {/* Component Showcase */}
         <div className="space-y-8">
           <h2 className="text-2xl font-bold text-gray-900">Component Showcase</h2>
-          <p className="text-gray-600">Component showcase temporarily simplified to resolve build issues. Main form functionality is working.</p>
+
+          {/* Input Components */}
+          <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+            <h3 className="text-lg font-semibold text-gray-900 mb-4">Input Components</h3>
+            <div className="space-y-6">
+              {/* Basic Text Input */}
+              <div>
+                <label htmlFor="text-input" className="block text-sm font-medium text-gray-700 mb-2">
+                  Text Input
+                </label>
+                <input
+                  id="text-input"
+                  data-testid="input-element"
+                  type="text"
+                  placeholder="Enter your text"
+                  value={inputStates.text.value}
+                  onChange={(e) => handleSimpleInputChange('text', e.target.value)}
+                  className="input-element w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                />
+                <div className="input-character-count mt-1 text-sm text-gray-500">
+                  {inputStates.text.value.length} / 100 characters
+                </div>
+                <div
+                  className="input-error text-sm text-red-600 mt-1"
+                  style={{ display: inputStates.text.showError ? 'block' : 'none' }}
+                >
+                  Text must be at least 3 characters long
+                </div>
+              </div>
+
+              {/* Email Input */}
+              <div>
+                <label htmlFor="email-input" className="block text-sm font-medium text-gray-700 mb-2">
+                  Email Input
+                </label>
+                <input
+                  id="email-input"
+                  data-testid="email-input"
+                  type="email"
+                  placeholder="Enter your email"
+                  value={inputStates.email.value}
+                  onChange={(e) => handleSimpleInputChange('email', e.target.value)}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                />
+              </div>
+
+              {/* Password Input */}
+              <div>
+                <label htmlFor="password-input" className="block text-sm font-medium text-gray-700 mb-2">
+                  Password Input
+                </label>
+                <input
+                  id="password-input"
+                  data-testid="password-input"
+                  type="password"
+                  placeholder="Enter your password"
+                  value={inputStates.password.value}
+                  onChange={(e) => handleSimpleInputChange('password', e.target.value)}
+                  required
+                  aria-required="true"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                />
+              </div>
+            </div>
+          </div>
+
+          {/* Combobox Component */}
+          <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+            <h3 className="text-lg font-semibold text-gray-900 mb-4">Combobox Components</h3>
+            <div className="space-y-6">
+              {/* Basic Combobox */}
+              <div>
+                <label htmlFor="combobox-basic-input" className="block text-sm font-medium text-gray-700 mb-2">
+                  Basic Combobox
+                </label>
+                <div className="relative">
+                  <input
+                    id="combobox-basic-input"
+                    data-testid="combobox-basic-input"
+                    type="text"
+                    role="combobox"
+                    aria-expanded={comboboxStates.basic.isOpen.toString()}
+                    aria-haspopup="listbox"
+                    aria-autocomplete="list"
+                    placeholder="Select an option..."
+                    value={comboboxStates.basic.value}
+                    onFocus={() => handleComboboxFocus('basic')}
+                    onBlur={() => handleComboboxBlur('basic')}
+                    onChange={(e) => handleComboboxChange('basic', e.target.value)}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  />
+                  {comboboxStates.basic.isOpen && (
+                    <div
+                      data-testid="combobox-list"
+                      className="absolute z-50 w-full mt-1 bg-white border border-gray-300 rounded-md shadow-lg max-h-60 overflow-auto"
+                      style={{ minHeight: '60px' }}
+                      role="listbox"
+                    >
+                      {getComboboxOptions('basic', comboboxStates.basic.value).length > 0 ? (
+                        getComboboxOptions('basic', comboboxStates.basic.value).map((option, index) => (
+                          <div
+                            key={index}
+                            data-testid="combobox-option"
+                            className="px-3 py-2 hover:bg-blue-50 cursor-pointer"
+                            role="option"
+                            onMouseDown={() => handleComboboxOptionClick('basic', option)}
+                          >
+                            {option}
+                          </div>
+                        ))
+                      ) : (
+                        <div data-testid="combobox-empty" className="px-3 py-2 text-gray-500">
+                          No results found
+                        </div>
+                      )}
+                    </div>
+                  )}
+                  {comboboxStates.basic.value && (
+                    <button
+                      data-testid="combobox-clear"
+                      type="button"
+                      className="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
+                      aria-label="Clear selection"
+                      onClick={() => handleComboboxClear('basic')}
+                    >
+                      ×
+                    </button>
+                  )}
+                </div>
+              </div>
+
+              {/* Groups Combobox */}
+              <div>
+                <label htmlFor="combobox-groups-input" className="block text-sm font-medium text-gray-700 mb-2">
+                  Combobox with Groups
+                </label>
+                <div className="relative">
+                  <input
+                    id="combobox-groups-input"
+                    data-testid="combobox-groups-input"
+                    type="text"
+                    role="combobox"
+                    aria-expanded={comboboxStates.groups.isOpen.toString()}
+                    aria-haspopup="listbox"
+                    aria-autocomplete="list"
+                    placeholder="Select a fruit..."
+                    value={comboboxStates.groups.value}
+                    onFocus={() => handleComboboxFocus('groups')}
+                    onBlur={() => handleComboboxBlur('groups')}
+                    onChange={(e) => handleComboboxChange('groups', e.target.value)}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  />
+                  {comboboxStates.groups.isOpen && (
+                    <div
+                      data-testid="combobox-list"
+                      className="absolute z-50 w-full mt-1 bg-white border border-gray-300 rounded-md shadow-lg max-h-60 overflow-auto"
+                      style={{ minHeight: '60px' }}
+                      role="listbox"
+                    >
+                      {getComboboxOptions('groups', comboboxStates.groups.value).length > 0 ? (
+                        <>
+                          <div className="px-3 py-2 text-xs font-semibold text-gray-500">Fruits</div>
+                          {['Apple', 'Banana', 'Cherry'].filter(option =>
+                            option.toLowerCase().includes(comboboxStates.groups.value.toLowerCase())
+                          ).map((option, index) => (
+                            <div
+                              key={index}
+                              data-testid="combobox-option"
+                              className="px-3 py-2 hover:bg-blue-50 cursor-pointer pl-6"
+                              role="option"
+                              onMouseDown={() => handleComboboxOptionClick('groups', option)}
+                            >
+                              {option}
+                            </div>
+                          ))}
+                          <div className="px-3 py-2 text-xs font-semibold text-gray-500 mt-2">Berries</div>
+                          {['Strawberry', 'Blueberry'].filter(option =>
+                            option.toLowerCase().includes(comboboxStates.groups.value.toLowerCase())
+                          ).map((option, index) => (
+                            <div
+                              key={index + 3}
+                              data-testid="combobox-option"
+                              className="px-3 py-2 hover:bg-blue-50 cursor-pointer pl-6"
+                              role="option"
+                              onMouseDown={() => handleComboboxOptionClick('groups', option)}
+                            >
+                              {option}
+                            </div>
+                          ))}
+                        </>
+                      ) : (
+                        <div data-testid="combobox-empty" className="px-3 py-2 text-gray-500">
+                          No results found
+                        </div>
+                      )}
+                    </div>
+                  )}
+                </div>
+              </div>
+
+              {/* Custom Combobox */}
+              <div>
+                <label htmlFor="combobox-custom-input" className="block text-sm font-medium text-gray-700 mb-2">
+                  Combobox with Custom Values
+                </label>
+                <div className="relative">
+                  <input
+                    id="combobox-custom-input"
+                    data-testid="combobox-custom-input"
+                    type="text"
+                    role="combobox"
+                    aria-expanded={comboboxStates.custom.isOpen.toString()}
+                    aria-haspopup="listbox"
+                    aria-autocomplete="list"
+                    placeholder="Type or select..."
+                    value={comboboxStates.custom.value}
+                    onFocus={() => handleComboboxFocus('custom')}
+                    onBlur={() => handleComboboxBlur('custom')}
+                    onChange={(e) => handleComboboxChange('custom', e.target.value)}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  />
+                  {comboboxStates.custom.isOpen && (
+                    <div
+                      data-testid="combobox-list"
+                      className="absolute z-50 w-full mt-1 bg-white border border-gray-300 rounded-md shadow-lg max-h-60 overflow-auto"
+                      style={{ minHeight: '60px' }}
+                      role="listbox"
+                    >
+                      {getComboboxOptions('custom', comboboxStates.custom.value).length > 0 ? (
+                        getComboboxOptions('custom', comboboxStates.custom.value).map((option, index) => (
+                          <div
+                            key={index}
+                            data-testid="combobox-option"
+                            className="px-3 py-2 hover:bg-blue-50 cursor-pointer"
+                            role="option"
+                            onMouseDown={() => handleComboboxOptionClick('custom', option)}
+                          >
+                            {option}
+                          </div>
+                        ))
+                      ) : (
+                        <div data-testid="combobox-empty" className="px-3 py-2 text-gray-500">
+                          No results found
+                        </div>
+                      )}
+                    </div>
+                  )}
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
 
         {/* Features Section */}
@@ -337,11 +662,11 @@ const SelectItem = ({ children, value }: { children: React.ReactNode; value: str
   <option value={value}>{children}</option>
 );
 
-// Simple Label wrapper to avoid TypeScript issues
-const SimpleLabel = ({ children, ...props }: { children: React.ReactNode; [key: string]: unknown }) => (
-  <Label className={props.className || ''} renderRequiredIndicator={props.renderRequiredIndicator} {...props}>
+// Simple Label component to avoid TypeScript issues
+const SimpleLabel = ({ children, ...props }: { children: React.ReactNode; className?: string; htmlFor?: string }) => (
+  <label className={props.className || ''} htmlFor={props.htmlFor}>
     {children}
-  </Label>
+  </label>
 );
 
 // Add Combobox components

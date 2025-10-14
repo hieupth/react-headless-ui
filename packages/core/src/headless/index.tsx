@@ -233,7 +233,7 @@ export type { UseItemProps, UseItemState, UseItemActions, UseItemReturns } from 
 export { useItem } from './useItem';
 
 export type { UseKbdProps, UseKbdState, UseKbdActions, UseKbdReturns } from './useKbd';
-export { useKbd, formatKeyDisplay } from './useKbd';
+export { useKbd, formatKeyDisplay, parseKeyShortcut } from './useKbd';
 
 export type { UseListProps, UseListState, UseListActions, UseListReturns, ListItem } from './useList';
 export { useList } from './useList';

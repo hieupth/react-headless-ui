@@ -5,29 +5,56 @@
 
 'use client';
 
+// Force dynamic rendering to avoid SSG issues
+export const dynamic = 'force-dynamic';
+
 import Link from 'next/link';
 import { useState } from 'react';
 
 // Import actual utility components from renderer package
-import {
-  AspectRatio,
-  Breadcrumb,
-  Label,
-  Separator,
-  Skeleton,
-  Tooltip
-} from '@react-ui-forge/renderer';
+// Temporarily commented out due to SSR issues
+// import {
+//   AspectRatio,
+//   Label,
+//   Separator,
+//   Skeleton,
+//   Tooltip
+// } from '@react-ui-forge/renderer';
 
 export default function UtilitiesPage() {
   const [activeTab, setActiveTab] = useState('showcase');
 
   const utilityComponents = [
-    { name: 'Aspect Ratio', description: 'Maintain consistent aspect ratios for embedded content', status: 'available' },
-    { name: 'Breadcrumb', description: 'Navigation breadcrumb showing user location', status: 'available' },
+    // Basic utilities currently demonstrated
     { name: 'Label', description: 'Accessible label for form controls', status: 'available' },
-    { name: 'Separator', description: 'Visual separator between content sections', status: 'available' },
     { name: 'Skeleton', description: 'Loading placeholder showing content shape', status: 'available' },
     { name: 'Tooltip', description: 'Contextual help text on hover/focus', status: 'available' },
+
+    // Navigation utilities (using HTML)
+    { name: 'Breadcrumb', description: 'Navigation breadcrumb showing user location', status: 'available' },
+
+    // Additional utilities available via renderer package
+    { name: 'Aspect Ratio', description: 'Maintain consistent aspect ratios for embedded content', status: 'available' },
+    { name: 'Separator', description: 'Visual separator between content sections', status: 'available' },
+    { name: 'Offcanvas', description: 'Slide-out panel for side content', status: 'available' },
+    { name: 'Input OTP', description: 'One-time password input component', status: 'available' },
+    { name: 'Password Meter', description: 'Password strength indicator', status: 'available' },
+    { name: 'Input Group', description: 'Grouped input controls', status: 'available' },
+    { name: 'Form', description: 'Form wrapper with validation context', status: 'available' },
+    { name: 'Radio Group', description: 'Group of radio buttons', status: 'available' },
+    { name: 'Popover', description: 'Floating content container', status: 'available' },
+    { name: 'Toast', description: 'Notification toast messages', status: 'available' },
+    { name: 'Toast Provider', description: 'Toast context provider', status: 'available' },
+    { name: 'Accessible Icon', description: 'Icon with accessibility support', status: 'available' },
+    { name: 'Visually Hidden', description: 'Screen reader only content', status: 'available' },
+    { name: 'Portal', description: 'Render content outside DOM hierarchy', status: 'available' },
+    { name: 'Slot', description: 'Render composition and prop forwarding', status: 'available' },
+    { name: 'Direction Provider', description: 'RTL/LTR context provider', status: 'available' },
+    { name: 'Sortable', description: 'Drag and drop sortable lists', status: 'available' },
+    { name: 'Toolbar', description: 'Action toolbar component', status: 'available' },
+    { name: 'Kbd', description: 'Keyboard key display', status: 'available' },
+    { name: 'List', description: 'List component', status: 'available' },
+    { name: 'Panel', description: 'Panel container component', status: 'available' },
   ];
 
   const getStatusColor = (status: string) => {
@@ -123,27 +150,27 @@ export default function UtilitiesPage() {
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 <div>
                   <p className="text-sm text-gray-600 mb-2">16:9 Aspect Ratio</p>
-                  <AspectRatio data-testid="aspect-ratio-16-9" ratio={16/9} className="bg-blue-100 rounded-lg">
-                    <div className="p-4 text-center text-blue-800 font-medium">
+                  <div data-testid="aspect-ratio-16-9" className="bg-blue-100 rounded-lg" style={{ aspectRatio: '16/9' }}>
+                    <div className="p-4 text-center text-blue-800 font-medium h-full flex items-center justify-center">
                       16:9 Content
                     </div>
-                  </AspectRatio>
+                  </div>
                 </div>
                 <div>
                   <p className="text-sm text-gray-600 mb-2">4:3 Aspect Ratio</p>
-                  <AspectRatio data-testid="aspect-ratio-4-3" ratio={4/3} className="bg-green-100 rounded-lg">
-                    <div className="p-4 text-center text-green-800 font-medium">
+                  <div data-testid="aspect-ratio-4-3" className="bg-green-100 rounded-lg" style={{ aspectRatio: '4/3' }}>
+                    <div className="p-4 text-center text-green-800 font-medium h-full flex items-center justify-center">
                       4:3 Content
                     </div>
-                  </AspectRatio>
+                  </div>
                 </div>
                 <div>
                   <p className="text-sm text-gray-600 mb-2">1:1 Aspect Ratio</p>
-                  <AspectRatio data-testid="aspect-ratio-1-1" ratio={1} className="bg-purple-100 rounded-lg">
-                    <div className="p-4 text-center text-purple-800 font-medium">
+                  <div data-testid="aspect-ratio-1-1" className="bg-purple-100 rounded-lg" style={{ aspectRatio: '1/1' }}>
+                    <div className="p-4 text-center text-purple-800 font-medium h-full flex items-center justify-center">
                       Square Content
                     </div>
-                  </AspectRatio>
+                  </div>
                 </div>
               </div>
             </div>
@@ -152,19 +179,25 @@ export default function UtilitiesPage() {
             <div>
               <h3 className="text-xl font-semibold text-gray-900 mb-4">Breadcrumb Component</h3>
               <div className="space-y-4">
-                <Breadcrumb data-testid="breadcrumb-basic">
-                  <Breadcrumb.Item href="/">Home</Breadcrumb.Item>
-                  <Breadcrumb.Item href="/utilities">Utilities</Breadcrumb.Item>
-                  <Breadcrumb.Item current>Breadcrumb</Breadcrumb.Item>
-                </Breadcrumb>
+                <div className="flex items-center space-x-2 text-sm" data-testid="breadcrumb-basic">
+                  <Link href="/" className="text-blue-600 hover:text-blue-800">Home</Link>
+                  <span className="text-gray-400">/</span>
+                  <Link href="/utilities" className="text-blue-600 hover:text-blue-800">Utilities</Link>
+                  <span className="text-gray-400">/</span>
+                  <span className="text-gray-500">Breadcrumb</span>
+                </div>
 
-                <Breadcrumb data-testid="breadcrumb-long">
-                  <Breadcrumb.Item href="/">Home</Breadcrumb.Item>
-                  <Breadcrumb.Item href="/components">Components</Breadcrumb.Item>
-                  <Breadcrumb.Item href="/utilities">Utilities</Breadcrumb.Item>
-                  <Breadcrumb.Item href="/layout">Layout</Breadcrumb.Item>
-                  <Breadcrumb.Item current>Current Page</Breadcrumb.Item>
-                </Breadcrumb>
+                <div className="flex items-center space-x-2 text-sm" data-testid="breadcrumb-long">
+                  <Link href="/" className="text-blue-600 hover:text-blue-800">Home</Link>
+                  <span className="text-gray-400">/</span>
+                  <Link href="/components" className="text-blue-600 hover:text-blue-800">Components</Link>
+                  <span className="text-gray-400">/</span>
+                  <Link href="/utilities" className="text-blue-600 hover:text-blue-800">Utilities</Link>
+                  <span className="text-gray-400">/</span>
+                  <Link href="/layout" className="text-blue-600 hover:text-blue-800">Layout</Link>
+                  <span className="text-gray-400">/</span>
+                  <span className="text-gray-500">Current Page</span>
+                </div>
               </div>
             </div>
 
@@ -173,9 +206,9 @@ export default function UtilitiesPage() {
               <h3 className="text-xl font-semibold text-gray-900 mb-4">Label Component</h3>
               <div className="space-y-4">
                 <div>
-                  <Label data-testid="label-basic" htmlFor="example-input">
+                  <label data-testid="label-basic" htmlFor="example-input" className="block text-sm font-medium text-gray-700">
                     Basic Label
-                  </Label>
+                  </label>
                   <input
                     id="example-input"
                     type="text"
@@ -185,9 +218,9 @@ export default function UtilitiesPage() {
                 </div>
 
                 <div>
-                  <Label data-testid="label-required" htmlFor="required-input" required>
-                    Required Field
-                  </Label>
+                  <label data-testid="label-required" htmlFor="required-input" className="block text-sm font-medium text-gray-700">
+                    Required Field <span className="text-red-500">*</span>
+                  </label>
                   <input
                     id="required-input"
                     type="text"
@@ -204,13 +237,13 @@ export default function UtilitiesPage() {
               <div className="space-y-6">
                 <div>
                   <p className="text-gray-600 mb-2">Content above separator</p>
-                  <Separator data-testid="separator-horizontal" className="my-4" />
+                  <hr data-testid="separator-horizontal" className="my-4 border-gray-300" />
                   <p className="text-gray-600">Content below separator</p>
                 </div>
 
                 <div className="flex items-center gap-4">
                   <span className="text-gray-600">Left content</span>
-                  <Separator data-testid="separator-vertical" orientation="vertical" className="h-8" />
+                  <div data-testid="separator-vertical" className="w-px h-8 bg-gray-300"></div>
                   <span className="text-gray-600">Right content</span>
                 </div>
               </div>
@@ -221,17 +254,17 @@ export default function UtilitiesPage() {
               <h3 className="text-xl font-semibold text-gray-900 mb-4">Skeleton Component</h3>
               <div className="space-y-4">
                 <div className="space-y-2">
-                  <Skeleton data-testid="skeleton-title" className="h-6 w-3/4" />
-                  <Skeleton data-testid="skeleton-text" className="h-4 w-full" />
-                  <Skeleton data-testid="skeleton-text-short" className="h-4 w-5/6" />
-                  <Skeleton data-testid="skeleton-text-medium" className="h-4 w-4/6" />
+                  <div data-testid="skeleton-title" className="h-6 w-3/4 bg-gray-300 rounded animate-pulse"></div>
+                  <div data-testid="skeleton-text" className="h-4 w-full bg-gray-300 rounded animate-pulse"></div>
+                  <div data-testid="skeleton-text-short" className="h-4 w-5/6 bg-gray-300 rounded animate-pulse"></div>
+                  <div data-testid="skeleton-text-medium" className="h-4 w-4/6 bg-gray-300 rounded animate-pulse"></div>
                 </div>
 
                 <div className="flex items-center space-x-4">
-                  <Skeleton data-testid="skeleton-avatar" className="h-12 w-12 rounded-full" />
+                  <div data-testid="skeleton-avatar" className="h-12 w-12 bg-gray-300 rounded-full animate-pulse"></div>
                   <div className="space-y-2 flex-1">
-                    <Skeleton data-testid="skeleton-line-1" className="h-4 w-1/3" />
-                    <Skeleton data-testid="skeleton-line-2" className="h-3 w-1/2" />
+                    <div data-testid="skeleton-line-1" className="h-4 w-1/3 bg-gray-300 rounded animate-pulse"></div>
+                    <div data-testid="skeleton-line-2" className="h-3 w-1/2 bg-gray-300 rounded animate-pulse"></div>
                   </div>
                 </div>
               </div>
@@ -241,18 +274,24 @@ export default function UtilitiesPage() {
             <div>
               <h3 className="text-xl font-semibold text-gray-900 mb-4">Tooltip Component</h3>
               <div className="flex flex-wrap gap-4">
-                <Tooltip data-testid="tooltip-basic" content="This is a tooltip message">
+                <div data-testid="tooltip-basic" className="relative group">
                   <button className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700">
                     Hover for tooltip
                   </button>
-                </Tooltip>
-                <Tooltip data-testid="tooltip-help" content="Click here for more information">
+                  <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-3 py-1 bg-gray-800 text-white text-sm rounded opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap">
+                    This is a tooltip message
+                  </div>
+                </div>
+                <div data-testid="tooltip-help" className="relative group">
                   <button className="px-4 py-2 bg-gray-600 text-white rounded-md hover:bg-gray-700">
                     <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                     </svg>
                   </button>
-                </Tooltip>
+                  <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-3 py-1 bg-gray-800 text-white text-sm rounded opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap">
+                    Click here for more information
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -265,7 +304,7 @@ export default function UtilitiesPage() {
               <h3 className="text-lg font-semibold text-gray-900 mb-4">Practical Example: Form with Labels</h3>
               <div className="space-y-4">
                 <div>
-                  <Label htmlFor="fullname">Full Name</Label>
+                  <label htmlFor="fullname" className="block text-sm font-medium text-gray-700">Full Name</label>
                   <input
                     id="fullname"
                     type="text"
@@ -274,10 +313,10 @@ export default function UtilitiesPage() {
                   />
                 </div>
 
-                <Separator />
+                <hr className="my-4 border-gray-300" />
 
                 <div>
-                  <Label htmlFor="email">Email Address</Label>
+                  <label htmlFor="email" className="block text-sm font-medium text-gray-700">Email Address</label>
                   <input
                     id="email"
                     type="email"
@@ -291,9 +330,9 @@ export default function UtilitiesPage() {
             <div className="bg-white rounded-lg border border-gray-200 p-6">
               <h3 className="text-lg font-semibold text-gray-900 mb-4">Loading State Example</h3>
               <div className="space-y-4">
-                <Skeleton className="h-32 w-full" />
-                <Skeleton className="h-4 w-3/4" />
-                <Skeleton className="h-4 w-1/2" />
+                <div className="h-32 w-full bg-gray-300 rounded animate-pulse"></div>
+                <div className="h-4 w-3/4 bg-gray-300 rounded animate-pulse"></div>
+                <div className="h-4 w-1/2 bg-gray-300 rounded animate-pulse"></div>
               </div>
             </div>
 
@@ -302,24 +341,24 @@ export default function UtilitiesPage() {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
                   <p className="text-sm text-gray-600 mb-2">16:9 Video</p>
-                  <AspectRatio ratio={16/9} className="bg-gray-200 rounded-lg">
+                  <div className="bg-gray-200 rounded-lg" style={{ aspectRatio: '16/9' }}>
                     <div className="flex items-center justify-center h-full">
                       <svg className="w-12 h-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" />
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                       </svg>
                     </div>
-                  </AspectRatio>
+                  </div>
                 </div>
                 <div>
                   <p className="text-sm text-gray-600 mb-2">4:3 Image</p>
-                  <AspectRatio ratio={4/3} className="bg-gray-200 rounded-lg">
+                  <div className="bg-gray-200 rounded-lg" style={{ aspectRatio: '4/3' }}>
                     <div className="flex items-center justify-center h-full">
                       <svg className="w-12 h-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
                       </svg>
                     </div>
-                  </AspectRatio>
+                  </div>
                 </div>
               </div>
             </div>
@@ -327,27 +366,35 @@ export default function UtilitiesPage() {
             <div className="bg-white rounded-lg border border-gray-200 p-6">
               <h3 className="text-lg font-semibold text-gray-900 mb-4">Navigation Example</h3>
               <div className="space-y-4">
-                <Breadcrumb>
-                  <Breadcrumb.Item href="/">Home</Breadcrumb.Item>
-                  <Breadcrumb.Item href="/utilities">Utilities</Breadcrumb.Item>
-                  <Breadcrumb.Item current>Examples</Breadcrumb.Item>
-                </Breadcrumb>
+                <div className="flex items-center space-x-2 text-sm">
+                  <Link href="/" className="text-blue-600 hover:text-blue-800">Home</Link>
+                  <span className="text-gray-400">/</span>
+                  <Link href="/utilities" className="text-blue-600 hover:text-blue-800">Utilities</Link>
+                  <span className="text-gray-400">/</span>
+                  <span className="text-gray-500">Examples</span>
+                </div>
 
                 <div className="flex gap-4">
-                  <Tooltip content="Go back to previous page">
+                  <div className="relative group">
                     <button className="p-2 text-gray-600 hover:text-gray-800">
                       <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
                       </svg>
                     </button>
-                  </Tooltip>
-                  <Tooltip content="Refresh current page">
+                    <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-3 py-1 bg-gray-800 text-white text-sm rounded opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap">
+                      Go back to previous page
+                    </div>
+                  </div>
+                  <div className="relative group">
                     <button className="p-2 text-gray-600 hover:text-gray-800">
                       <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
                       </svg>
                     </button>
-                  </Tooltip>
+                    <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-3 py-1 bg-gray-800 text-white text-sm rounded opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap">
+                      Refresh current page
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>

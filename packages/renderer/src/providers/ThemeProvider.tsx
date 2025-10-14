@@ -13,6 +13,7 @@ export interface Theme {
     secondary: string;
     muted: string;
     border: string;
+    destructive: string;
   };
   borderRadius: {
     sm: string;
@@ -26,6 +27,19 @@ export interface Theme {
     lg: string;
     xl: string;
   };
+  fontSizes: {
+    xs: string;
+    sm: string;
+    md: string;
+    lg: string;
+    xl: string;
+  };
+  fontWeights: {
+    normal: string;
+    medium: string;
+    semibold: string;
+    bold: string;
+  };
 }
 
 const defaultTheme: Theme = {
@@ -36,6 +50,7 @@ const defaultTheme: Theme = {
     secondary: '#6b7280',
     muted: '#f3f4f6',
     border: '#e5e7eb',
+    destructive: '#ef4444',
   },
   borderRadius: {
     sm: '0.125rem',
@@ -48,6 +63,19 @@ const defaultTheme: Theme = {
     md: '1rem',
     lg: '1.5rem',
     xl: '2rem',
+  },
+  fontSizes: {
+    xs: '0.75rem',
+    sm: '0.875rem',
+    md: '1rem',
+    lg: '1.125rem',
+    xl: '1.25rem',
+  },
+  fontWeights: {
+    normal: '400',
+    medium: '500',
+    semibold: '600',
+    bold: '700',
   },
 };
 

@@ -3,7 +3,7 @@
  * Provides tri-state checkbox behavior with proper accessibility.
  */
 
-import { useState, useCallback, useMemo } from 'react';
+import { useState, useCallback, useMemo, useRef } from 'react';
 import { useFocusableMixin, usePressableMixin, useSemanticMixin } from '../mixins';
 import { composeState, composeHandlers } from '../utils';
 import type { FocusableMixinProps, PressableMixinProps, SemanticMixinProps } from '../mixins';
