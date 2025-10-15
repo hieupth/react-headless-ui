@@ -358,35 +358,51 @@ export default function NavigationPage() {
 
   // Command handlers
   const handleCommandTrigger = (commandId: string) => {
-    setCommandStates(prev => ({
-      ...prev,
-      [commandId]: { isOpen: true, value: '' }
-    }));
+    setCommandStates(prev => {
+      const key = commandId as keyof typeof prev;
+      return {
+        ...prev,
+        [key]: { isOpen: true, value: '' }
+      };
+    });
   };
 
   const handleCommandChange = (commandId: string, value: string) => {
-    setCommandStates(prev => ({
-      ...prev,
-      [commandId]: { ...prev[commandId], value }
-    }));
+    setCommandStates(prev => {
+      const key = commandId as keyof typeof prev;
+      return {
+        ...prev,
+        [key]: { ...prev[key], value }
+      };
+    });
   };
 
   const handleCommandEscape = (commandId: string) => {
-    setCommandStates(prev => ({
-      ...prev,
-      [commandId]: { isOpen: false, value: '' }
-    }));
+    setCommandStates(prev => {
+      const key = commandId as keyof typeof prev;
+      return {
+        ...prev,
+        [key]: { isOpen: false, value: '' }
+      };
+    });
   };
 
   const handleCommandSelect = (commandId: string, value: string) => {
-    setCommandStates(prev => ({
-      ...prev,
-      [commandId]: { isOpen: false, value: '' }
-    }));
+    setCommandStates(prev => {
+      const key = commandId as keyof typeof prev;
+      return {
+        ...prev,
+        [key]: { isOpen: false, value: '' }
+      };
+    });
   };
 
   const getCommandItems = (commandId: string, filterText: string) => {
-    const allItems = {
+    type CommandItem =
+      | { value: string; label: string; shortcut: string }
+      | { value: string; label: string; group: string; shortcut: string };
+
+    const allItems: Record<string, CommandItem[]> = {
       basic: [
         { value: 'new-file', label: 'New File', shortcut: '⌘N' },
         { value: 'open-file', label: 'Open File', shortcut: '⌘O' },
@@ -962,24 +978,30 @@ export default function NavigationPage() {
                       role="listbox"
                       className="max-h-64 overflow-y-auto"
                     >
-                      {getCommandItems('groups', commandStates.groups.value).map((item, index, array) => (
-                        <div key={item.value}>
-                          {index === 0 || (index > 0 && item.group !== array[index - 1].group) ? (
-                            <div className="px-4 py-1 text-xs font-semibold text-gray-500 uppercase">
-                              {item.group}
+                      {getCommandItems('groups', commandStates.groups.value).map((item, index, array) => {
+                        const hasGroup = 'group' in item;
+                        const prevItem = index > 0 ? array[index - 1] : null;
+                        const prevHasGroup = prevItem && 'group' in prevItem;
+
+                        return (
+                          <div key={item.value}>
+                            {index === 0 || (index > 0 && hasGroup && prevHasGroup && item.group !== prevItem!.group) ? (
+                              <div className="px-4 py-1 text-xs font-semibold text-gray-500 uppercase">
+                                {hasGroup ? item.group : ''}
+                              </div>
+                            ) : null}
+                            <div
+                              data-testid="command-item"
+                              role="option"
+                              onClick={() => handleCommandSelect('groups', item.value)}
+                              className="px-4 py-2 hover:bg-gray-100 cursor-pointer flex justify-between"
+                            >
+                              <span>{item.label}</span>
+                              {item.shortcut && <kbd className="text-xs text-gray-500">{item.shortcut}</kbd>}
                             </div>
-                          ) : null}
-                          <div
-                            data-testid="command-item"
-                            role="option"
-                            onClick={() => handleCommandSelect('groups', item.value)}
-                            className="px-4 py-2 hover:bg-gray-100 cursor-pointer flex justify-between"
-                          >
-                            <span>{item.label}</span>
-                            {item.shortcut && <kbd className="text-xs text-gray-500">{item.shortcut}</kbd>}
                           </div>
-                        </div>
-                      ))}
+                        );
+                      })}
                     </div>
                   </div>
                 </div>
@@ -1062,6 +1084,185 @@ export default function NavigationPage() {
             </div>
           </div>
         )}
+
+        {/* Drawer Components Section */}
+        <section className="space-y-8 mb-12">
+          <h2 className="text-2xl font-bold text-gray-900">Drawer Components</h2>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {/* Basic Drawer */}
+            <div className="bg-white rounded-lg border border-gray-200 p-6">
+              <h3 className="text-lg font-semibold text-gray-800 mb-4">Basic Drawer</h3>
+              <button
+                data-testid="drawer-basic-trigger"
+                onClick={() => {
+                  const drawer = document.querySelector('[data-testid="drawer-basic"]') as HTMLElement;
+                  if (drawer) {
+                    drawer.style.display = drawer.style.display === 'none' ? 'block' : 'none';
+                  }
+                }}
+                className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700"
+              >
+                Open Basic Drawer
+              </button>
+              <div
+                data-testid="drawer-basic"
+                className="fixed right-0 top-0 h-full w-80 bg-white shadow-lg transform transition-transform duration-300 z-50"
+                style={{ display: 'none' }}
+              >
+                <div className="p-4 border-b border-gray-200">
+                  <h4 className="text-lg font-semibold">Basic Drawer</h4>
+                  <button
+                    onClick={() => {
+                      const drawer = document.querySelector('[data-testid="drawer-basic"]') as HTMLElement;
+                      if (drawer) drawer.style.display = 'none';
+                    }}
+                    className="mt-2 px-3 py-1 text-sm bg-gray-200 rounded hover:bg-gray-300"
+                  >
+                    Close
+                  </button>
+                </div>
+                <div className="p-4">
+                  <p>This is a basic drawer component.</p>
+                </div>
+              </div>
+            </div>
+
+            {/* Drawer with Header */}
+            <div className="bg-white rounded-lg border border-gray-200 p-6">
+              <h3 className="text-lg font-semibold text-gray-800 mb-4">Drawer with Header</h3>
+              <button
+                data-testid="drawer-header-trigger"
+                onClick={() => {
+                  const drawer = document.querySelector('[data-testid="drawer-header"]') as HTMLElement;
+                  if (drawer) {
+                    drawer.style.display = drawer.style.display === 'none' ? 'block' : 'none';
+                  }
+                }}
+                className="px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700"
+              >
+                Open Header Drawer
+              </button>
+              <div
+                data-testid="drawer-header"
+                className="fixed right-0 top-0 h-full w-80 bg-white shadow-lg transform transition-transform duration-300 z-50"
+                style={{ display: 'none' }}
+              >
+                <div className="p-6 border-b border-gray-200 bg-gradient-to-r from-green-500 to-green-600 text-white">
+                  <h4 className="text-lg font-semibold">Drawer Header</h4>
+                  <p className="text-sm opacity-90">With custom header styling</p>
+                  <button
+                    onClick={() => {
+                      const drawer = document.querySelector('[data-testid="drawer-header"]') as HTMLElement;
+                      if (drawer) drawer.style.display = 'none';
+                    }}
+                    className="mt-2 px-3 py-1 text-sm bg-white bg-opacity-20 rounded hover:bg-opacity-30"
+                  >
+                    Close
+                  </button>
+                </div>
+                <div className="p-4">
+                  <p>Drawer with styled header section.</p>
+                </div>
+              </div>
+            </div>
+
+            {/* Modal Drawer */}
+            <div className="bg-white rounded-lg border border-gray-200 p-6">
+              <h3 className="text-lg font-semibold text-gray-800 mb-4">Modal Drawer</h3>
+              <button
+                data-testid="drawer-modal-trigger"
+                onClick={() => {
+                  const drawer = document.querySelector('[data-testid="drawer-modal"]') as HTMLElement;
+                  const overlay = document.querySelector('[data-testid="drawer-modal-overlay"]') as HTMLElement;
+                  if (drawer && overlay) {
+                    drawer.style.display = 'block';
+                    overlay.style.display = 'block';
+                  }
+                }}
+                className="px-4 py-2 bg-purple-600 text-white rounded-md hover:bg-purple-700"
+              >
+                Open Modal Drawer
+              </button>
+              <div
+                data-testid="drawer-modal-overlay"
+                className="fixed inset-0 bg-black bg-opacity-50 z-40"
+                style={{ display: 'none' }}
+                onClick={() => {
+                  const drawer = document.querySelector('[data-testid="drawer-modal"]') as HTMLElement;
+                  const overlay = document.querySelector('[data-testid="drawer-modal-overlay"]') as HTMLElement;
+                  if (drawer && overlay) {
+                    drawer.style.display = 'none';
+                    overlay.style.display = 'none';
+                  }
+                }}
+              />
+              <div
+                data-testid="drawer-modal"
+                className="fixed right-0 top-0 h-full w-80 bg-white shadow-lg transform transition-transform duration-300 z-50"
+                style={{ display: 'none' }}
+              >
+                <div className="p-4 border-b border-gray-200">
+                  <h4 className="text-lg font-semibold">Modal Drawer</h4>
+                  <button
+                    onClick={() => {
+                      const drawer = document.querySelector('[data-testid="drawer-modal"]') as HTMLElement;
+                      const overlay = document.querySelector('[data-testid="drawer-modal-overlay"]') as HTMLElement;
+                      if (drawer && overlay) {
+                        drawer.style.display = 'none';
+                        overlay.style.display = 'none';
+                      }
+                    }}
+                    className="mt-2 px-3 py-1 text-sm bg-gray-200 rounded hover:bg-gray-300"
+                  >
+                    Close
+                  </button>
+                </div>
+                <div className="p-4">
+                  <p>Modal drawer with backdrop overlay.</p>
+                </div>
+              </div>
+            </div>
+
+            {/* Left Side Drawer */}
+            <div className="bg-white rounded-lg border border-gray-200 p-6">
+              <h3 className="text-lg font-semibold text-gray-800 mb-4">Left Side Drawer</h3>
+              <button
+                data-testid="drawer-left-trigger"
+                onClick={() => {
+                  const drawer = document.querySelector('[data-testid="drawer-left"]') as HTMLElement;
+                  if (drawer) {
+                    drawer.style.display = drawer.style.display === 'none' ? 'block' : 'none';
+                  }
+                }}
+                className="px-4 py-2 bg-orange-600 text-white rounded-md hover:bg-orange-700"
+              >
+                Open Left Drawer
+              </button>
+              <div
+                data-testid="drawer-left"
+                className="fixed left-0 top-0 h-full w-80 bg-white shadow-lg transform transition-transform duration-300 z-50"
+                style={{ display: 'none' }}
+              >
+                <div className="p-4 border-b border-gray-200">
+                  <h4 className="text-lg font-semibold">Left Side Drawer</h4>
+                  <button
+                    onClick={() => {
+                      const drawer = document.querySelector('[data-testid="drawer-left"]') as HTMLElement;
+                      if (drawer) drawer.style.display = 'none';
+                    }}
+                    className="mt-2 px-3 py-1 text-sm bg-gray-200 rounded hover:bg-gray-300"
+                  >
+                    Close
+                  </button>
+                </div>
+                <div className="p-4">
+                  <p>Drawer appearing from the left side.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
 
         {/* Scrollspy Component */}
         <div className="space-y-8 mb-12">

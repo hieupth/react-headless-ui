@@ -294,6 +294,94 @@ export default function UtilitiesPage() {
                 </div>
               </div>
             </div>
+
+            {/* Accessible Icon */}
+            <div>
+              <h3 className="text-xl font-semibold text-gray-900 mb-4">Accessible Icon Component</h3>
+              <div className="space-y-4">
+                <div className="flex items-center gap-4">
+                  <button data-testid="accessible-icon-info" className="p-2 text-blue-600 hover:text-blue-800" aria-label="Information">
+                    <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000-2v-1a1 1 0 000-2zm1 1a1 1 0 000 2v1a1 1 0 000 2zm-2-1a1 1 0 00-2 0 1 1 0 012 0zm-1 1a1 1 0 000 2v1a1 1 0 000-2z" clipRule="evenodd" />
+                    </svg>
+                  </button>
+                  <button data-testid="accessible-icon-success" className="p-2 text-green-600 hover:text-green-800" aria-label="Success">
+                    <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                    </svg>
+                  </button>
+                  <button data-testid="accessible-icon-warning" className="p-2 text-yellow-600 hover:text-yellow-800" aria-label="Warning">
+                    <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58-9.92a11.813 11.813 0 01-2.76-1.11h-2.76l-1.4 2.466c-.396.697-1.333.963-1.333 1.233 0 0-.218-.019c-.376-.774.96-1.412 1.412-.963.638-1.371 1.412-.422.645-.923.1.017.879m0 0h2.146c.461 0 .91-.183 1.373-.374 1.743-.366c.372-.008.749-.04 1.125-.124.364-.034.725-.108 1.086-.292.46-.656.727-.727.362-.386.72-.59.1-.022.1-.022m-1.125 7.125c-.372.362-.84.637-1.35.637-.686 0-1.022-.317-1.35-.637-.334-.32-.657-.656-.755-.656zm-8.25 3.49c.667 0 1.257-.298 1.743-.647.47-.4.873-.874.874-.417.437.789.874.874zm0 0c.413-.324.677-.617.776-.777.632-.362.874-.617.874-.417 0-.874.362-.874.874z" clipRule="evenodd" />
+                    </svg>
+                  </button>
+                </div>
+                <p className="text-sm text-gray-600">
+                  Icons are hidden from screen readers but remain keyboard accessible
+                </p>
+              </div>
+            </div>
+
+            {/* Direction Provider */}
+            <div>
+              <h3 className="text-xl font-semibold text-gray-900 mb-4">Direction Provider Component</h3>
+              <div className="bg-white rounded-lg border border-gray-200 p-6">
+                <div className="flex items-center justify-between mb-4">
+                  <span className="text-sm font-medium text-gray-700">Text Direction: <span id="direction-text" className="ml-2 font-semibold">LTR</span></span>
+                  <button
+                    data-testid="direction-toggle"
+                    className="px-3 py-1 bg-blue-600 text-white rounded-md hover:bg-blue-700 text-sm"
+                  >
+                    Toggle RTL
+                  </button>
+                </div>
+                <div
+                  data-testid="direction-content"
+                  className="p-4 bg-gray-50 rounded border border-gray-200"
+                  dir="ltr"
+                >
+                  <p className="text-gray-700">This content uses left-to-right text direction.</p>
+                  <p className="text-gray-500">Toggle the button above to see RTL layout.</p>
+                </div>
+              </div>
+            </div>
+
+            {/* Visually Hidden */}
+            <div>
+              <h3 className="text-xl font-semibold text-gray-900 mb-4">Visually Hidden Component</h3>
+              <div className="space-y-4">
+                <div className="bg-white rounded-lg border border-gray-200 p-4">
+                  <p className="text-gray-700 mb-2">Visible text for all users:</p>
+                  <p>This text is visible to everyone and screen readers.</p>
+                  <p className="text-gray-500 mt-2">Skip link below is only for screen readers.</p>
+                  <a href="#main-content" data-testid="visually-hidden-skip-link" className="sr-only focus:not-sr-only focus:outline-none focus:bg-blue-600 focus:text-white p-2 rounded">
+                    Skip to main content
+                  </a>
+                </div>
+
+                <div className="bg-white rounded-lg border border-gray-200 p-4">
+                  <p className="text-gray-700 mb-2">Screen reader only content:</p>
+                  <span data-testid="visually-hidden-content" className="sr-only">
+                    This text is only visible to screen readers and not to sighted users
+                  </span>
+                  <p className="text-gray-500 mt-2">Try navigating with screen reader to hear this text.</p>
+                </div>
+
+                <div className="bg-white rounded-lg border border-gray-200 p-4">
+                  <p className="text-gray-700 mb-2">Form helper text:</p>
+                  <label htmlFor="visually-hidden-label" className="block text-sm font-medium text-gray-700 mb-1">Password</label>
+                  <input
+                    type="password"
+                    id="visually-hidden-label"
+                    data-testid="visually-hidden-helper"
+                    className="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                    placeholder="Enter password"
+                    aria-describedby="password-help"
+                  />
+                  <p id="password-help" className="sr-only">Password must be at least 8 characters long</p>
+                </div>
+              </div>
+            </div>
           </div>
         )}
 

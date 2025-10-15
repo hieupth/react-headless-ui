@@ -37,7 +37,18 @@ export const FadeInOut = forwardRef<HTMLDivElement, FadeInOutProps>(({
   useMotion = true,
   variants,
   transition,
-  ...fadeInOutProps
+  duration = 300,
+  easing = 'easeInOut',
+  delay = 0,
+  initialVisible = false,
+  direction = 'in',
+  trigger = 'immediate',
+  initialOpacity = 0,
+  finalOpacity = 1,
+  respectReducedMotion = true,
+  onAnimationStart,
+  onAnimationComplete,
+  onOpacityChange
 }, ref) => {
   const theme = useTheme();
   const {
@@ -46,7 +57,20 @@ export const FadeInOut = forwardRef<HTMLDivElement, FadeInOutProps>(({
     computed,
     style: hookStyle,
     attributes
-  } = useFadeInOut(fadeInOutProps);
+  } = useFadeInOut({
+    duration,
+    easing,
+    delay,
+    initialVisible,
+    direction,
+    trigger,
+    initialOpacity,
+    finalOpacity,
+    respectReducedMotion,
+    onAnimationStart,
+    onAnimationComplete,
+    onOpacityChange
+  });
 
   // Base classes
   const baseClasses = [
@@ -62,26 +86,26 @@ export const FadeInOut = forwardRef<HTMLDivElement, FadeInOutProps>(({
     hidden: {
       opacity: 0,
       transition: {
-        duration: (fadeInOutProps.duration || 300) / 1000,
-        ease: fadeInInOutProps.easing || 'easeInOut',
-        delay: (fadeInInOutProps.delay || 0) / 1000
+        duration: duration / 1000,
+        ease: easing,
+        delay: delay / 1000
       }
     },
     visible: {
       opacity: 1,
       transition: {
-        duration: (fadeInOutProps.duration || 300) / 1000,
-        ease: fadeInInOutProps.easing || 'easeInOut',
-        delay: (fadeInInOutProps.delay || 0) / 1000
+        duration: duration / 1000,
+        ease: easing,
+        delay: delay / 1000
       }
     }
   };
 
   // Default transition config
   const defaultTransition = {
-    duration: (fadeInOutProps.duration || 300) / 1000,
-    ease: fadeInInOutProps.easing || 'easeInOut',
-    delay: (fadeInInOutProps.delay || 0) / 1000
+    duration: duration / 1000,
+    ease: easing,
+    delay: delay / 1000
   };
 
   // Merge with custom variants/transition

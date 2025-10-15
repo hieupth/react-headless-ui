@@ -5,7 +5,7 @@
 
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 export default function TestInteractivePage() {
   const [clickCount, setClickCount] = useState(0);
@@ -27,6 +27,16 @@ export default function TestInteractivePage() {
     multiple: '',
     basic: ''
   });
+
+  // Context menu state
+  const [contextMenuStates, setContextMenuStates] = useState({
+    basic: { isOpen: false, x: 0, y: 0 },
+    checkbox: { isOpen: false, x: 0, y: 0 },
+    icons: { isOpen: false, x: 0, y: 0 }
+  });
+
+  // Dialog state
+  const [dialogOpen, setDialogOpen] = useState(false);
 
   const handleClick = () => {
     setClickCount(prev => prev + 1);
@@ -73,8 +83,79 @@ export default function TestInteractivePage() {
     }
   };
 
+  // Context menu handlers
+  const handleContextMenu = (e: React.MouseEvent, menuType: string) => {
+    e.preventDefault();
+    setContextMenuStates(prev => ({
+      ...prev,
+      [menuType]: { isOpen: true, x: e.clientX, y: e.clientY }
+    }));
+  };
+
+  const closeContextMenu = (menuType: string) => {
+    setContextMenuStates(prev => {
+      const key = menuType as keyof typeof prev;
+      return {
+        ...prev,
+        [key]: { ...prev[key], isOpen: false }
+      };
+    });
+  };
+
+  const closeAllContextMenus = () => {
+    setContextMenuStates(prev => ({
+      basic: { ...prev.basic, isOpen: false },
+      checkbox: { ...prev.checkbox, isOpen: false },
+      icons: { ...prev.icons, isOpen: false }
+    }));
+  };
+
+  const handleContextMenuItemClick = (menuType: string, action: string) => {
+    console.log(`Context menu action: ${action} from ${menuType} menu`);
+    closeContextMenu(menuType);
+  };
+
+  // Dialog handlers
+  const handleDialogOpen = () => {
+    setDialogOpen(true);
+  };
+
+  const handleDialogClose = () => {
+    setDialogOpen(false);
+  };
+
+  const handleDialogConfirm = () => {
+    alert('Dialog confirmed!');
+    setDialogOpen(false);
+  };
+
+  const handleDialogCancel = () => {
+    alert('Dialog cancelled!');
+    setDialogOpen(false);
+  };
+
+  // Global Escape key handler
+  useEffect(() => {
+    const handleGlobalEscape = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        closeAllContextMenus();
+        setDialogOpen(false);
+      }
+    };
+
+    document.addEventListener('keydown', handleGlobalEscape);
+    return () => {
+      document.removeEventListener('keydown', handleGlobalEscape);
+    };
+  }, []);
+
   return (
-    <div className="min-h-screen bg-gray-50 p-8">
+    <div className="min-h-screen bg-gray-50 p-8" onClick={closeAllContextMenus} onKeyDown={(e) => {
+      if (e.key === 'Escape') {
+        e.preventDefault();
+        closeAllContextMenus();
+      }
+    }} tabIndex={-1} style={{ outline: 'none' }}>
       <div className="max-w-6xl mx-auto">
         <h1 className="text-2xl font-bold mb-6">Interactive Test Page</h1>
 
@@ -481,6 +562,290 @@ export default function TestInteractivePage() {
               ›
             </button>
           </div>
+        </section>
+
+        {/* Context Menu Components */}
+        <section className="mb-8 space-y-4">
+          <h2 className="text-xl font-semibold">Context Menu Components</h2>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            {/* Basic Context Menu */}
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                Basic Context Menu (Right-click)
+              </label>
+              <div
+                data-testid="context-menu-basic-trigger"
+                onContextMenu={(e) => handleContextMenu(e, 'basic')}
+                className="p-4 bg-blue-100 border border-blue-300 rounded-lg cursor-pointer hover:bg-blue-200 text-center"
+                style={{ userSelect: 'none' }}
+              >
+                Right-click me
+              </div>
+            </div>
+
+            {/* Checkbox Context Menu */}
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                Checkbox Context Menu (Right-click)
+              </label>
+              <div
+                data-testid="context-menu-checkbox-trigger"
+                onContextMenu={(e) => handleContextMenu(e, 'checkbox')}
+                className="p-4 bg-green-100 border border-green-300 rounded-lg cursor-pointer hover:bg-green-200 text-center"
+                style={{ userSelect: 'none' }}
+              >
+                Right-click for options
+              </div>
+            </div>
+
+            {/* Icons Context Menu */}
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                Icons Context Menu (Right-click)
+              </label>
+              <div
+                data-testid="context-menu-icons-trigger"
+                onContextMenu={(e) => handleContextMenu(e, 'icons')}
+                className="p-4 bg-purple-100 border border-purple-300 rounded-lg cursor-pointer hover:bg-purple-200 text-center"
+                style={{ userSelect: 'none' }}
+              >
+                Right-click for icons
+              </div>
+            </div>
+          </div>
+
+          {/* Basic Context Menu */}
+          {contextMenuStates.basic.isOpen && (
+            <div
+              data-testid="context-menu-basic"
+              className="fixed z-50 bg-white border border-gray-200 rounded-lg shadow-lg py-1 min-w-[160px]"
+              style={{ left: contextMenuStates.basic.x, top: contextMenuStates.basic.y }}
+              role="menu"
+              aria-label="Context menu"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <div
+                role="menuitem"
+                tabIndex={-1}
+                className="px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 cursor-pointer"
+                onClick={() => handleContextMenuItemClick('basic', 'cut')}
+              >
+                Cut
+              </div>
+              <div
+                role="menuitem"
+                tabIndex={-1}
+                className="px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 cursor-pointer"
+                onClick={() => handleContextMenuItemClick('basic', 'copy')}
+              >
+                Copy
+              </div>
+              <div
+                role="menuitem"
+                tabIndex={-1}
+                className="px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 cursor-pointer"
+                onClick={() => handleContextMenuItemClick('basic', 'paste')}
+              >
+                Paste
+              </div>
+              <div
+                role="menuitem"
+                tabIndex={-1}
+                className="px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 cursor-pointer"
+                onClick={() => handleContextMenuItemClick('basic', 'delete')}
+              >
+                Delete
+              </div>
+            </div>
+          )}
+
+          {/* Checkbox Context Menu */}
+          {contextMenuStates.checkbox.isOpen && (
+            <div
+              data-testid="context-menu-checkbox"
+              className="fixed z-50 bg-white border border-gray-200 rounded-lg shadow-lg py-1 min-w-[160px]"
+              style={{ left: contextMenuStates.checkbox.x, top: contextMenuStates.checkbox.y }}
+              role="menu"
+              aria-label="Context menu"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <div
+                role="menuitem"
+                tabIndex={-1}
+                aria-checked="false"
+                className="px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 cursor-pointer flex items-center gap-2"
+                onClick={() => handleContextMenuItemClick('checkbox', 'show-hidden')}
+              >
+                <span className="w-4 h-4 border border-gray-300 rounded"></span>
+                Show Hidden Files
+              </div>
+              <div
+                role="menuitem"
+                tabIndex={-1}
+                aria-checked="true"
+                className="px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 cursor-pointer flex items-center gap-2"
+                onClick={() => handleContextMenuItemClick('checkbox', 'auto-arrange')}
+              >
+                <span className="w-4 h-4 border border-gray-300 rounded bg-blue-500 flex items-center justify-center">
+                  <span className="text-white text-xs">✓</span>
+                </span>
+                Auto Arrange
+              </div>
+              <div
+                role="menuitem"
+                tabIndex={-1}
+                aria-checked="false"
+                className="px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 cursor-pointer flex items-center gap-2"
+                onClick={() => handleContextMenuItemClick('checkbox', 'grid-view')}
+              >
+                <span className="w-4 h-4 border border-gray-300 rounded"></span>
+                Grid View
+              </div>
+              <div
+                role="menuitem"
+                tabIndex={-1}
+                className="px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 cursor-pointer"
+                onClick={() => handleContextMenuItemClick('checkbox', 'refresh')}
+              >
+                Refresh
+              </div>
+            </div>
+          )}
+
+          {/* Icons Context Menu */}
+          {contextMenuStates.icons.isOpen && (
+            <div
+              data-testid="context-menu-icons"
+              className="fixed z-50 bg-white border border-gray-200 rounded-lg shadow-lg py-1 min-w-[160px]"
+              style={{ left: contextMenuStates.icons.x, top: contextMenuStates.icons.y }}
+              role="menu"
+              aria-label="Context menu"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <div
+                role="menuitem"
+                tabIndex={-1}
+                className="px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 cursor-pointer flex items-center gap-2"
+                onClick={() => handleContextMenuItemClick('icons', 'open')}
+              >
+                <span className="text-blue-500">📁</span>
+                Open
+              </div>
+              <div
+                role="menuitem"
+                tabIndex={-1}
+                className="px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 cursor-pointer flex items-center gap-2"
+                onClick={() => handleContextMenuItemClick('icons', 'edit')}
+              >
+                <span className="text-green-500">✏️</span>
+                Edit
+              </div>
+              <div
+                role="menuitem"
+                tabIndex={-1}
+                className="px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 cursor-pointer flex items-center gap-2"
+                onClick={() => handleContextMenuItemClick('icons', 'share')}
+              >
+                <span className="text-purple-500">🔗</span>
+                Share
+              </div>
+              <div
+                role="menuitem"
+                tabIndex={-1}
+                className="px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 cursor-pointer flex items-center gap-2"
+                onClick={() => handleContextMenuItemClick('icons', 'delete')}
+              >
+                <span className="text-red-500">🗑️</span>
+                Delete
+              </div>
+            </div>
+          )}
+        </section>
+
+        {/* Dialog Component */}
+        <section className="mb-8 space-y-4">
+          <h2 className="text-xl font-semibold">Dialog Component</h2>
+
+          <button
+            onClick={handleDialogOpen}
+            className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700"
+          >
+            Open Dialog
+          </button>
+
+          {dialogOpen && (
+            <>
+              {/* Dialog Overlay */}
+              <div
+                className="dialog-overlay fixed inset-0 bg-black bg-opacity-50 z-40"
+                onClick={handleDialogClose}
+              />
+
+              {/* Dialog Content */}
+              <div
+                className="fixed inset-0 z-50 flex items-center justify-center p-4"
+                onClick={(e) => e.stopPropagation()}
+              >
+                <div
+                  className="dialog-content bg-white rounded-lg shadow-xl max-w-md w-full max-h-[90vh] overflow-auto"
+                  style={{ width: '600px' }}
+                  role="dialog"
+                  aria-modal="true"
+                  aria-labelledby="dialog-title"
+                >
+                  {/* Dialog Header */}
+                  <div className="dialog-title flex items-center justify-between p-6 border-b">
+                    <h3 id="dialog-title" className="text-lg font-semibold text-gray-900">
+                      Dialog Title
+                    </h3>
+                    <button
+                      className="dialog-close-button text-gray-400 hover:text-gray-600"
+                      onClick={handleDialogClose}
+                      aria-label="Close dialog"
+                    >
+                      <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                      </svg>
+                    </button>
+                  </div>
+
+                  {/* Dialog Body */}
+                  <div className="p-6">
+                    <p className="text-gray-600 mb-4">
+                      This is a dialog component for testing purposes. It includes proper accessibility attributes and keyboard navigation.
+                    </p>
+                    <div className="mb-4">
+                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                        Sample Input
+                      </label>
+                      <input
+                        type="text"
+                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        placeholder="Enter some text..."
+                      />
+                    </div>
+                  </div>
+
+                  {/* Dialog Footer */}
+                  <div className="flex justify-end gap-3 p-6 border-t bg-gray-50">
+                    <button
+                      onClick={handleDialogCancel}
+                      className="px-4 py-2 text-gray-700 bg-gray-200 rounded-md hover:bg-gray-300"
+                    >
+                      Cancel
+                    </button>
+                    <button
+                      onClick={handleDialogConfirm}
+                      className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700"
+                    >
+                      Confirm
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </>
+          )}
         </section>
 
         {/* Button Counter Test */}

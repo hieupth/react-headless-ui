@@ -4,7 +4,7 @@
  * Manages slide states, directions, and accessibility considerations.
  */
 
-import { useState, useCallback, useEffect, useRef } from 'react';
+import { useState, useCallback, useEffect, useRef, useMemo } from 'react';
 import { useFocusableMixin, usePressableMixin, useSemanticMixin } from '../mixins';
 
 /**

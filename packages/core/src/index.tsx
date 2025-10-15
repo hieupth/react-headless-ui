@@ -482,7 +482,10 @@ export type {
   UseToolbarState,
   UseToolbarActions,
   UseToolbarReturns,
-  ToolbarItem
+  ToolbarItem,
+  MotionProps,
+  MotionState,
+  MotionHandlers
 } from './headless';
 
 export {
@@ -573,5 +576,7 @@ export {
   useOffcanvas,
   usePanel,
   useSortable,
-  useToolbar
+  useToolbar,
+  useMotion,
+  motionVariants
 } from './headless';

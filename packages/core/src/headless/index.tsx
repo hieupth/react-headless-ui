@@ -183,6 +183,9 @@ export type { UseChipProps, UseChipReturns, ChipState, ChipActions, ChipVariant,
 export { useChip } from './useChip';
 
 // Motion components
+export type { MotionProps, MotionState, MotionHandlers } from './useMotion';
+export { useMotion, motionVariants } from './useMotion';
+
 export type { UseFadeInOutProps, UseFadeInOutReturns, FadeInOutState, FadeInOutActions, FadeDirection, FadeTrigger } from './useFadeInOut';
 export { useFadeInOut } from './useFadeInOut';
 
