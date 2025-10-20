@@ -312,7 +312,7 @@ export default function UtilitiesPage() {
                   </button>
                   <button data-testid="accessible-icon-warning" className="p-2 text-yellow-600 hover:text-yellow-800" aria-label="Warning">
                     <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-                      <path fillRule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58-9.92a11.813 11.813 0 01-2.76-1.11h-2.76l-1.4 2.466c-.396.697-1.333.963-1.333 1.233 0 0-.218-.019c-.376-.774.96-1.412 1.412-.963.638-1.371 1.412-.422.645-.923.1.017.879m0 0h2.146c.461 0 .91-.183 1.373-.374 1.743-.366c.372-.008.749-.04 1.125-.124.364-.034.725-.108 1.086-.292.46-.656.727-.727.362-.386.72-.59.1-.022.1-.022m-1.125 7.125c-.372.362-.84.637-1.35.637-.686 0-1.022-.317-1.35-.637-.334-.32-.657-.656-.755-.656zm-8.25 3.49c.667 0 1.257-.298 1.743-.647.47-.4.873-.874.874-.417.437.789.874.874zm0 0c.413-.324.677-.617.776-.777.632-.362.874-.617.874-.417 0-.874.362-.874.874z" clipRule="evenodd" />
+                      <path fillRule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
                     </svg>
                   </button>
                 </div>
@@ -379,6 +379,165 @@ export default function UtilitiesPage() {
                     aria-describedby="password-help"
                   />
                   <p id="password-help" className="sr-only">Password must be at least 8 characters long</p>
+                </div>
+              </div>
+            </div>
+
+            {/* Portal */}
+            <div>
+              <h3 className="text-xl font-semibold text-gray-900 mb-4">Portal Component</h3>
+              <div className="space-y-4">
+                <div>
+                  <p className="text-gray-600 mb-3">Modal using Portal for rendering outside DOM hierarchy</p>
+                  <button
+                    data-testid="portal-trigger"
+                    className="px-4 py-2 bg-purple-600 text-white rounded-md hover:bg-purple-700"
+                  >
+                    Open Modal (Portal)
+                  </button>
+                  <div className="mt-2 text-sm text-gray-500">
+                    Click to see portal-rendered modal overlay
+                  </div>
+                </div>
+
+                <div className="bg-white rounded-lg border border-gray-200 p-4">
+                  <h4 className="font-medium text-gray-900 mb-2">Portal Features</h4>
+                  <ul className="text-sm text-gray-600 space-y-1">
+                    <li>• Renders content outside normal DOM flow</li>
+                    <li>• Perfect for modals and tooltips</li>
+                    <li>• Avoids z-index stacking issues</li>
+                    <li>• Maintains React context across portal boundary</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            {/* Slot */}
+            <div>
+              <h3 className="text-xl font-semibold text-gray-900 mb-4">Slot Component</h3>
+              <div className="space-y-4">
+                <div>
+                  <p className="text-gray-600 mb-3">Component composition with prop forwarding</p>
+                  <div data-testid="slot-wrapper" className="bg-blue-50 border border-blue-200 rounded-lg p-4">
+                    <button data-testid="slot-button" className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700">
+                      Slot Button
+                    </button>
+                  </div>
+                  <div className="mt-2 text-sm text-gray-500">
+                    Slot component forwards props to child element
+                  </div>
+                </div>
+
+                <div className="bg-white rounded-lg border border-gray-200 p-4">
+                  <h4 className="font-medium text-gray-900 mb-2">Slot Features</h4>
+                  <ul className="text-sm text-gray-600 space-y-1">
+                    <li>• Composable component pattern</li>
+                    <li>• Props forwarding to children</li>
+                    <li>• Flexible component composition</li>
+                    <li>• Maintains component behavior while enhancing</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            {/* Sortable */}
+            <div>
+              <h3 className="text-xl font-semibold text-gray-900 mb-4">Sortable Component</h3>
+              <div className="space-y-4">
+                <div>
+                  <p className="text-gray-600 mb-3">Drag and drop sortable list</p>
+                  <div data-testid="sortable-list" className="space-y-2">
+                    <div className="bg-white border border-gray-200 rounded-lg p-3 cursor-move hover:bg-gray-50" data-testid="sortable-item-1">
+                      <div className="flex items-center gap-3">
+                        <div className="text-gray-400">⋮⋮</div>
+                        <span>Item 1 - Drag to reorder</span>
+                      </div>
+                    </div>
+                    <div className="bg-white border border-gray-200 rounded-lg p-3 cursor-move hover:bg-gray-50" data-testid="sortable-item-2">
+                      <div className="flex items-center gap-3">
+                        <div className="text-gray-400">⋮⋮</div>
+                        <span>Item 2 - Drag to reorder</span>
+                      </div>
+                    </div>
+                    <div className="bg-white border border-gray-200 rounded-lg p-3 cursor-move hover:bg-gray-50" data-testid="sortable-item-3">
+                      <div className="flex items-center gap-3">
+                        <div className="text-gray-400">⋮⋮</div>
+                        <span>Item 3 - Drag to reorder</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="mt-2 text-sm text-gray-500">
+                    Drag items to reorder them in the list
+                  </div>
+                </div>
+
+                <div className="bg-white rounded-lg border border-gray-200 p-4">
+                  <h4 className="font-medium text-gray-900 mb-2">Sortable Features</h4>
+                  <ul className="text-sm text-gray-600 space-y-1">
+                    <li>• Drag and drop functionality</li>
+                    <li>• Visual feedback during dragging</li>
+                    <li>• Accessible keyboard navigation</li>
+                    <li>• Touch-friendly on mobile devices</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            {/* Toolbar */}
+            <div>
+              <h3 className="text-xl font-semibold text-gray-900 mb-4">Toolbar Component</h3>
+              <div className="space-y-4">
+                <div>
+                  <p className="text-gray-600 mb-3">Action toolbar for common operations</p>
+                  <div data-testid="toolbar" className="bg-white border border-gray-200 rounded-lg p-3">
+                    <div className="flex items-center gap-2 flex-wrap">
+                      <button data-testid="toolbar-button-bold" className="p-2 hover:bg-gray-100 rounded" aria-label="Bold">
+                        <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                          <path d="M6 4v12h4.5c1.5 0 2.5-1 2.5-2.5S12 11 10.5 11H8V9h2c1 0 2-1 2-2s-1-2-2-2H6z"/>
+                        </svg>
+                      </button>
+                      <button data-testid="toolbar-button-italic" className="p-2 hover:bg-gray-100 rounded" aria-label="Italic">
+                        <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                          <path d="M7 4h6l-1 8H9l1-8zm0 10h6l-1 2H8l1-2z"/>
+                        </svg>
+                      </button>
+                      <div className="w-px h-6 bg-gray-300"></div>
+                      <button data-testid="toolbar-button-list" className="p-2 hover:bg-gray-100 rounded" aria-label="List">
+                        <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                          <path d="M3 4h14v2H3V4zm0 4h10v2H3V8zm0 4h14v2H3v-2z"/>
+                        </svg>
+                      </button>
+                      <button data-testid="toolbar-button-link" className="p-2 hover:bg-gray-100 rounded" aria-label="Link">
+                        <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                          <path d="M12.586 4.586a2 2 0 112.828 2.828l-3 3a2 2 0 01-2.828 0 1 1 0 00-1.414 1.414 4 4 0 005.656 0l3-3a4 4 0 00-5.656-5.656l-1.5 1.5a1 1 0 101.414 1.414l1.5-1.5z"/>
+                        </svg>
+                      </button>
+                      <div className="w-px h-6 bg-gray-300"></div>
+                      <button data-testid="toolbar-button-undo" className="p-2 hover:bg-gray-100 rounded" aria-label="Undo">
+                        <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                          <path d="M7.707 14.707a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l2.293 2.293a1 1 0 010 1.414z"/>
+                        </svg>
+                      </button>
+                      <button data-testid="toolbar-button-redo" className="p-2 hover:bg-gray-100 rounded" aria-label="Redo">
+                        <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                          <path d="M12.293 14.707a1 1 0 001.414 0l4-4a1 1 0 000-1.414l-4-4a1 1 0 10-1.414 1.414L14.586 9H3a1 1 0 100 2h11.586l-2.293 2.293a1 1 0 000 1.414z"/>
+                        </svg>
+                      </button>
+                    </div>
+                  </div>
+                  <div className="mt-2 text-sm text-gray-500">
+                    Toolbar with formatting actions and keyboard shortcuts
+                  </div>
+                </div>
+
+                <div className="bg-white rounded-lg border border-gray-200 p-4">
+                  <h4 className="font-medium text-gray-900 mb-2">Toolbar Features</h4>
+                  <ul className="text-sm text-gray-600 space-y-1">
+                    <li>• Grouped action buttons</li>
+                    <li>• Keyboard shortcuts support</li>
+                    <li>• Responsive design</li>
+                    <li>• Accessibility with ARIA labels</li>
+                  </ul>
                 </div>
               </div>
             </div>

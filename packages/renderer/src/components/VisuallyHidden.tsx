@@ -317,7 +317,7 @@ export const VisuallyHiddenAnnouncer = React.forwardRef<HTMLDivElement, {
         border: '0'
       }}
       aria-live={priority}
-      aria-atomic="true"
+      aria-atomic={true}
       data-testid="visually-hidden-announcer"
       data-announcing={state.announce}
     >

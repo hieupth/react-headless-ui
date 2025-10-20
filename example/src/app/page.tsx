@@ -8,6 +8,13 @@ import Link from 'next/link';
 export default function IndexPage() {
   const categories = [
     {
+      title: 'Buttons',
+      description: 'Interactive button components for user actions',
+      href: '/buttons',
+      components: ['Button', 'Button Group', 'Icon Button', 'Loading Button', 'Toggle Button'],
+      color: 'blue'
+    },
+    {
       title: 'Navigation',
       description: 'Navigation components for menus, breadcrumbs, and user flow',
       href: '/navigation',

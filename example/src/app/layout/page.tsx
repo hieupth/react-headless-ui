@@ -245,6 +245,106 @@ export default function LayoutPage() {
                 </div>
               </div>
             </div>
+
+            {/* Resizable */}
+            <div>
+              <h3 className="text-xl font-semibold text-gray-900 mb-4">Resizable Component</h3>
+              <div className="space-y-6">
+                <div>
+                  <p className="text-gray-600 mb-3">Basic resizable container with resize handles</p>
+                  <div
+                    data-testid="layout-resizable-basic"
+                    className="relative bg-white border-2 border-gray-300 rounded-lg p-4 min-h-[200px] min-w-[300px] max-w-[600px]"
+                    style={{ resize: 'both', overflow: 'auto' }}
+                  >
+                    <div className="absolute bottom-2 right-2 text-xs text-gray-400 bg-gray-50 px-2 py-1 rounded">
+                      Resize from corner
+                    </div>
+                    <div className="text-gray-700">
+                      <h4 className="font-medium mb-2">Resizable Panel</h4>
+                      <p className="text-sm">This panel can be resized by dragging the bottom-right corner. Try resizing it to see the content adapt.</p>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div>
+                    <p className="text-gray-600 mb-3">Resizable with minimum size</p>
+                    <div
+                      data-testid="layout-resizable-min"
+                      className="relative bg-blue-50 border-2 border-blue-200 rounded-lg p-4"
+                      style={{
+                        resize: 'both',
+                        overflow: 'auto',
+                        minWidth: '200px',
+                        minHeight: '150px'
+                      }}
+                    >
+                      <div className="text-blue-800">
+                        <h4 className="font-medium mb-2">Min Size: 200x150px</h4>
+                        <p className="text-sm">This resizable panel has a minimum size constraint.</p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div>
+                    <p className="text-gray-600 mb-3">Resizable with maximum size</p>
+                    <div
+                      data-testid="layout-resizable-max"
+                      className="relative bg-green-50 border-2 border-green-200 rounded-lg p-4"
+                      style={{
+                        resize: 'both',
+                        overflow: 'auto',
+                        maxWidth: '400px',
+                        maxHeight: '300px'
+                      }}
+                    >
+                      <div className="text-green-800">
+                        <h4 className="font-medium mb-2">Max Size: 400x300px</h4>
+                        <p className="text-sm">This resizable panel has a maximum size constraint.</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div>
+                  <p className="text-gray-600 mb-3">Horizontal and Vertical Resizable Containers</p>
+                  <div className="space-y-4">
+                    <div
+                      data-testid="layout-resizable-horizontal"
+                      className="relative bg-purple-50 border-2 border-purple-200 rounded-lg p-4"
+                      style={{
+                        resize: 'horizontal',
+                        overflow: 'auto',
+                        minWidth: '200px',
+                        maxWidth: '100%'
+                      }}
+                    >
+                      <div className="text-purple-800">
+                        <h4 className="font-medium mb-2">Horizontal Only</h4>
+                        <p className="text-sm">This can only be resized horizontally (width only).</p>
+                      </div>
+                    </div>
+
+                    <div
+                      data-testid="layout-resizable-vertical"
+                      className="relative bg-orange-50 border-2 border-orange-200 rounded-lg p-4"
+                      style={{
+                        resize: 'vertical',
+                        overflow: 'auto',
+                        minHeight: '100px',
+                        maxHeight: '300px'
+                      }}
+                    >
+                      <div className="text-orange-800">
+                        <h4 className="font-medium mb-2">Vertical Only</h4>
+                        <p className="text-sm">This can only be resized vertically (height only).</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         )}
 

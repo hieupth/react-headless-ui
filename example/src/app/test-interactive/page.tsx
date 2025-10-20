@@ -269,7 +269,7 @@ export default function TestInteractivePage() {
                 value={fieldValues.required}
                 onChange={(e) => handleFieldChange('required', e.target.value)}
                 placeholder="This field is required"
-                aria-required="true"
+                aria-required={true}
                 required
                 className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
@@ -301,7 +301,7 @@ export default function TestInteractivePage() {
                 data-testid="field-disabled"
                 value="This field is disabled"
                 disabled
-                aria-disabled="true"
+                aria-disabled={true}
                 className="w-full px-3 py-2 border border-gray-300 rounded-md bg-gray-100 text-gray-500 cursor-not-allowed"
               />
             </div>
@@ -445,7 +445,7 @@ export default function TestInteractivePage() {
           <div
             data-testid="toggle"
             role="switch"
-            aria-checked={togglePressed ? "true" : "false"}
+            aria-checked={togglePressed}
             aria-pressed={togglePressed}
             data-pressed={togglePressed.toString()}
             onClick={handleToggleClick}
@@ -673,7 +673,7 @@ export default function TestInteractivePage() {
               <div
                 role="menuitem"
                 tabIndex={-1}
-                aria-checked="false"
+                aria-checked={false}
                 className="px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 cursor-pointer flex items-center gap-2"
                 onClick={() => handleContextMenuItemClick('checkbox', 'show-hidden')}
               >
@@ -683,7 +683,7 @@ export default function TestInteractivePage() {
               <div
                 role="menuitem"
                 tabIndex={-1}
-                aria-checked="true"
+                aria-checked={true}
                 className="px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 cursor-pointer flex items-center gap-2"
                 onClick={() => handleContextMenuItemClick('checkbox', 'auto-arrange')}
               >
@@ -695,7 +695,7 @@ export default function TestInteractivePage() {
               <div
                 role="menuitem"
                 tabIndex={-1}
-                aria-checked="false"
+                aria-checked={false}
                 className="px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 cursor-pointer flex items-center gap-2"
                 onClick={() => handleContextMenuItemClick('checkbox', 'grid-view')}
               >
@@ -791,7 +791,7 @@ export default function TestInteractivePage() {
                   className="dialog-content bg-white rounded-lg shadow-xl max-w-md w-full max-h-[90vh] overflow-auto"
                   style={{ width: '600px' }}
                   role="dialog"
-                  aria-modal="true"
+                  aria-modal={true}
                   aria-labelledby="dialog-title"
                 >
                   {/* Dialog Header */}

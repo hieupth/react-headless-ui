@@ -156,7 +156,7 @@ export const Pagination = forwardRef<HTMLDivElement, PaginationProps>(({
             <span
               key={`ellipsis-${index}`}
               className={`px-2 py-1 ${sizeClasses} text-gray-500`}
-              aria-hidden="true"
+              aria-hidden={true}
             >
               ...
             </span>
@@ -395,7 +395,7 @@ export const JumpPagination = forwardRef<HTMLDivElement, PaginationProps>(({
               <span
                 key={`ellipsis-${index}`}
                 className={`px-2 py-1 ${sizeClasses} text-gray-500`}
-                aria-hidden="true"
+                aria-hidden={true}
               >
                 ...
               </span>

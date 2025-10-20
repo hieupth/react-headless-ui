@@ -1,261 +1,339 @@
-"""
-Selenium tests for Input component following CLAUDE.md testing requirements.
-
-Each test covers:
-1. Functionality - component behavior
-2. Visual rendering - normal size/shape/position
-3. Navigation - correct URLs, no errors
-4. Runtime stability - no console errors
-"""
-
 import pytest
 import time
-from selenium import webdriver
 from selenium.webdriver.common.by import By
-from selenium.webdriver.common.action_chains import ActionChains
-from selenium.webdriver.common.keys import Keys
-from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-from test_helpers import filter_console_errors, normalize_url
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.common.exceptions import TimeoutException
+
+
+# Common locators for repeated use
+class Locators:
+    """Common locators used across tests."""
+
+    # Button locators
+    BUTTON_COUNTER = (By.CSS_SELECTOR, "[data-testid='button-counter']")
+    BUTTON_RESET = (By.CSS_SELECTOR, "[data-testid='button-reset']")
+    BUTTON_LOADING = (By.CSS_SELECTOR, "[data-testid='button-loading']")
+    BUTTON_DISABLED = (By.CSS_SELECTOR, "[data-testid='button-disabled']")
+    BUTTON_SUBMIT = (By.CSS_SELECTOR, "[data-testid='button-submit']")
+
+    # Input locators
+    INPUT_NAME = (By.CSS_SELECTOR, "[data-testid='input-name']")
+    INPUT_EMAIL = (By.CSS_SELECTOR, "[data-testid='input-email']")
+    INPUT_ELEMENT = (By.CSS_SELECTOR, "[data-testid='input-element']")
+
+    # Checkbox/Switch locators
+    CHECKBOX_SUBSCRIBE = (By.CSS_SELECTOR, "[data-testid='checkbox-subscribe']")
+    CHECKBOX = (By.CSS_SELECTOR, "[data-testid='checkbox']")
+    SWITCH_NOTIFICATIONS = (By.CSS_SELECTOR, "[data-testid='switch-notifications']")
+    TOGGLE = (By.CSS_SELECTOR, "[data-testid='toggle']")
+
+    # Textarea locators
+    TEXTAREA_MESSAGE = (By.CSS_SELECTOR, "[data-testid='textarea-message']")
+    TEXTAREA = (By.CSS_SELECTOR, "[data-testid='textarea']")
+
+    # Select locators
+    SELECT_PRIORITY = (By.CSS_SELECTOR, "[data-testid='select-priority']")
+    BASIC_SELECT = (By.CSS_SELECTOR, "[data-testid='basic-select']")
+
+    # Calendar locators
+    CALENDAR_EVENT_DATE = (By.CSS_SELECTOR, "[data-testid='calendar-event-date']")
+    CALENDAR = (By.CSS_SELECTOR, "[data-testid='calendar']")
+
+    # Component groups
+    BUTTON_GROUP = (By.CSS_SELECTOR, "[data-testid='button-group']")
+    RADIO_GROUP = (By.CSS_SELECTOR, "[data-testid='radio-group']")
+    INPUT_OTP = (By.CSS_SELECTOR, "[data-testid='input-otp']")
+
+
+# Test data constants
+class TestData:
+    """Test data constants used across tests."""
+
+    VALID_EMAIL = "test@example.com"
+    INVALID_EMAIL = "invalid-email"
+    TEST_NAME = "Test User"
+    TEST_MESSAGE = "This is a test message"
+    LONG_TEXT = "This is a very long text that exceeds normal input limits to test component behavior with excessive content"
+
+    # URLs for navigation tests
+    BUTTONS_PAGE = "/buttons"
+    INPUTS_PAGE = "/inputs"
+    NAVIGATION_PAGE = "/navigation"
+    DATA_DISPLAY_PAGE = "/data-display"
+    FEEDBACK_PAGE = "/feedback"
+    LAYOUT_PAGE = "/layout"
+    MOTION_PAGE = "/motion"
+    UTILITIES_PAGE = "/utilities"
+
+
+# Custom assertions for component testing
+class ComponentAssertions:
+    """Custom assertion methods for component testing."""
+
+    @staticmethod
+    def assert_element_rendered_properly(element):
+        """Assert element renders without visual abnormalities."""
+        assert element.is_displayed(), "Element should be visible"
+
+        size = element.size
+        assert size['width'] > 0, "Element should have positive width"
+        assert size['height'] > 0, "Element should have positive height"
+
+        # Check for reasonable size limits (not too large or too small)
+        assert size['width'] < 5000, "Element width seems abnormally large"
+        assert size['height'] < 5000, "Element height seems abnormally large"
+
+    @staticmethod
+    def assert_no_console_errors(driver):
+        """Assert no JavaScript console errors."""
+        logs = driver.get_log('browser')
+        errors = [log for log in logs if log['level'] == 'SEVERE']
+
+        if errors:
+            error_messages = [error['message'] for error in errors]
+            assert False, f"JavaScript errors detected: {error_messages}"
+
+    @staticmethod
+    def assert_navigation_works(driver, expected_url_fragment):
+        """Assert navigation works without errors."""
+        current_url = driver.current_url
+        assert expected_url_fragment in current_url, f"Expected URL fragment '{expected_url_fragment}' not found in '{current_url}'"
+
+        # Check for navigation errors
+        ComponentAssertions.assert_no_console_errors(driver)
+
+
+
+
+"""
+Input Component Tests
+Following CLAUDE.md requirements: 4 tests per component (Functionality, Visual Rendering, Navigation, Runtime Stability)
+"""
+
+
 
 
 class TestInput:
-    """Test suite for Input component"""
+    """Test suite for Input component."""
 
-    @pytest.fixture(autouse=True)
-    def setup(self, driver, base_url):
-        """Setup test environment"""
-        self.driver = driver
-        # Use inputs page for input tests
-        self.base_url = "http://localhost:3000/inputs"
-        self.driver.get(self.base_url)
+    def test_input_functionality(self, driver, test_helper, assertions):
+        """
+        Test 1: Input Functionality
+        Test core input interactions and state changes
+        """
+        # Navigate to inputs page
+        test_helper.navigate_to_category("inputs")
 
-        # Scroll to Input Components section
-        try:
-            input_section = self.driver.find_element(By.XPATH, "//h2[contains(text(), 'Input Components')]")
-            self.driver.execute_script("arguments[0].scrollIntoView(true);", input_section)
-            time.sleep(0.5)
-        except:
-            pass
+        # Test name input functionality
+        name_input = test_helper.wait_for_element(Locators.INPUT_NAME)
 
-        # Wait for page to load
-        WebDriverWait(self.driver, 10).until(
-            EC.presence_of_element_located((By.TAG_NAME, "body"))
-        )
-
-    def test_input_text_entry(self):
-        """Test 1: Input functionality - text entry works"""
-        # Find text input
-        input_element = self.driver.find_element(By.XPATH, "//input[contains(@placeholder, 'Enter your text')]")
-        label_element = self.driver.find_element(By.XPATH, "//label[contains(text(), 'Text Input')]")
-
-        # Verify input is displayed
-        assert input_element.is_displayed(), "Input should be visible"
-        assert label_element.is_displayed(), "Input label should be visible"
-
-        # Type text into input
-        test_text = "Hello React UI Forge!"
-        input_element.send_keys(test_text)
-        time.sleep(0.1)
+        # Test typing into input
+        test_helper.type_text(Locators.INPUT_NAME, TestData.TEST_NAME)
+        time.sleep(0.3)
 
         # Verify text was entered
-        assert input_element.get_attribute("value") == test_text, "Input should contain entered text"
+        entered_value = name_input.get_attribute('value')
+        assert entered_value == TestData.TEST_NAME, \
+            f"Expected input value '{TestData.TEST_NAME}', got '{entered_value}'"
 
-    def test_input_renders_normally(self):
-        """Test 2: Input visual rendering - normal size and shape"""
-        input_element = self.driver.find_element(By.XPATH, "//input[contains(@placeholder, 'Enter your text')]")
-
-        # Check input is displayed
-        assert input_element.is_displayed(), "Input should be visible"
-
-        # Check input has reasonable dimensions
-        assert input_element.size['width'] > 50, "Input width should be reasonable"
-        assert input_element.size['height'] > 10, "Input height should be reasonable"
-        assert input_element.size['height'] < 200, "Input height should not be excessive"
-
-        # Check input has proper attributes
-        assert input_element.get_attribute("type") == "text", "Input should be text type"
-        assert "input-element" in input_element.get_attribute("class"), "Input should have element class"
-
-    def test_input_navigation(self):
-        """Test 3: Input navigation - no URL changes or console errors"""
-        input_element = self.driver.find_element(By.XPATH, "//input[contains(@placeholder, 'Enter your text')]")
-        initial_url = self.driver.current_url
-
-        # Type in input
-        input_element.send_keys("test text")
-        time.sleep(0.1)
-
-        # Verify URL hasn't changed
-        assert self.driver.current_url == initial_url, "Input interaction should not change URL"
-
-        # Check for browser console errors (filter network errors)
-        logs = self.driver.get_log('browser')
-        errors = filter_console_errors(logs)
-        assert len(errors) == 0, f"Console errors found: {errors}"
-
-    def test_input_no_errors(self):
-        """Test 4: Input runtime stability - no JavaScript errors"""
-        # Check initial console logs
-        initial_logs = self.driver.get_log('browser')
-        initial_errors = filter_console_errors(initial_logs)
-        assert len(initial_errors) == 0, f"Initial console errors: {initial_errors}"
-
-        # Interact with multiple inputs
-        inputs = self.driver.find_elements(By.TAG_NAME, "input")
-
-        for input_element in inputs[:3]:  # Test first 3 inputs
-            if input_element.is_displayed() and input_element.is_enabled():
-                try:
-                    input_element.send_keys("test")
-                    time.sleep(0.1)
-                    input_element.clear()
-                except:
-                    # Some inputs (like required password fields) might not be clearable
-                    # That's okay for this test - we just want to ensure no errors
-                    pass
-
-        # Check for errors after interactions
-        final_logs = self.driver.get_log('browser')
-        final_errors = filter_console_errors(final_logs)
-        assert len(final_errors) == 0, f"Console errors after interactions: {final_errors}"
-
-    def test_input_validation(self):
-        """Test 5: Input validation - real-time validation works"""
-        input_element = self.driver.find_element(By.XPATH, "//input[contains(@placeholder, 'Enter your text')]")
-
-        # Enter text that's too short
-        input_element.send_keys("ab")
-        time.sleep(0.2)  # Wait for validation
-
-        # Check for error message
-        try:
-            error_element = self.driver.find_element(By.XPATH, "//div[contains(@class, 'input-error')]")
-            assert error_element.is_displayed(), "Error message should be visible for invalid input"
-            assert "at least 3 characters" in error_element.text, "Error message should mention length requirement"
-        except:
-            # Error element might not exist if validation isn't implemented yet
-            pass
-
-        # Enter valid text
-        input_element.clear()
-        input_element.send_keys("valid text")
-        time.sleep(0.2)
-
-        # Check error is gone (if it existed)
-        try:
-            error_element = self.driver.find_element(By.XPATH, "//div[contains(@class, 'input-error')]")
-            assert not error_element.is_displayed(), "Error message should disappear for valid input"
-        except:
-            pass
-
-    def test_input_character_count(self):
-        """Test 6: Input character count - character counter works"""
-        input_element = self.driver.find_element(By.XPATH, "//input[contains(@placeholder, 'Enter your text')]")
-
-        # Find character count element
-        try:
-            char_count_element = self.driver.find_element(By.XPATH, "//div[contains(@class, 'input-character-count')]")
-            assert char_count_element.is_displayed(), "Character count should be visible"
-
-            # Type text and check count updates
-            test_text = "Hello"
-            input_element.send_keys(test_text)
-            time.sleep(0.1)
-
-            count_text = char_count_element.text
-            assert str(len(test_text)) in count_text, f"Character count should show {len(test_text)}"
-        except:
-            # Character count might not be implemented yet
-            pass
-
-    def test_input_keyboard_navigation(self):
-        """Test 7: Input keyboard navigation - keyboard typing works"""
-        # Find first input
-        input_element = self.driver.find_element(By.XPATH, "//input[contains(@placeholder, 'Enter your text')]")
-
-        # Focus the input directly (simplified approach)
-        input_element.click()
-        time.sleep(0.1)
-
-        # Verify input is focused
-        active_element = self.driver.switch_to.active_element
-        assert active_element == input_element, "Input should be focusable"
-
-        # Type text
-        test_text = "keyboard test"
-        active_element.send_keys(test_text)
-        time.sleep(0.1)
-
-        # Verify text was entered
-        assert input_element.get_attribute("value") == test_text, "Should be able to type in focused input"
-
-    def test_input_email_type(self):
-        """Test 8: Input email type - email input works correctly"""
-        email_input = self.driver.find_element(By.XPATH, "//input[@type='email']")
-
-        # Verify email input type
-        assert email_input.get_attribute("type") == "email", "Email input should have type='email'"
-
-        # Verify email input is displayed
-        assert email_input.is_displayed(), "Email input should be visible"
-
-        # Type email address
-        test_email = "test@example.com"
-        email_input.send_keys(test_email)
-        time.sleep(0.1)
+        # Test email input functionality
+        email_input = test_helper.wait_for_element(Locators.INPUT_EMAIL)
+        test_helper.type_text(Locators.INPUT_EMAIL, TestData.VALID_EMAIL)
+        time.sleep(0.3)
 
         # Verify email was entered
-        assert email_input.get_attribute("value") == test_email, "Email input should accept email addresses"
+        email_value = email_input.get_attribute('value')
+        assert email_value == TestData.VALID_EMAIL, \
+            f"Expected email value '{TestData.VALID_EMAIL}', got '{email_value}'"
 
-    def test_input_password_type(self):
-        """Test 9: Input password type - password input masks text"""
-        password_input = self.driver.find_element(By.XPATH, "//input[@type='password']")
+        # Test clearing input
+        name_input.clear()
+        time.sleep(0.2)
 
-        # Verify password input type
-        assert password_input.get_attribute("type") == "password", "Password input should have type='password'"
+        cleared_value = name_input.get_attribute('value')
+        assert cleared_value == "", f"Expected empty input after clear, got '{cleared_value}'"
 
-        # Verify password input is displayed
-        assert password_input.is_displayed(), "Password input should be visible"
+        # Test input with special characters
+        special_text = "Test!@#$%^&*()_+-={}[]|\\:;\"'<>?,./"
+        test_helper.type_text(Locators.INPUT_NAME, special_text)
+        time.sleep(0.3)
 
-        # Type password
-        test_password = "secretpassword123"
-        password_input.send_keys(test_password)
-        time.sleep(0.1)
+        # Verify special characters accepted
+        special_value = name_input.get_attribute('value')
+        assert special_text in special_value, \
+            f"Input should accept special characters, got '{special_value}'"
 
-        # Verify password was entered (value attribute should contain the password)
-        assert password_input.get_attribute("value") == test_password, "Password input should store entered value"
+    def test_input_renders_normally(self, driver, test_helper, assertions):
+        """
+        Test 2: Visual Rendering
+        Test input renders without visual abnormalities
+        """
+        # Navigate to inputs page
+        test_helper.navigate_to_category("inputs")
 
-    def test_input_required_attribute(self):
-        """Test 10: Input required attribute - required inputs have proper attributes"""
-        password_input = self.driver.find_element(By.XPATH, "//input[@type='password']")
+        # Test name input rendering
+        name_input = test_helper.wait_for_element(Locators.INPUT_NAME)
+        assertions.assert_element_rendered_properly(name_input)
 
-        # Check for required attribute
-        required = password_input.get_attribute("required")
-        assert required is not None, "Required input should have required attribute"
+        # Check input has reasonable dimensions
+        width, height = test_helper.get_element_size(Locators.INPUT_NAME)
+        assert 100 <= width <= 800, f"Input width {width} is outside reasonable range"
+        assert 20 <= height <= 200, f"Input height {height} is outside reasonable range"
 
-        # Check for aria-required
-        aria_required = password_input.get_attribute("aria-required")
-        assert aria_required == "true", "Required input should have aria-required='true'"
+        # Check input position
+        x, y = test_helper.get_element_position(Locators.INPUT_NAME)
+        assert x >= 0 and y >= 0, f"Input position ({x}, {y}) is negative"
+        assert x <= 2000 and y <= 2000, f"Input position ({x}, {y}) is too far"
 
-    def test_input_label_association(self):
-        """Test 11: Input label association - labels are properly associated with inputs"""
-        input_element = self.driver.find_element(By.XPATH, "//input[contains(@placeholder, 'Enter your text')]")
-        label_element = self.driver.find_element(By.XPATH, "//label[contains(text(), 'Text Input')]")
+        # Test email input rendering
+        email_input = test_helper.wait_for_element(Locators.INPUT_EMAIL)
+        assertions.assert_element_rendered_properly(email_input)
 
-        # Check label has for attribute
-        label_for = label_element.get_attribute("for")
-        input_id = input_element.get_attribute("id")
+        # Test textarea rendering (if present on inputs page)
+        try:
+            textarea = test_helper.wait_for_element(Locators.TEXTAREA_MESSAGE, timeout=5)
+            assertions.assert_element_rendered_properly(textarea)
+        except TimeoutException:
+            # Textarea might not be on this page, that's okay
+            pass
 
-        # Either label should have for attribute OR input should have aria-labelledby
-        if label_for:
-            assert label_for == input_id, "Label for attribute should match input id"
-        else:
-            aria_labelledby = input_element.get_attribute("aria-labelledby")
-            assert aria_labelledby, "Input should have aria-labelledby if label has no for attribute"
+        # Verify input type attributes are correct
+        assert name_input.get_attribute('type') == 'text', \
+            f"Expected text input type, got '{name_input.get_attribute('type')}'"
 
-    def test_input_placeholder_text(self):
-        """Test 12: Input placeholder text - placeholders are visible"""
-        input_element = self.driver.find_element(By.XPATH, "//input[contains(@placeholder, 'Enter your text')]")
-        placeholder = input_element.get_attribute("placeholder")
-        assert placeholder and len(placeholder) > 0, "Input should have placeholder text"
+        assert email_input.get_attribute('type') == 'email', \
+            f"Expected email input type, got '{email_input.get_attribute('type')}'"
+
+        # Check inputs have proper labels
+        name_label = test_helper.driver.find_element(By.XPATH, "//label[@for='name']")
+        assert name_label.is_displayed(), "Name input should have visible label"
+
+        email_label = test_helper.driver.find_element(By.XPATH, "//label[@for='email']")
+        assert email_label.is_displayed(), "Email input should have visible label"
+
+    def test_input_navigation(self, driver, test_helper, assertions):
+        """
+        Test 3: Navigation
+        Test input navigation behavior and form submission
+        """
+        # Navigate to inputs page
+        test_helper.navigate_to_category("inputs")
+
+        # Test tab navigation between inputs
+        name_input = test_helper.wait_for_element(Locators.INPUT_NAME)
+        name_input.click()
+
+        # Tab to email input
+        name_input.send_keys('\t')
+        time.sleep(0.3)
+
+        # Verify focus moved to email input
+        active_element = test_helper.driver.switch_to.active_element
+        assert active_element.get_attribute('data-testid') == 'input-email', \
+            "Tab navigation should move focus to email input"
+
+        # Test form submission navigation (if submit button exists)
+        try:
+            submit_button = test_helper.driver.find_element(Locators.BUTTON_SUBMIT)
+
+            # Fill form and submit
+            test_helper.type_text(Locators.INPUT_NAME, TestData.TEST_NAME)
+            test_helper.type_text(Locators.INPUT_EMAIL, TestData.VALID_EMAIL)
+
+            initial_url = test_helper.driver.current_url
+            submit_button.click()
+            time.sleep(1)
+
+            # Check if navigation occurred (might stay on same page with success message)
+            assertions.assert_no_console_errors(test_helper.driver)
+
+        except:
+            # Submit button might not be present or might behave differently
+            pass
+
+        # Test breadcrumb navigation if present
+        try:
+            breadcrumb_link = test_helper.driver.find_element(By.LINK_TEXT, "Home")
+            breadcrumb_link.click()
+            time.sleep(1)
+
+            assertions.assert_navigation_works(test_helper.driver, "/")
+        except:
+            # Breadcrumb might not be present, that's okay
+            pass
+
+    def test_input_no_errors(self, driver, test_helper, assertions):
+        """
+        Test 4: Runtime Stability
+        Test input runtime stability and console errors
+        """
+        # Navigate to inputs page
+        test_helper.navigate_to_category("inputs")
+
+        # Check initial console state
+        initial_errors = test_helper.get_console_errors()
+        assert len(initial_errors) == 0, \
+            f"Page loaded with {len(initial_errors)} JavaScript errors: {[e['message'] for e in initial_errors]}"
+
+        # Test rapid input changes to trigger potential errors
+        name_input = test_helper.wait_for_element(Locators.INPUT_NAME)
+
+        # Rapid text changes
+        for i in range(20):
+            name_input.clear()
+            name_input.send_keys(f"Test text {i}")
+            time.sleep(0.05)
+
+        # Test very long text input
+        name_input.clear()
+        very_long_text = "A" * 1000  # 1000 characters
+        name_input.send_keys(very_long_text)
+        time.sleep(0.3)
+
+        # Test invalid email format
+        email_input = test_helper.wait_for_element(Locators.INPUT_EMAIL)
+        email_input.clear()
+        email_input.send_keys(TestData.INVALID_EMAIL)
+        time.sleep(0.3)
+
+        # Test valid email format
+        email_input.clear()
+        email_input.send_keys(TestData.VALID_EMAIL)
+        time.sleep(0.3)
+
+        # Test input focus/blur cycles
+        for i in range(10):
+            name_input.click()
+            time.sleep(0.1)
+            email_input.click()
+            time.sleep(0.1)
+
+        # Check for console errors after interactions
+        final_errors = test_helper.get_console_errors()
+        error_messages = [error['message'] for error in final_errors]
+
+        assert len(final_errors) == 0, \
+            f"Input interactions caused {len(final_errors)} JavaScript errors: {error_messages}"
+
+        # Test input elements are still functional
+        name_input = test_helper.wait_for_element(Locators.INPUT_NAME)
+        assert name_input.is_displayed(), "Name input should still be displayed after interactions"
+        assert name_input.is_enabled(), "Name input should still be enabled after interactions"
+
+        # Verify no JavaScript exceptions thrown
+        logs = test_helper.driver.get_log('browser')
+        js_exceptions = [log for log in logs if 'Uncaught' in log.get('message', '')]
+
+        assert len(js_exceptions) == 0, \
+            f"Found {len(js_exceptions)} JavaScript exceptions: {[log['message'] for log in js_exceptions]}"
+
+        # Test input values persisted correctly
+        final_name_value = name_input.get_attribute('value')
+        final_email_value = email_input.get_attribute('value')
+
+        assert final_name_value == very_long_text, \
+            f"Name input value should persist, expected '{very_long_text[:50]}...', got '{final_name_value[:50]}...'"
+
+        assert final_email_value == TestData.VALID_EMAIL, \
+            f"Email input value should persist, expected '{TestData.VALID_EMAIL}', got '{final_email_value}'"

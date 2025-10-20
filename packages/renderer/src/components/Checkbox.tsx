@@ -131,7 +131,7 @@ export const Checkbox: React.FC<CheckboxProps> = ({
         >
           {children}
           {required && (
-            <span className="checkbox-required-indicator" aria-hidden="true">
+            <span className="checkbox-required-indicator" aria-hidden={true}>
               *
             </span>
           )}

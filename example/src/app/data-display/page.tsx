@@ -121,6 +121,11 @@ export default function DataDisplayPage() {
     { name: 'Kbd', description: 'Keyboard key display component', status: 'available' },
     { name: 'Kbd Shortcut', description: 'Keyboard shortcut display', status: 'available' },
     { name: 'Kbd Modifier', description: 'Modifier key display (Ctrl, Alt, etc.)', status: 'available' },
+
+    // Floating & Overlay Components
+    { name: 'Popover', description: 'Floating content container with trigger', status: 'available' },
+    { name: 'Toast', description: 'Notification toast messages', status: 'available' },
+    { name: 'Toast Provider', description: 'Toast context provider', status: 'available' },
   ];
 
   const getStatusColor = (status: string) => {
@@ -642,6 +647,138 @@ export default function DataDisplayPage() {
                 <button className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700" onClick={() => console.log('Action clicked')}>
                   Create First Item
                 </button>
+              </div>
+            </div>
+
+            {/* Popover */}
+            <div>
+              <h3 className="text-xl font-semibold text-gray-900 mb-4">Popover Component</h3>
+              <div className="space-y-6">
+                <div>
+                  <p className="text-gray-600 mb-3">Basic popover with hover trigger</p>
+                  <div className="flex gap-4">
+                    <div data-testid="popover-hover" className="relative group">
+                      <button className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700">
+                        Hover for Popover
+                      </button>
+                      <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 w-64 p-4 bg-white border border-gray-200 rounded-lg shadow-lg opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none group-hover:pointer-events-auto z-10">
+                        <h4 className="font-semibold text-gray-900 mb-2">Popover Title</h4>
+                        <p className="text-sm text-gray-600">This is popover content that appears on hover. It can contain detailed information or actions.</p>
+                      </div>
+                    </div>
+
+                    <div data-testid="popover-click" className="relative">
+                      <button className="px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700">
+                        Click for Popover
+                      </button>
+                      <div className="absolute top-full left-1/2 transform -translate-x-1/2 mt-2 w-64 p-4 bg-white border border-gray-200 rounded-lg shadow-lg z-10 hidden group-focus-within:block">
+                        <h4 className="font-semibold text-gray-900 mb-2">Click Popover</h4>
+                        <p className="text-sm text-gray-600 mb-3">This popover appears on click and stays visible.</p>
+                        <button className="px-3 py-1 bg-blue-600 text-white text-sm rounded hover:bg-blue-700">Action</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="bg-white rounded-lg border border-gray-200 p-4">
+                  <h4 className="font-medium text-gray-900 mb-2">Popover Features</h4>
+                  <ul className="text-sm text-gray-600 space-y-1">
+                    <li>• Flexible positioning (top, bottom, left, right)</li>
+                    <li>• Multiple trigger types (hover, click, focus)</li>
+                    <li>• Customizable content and styling</li>
+                    <li>• Accessible with proper ARIA attributes</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            {/* Toast */}
+            <div>
+              <h3 className="text-xl font-semibold text-gray-900 mb-4">Toast Component</h3>
+              <div className="space-y-6">
+                <div>
+                  <p className="text-gray-600 mb-3">Toast notification variants</p>
+                  <div className="space-y-3">
+                    <div data-testid="toast-success" className="bg-green-50 border border-green-200 rounded-lg p-4 flex items-center gap-3">
+                      <div className="w-6 h-6 bg-green-500 rounded-full flex items-center justify-center">
+                        <svg className="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
+                          <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                        </svg>
+                      </div>
+                      <div className="flex-1">
+                        <h4 className="text-sm font-medium text-green-900">Success</h4>
+                        <p className="text-sm text-green-700">Your changes have been saved successfully.</p>
+                      </div>
+                      <button className="text-green-500 hover:text-green-700">
+                        <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                          <path fillRule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clipRule="evenodd" />
+                        </svg>
+                      </button>
+                    </div>
+
+                    <div data-testid="toast-error" className="bg-red-50 border border-red-200 rounded-lg p-4 flex items-center gap-3">
+                      <div className="w-6 h-6 bg-red-500 rounded-full flex items-center justify-center">
+                        <svg className="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
+                          <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
+                        </svg>
+                      </div>
+                      <div className="flex-1">
+                        <h4 className="text-sm font-medium text-red-900">Error</h4>
+                        <p className="text-sm text-red-700">Failed to save changes. Please try again.</p>
+                      </div>
+                      <button className="text-red-500 hover:text-red-700">
+                        <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                          <path fillRule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clipRule="evenodd" />
+                        </svg>
+                      </button>
+                    </div>
+
+                    <div data-testid="toast-info" className="bg-blue-50 border border-blue-200 rounded-lg p-4 flex items-center gap-3">
+                      <div className="w-6 h-6 bg-blue-500 rounded-full flex items-center justify-center">
+                        <svg className="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
+                          <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clipRule="evenodd" />
+                        </svg>
+                      </div>
+                      <div className="flex-1">
+                        <h4 className="text-sm font-medium text-blue-900">Information</h4>
+                        <p className="text-sm text-blue-700">A new update is available for download.</p>
+                      </div>
+                      <button className="text-blue-500 hover:text-blue-700">
+                        <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                          <path fillRule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clipRule="evenodd" />
+                        </svg>
+                      </button>
+                    </div>
+
+                    <div data-testid="toast-warning" className="bg-yellow-50 border border-yellow-200 rounded-lg p-4 flex items-center gap-3">
+                      <div className="w-6 h-6 bg-yellow-500 rounded-full flex items-center justify-center">
+                        <svg className="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
+                          <path fillRule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
+                        </svg>
+                      </div>
+                      <div className="flex-1">
+                        <h4 className="text-sm font-medium text-yellow-900">Warning</h4>
+                        <p className="text-sm text-yellow-700">Your session will expire in 5 minutes.</p>
+                      </div>
+                      <button className="text-yellow-500 hover:text-yellow-700">
+                        <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                          <path fillRule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clipRule="evenodd" />
+                        </svg>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="bg-white rounded-lg border border-gray-200 p-4">
+                  <h4 className="font-medium text-gray-900 mb-2">Toast Features</h4>
+                  <ul className="text-sm text-gray-600 space-y-1">
+                    <li>• Multiple variants (success, error, info, warning)</li>
+                    <li>• Auto-dismiss after configurable timeout</li>
+                    <li>• Manual dismiss option</li>
+                    <li>• Stackable notifications</li>
+                    <li>• Accessible with ARIA live regions</li>
+                  </ul>
+                </div>
               </div>
             </div>
           </div>

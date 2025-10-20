@@ -110,7 +110,7 @@ export const EmptyState = forwardRef<HTMLDivElement, EmptyStateProps>(
       >
         {/* Icon/Illustration */}
         {icon && (
-          <div className="mb-4 text-4xl" role="img" aria-hidden="true">
+          <div className="mb-4 text-4xl" role="img" aria-hidden={true}>
             {icon}
           </div>
         )}

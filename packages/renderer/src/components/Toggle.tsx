@@ -76,7 +76,7 @@ export const Toggle: React.FC<ToggleProps> = ({
       disabled={state.disabled}
     >
       {displayIcon && (
-        <span className="toggle-icon" aria-hidden="true">
+        <span className="toggle-icon" aria-hidden={true}>
           {displayIcon}
         </span>
       )}

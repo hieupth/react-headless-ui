@@ -190,7 +190,7 @@ const HorizontalTabs = () => {
         <button
           data-testid="disabled-tab"
           role="tab"
-          aria-selected="false"
+          aria-selected={false}
           disabled
           className="px-1 py-2 font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-400 cursor-not-allowed border-b-2 border-transparent"
         >
@@ -448,6 +448,7 @@ export default function NavigationPage() {
     { name: 'Command', description: 'Command palette with search and keyboard navigation', status: 'available' },
     { name: 'Combobox', description: 'Combined input and dropdown with search functionality', status: 'available' },
     { name: 'Context Menu', description: 'Menu appearing on right-click with context actions', status: 'available' },
+    { name: 'Pagination', description: 'Navigate through multiple pages with controls', status: 'available' },
   ];
 
   const getStatusColor = (status: string) => {
@@ -583,7 +584,7 @@ export default function NavigationPage() {
                     onClick={() => console.log('Menu clicked')}
                   >
                     Menu
-                    <svg className="-mr-1 ml-2 h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                    <svg className="-mr-1 ml-2 h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden={true}>
                       <path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" />
                     </svg>
                   </button>
@@ -732,7 +733,7 @@ export default function NavigationPage() {
                   onClick={() => console.log('Menu clicked')}
                 >
                   Menu
-                  <svg className="-mr-1 ml-2 h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                  <svg className="-mr-1 ml-2 h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden={true}>
                     <path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" />
                   </svg>
                 </button>
@@ -755,7 +756,7 @@ export default function NavigationPage() {
                   onClick={() => console.log('User menu clicked')}
                 >
                   User Menu
-                  <svg className="-mr-1 ml-2 h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                  <svg className="-mr-1 ml-2 h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden={true}>
                     <path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" />
                   </svg>
                 </button>
@@ -784,7 +785,7 @@ export default function NavigationPage() {
                   onClick={() => console.log('Actions menu clicked')}
                 >
                   Actions
-                  <svg className="-mr-1 ml-2 h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                  <svg className="-mr-1 ml-2 h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden={true}>
                     <path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" />
                   </svg>
                 </button>
@@ -1050,7 +1051,7 @@ export default function NavigationPage() {
                       onClick={() => console.log('File menu clicked')}
                     >
                       File Menu
-                      <svg className="-mr-1 ml-2 h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                      <svg className="-mr-1 ml-2 h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden={true}>
                         <path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" />
                       </svg>
                     </button>
@@ -1263,6 +1264,159 @@ export default function NavigationPage() {
             </div>
           </div>
         </section>
+
+        {/* Pagination Component */}
+        <div className="space-y-8 mb-12">
+          <div>
+            <h3 className="text-xl font-semibold text-gray-900 mb-4">Pagination</h3>
+            <div className="bg-white rounded-lg border border-gray-200 p-6">
+              <div className="space-y-6">
+                {/* Basic Pagination */}
+                <div>
+                  <h4 className="text-lg font-medium text-gray-800 mb-3">Basic Pagination</h4>
+                  <nav data-testid="pagination-basic" className="flex items-center justify-between">
+                    <div className="text-sm text-gray-700">
+                      Showing <span className="font-medium">1</span> to <span className="font-medium">10</span> of{' '}
+                      <span className="font-medium">97</span> results
+                    </div>
+                    <div className="flex gap-1">
+                      <button
+                        data-testid="pagination-prev"
+                        className="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50"
+                      >
+                        <span className="sr-only">Previous</span>
+                        <svg className="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                          <path fillRule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clipRule="evenodd" />
+                        </svg>
+                      </button>
+                      <button
+                        data-testid="pagination-page-1"
+                        className="relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50"
+                      >
+                        1
+                      </button>
+                      <button
+                        data-testid="pagination-page-2"
+                        className="relative inline-flex items-center px-4 py-2 border border-gray-300 bg-blue-50 text-sm font-medium text-blue-600"
+                      >
+                        2
+                      </button>
+                      <button
+                        data-testid="pagination-page-3"
+                        className="relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50"
+                      >
+                        3
+                      </button>
+                      <span className="relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-700">
+                        ...
+                      </span>
+                      <button
+                        data-testid="pagination-page-10"
+                        className="relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50"
+                      >
+                        10
+                      </button>
+                      <button
+                        data-testid="pagination-next"
+                        className="relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50"
+                      >
+                        <span className="sr-only">Next</span>
+                        <svg className="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                          <path fillRule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clipRule="evenodd" />
+                        </svg>
+                      </button>
+                    </div>
+                  </nav>
+                </div>
+
+                {/* Compact Pagination */}
+                <div>
+                  <h4 className="text-lg font-medium text-gray-800 mb-3">Compact Pagination</h4>
+                  <nav data-testid="pagination-compact" className="flex items-center justify-center gap-2">
+                    <button
+                      data-testid="pagination-compact-prev"
+                      className="p-2 border border-gray-300 rounded-md bg-white text-sm font-medium text-gray-500 hover:bg-gray-50"
+                    >
+                      <svg className="h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                        <path fillRule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clipRule="evenodd" />
+                      </svg>
+                    </button>
+                    <button
+                      data-testid="pagination-compact-page-1"
+                      className="px-3 py-1 border border-gray-300 rounded-md bg-white text-sm font-medium text-gray-700 hover:bg-gray-50"
+                    >
+                      1
+                    </button>
+                    <button
+                      data-testid="pagination-compact-page-2"
+                      className="px-3 py-1 border border-blue-500 rounded-md bg-blue-50 text-sm font-medium text-blue-600"
+                    >
+                      2
+                    </button>
+                    <button
+                      data-testid="pagination-compact-page-3"
+                      className="px-3 py-1 border border-gray-300 rounded-md bg-white text-sm font-medium text-gray-700 hover:bg-gray-50"
+                    >
+                      3
+                    </button>
+                    <button
+                      data-testid="pagination-compact-next"
+                      className="p-2 border border-gray-300 rounded-md bg-white text-sm font-medium text-gray-500 hover:bg-gray-50"
+                    >
+                      <svg className="h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                        <path fillRule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clipRule="evenodd" />
+                      </svg>
+                    </button>
+                  </nav>
+                </div>
+
+                {/* Pagination with page size selector */}
+                <div>
+                  <h4 className="text-lg font-medium text-gray-800 mb-3">Pagination with Page Size</h4>
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-2">
+                      <label className="text-sm text-gray-700">Items per page:</label>
+                      <select
+                        data-testid="pagination-page-size"
+                        className="border border-gray-300 rounded-md px-3 py-1 text-sm"
+                      >
+                        <option value="10">10</option>
+                        <option value="25">25</option>
+                        <option value="50">50</option>
+                        <option value="100">100</option>
+                      </select>
+                    </div>
+                    <nav data-testid="pagination-with-size" className="flex gap-1">
+                      <button
+                        className="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50"
+                      >
+                        Previous
+                      </button>
+                      <button className="relative inline-flex items-center px-4 py-2 border border-blue-500 bg-blue-50 text-sm font-medium text-blue-600">
+                        1
+                      </button>
+                      <button
+                        className="relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50"
+                      >
+                        2
+                      </button>
+                      <button
+                        className="relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50"
+                      >
+                        3
+                      </button>
+                      <button
+                        className="relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50"
+                      >
+                        Next
+                      </button>
+                    </nav>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
 
         {/* Scrollspy Component */}
         <div className="space-y-8 mb-12">

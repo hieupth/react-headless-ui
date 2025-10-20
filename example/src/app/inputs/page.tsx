@@ -266,6 +266,8 @@ export default function InputsPage() {
     { name: 'Range Calendar', description: 'Calendar for date range selection', status: 'available' },
     { name: 'Date Picker Calendar', description: 'Integrated date picker with input field', status: 'available' },
     { name: 'Stepper', description: 'Step-by-step input wizard with navigation', status: 'available' },
+    { name: 'File Upload', description: 'File upload component with drag-and-drop support', status: 'available' },
+    { name: 'Form', description: 'Form wrapper with validation and submission handling', status: 'available' },
   ];
 
   const getStatusColor = (status: string) => {
@@ -404,9 +406,11 @@ export default function InputsPage() {
                   type="checkbox"
                   id="checkbox"
                   data-testid="checkbox"
+                  role="checkbox"
+                  aria-checked={formData.subscribe}
                   checked={formData.subscribe}
                   onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleInputChange('subscribe', e.target.checked)}
-                  className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+                  className="checkbox h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
                 />
                 <label htmlFor="checkbox" className="text-sm font-medium text-gray-700">Test Checkbox</label>
               </div>
@@ -576,7 +580,7 @@ export default function InputsPage() {
                   value={inputStates.password.value}
                   onChange={(e) => handleSimpleInputChange('password', e.target.value)}
                   required
-                  aria-required="true"
+                  aria-required={true}
                   className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />
               </div>
@@ -637,7 +641,7 @@ export default function InputsPage() {
                   id="multi-select"
                   data-testid="multi-select"
                   multiple
-                  size="4"
+                  size={4}
                   className="select-element w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                 >
                   <option value="red">Red</option>
@@ -1122,6 +1126,69 @@ export default function InputsPage() {
           </div>
         </div>
 
+          {/* File Upload Component */}
+          <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+            <h3 className="text-lg font-semibold text-gray-900 mb-4">File Upload Component</h3>
+            <div className="space-y-4">
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">Upload Files</label>
+                <div
+                  data-testid="file-upload"
+                  className="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center hover:border-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                  onDragOver={(e) => {
+                    e.preventDefault();
+                    e.currentTarget.classList.add('border-blue-500', 'bg-blue-50');
+                  }}
+                  onDragLeave={(e) => {
+                    e.preventDefault();
+                    e.currentTarget.classList.remove('border-blue-500', 'bg-blue-50');
+                  }}
+                  onDrop={(e) => {
+                    e.preventDefault();
+                    e.currentTarget.classList.remove('border-blue-500', 'bg-blue-50');
+                    const files = Array.from(e.dataTransfer.files);
+                    console.log('Dropped files:', files);
+                  }}
+                >
+                  <svg className="mx-auto h-12 w-12 text-gray-400" stroke="currentColor" fill="none" viewBox="0 0 48 48" aria-hidden={true}>
+                    <path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                  </svg>
+                  <div className="flex text-sm text-gray-600">
+                    <label htmlFor="file-upload" className="relative cursor-pointer rounded-md bg-white font-medium text-blue-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-blue-500 focus-within:ring-offset-2 hover:text-blue-500">
+                      <span>Upload a file</span>
+                      <input id="file-upload" name="file-upload" type="file" className="sr-only" data-testid="file-input" onChange={(e) => {
+                        const files = Array.from(e.target.files || []);
+                        console.log('Selected files:', files);
+                      }} />
+                    </label>
+                    <p className="pl-1">or drag and drop</p>
+                  </div>
+                  <p className="text-xs text-gray-500">PNG, JPG, GIF up to 10MB</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Form Component */}
+          <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+            <h3 className="text-lg font-semibold text-gray-900 mb-4">Form Component</h3>
+            <div className="space-y-4">
+              <div>
+                <p className="text-sm text-gray-600 mb-4">Form wrapper with validation and submission handling. The interactive form demo above demonstrates the Form component capabilities.</p>
+                <div className="bg-gray-50 rounded-lg p-4">
+                  <h4 className="font-medium text-gray-900 mb-2">Form Features:</h4>
+                  <ul className="text-sm text-gray-600 space-y-1">
+                    <li>• Built-in validation and error states</li>
+                    <li>• Semantic HTML5 form structure</li>
+                    <li>• Accessibility compliance</li>
+                    <li>• Controlled and uncontrolled modes</li>
+                    <li>• Field grouping and organization</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+
           {/* Alert Dialog Component */}
           <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
             <h3 className="text-lg font-semibold text-gray-900 mb-4">Alert Dialog Component</h3>
@@ -1205,6 +1272,98 @@ export default function InputsPage() {
               </div>
             </div>
           </div>
+
+        {/* Switch Components */}
+          <section className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+            <h2 className="text-lg font-semibold text-gray-900 mb-4">Switch Components</h2>
+            <div className="space-y-6">
+              {/* Basic Switches */}
+              <div>
+                <h3 className="text-md font-medium text-gray-800 mb-3">Basic Switches</h3>
+                <div className="space-y-4">
+                  <div className="flex items-center space-x-3">
+                    <button
+                      type="button"
+                      data-testid="switch-email"
+                      role="switch"
+                      aria-checked={formData.notifications}
+                      onClick={() => handleInputChange('notifications', !formData.notifications)}
+                      className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 ${formData.notifications ? 'bg-blue-600' : 'bg-gray-200'}`}
+                    >
+                      <span className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${formData.notifications ? 'translate-x-6' : 'translate-x-1'}`} />
+                    </button>
+                    <label htmlFor="switch-email" className="text-sm font-medium text-gray-700">Email Notifications</label>
+                  </div>
+
+                  <div className="flex items-center space-x-3">
+                    <button
+                      type="button"
+                      data-testid="switch-darkmode"
+                      role="switch"
+                      aria-checked={!formData.notifications}
+                      onClick={() => handleInputChange('notifications', !formData.notifications)}
+                      className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 ${!formData.notifications ? 'bg-blue-600' : 'bg-gray-200'}`}
+                    >
+                      <span className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${!formData.notifications ? 'translate-x-6' : 'translate-x-1'}`} />
+                    </button>
+                    <label htmlFor="switch-darkmode" className="text-sm font-medium text-gray-700">Dark Mode</label>
+                  </div>
+                </div>
+              </div>
+
+              {/* Disabled Switch */}
+              <div>
+                <h3 className="text-md font-medium text-gray-800 mb-3">Disabled Switch</h3>
+                <div className="flex items-center space-x-3">
+                  <button
+                    type="button"
+                    data-testid="switch-disabled"
+                    role="switch"
+                    aria-checked={false}
+                    disabled
+                    className="relative inline-flex h-6 w-11 items-center rounded-full bg-gray-200 opacity-50 cursor-not-allowed transition-colors"
+                  >
+                    <span className="inline-block h-4 w-4 transform rounded-full bg-white transition-transform translate-x-1" />
+                  </button>
+                  <label htmlFor="switch-disabled" className="text-sm font-medium text-gray-700">Disabled Switch</label>
+                </div>
+              </div>
+
+              {/* Small Switches */}
+              <div>
+                <h3 className="text-md font-medium text-gray-800 mb-3">Small Switches</h3>
+                <div className="space-y-3">
+                  <div className="flex items-center space-x-3">
+                    <button
+                      type="button"
+                      data-testid="switch-small-autosave"
+                      role="switch"
+                      aria-checked={formData.notifications}
+                      onClick={() => handleInputChange('notifications', !formData.notifications)}
+                      className={`relative inline-flex h-5 w-8 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 ${formData.notifications ? 'bg-blue-600' : 'bg-gray-200'}`}
+                    >
+                      <span className={`inline-block h-3 w-3 transform rounded-full bg-white transition-transform ${formData.notifications ? 'translate-x-5' : 'translate-x-1'}`} />
+                    </button>
+                    <label htmlFor="switch-small-autosave" className="text-sm font-medium text-gray-700">Auto-save</label>
+                  </div>
+
+                  <div className="flex items-center space-x-3">
+                    <button
+                      type="button"
+                      data-testid="switch-small-notifications"
+                      role="switch"
+                      aria-checked={!formData.notifications}
+                      onClick={() => handleInputChange('notifications', !formData.notifications)}
+                      className={`relative inline-flex h-5 w-8 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 ${!formData.notifications ? 'bg-blue-600' : 'bg-gray-200'}`}
+                    >
+                      <span className={`inline-block h-3 w-3 transform rounded-full bg-white transition-transform ${!formData.notifications ? 'translate-x-5' : 'translate-x-1'}`} />
+                    </button>
+                    <label htmlFor="switch-small-notifications" className="text-sm font-medium text-gray-700">Push Notifications</label>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
 
         {/* Features Section */}
         <div className="bg-green-50 rounded-lg p-6 mt-8">

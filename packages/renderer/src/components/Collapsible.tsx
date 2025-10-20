@@ -82,7 +82,7 @@ export const Collapsible: React.FC<CollapsibleProps> = ({
       type="button"
     >
       {triggerChildren}
-      <span className="collapsible-trigger-icon" aria-hidden="true">
+      <span className="collapsible-trigger-icon" aria-hidden={true}>
         {isOpen ? (
           <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 15l7-7 7 7" />
@@ -157,7 +157,7 @@ export const CollapsibleTrigger: React.FC<{
       aria-expanded={isOpen}
     >
       {children}
-      <span className="collapsible-trigger-icon" aria-hidden="true">
+      <span className="collapsible-trigger-icon" aria-hidden={true}>
         {isOpen ? (
           <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 15l7-7 7 7" />

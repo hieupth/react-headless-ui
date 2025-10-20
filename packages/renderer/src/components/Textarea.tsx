@@ -106,7 +106,7 @@ export const Textarea: React.FC<TextareaProps> = ({
         >
           {label}
           {state.required && (
-            <span className="textarea-required-indicator" aria-hidden="true">
+            <span className="textarea-required-indicator" aria-hidden={true}>
               {' '}*
             </span>
           )}

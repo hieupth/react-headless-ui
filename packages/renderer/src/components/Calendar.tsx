@@ -170,7 +170,7 @@ export const Calendar: React.FC<CalendarProps> = ({
 
   // Default Weekday component
   const DefaultWeekday = ({ weekday }: { weekday: string; index: number }) => (
-    <div className={weekdayClassName} aria-hidden="true">
+    <div className={weekdayClassName} aria-hidden={true}>
       {weekday}
     </div>
   );
@@ -196,7 +196,7 @@ export const Calendar: React.FC<CalendarProps> = ({
         {/* Weekday headers */}
         <div className="calendar-weekdays" role="row">
           {props.showWeekNumber && (
-            <div className={weekNumberClassName} aria-hidden="true">
+            <div className={weekNumberClassName} aria-hidden={true}>
               Wk
             </div>
           )}
@@ -209,7 +209,7 @@ export const Calendar: React.FC<CalendarProps> = ({
         {state.grid.map((week, weekIndex) => (
           <div key={weekIndex} className="calendar-week" role="row">
             {props.showWeekNumber && state.weekNumbers && (
-              <div className={weekNumberClassName} aria-hidden="true">
+              <div className={weekNumberClassName} aria-hidden={true}>
                 {state.weekNumbers[weekIndex]}
               </div>
             )}

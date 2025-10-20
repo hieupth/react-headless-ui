@@ -156,7 +156,7 @@ export const Sidebar = forwardRef<HTMLDivElement, SidebarProps>(({
         <div
           className={overlayClasses}
           onClick={actions.handleOverlayClick}
-          aria-hidden="true"
+          aria-hidden={true}
         >
           {overlay}
         </div>

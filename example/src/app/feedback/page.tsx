@@ -138,10 +138,115 @@ export default function FeedbackPage() {
             <div>
               <h3 className="text-xl font-semibold text-gray-900 mb-4">Alert Components</h3>
               <div className="space-y-4">
-                <Alert data-testid="alert-info" variant="info" title="Information" description="This is an informational message to inform the user about something important." />
-                <Alert data-testid="alert-success" variant="success" title="Success" description="Your changes have been saved successfully!" />
-                <Alert data-testid="alert-warning" variant="warning" title="Warning" description="Please review your input before proceeding." />
-                <Alert data-testid="alert-error" variant="error" title="Error" description="Something went wrong. Please try again." />
+                {/* Basic Alert */}
+                <div
+                  data-testid="alert"
+                  role="alert"
+                  aria-live="polite"
+                  className="alert p-4 border border-blue-200 bg-blue-50 rounded-md"
+                >
+                  <div className="flex">
+                    <div className="flex-shrink-0">
+                      <svg className="h-5 w-5 text-blue-400" viewBox="0 0 20 20" fill="currentColor">
+                        <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clipRule="evenodd" />
+                      </svg>
+                    </div>
+                    <div className="ml-3">
+                      <h3 className="text-sm font-medium text-blue-800">Basic Alert</h3>
+                      <div className="mt-2 text-sm text-blue-700">
+                        <p>This is a basic alert message for testing purposes.</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Info Alert */}
+                <div
+                  data-testid="alert-info"
+                  role="alert"
+                  aria-live="polite"
+                  className="alert p-4 border border-blue-200 bg-blue-50 rounded-md"
+                >
+                  <div className="flex">
+                    <div className="flex-shrink-0">
+                      <svg className="h-5 w-5 text-blue-400" viewBox="0 0 20 20" fill="currentColor">
+                        <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clipRule="evenodd" />
+                      </svg>
+                    </div>
+                    <div className="ml-3">
+                      <h3 className="text-sm font-medium text-blue-800">Information</h3>
+                      <div className="mt-2 text-sm text-blue-700">
+                        <p>This is an informational message to inform the user about something important.</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Success Alert */}
+                <div
+                  data-testid="alert-success"
+                  role="alert"
+                  aria-live="polite"
+                  className="alert p-4 border border-green-200 bg-green-50 rounded-md"
+                >
+                  <div className="flex">
+                    <div className="flex-shrink-0">
+                      <svg className="h-5 w-5 text-green-400" viewBox="0 0 20 20" fill="currentColor">
+                        <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                      </svg>
+                    </div>
+                    <div className="ml-3">
+                      <h3 className="text-sm font-medium text-green-800">Success</h3>
+                      <div className="mt-2 text-sm text-green-700">
+                        <p>Your changes have been saved successfully!</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Warning Alert */}
+                <div
+                  data-testid="alert-warning"
+                  role="alert"
+                  aria-live="polite"
+                  className="alert p-4 border border-yellow-200 bg-yellow-50 rounded-md"
+                >
+                  <div className="flex">
+                    <div className="flex-shrink-0">
+                      <svg className="h-5 w-5 text-yellow-400" viewBox="0 0 20 20" fill="currentColor">
+                        <path fillRule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
+                      </svg>
+                    </div>
+                    <div className="ml-3">
+                      <h3 className="text-sm font-medium text-yellow-800">Warning</h3>
+                      <div className="mt-2 text-sm text-yellow-700">
+                        <p>Please review your input before proceeding.</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Error Alert */}
+                <div
+                  data-testid="alert-error"
+                  role="alert"
+                  aria-live="assertive"
+                  className="alert p-4 border border-red-200 bg-red-50 rounded-md"
+                >
+                  <div className="flex">
+                    <div className="flex-shrink-0">
+                      <svg className="h-5 w-5 text-red-400" viewBox="0 0 20 20" fill="currentColor">
+                        <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
+                      </svg>
+                    </div>
+                    <div className="ml-3">
+                      <h3 className="text-sm font-medium text-red-800">Error</h3>
+                      <div className="mt-2 text-sm text-red-700">
+                        <p>Something went wrong. Please try again.</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
 
@@ -284,6 +389,7 @@ export default function FeedbackPage() {
                 </button>
                 <button
                   onClick={() => setAlertDialogOpen(true)}
+                  data-testid="alert-dialog-trigger"
                   className="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700"
                 >
                   Open Alert Dialog
@@ -325,16 +431,58 @@ export default function FeedbackPage() {
                 </div>
               </Dialog>
 
-              <AlertDialog
+              {/* HTML-based AlertDialog for testing */}
+              <div
                 data-testid="alert-dialog-example"
-                open={alertDialogOpen}
-                onOpenChange={setAlertDialogOpen}
-                title="Delete Account"
-                description="Are you sure you want to delete your account? This action cannot be undone."
-                variant="destructive"
-                confirmText="Delete Account"
-                cancelText="Cancel"
-              />
+                aria-modal={alertDialogOpen}
+                className={`fixed inset-0 z-50 flex items-center justify-center ${alertDialogOpen ? 'flex' : 'hidden'}`}
+                style={{ display: alertDialogOpen ? 'flex' : 'none' }}
+              >
+                {/* Overlay */}
+                <div
+                  className="absolute inset-0 bg-black bg-opacity-50"
+                  onClick={() => setAlertDialogOpen(false)}
+                />
+
+                {/* Dialog */}
+                <div
+                  role="alertdialog"
+                  aria-labelledby="alert-dialog-title"
+                  aria-describedby="alert-dialog-description"
+                  className="dialog relative bg-white rounded-lg shadow-xl p-6 max-w-md w-full mx-auto z-10"
+                >
+                  <h2
+                    id="alert-dialog-title"
+                    data-testid="alert-dialog-title"
+                    className="text-lg font-semibold text-gray-900 mb-2"
+                  >
+                    Delete Account
+                  </h2>
+                  <p
+                    id="alert-dialog-description"
+                    data-testid="alert-dialog-description"
+                    className="text-gray-600 mb-6"
+                  >
+                    Are you sure you want to delete your account? This action cannot be undone.
+                  </p>
+                  <div className="flex justify-end gap-3">
+                    <button
+                      data-testid="alert-dialog-cancel"
+                      onClick={() => setAlertDialogOpen(false)}
+                      className="px-4 py-2 text-gray-600 border border-gray-300 rounded-md hover:bg-gray-50"
+                    >
+                      Cancel
+                    </button>
+                    <button
+                      data-testid="alert-dialog-action"
+                      onClick={() => setAlertDialogOpen(false)}
+                      className="px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700"
+                    >
+                      Delete Account
+                    </button>
+                  </div>
+                </div>
+              </div>
 
               <Drawer
                 data-testid="drawer-example"

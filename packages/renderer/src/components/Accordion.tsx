@@ -76,7 +76,7 @@ export const Accordion = forwardRef<HTMLDivElement, AccordionProps>(({
           <span className="accordion-trigger-content">
             {props.trigger}
           </span>
-          <span className="accordion-trigger-icon" aria-hidden="true">
+          <span className="accordion-trigger-icon" aria-hidden={true}>
             <svg
               width="24"
               height="24"
