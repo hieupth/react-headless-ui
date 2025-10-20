@@ -7,6 +7,8 @@
 
 import Link from 'next/link';
 import React, { useState } from 'react';
+import { Button } from '@react-ui-forge/renderer';
+import { ButtonGroup } from '@react-ui-forge/renderer';
 
 export default function ButtonsPage() {
   const [clickCount, setClickCount] = useState(0);
@@ -105,32 +107,32 @@ export default function ButtonsPage() {
             <div>
               <h3 className="text-lg font-semibold text-gray-800 mb-3">Click Counter</h3>
               <div className="space-y-4">
-                <button
-                  onClick={handleButtonClick}
+                <Button
+                  onPress={handleButtonClick}
                   data-testid="button-counter"
-                  className="button px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  variant="primary"
                 >
                   Clicked {clickCount} times
-                </button>
+                </Button>
 
                 <div className="flex gap-2">
-                  <button
-                    onClick={handleReset}
+                  <Button
+                    onPress={handleReset}
                     data-testid="button-reset"
-                    className="button-secondary px-4 py-2 bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-500"
+                    variant="outline"
                   >
                     Reset Counter
-                  </button>
+                  </Button>
 
-                  <button
-                    onClick={handleLoadingClick}
+                  <Button
+                    onPress={handleLoadingClick}
                     data-testid="button-loading"
                     data-loading={isLoading ? "true" : "false"}
-                    className={`button-loading px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 ${isLoading ? 'opacity-75 cursor-wait' : ''}`}
                     disabled={isLoading}
+                    variant="secondary"
                   >
                     Loading {isLoading ? '...' : 'Button'}
-                  </button>
+                  </Button>
                 </div>
 
                 <p className="text-sm text-gray-600">
@@ -143,25 +145,25 @@ export default function ButtonsPage() {
             <div>
               <h3 className="text-lg font-semibold text-gray-800 mb-3">Button States</h3>
               <div className="flex flex-wrap gap-2">
-                <button className="button px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700">
+                <Button variant="primary">
                   Primary Button
-                </button>
+                </Button>
 
-                <button className="button-secondary px-4 py-2 bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300">
+                <Button variant="outline">
                   Secondary Button
-                </button>
+                </Button>
 
-                <button
+                <Button
                   disabled
                   data-testid="button-disabled"
-                  className="button px-4 py-2 bg-gray-300 text-gray-500 rounded-md cursor-not-allowed"
+                  variant="ghost"
                 >
                   Disabled Button
-                </button>
+                </Button>
 
-                <button className="button px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700">
+                <Button variant="primary" className="bg-red-600 hover:bg-red-700 focus:ring-red-500">
                   Danger Button
-                </button>
+                </Button>
               </div>
             </div>
 
@@ -169,15 +171,42 @@ export default function ButtonsPage() {
             <div>
               <h3 className="text-lg font-semibold text-gray-800 mb-3">Button Sizes</h3>
               <div className="flex items-center gap-2">
-                <button className="button px-3 py-1 bg-blue-600 text-white text-sm rounded hover:bg-blue-700">
+                <Button size="sm" variant="primary">
                   Small
-                </button>
-                <button className="button px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">
+                </Button>
+                <Button size="md" variant="primary">
                   Medium
-                </button>
-                <button className="button px-6 py-3 bg-blue-600 text-white text-lg rounded hover:bg-blue-700">
+                </Button>
+                <Button size="lg" variant="primary">
                   Large
-                </button>
+                </Button>
+              </div>
+            </div>
+
+            {/* Button Group */}
+            <div>
+              <h3 className="text-lg font-semibold text-gray-800 mb-3">Button Group</h3>
+              <div className="space-y-4">
+                <ButtonGroup
+                  buttons={[
+                    { label: 'Option 1', value: 'option1' },
+                    { label: 'Option 2', value: 'option2' },
+                    { label: 'Option 3', value: 'option3' }
+                  ]}
+                  orientation="horizontal"
+                  exclusive={true}
+                />
+
+                <ButtonGroup
+                  buttons={[
+                    { label: 'Left', value: 'left' },
+                    { label: 'Center', value: 'center' },
+                    { label: 'Right', value: 'right' }
+                  ]}
+                  orientation="horizontal"
+                  exclusive={false}
+                  variant="outline"
+                />
               </div>
             </div>
 
@@ -185,21 +214,13 @@ export default function ButtonsPage() {
             <div>
               <h3 className="text-lg font-semibold text-gray-800 mb-3">Toggle Button</h3>
               <div className="flex items-center gap-4">
-                <button
-                  onClick={handleToggle}
+                <Button
+                  onPress={handleToggle}
                   data-testid="toggle-button"
-                  role="switch"
-                  aria-checked={isToggled}
-                  className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 ${
-                    isToggled ? 'bg-blue-600' : 'bg-gray-200'
-                  }`}
+                  variant={isToggled ? "primary" : "outline"}
                 >
-                  <span
-                    className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
-                      isToggled ? 'translate-x-6' : 'translate-x-1'
-                    }`}
-                  />
-                </button>
+                  {isToggled ? 'ON' : 'OFF'}
+                </Button>
                 <span className="text-sm text-gray-600">
                   Toggle is {isToggled ? 'ON' : 'OFF'}
                 </span>
@@ -210,23 +231,23 @@ export default function ButtonsPage() {
             <div>
               <h3 className="text-lg font-semibold text-gray-800 mb-3">Icon Buttons</h3>
               <div className="flex gap-2">
-                <button className="button p-2 bg-blue-600 text-white rounded hover:bg-blue-700">
+                <Button variant="primary">
                   <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
                   </svg>
-                </button>
+                </Button>
 
-                <button className="button p-2 bg-gray-200 text-gray-700 rounded hover:bg-gray-300">
+                <Button variant="outline">
                   <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
                   </svg>
-                </button>
+                </Button>
 
-                <button className="button p-2 bg-red-600 text-white rounded hover:bg-red-700">
+                <Button variant="primary" className="bg-red-600 hover:bg-red-700 focus:ring-red-500">
                   <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
                   </svg>
-                </button>
+                </Button>
               </div>
             </div>
           </div>

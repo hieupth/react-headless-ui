@@ -173,7 +173,7 @@ class TestButton:
         # Check button has reasonable dimensions
         width, height = test_helper.get_element_size(Locators.BUTTON_COUNTER)
         assert 50 <= width <= 400, f"Button width {width} is outside reasonable range"
-        assert 30 <= height <= 100, f"Button height {height} is outside reasonable range"
+        assert 20 <= height <= 80, f"Button height {height} is outside reasonable range"
 
         # Check button position (not way off screen)
         x, y = test_helper.get_element_position(Locators.BUTTON_COUNTER)

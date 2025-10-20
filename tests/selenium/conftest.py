@@ -5,6 +5,7 @@ Following CLAUDE.md requirements for comprehensive testing.
 
 import pytest
 import time
+import os
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.chrome.service import Service
@@ -19,14 +20,24 @@ def driver():
     """Create and configure Chrome WebDriver for testing - function scoped for parallel execution."""
     chrome_options = Options()
 
-    # Fast headless configuration
-    chrome_options.add_argument("--headless=new")
+    # Use portable Chrome and ChromeDriver paths for CLAUDE.md compliance
+    chrome_binary_path = os.environ.get('CHROME_BINARY_PATH', '/home/hieupth/.chrome-portable/chrome-linux64/chrome')
+    chromedriver_path = os.environ.get('CHROMEDRIVER_PATH', '/home/hieupth/.chrome-driver/chromedriver-linux64/chromedriver')
+
+    chrome_options.binary_location = chrome_binary_path
+
+    # Stable headless configuration for container environments
+    chrome_options.add_argument("--headless")
     chrome_options.add_argument("--no-sandbox")
     chrome_options.add_argument("--disable-dev-shm-usage")
     chrome_options.add_argument("--disable-gpu")
-    chrome_options.add_argument("--window-size=1280,720")  # Reasonable size for testing
+    chrome_options.add_argument("--window-size=1920,1080")
+    # Use unique debug port for each test process to avoid conflicts
+    import random
+    debug_port = random.randint(9222, 9322)
+    chrome_options.add_argument(f"--remote-debugging-port={debug_port}")
 
-    # Performance optimizations
+    # Essential stability options
     chrome_options.add_argument("--disable-extensions")
     chrome_options.add_argument("--disable-plugins")
     chrome_options.add_argument("--disable-images")
@@ -42,14 +53,25 @@ def driver():
     chrome_options.add_argument("--disable-translate")
     chrome_options.add_argument("--mute-audio")
     chrome_options.add_argument("--disable-logging")
+    chrome_options.add_argument("--disable-permissions-api")
+    chrome_options.add_argument("--disable-notifications")
+    chrome_options.add_argument("--disable-popup-blocking")
+
+    # Additional resource isolation options
+    chrome_options.add_argument("--disable-background-timer-throttling")
+    chrome_options.add_argument("--disable-renderer-backgrounding")
+    chrome_options.add_argument("--disable-background-networking")
+    chrome_options.add_argument("--disable-ipc-flooding-protection")
+    chrome_options.add_argument("--max_old_space_size=4096")
+    chrome_options.add_argument("--memory-pressure-off")
 
     # Minimal logging
     chrome_options.set_capability('goog:loggingPrefs', {
         'browser': 'SEVERE'  # Only severe errors
     })
 
-    # Use ChromeDriver service
-    service = Service('/opt/homebrew/bin/chromedriver')
+    # Use ChromeDriver service with portable path
+    service = Service(chromedriver_path)
 
     # Create driver with faster timeouts
     driver = webdriver.Chrome(service=service, options=chrome_options)

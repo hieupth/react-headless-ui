@@ -22,6 +22,8 @@ export interface ButtonProps extends UseButtonProps {
   loadingIndicator?: React.ReactNode;
   /** Custom render function */
   render?: (props: ButtonRenderProps) => React.ReactElement;
+  /** Additional HTML attributes */
+  [key: string]: any;
 }
 
 export interface ButtonRenderProps {
@@ -63,6 +65,19 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(({
     focusRef: ref as React.RefObject<HTMLElement>
   });
 
+  // Filter out known button props to get remaining HTML attributes
+  const {
+    onPress,
+    onFocus,
+    onBlur,
+    onKeyDown,
+    disabled,
+    variant,
+    size,
+    color,
+    ...htmlAttributes
+  } = buttonProps;
+
   // Default render function
   const defaultRender = (props: ButtonRenderProps) => {
     return (
@@ -71,7 +86,10 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(({
         className={props.className}
         style={style}
         {...props.semanticAttributes}
+        {...htmlAttributes}
         disabled={props.disabled}
+        aria-pressed={props.pressed ? 'true' : 'false'}
+        tabIndex={props.disabled ? -1 : 0}
       >
         {props.loading && loadingIndicator && (
           <span className="button-loading-indicator">
