@@ -14,6 +14,8 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import TimeoutException
 
+from tests.selenium.strict_assertions import ComponentAssertions
+from tests.selenium.test_constants import Locators, TestData
 
 @pytest.fixture(scope="function")
 def driver():
@@ -144,11 +146,7 @@ class ComponentTestHelper:
     def get_console_errors(self):
         """Get JavaScript console errors."""
         logs = self.driver.get_log('browser')
-        # Filter out favicon.ico 404 errors and webpack development errors as they're not actual JavaScript errors
-        return [log for log in logs
-                if log['level'] == 'SEVERE' and
-                'favicon.ico' not in log.get('message', '') and
-                'webpack-internal' not in log.get('message', '')]
+        return ComponentAssertions._filtered_logs(logs)
 
     def has_console_errors(self):
         """Check if there are any console errors."""
@@ -240,112 +238,18 @@ def test_helper(driver, base_url):
     return ComponentTestHelper(driver, base_url)
 
 
-# Common locators for repeated use
-class Locators:
-    """Common locators used across tests."""
-
-    # Button locators
-    BUTTON_COUNTER = (By.CSS_SELECTOR, "[data-testid='button-counter']")
-    BUTTON_RESET = (By.CSS_SELECTOR, "[data-testid='button-reset']")
-    BUTTON_LOADING = (By.CSS_SELECTOR, "[data-testid='button-loading']")
-    BUTTON_DISABLED = (By.CSS_SELECTOR, "[data-testid='button-disabled']")
-    BUTTON_SUBMIT = (By.CSS_SELECTOR, "[data-testid='button-submit']")
-
-    # Input locators
-    INPUT_NAME = (By.CSS_SELECTOR, "[data-testid='input-name']")
-    INPUT_EMAIL = (By.CSS_SELECTOR, "[data-testid='input-email']")
-    INPUT_ELEMENT = (By.CSS_SELECTOR, "[data-testid='input-element']")
-
-    # Checkbox/Switch locators
-    CHECKBOX_SUBSCRIBE = (By.CSS_SELECTOR, "[data-testid='checkbox-subscribe']")
-    CHECKBOX = (By.CSS_SELECTOR, "[data-testid='checkbox']")
-    SWITCH_NOTIFICATIONS = (By.CSS_SELECTOR, "[data-testid='switch-notifications']")
-    TOGGLE = (By.CSS_SELECTOR, "[data-testid='toggle']")
-
-    # Textarea locators
-    TEXTAREA_MESSAGE = (By.CSS_SELECTOR, "[data-testid='textarea-message']")
-    TEXTAREA = (By.CSS_SELECTOR, "[data-testid='textarea']")
-
-    # Select locators
-    SELECT_PRIORITY = (By.CSS_SELECTOR, "[data-testid='select-priority']")
-    BASIC_SELECT = (By.CSS_SELECTOR, "[data-testid='basic-select']")
-
-    # Calendar locators
-    CALENDAR_EVENT_DATE = (By.CSS_SELECTOR, "[data-testid='calendar-event-date']")
-    CALENDAR = (By.CSS_SELECTOR, "[data-testid='calendar']")
-
-    # Component groups
-    BUTTON_GROUP = (By.CSS_SELECTOR, "[data-testid='button-group']")
-    RADIO_GROUP = (By.CSS_SELECTOR, "[data-testid='radio-group']")
-    INPUT_OTP = (By.CSS_SELECTOR, "[data-testid='input-otp']")
-
-
-# Test data constants
-class TestData:
-    """Test data constants used across tests."""
-
-    VALID_EMAIL = "test@example.com"
-    INVALID_EMAIL = "invalid-email"
-    TEST_NAME = "Test User"
-    TEST_MESSAGE = "This is a test message"
-    LONG_TEXT = "This is a very long text that exceeds normal input limits to test component behavior with excessive content"
-
-    # URLs for navigation tests
-    BUTTONS_PAGE = "/buttons"
-    INPUTS_PAGE = "/inputs"
-    NAVIGATION_PAGE = "/navigation"
-    DATA_DISPLAY_PAGE = "/data-display"
-    FEEDBACK_PAGE = "/feedback"
-    LAYOUT_PAGE = "/layout"
-    MOTION_PAGE = "/motion"
-    UTILITIES_PAGE = "/utilities"
-
-
-# Custom assertions for component testing
-class ComponentAssertions:
-    """Custom assertion methods for component testing."""
-
-    @staticmethod
-    def assert_element_rendered_properly(element):
-        """Assert element renders without visual abnormalities."""
-        assert element.is_displayed(), "Element should be visible"
-
-        size = element.size
-        assert size['width'] > 0, "Element should have positive width"
-        assert size['height'] > 0, "Element should have positive height"
-
-        # Check for reasonable size limits (not too large or too small)
-        assert size['width'] < 5000, "Element width seems abnormally large"
-        assert size['height'] < 5000, "Element height seems abnormally large"
-
-    @staticmethod
-    def assert_no_console_errors(driver):
-        """Assert no JavaScript console errors."""
-        logs = driver.get_log('browser')
-        # Filter out favicon.ico 404 errors and webpack development errors as they're not actual JavaScript errors
-        errors = [log for log in logs
-                 if log['level'] == 'SEVERE' and
-                 'favicon.ico' not in log.get('message', '') and
-                 'webpack-internal' not in log.get('message', '')]
-
-        if errors:
-            error_messages = [error['message'] for error in errors]
-            assert False, f"JavaScript errors detected: {error_messages}"
-
-    @staticmethod
-    def assert_navigation_works(driver, expected_url_fragment):
-        """Assert navigation works without errors."""
-        current_url = driver.current_url
-        assert expected_url_fragment in current_url, f"Expected URL fragment '{expected_url_fragment}' not found in '{current_url}'"
-
-        # Check for navigation errors
-        ComponentAssertions.assert_no_console_errors(driver)
-
-
 @pytest.fixture(scope="function")
 def assertions():
     """Provide assertion helper."""
     return ComponentAssertions()
+
+
+@pytest.fixture(autouse=True)
+def strict_runtime_checks(driver):
+    """Run strict runtime checks after every test."""
+    yield
+    ComponentAssertions.assert_no_console_errors(driver)
+    ComponentAssertions.assert_no_js_exceptions(driver)
 
 
 # Pytest configuration and markers
