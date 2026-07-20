@@ -1,13 +1,17 @@
 # @hieupth/reui
 
 A headless React UI system built with composition over inheritance: behavior
-hooks, styled components, reusable behavior mixins, a theme provider, and
+hooks, headless UI primitives, reusable behavior mixins, a theme provider, and
 semantic-first accessibility — all from a single package.
+
+Components emit semantic class names (e.g. `button`, `button-leading-icon`,
+`accordion-trigger`) so consumers can style them with their own CSS. No CSS is
+shipped — styling is entirely consumer-owned.
 
 ## Features
 
 - **🪝 Behavior hooks** — `useButton`, `useAccordion`, `useCombobox`, `useTabs`, … headless logic with keyboard nav and ARIA wiring.
-- **🧩 Styled components** — matching `<Button>`, `<Accordion>`, … rendering real DOM.
+- **🧩 Headless UI primitives** — matching `<Button>`, `<Accordion>`, … rendering unstyled real DOM with semantic class names for consumer styling (no shipped CSS).
 - **🔧 Behavior mixins** — `useFocusableMixin`, `usePressableMixin`, `useSemanticMixin` for reusable focus / press / a11y logic.
 - **🎨 ThemeProvider** — context-based theming with a default theme and shallow overrides.
 - **♿ Semantic-first** — accessibility wired into the behavior layer, not bolted on.
@@ -76,7 +80,7 @@ a default theme and shallow top-level overrides).
 ```
 packages/reui/src
   hooks/        behavior hooks (use*.tsx)
-  components/   styled components (*.tsx)
+  components/   headless UI primitives (*.tsx)
   mixins/       focusable / pressable / semantic
   providers/    ThemeProvider
   contracts/    type-only contracts (ComponentContract, SemanticContract, AriaRole…)
