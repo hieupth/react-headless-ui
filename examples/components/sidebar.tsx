@@ -20,7 +20,7 @@ function buildSections(): SidebarSection[] {
       title: 'Getting Started',
       links: [
         { label: 'Introduction', href: '/' },
-        { label: 'Installation', href: '/docs/installation' },
+        { label: 'Installation', href: '/docs/getting-started' },
       ],
     },
     {
@@ -34,7 +34,7 @@ function buildSections(): SidebarSection[] {
       title: category,
       links: getComponentsByCategory(category).map((c) => ({
         label: c.name,
-        href: `/components/${c.slug}`,
+        href: `/components/${c.categoryFolder}/${c.slug}`,
       })),
     });
   }
