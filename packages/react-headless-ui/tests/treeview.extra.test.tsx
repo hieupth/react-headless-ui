@@ -23,10 +23,9 @@ describe('TreeView rendering options', () => {
     expect(document.querySelector('.border-l.border-gray-300')).not.toBeNull();
   });
 
-  it('applies a height and virtualized classes', () => {
-    render(<TreeView nodes={tree} height={300} virtualized />);
+  it('applies a height and overflow-hidden when height is set', () => {
+    render(<TreeView nodes={tree} height={300} />);
     const tv = screen.getByTestId('tree-view');
-    expect(tv.className).toContain('overflow-auto');
     expect(tv.className).toContain('overflow-hidden');
     expect((tv.style as any).height).toBe('300px');
   });

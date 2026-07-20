@@ -25,8 +25,6 @@ export interface TreeViewProps extends Omit<UseTreeViewProps, 'treeRef'> {
   defaultNodeIcon?: React.ReactNode;
   /** Height of the tree container */
   height?: number | string;
-  /** Whether tree is virtualized (for large datasets) */
-  virtualized?: boolean;
 }
 
 /**
@@ -42,7 +40,6 @@ export const TreeView = forwardRef<HTMLDivElement, TreeViewProps>(({
   showLines = false,
   defaultNodeIcon,
   height,
-  virtualized = false,
   ...treeViewProps
 }, ref) => {
   const theme = useTheme();
@@ -238,7 +235,6 @@ export const TreeView = forwardRef<HTMLDivElement, TreeViewProps>(({
   const treeClasses = `
     tree-view
     ${className || ''}
-    ${virtualized ? 'overflow-auto' : ''}
     ${height ? 'overflow-hidden' : ''}
   `.trim().replace(/\s+/g, ' ');
 
