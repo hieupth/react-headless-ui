@@ -55,9 +55,9 @@
     "access": "public"
   },
   "peerDependencies": {
+    "framer-motion": "^12",
     "react": ">=19",
-    "react-dom": ">=19",
-    "framer-motion": "^12"
+    "react-dom": ">=19"
   },
   "peerDependenciesMeta": {
     "framer-motion": {
@@ -65,6 +65,7 @@
     }
   },
   "dependencies": {
+    "@tanstack/react-virtual": "^3.14.7",
     "react-hook-form": "^7"
   },
   "devDependencies": {
