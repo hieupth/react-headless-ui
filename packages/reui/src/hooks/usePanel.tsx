@@ -73,28 +73,10 @@ export interface PanelActions {
   hover: () => void;
   /** Unhover panel */
   unhover: () => void;
-  /** Set variant */
-  setVariant: (variant: PanelVariant) => void;
-  /** Set size */
-  setSize: (size: PanelSize) => void;
-  /** Set loading state */
-  setLoading: (loading: boolean) => void;
   /** Set selected state */
   setSelected: (selected: boolean) => void;
   /** Set highlighted state */
   setHighlighted: (highlighted: boolean) => void;
-  /** Show header */
-  showHeader: () => void;
-  /** Hide header */
-  hideHeader: () => void;
-  /** Show footer */
-  showFooter: () => void;
-  /** Hide footer */
-  hideFooter: () => void;
-  /** Show actions */
-  showActions: () => void;
-  /** Hide actions */
-  hideActions: () => void;
   /** Get panel element */
   getPanelElement: () => HTMLElement | null;
   /** Get accessibility attributes */
@@ -345,27 +327,6 @@ export function usePanel(props: UsePanelProps): UsePanelReturns {
   }, [onHover]);
 
   /**
-   * Set variant
-   */
-  const setVariantAction = useCallback((newVariant: PanelVariant) => {
-    // Variant is managed externally via props
-  }, []);
-
-  /**
-   * Set size
-   */
-  const setSizeAction = useCallback((newSize: PanelSize) => {
-    // Size is managed externally via props
-  }, []);
-
-  /**
-   * Set loading state
-   */
-  const setLoadingAction = useCallback((newLoading: boolean) => {
-    // Loading state is managed externally via props
-  }, []);
-
-  /**
    * Set selected state
    */
   const setSelectedAction = useCallback((selected: boolean) => {
@@ -380,48 +341,6 @@ export function usePanel(props: UsePanelProps): UsePanelReturns {
    */
   const setHighlightedAction = useCallback((highlightedValue: boolean) => {
     setHighlighted(highlightedValue);
-  }, []);
-
-  /**
-   * Show header
-   */
-  const showHeaderAction = useCallback(() => {
-    // Header visibility is managed externally via props
-  }, []);
-
-  /**
-   * Hide header
-   */
-  const hideHeaderAction = useCallback(() => {
-    // Header visibility is managed externally via props
-  }, []);
-
-  /**
-   * Show footer
-   */
-  const showFooterAction = useCallback(() => {
-    // Footer visibility is managed externally via props
-  }, []);
-
-  /**
-   * Hide footer
-   */
-  const hideFooterAction = useCallback(() => {
-    // Footer visibility is managed externally via props
-  }, []);
-
-  /**
-   * Show actions
-   */
-  const showActionsAction = useCallback(() => {
-    // Actions visibility is managed externally via props
-  }, []);
-
-  /**
-   * Hide actions
-   */
-  const hideActionsAction = useCallback(() => {
-    // Actions visibility is managed externally via props
   }, []);
 
   /**
@@ -496,17 +415,8 @@ export function usePanel(props: UsePanelProps): UsePanelReturns {
     blur: blurAction,
     hover: hoverAction,
     unhover: unhoverAction,
-    setVariant: setVariantAction,
-    setSize: setSizeAction,
-    setLoading: setLoadingAction,
     setSelected: setSelectedAction,
     setHighlighted: setHighlightedAction,
-    showHeader: showHeaderAction,
-    hideHeader: hideHeaderAction,
-    showFooter: showFooterAction,
-    hideFooter: hideFooterAction,
-    showActions: showActionsAction,
-    hideActions: hideActionsAction,
     getPanelElement: getPanelElementAction,
     getAccessibilityProps: getAccessibilityPropsAction
   };
