@@ -128,8 +128,8 @@ export const DirectionalText = forwardRef<HTMLSpanElement, {
 
   const textClasses = `
     directional-text
-    text-align-${textAlign}
-    ${state.isRTL ? 'text-rtl' : 'text-ltr'}
+    ${textAlign}
+    ${state.isRTL ? '' : ''}
     ${className}
   `.trim().replace(/\s+/g, ' ');
 
@@ -208,10 +208,10 @@ export const DirectionalFlex = forwardRef<HTMLDivElement, {
 
   const flexClasses = `
     directional-flex
-    flex-direction-${actualDirection}
+    ${actualDirection}
     justify-${justify}
     align-${align}
-    ${state.isRTL ? 'flex-rtl' : 'flex-ltr'}
+    ${state.isRTL ? '' : ''}
     ${className}
   `.trim().replace(/\s+/g, ' ');
 

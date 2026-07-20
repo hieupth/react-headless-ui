@@ -131,10 +131,10 @@ export const AccessibleIcon = forwardRef<HTMLElement, AccessibleIconProps>(({
   // Build CSS classes
   const iconClasses = `
     accessible-icon
-    inline-flex items-center justify-center
-    ${interactive ? 'cursor-pointer' : ''}
-    ${state.hidden ? 'opacity-0 pointer-events-none' : ''}
-    ${animateOnHover ? 'transition-transform duration-200' : ''}
+      
+    ${interactive ? '' : ''}
+    ${state.hidden ? ' pointer-events-none' : ''}
+    ${animateOnHover ? ' ' : ''}
     ${className || ''}
   `.trim().replace(/\s+/g, ' ');
 

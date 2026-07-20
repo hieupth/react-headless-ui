@@ -62,23 +62,23 @@ export const InputOTP = forwardRef<HTMLDivElement, InputOTPProps>(({
 
   // Size classes
   const sizeClasses = {
-    sm: 'text-sm',
-    md: 'text-base',
-    lg: 'text-lg'
+    sm: '',
+    md: '',
+    lg: ''
   };
 
   // Input size classes
   const inputSizeClasses = {
-    sm: 'w-10 h-10',
-    md: 'w-12 h-12',
-    lg: 'w-14 h-14'
+    sm: ' ',
+    md: ' ',
+    lg: ' '
   };
 
   // Base OTP classes
   const otpClasses = `
     input-otp
-    flex gap-2 items-center
-    ${state.disabled ? 'opacity-50 cursor-not-allowed' : ''}
+      
+    ${state.disabled ? ' ' : ''}
     ${className || ''}
   `.trim().replace(/\s+/g, ' ');
 
@@ -87,23 +87,23 @@ export const InputOTP = forwardRef<HTMLDivElement, InputOTPProps>(({
     const slotClasses = `
       otp-slot
       ${inputSizeClasses[size]}
-      border-2 rounded-lg text-center font-mono
-      transition-all duration-200
+         
+       
       ${slot.focused
-        ? 'border-blue-500 ring-2 ring-blue-200 ring-opacity-50'
-        : 'border-gray-300 hover:border-gray-400'
+        ? '   '
+        : ' '
       }
       ${slot.filled
-        ? 'bg-blue-50 text-blue-700'
-        : 'bg-white text-gray-900'
+        ? ' '
+        : ' '
       }
       ${slot.hasError
-        ? 'border-red-500 bg-red-50 text-red-700'
+        ? '  '
         : ''
       }
-      ${state.disabled ? 'bg-gray-50 text-gray-400' : ''}
+      ${state.disabled ? ' ' : ''}
       ${sizeClasses[size]}
-      focus:outline-none
+      
     `.trim().replace(/\s+/g, ' ');
 
     const displayValue = state.masked && slot.filled ? '●' : slot.value;
@@ -151,10 +151,10 @@ export const InputOTP = forwardRef<HTMLDivElement, InputOTPProps>(({
     if (!showCompleteIndicator || !state.isComplete) return null;
 
     return (
-      <div className="complete-indicator ml-2">
-        <div className="flex items-center justify-center w-8 h-8 bg-green-100 rounded-full">
+      <div className="complete-indicator ">
+        <div className="      ">
           <svg
-            className="w-5 h-5 text-green-600"
+            className="  "
             fill="currentColor"
             viewBox="0 0 20 20"
           >
@@ -176,12 +176,12 @@ export const InputOTP = forwardRef<HTMLDivElement, InputOTPProps>(({
     return (
       <button
         onClick={actions.clear}
-        className="clear-button p-2 text-gray-400 hover:text-gray-600 transition-colors duration-200"
+        className="clear-button     "
         aria-label="Clear OTP"
         data-testid="otp-clear"
       >
         <svg
-          className="w-5 h-5"
+          className=" "
           fill="none"
           stroke="currentColor"
           viewBox="0 0 24 24"
@@ -202,11 +202,11 @@ export const InputOTP = forwardRef<HTMLDivElement, InputOTPProps>(({
     if (!showErrors || state.errors.length === 0) return null;
 
     return (
-      <div className="errors mt-2" id="otp-errors">
+      <div className="errors " id="otp-errors">
         {state.errors.map((error, index) => (
-          <div key={index} className="text-red-600 text-sm flex items-center gap-1">
+          <div key={index} className="    ">
             <svg
-              className="w-4 h-4"
+              className=" "
               fill="currentColor"
               viewBox="0 0 20 20"
             >
@@ -233,10 +233,10 @@ export const InputOTP = forwardRef<HTMLDivElement, InputOTPProps>(({
     const isNearLimit = remainingAttempts !== null && remainingAttempts <= 1;
 
     return (
-      <div className="attempts mt-2 text-sm">
-        <span className={`flex items-center gap-1 ${isNearLimit ? 'text-red-600' : 'text-gray-500'}`}>
+      <div className="attempts  ">
+        <span className={`   ${isNearLimit ? '' : ''}`}>
           <svg
-            className="w-4 h-4"
+            className=" "
             fill="currentColor"
             viewBox="0 0 20 20"
           >
@@ -249,7 +249,7 @@ export const InputOTP = forwardRef<HTMLDivElement, InputOTPProps>(({
           <span>
             Attempts: {state.attempts}
             {remainingAttempts !== null && (
-              <span className="text-gray-400"> ({remainingAttempts} remaining)</span>
+              <span className=""> ({remainingAttempts} remaining)</span>
             )}
           </span>
         </span>
@@ -263,14 +263,14 @@ export const InputOTP = forwardRef<HTMLDivElement, InputOTPProps>(({
     const progress = (state.value.length / inputOTPProps.length!) * 100;
 
     return (
-      <div className="progress-container mt-4">
-        <div className="w-full bg-gray-200 rounded-full h-2">
+      <div className="progress-container ">
+        <div className="   ">
           <div
-            className="bg-blue-600 h-2 rounded-full transition-all duration-300"
+            className="    "
             style={{ width: `${progress}%` }}
           />
         </div>
-        <div className="flex justify-between text-xs text-gray-500 mt-1">
+        <div className="    ">
           <span>{state.value.length}/{inputOTPProps.length}</span>
           <span>{Math.round(progress)}%</span>
         </div>
@@ -287,8 +287,8 @@ export const InputOTP = forwardRef<HTMLDivElement, InputOTPProps>(({
       data-testid="input-otp"
     >
       {/* Label */}
-      <div className="otp-label mb-2">
-        <label className="text-sm font-medium text-gray-700">
+      <div className="otp-label ">
+        <label className="  ">
           Enter verification code
         </label>
       </div>
@@ -306,7 +306,7 @@ export const InputOTP = forwardRef<HTMLDivElement, InputOTPProps>(({
       </div>
 
       {/* Controls and Indicators */}
-      <div className="otp-controls flex items-center justify-between mt-4">
+      <div className="otp-controls    ">
         {renderClearButton()}
         {renderCompleteIndicator()}
       </div>
@@ -372,9 +372,9 @@ export const OTPSlot = forwardRef<HTMLInputElement, OTPSlotProps>(({
   ...props
 }, ref) => {
   const sizeClasses = {
-    sm: 'w-10 h-10',
-    md: 'w-12 h-12',
-    lg: 'w-14 h-14'
+    sm: ' ',
+    md: ' ',
+    lg: ' '
   };
 
   const displayValue = masked && slot.filled ? '●' : slot.value;
@@ -382,22 +382,22 @@ export const OTPSlot = forwardRef<HTMLInputElement, OTPSlotProps>(({
   const slotClasses = `
     otp-slot
     ${sizeClasses[size]}
-    border-2 rounded-lg text-center font-mono
-    transition-all duration-200
+       
+     
     ${slot.focused
-      ? 'border-blue-500 ring-2 ring-blue-200 ring-opacity-50'
-      : 'border-gray-300 hover:border-gray-400'
+      ? '   '
+      : ' '
     }
     ${slot.filled
-      ? 'bg-blue-50 text-blue-700'
-      : 'bg-white text-gray-900'
+      ? ' '
+      : ' '
     }
     ${slot.hasError
-      ? 'border-red-500 bg-red-50 text-red-700'
+      ? '  '
       : ''
     }
-    ${slot.disabled ? 'bg-gray-50 text-gray-400' : ''}
-    focus:outline-none
+    ${slot.disabled ? ' ' : ''}
+    
     ${className || ''}
   `.trim().replace(/\s+/g, ' ');
 

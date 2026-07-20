@@ -148,26 +148,26 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>(({
 
   // Size classes
   const sizeClasses = {
-    sm: 'h-2',
-    md: 'h-3',
-    lg: 'h-4'
+    sm: '',
+    md: '',
+    lg: ''
   }[size];
 
   const thumbSizeClasses = {
-    sm: 'w-4 h-4',
-    md: 'w-5 h-5',
-    lg: 'w-6 h-6'
+    sm: ' ',
+    md: ' ',
+    lg: ' '
   }[size];
 
   // Variant classes
   const variantClasses = {
-    default: 'bg-gray-200',
-    solid: 'bg-gray-100',
-    outline: 'border-2 border-gray-300 bg-transparent'
+    default: '',
+    solid: '',
+    outline: '  '
   }[variant];
 
   // Animation classes
-  const animationClasses = animated ? 'transition-all duration-200 ease-in-out' : '';
+  const animationClasses = animated ? '  ' : '';
 
   // Get current values and calculate percentages
   const values: [number, number] = Array.isArray(sliderHook.state.value)
@@ -182,12 +182,12 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>(({
   // Default track render function
   const defaultTrackRender = (props: SliderTrackRenderProps) => {
     const baseTrackClasses = `
-      relative
+      
       ${sizeClasses}
       ${variantClasses}
-      ${props.disabled ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'}
-      ${sliderHook.state.focused ? 'ring-2 ring-blue-500 ring-opacity-50 ring-offset-2' : ''}
-      rounded-full
+      ${props.disabled ? ' ' : ''}
+      ${sliderHook.state.focused ? '   ' : ''}
+      
       ${animationClasses}
       ${props.className}
     `;
@@ -208,10 +208,10 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>(({
     };
 
     const baseRangeClasses = `
-      absolute
-      h-full
-      ${color || 'bg-blue-600'}
-      rounded-full
+      
+      
+      ${color || ''}
+      
       ${animationClasses}
       ${props.className}
     `;
@@ -227,16 +227,16 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>(({
   // Default thumb render function
   const defaultThumbRender = (props: SliderThumbRenderProps) => {
     const baseThumbClasses = `
-      absolute
+      
       ${thumbSizeClasses}
-      rounded-full
-      bg-white
-      border-2
-      ${color ? `border-${color}-600` : 'border-blue-600'}
-      shadow-md
-      ${props.active ? 'ring-2 ring-blue-500 ring-opacity-50 ring-offset-2' : ''}
-      ${props.dragging ? 'scale-110' : ''}
-      ${sliderHook.state.disabled ? 'opacity-50 cursor-not-allowed' : 'cursor-grab active:cursor-grabbing'}
+      
+      
+      
+      ${color ? `border-${color}-600` : ''}
+      
+      ${props.active ? '   ' : ''}
+      ${props.dragging ? '' : ''}
+      ${sliderHook.state.disabled ? ' ' : ' '}
       ${animationClasses}
       ${props.className}
     `;
@@ -255,7 +255,7 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>(({
         {...props.attributes}
       >
         {showTooltip && (
-          <div className="absolute bottom-full mb-2 px-2 py-1 text-xs text-white bg-gray-800 rounded whitespace-nowrap">
+          <div className="         ">
             {props.value}
           </div>
         )}
@@ -337,7 +337,7 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>(({
       const secondLabel = isRange ? <span>{values[1]}</span> : null;
       /* c8 ignore end */
       valueLabels = (
-        <div className={`flex justify-between mt-2 text-sm text-gray-600 ${isHorizontal ? '' : 'flex-col'}`}>
+        <div className={`     ${isHorizontal ? '' : ''}`}>
           <span>{values[0]}</span>
           {secondLabel}
         </div>
@@ -345,8 +345,8 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>(({
     }
 
     const baseSliderClasses = `
-      relative
-      ${isHorizontal ? 'w-full' : 'h-full'}
+      
+      ${isHorizontal ? '' : ''}
       ${props.className}
     `;
 
@@ -355,9 +355,9 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>(({
         <div
           ref={props.sliderRef}
           className={`
-            relative
-            ${isHorizontal ? 'w-full' : 'h-full'}
-            ${props.disabled ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'}
+            
+            ${isHorizontal ? '' : ''}
+            ${props.disabled ? ' ' : ''}
           `}
           onKeyDown={props.onKeyDown}
           onFocus={props.onFocus}

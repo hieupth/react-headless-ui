@@ -88,40 +88,40 @@ export const Pagination = forwardRef<HTMLDivElement, PaginationProps>(({
 
   // Size classes
   const sizeClasses = {
-    sm: 'text-xs',
-    md: 'text-sm',
-    lg: 'text-base'
+    sm: '',
+    md: '',
+    lg: ''
   }[size];
 
   // Variant classes
   const variantClasses = {
-    default: 'bg-white border border-gray-300 shadow-sm',
-    outline: 'bg-transparent border border-gray-300',
-    ghost: 'bg-transparent'
+    default: '   ',
+    outline: '  ',
+    ghost: ''
   }[variant];
 
   // Color classes for active/current page
   const colorClasses = {
-    primary: 'bg-blue-600 text-white border-blue-600',
-    secondary: 'bg-gray-600 text-white border-gray-600',
-    success: 'bg-green-600 text-white border-green-600',
-    warning: 'bg-yellow-600 text-white border-yellow-600',
-    error: 'bg-red-600 text-white border-red-600'
+    primary: '  ',
+    secondary: '  ',
+    success: '  ',
+    warning: '  ',
+    error: '  '
   }[color];
 
   // Button base classes
-  const buttonBaseClasses = 'inline-flex items-center justify-center font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-md disabled:opacity-50 disabled:cursor-not-allowed';
+  const buttonBaseClasses = '          ';
 
   // Page number button classes
-  const pageButtonClasses = `${buttonBaseClasses} ${sizeClasses} px-3 py-2 mx-0.5 ${variantClasses}`;
+  const pageButtonClasses = `${buttonBaseClasses} ${sizeClasses}    ${variantClasses}`;
 
   // Navigation button classes
-  const navButtonClasses = `${buttonBaseClasses} ${sizeClasses} p-2 mx-0.5 ${variantClasses}`;
+  const navButtonClasses = `${buttonBaseClasses} ${sizeClasses}   ${variantClasses}`;
 
   return (
     <nav
       ref={ref}
-      className={`flex items-center justify-center space-x-1 ${variantClasses} rounded-lg ${className || ''}`}
+      className={`    ${variantClasses}  ${className || ''}`}
       style={style}
       {...attributes}
       // The hook emits `aria-current` as the numeric page number, which is
@@ -141,7 +141,7 @@ export const Pagination = forwardRef<HTMLDivElement, PaginationProps>(({
           aria-disabled={!state.hasPrevious}
         >
           <svg
-            className="w-4 h-4"
+            className=" "
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"
@@ -166,7 +166,7 @@ export const Pagination = forwardRef<HTMLDivElement, PaginationProps>(({
           aria-disabled={!state.hasPrevious}
         >
           <svg
-            className="w-4 h-4"
+            className=" "
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"
@@ -190,7 +190,7 @@ export const Pagination = forwardRef<HTMLDivElement, PaginationProps>(({
           return (
             <span
               key={`ellipsis-${index}`}
-              className={`px-2 py-1 ${sizeClasses} text-gray-500`}
+              className={`  ${sizeClasses} `}
               aria-hidden={true}
             >
               ...
@@ -202,7 +202,7 @@ export const Pagination = forwardRef<HTMLDivElement, PaginationProps>(({
         const pageClasses = `${pageButtonClasses} ${
           isActive
             ? colorClasses
-            : 'text-gray-700 hover:bg-gray-100'
+            : ' '
         }`;
 
         return (
@@ -229,7 +229,7 @@ export const Pagination = forwardRef<HTMLDivElement, PaginationProps>(({
           aria-disabled={!state.hasNext}
         >
           <svg
-            className="w-4 h-4"
+            className=" "
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"
@@ -254,7 +254,7 @@ export const Pagination = forwardRef<HTMLDivElement, PaginationProps>(({
           aria-disabled={!state.hasNext}
         >
           <svg
-            className="w-4 h-4"
+            className=" "
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"
@@ -296,25 +296,25 @@ export const CompactPagination = forwardRef<HTMLDivElement, PaginationProps>(({
 
   // Size classes
   const sizeClasses = {
-    sm: 'text-xs',
-    md: 'text-sm',
-    lg: 'text-base'
+    sm: '',
+    md: '',
+    lg: ''
   }[size];
 
   // Variant classes
   const variantClasses = {
-    default: 'bg-white border border-gray-300 shadow-sm',
-    outline: 'bg-transparent border border-gray-300',
-    ghost: 'bg-transparent'
+    default: '   ',
+    outline: '  ',
+    ghost: ''
   }[variant];
 
   // Button base classes
-  const buttonBaseClasses = 'inline-flex items-center justify-center font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-md disabled:opacity-50 disabled:cursor-not-allowed';
+  const buttonBaseClasses = '          ';
 
   return (
     <nav
       ref={ref}
-      className={`flex items-center justify-between ${variantClasses} rounded-lg px-4 ${sizeClasses} ${className || ''}`}
+      className={`   ${variantClasses}   ${sizeClasses} ${className || ''}`}
       style={style}
       {...attributes}
       aria-current={undefined}
@@ -324,7 +324,7 @@ export const CompactPagination = forwardRef<HTMLDivElement, PaginationProps>(({
       <button
         onClick={handlers.handlePrevious}
         disabled={!state.hasPrevious}
-        className={`${buttonBaseClasses} px-3 py-1 ${state.hasPrevious ? 'text-gray-700 hover:bg-gray-100' : 'text-gray-400'}`}
+        className={`${buttonBaseClasses}   ${state.hasPrevious ? ' ' : ''}`}
         aria-label="Go to previous page"
         aria-disabled={!state.hasPrevious}
       >
@@ -332,16 +332,16 @@ export const CompactPagination = forwardRef<HTMLDivElement, PaginationProps>(({
       </button>
 
       {/* Page info */}
-      <span className="text-center">
-        Page <span className="font-medium">{state.page}</span> of{' '}
-        <span className="font-medium">{state.totalPages}</span>
+      <span className="">
+        Page <span className="">{state.page}</span> of{' '}
+        <span className="">{state.totalPages}</span>
       </span>
 
       {/* Next */}
       <button
         onClick={handlers.handleNext}
         disabled={!state.hasNext}
-        className={`${buttonBaseClasses} px-3 py-1 ${state.hasNext ? 'text-gray-700 hover:bg-gray-100' : 'text-gray-400'}`}
+        className={`${buttonBaseClasses}   ${state.hasNext ? ' ' : ''}`}
         aria-label="Go to next page"
         aria-disabled={!state.hasNext}
       >
@@ -376,9 +376,9 @@ export const JumpPagination = forwardRef<HTMLDivElement, PaginationProps>(({
 
   // Size classes
   const sizeClasses = {
-    sm: 'text-xs',
-    md: 'text-sm',
-    lg: 'text-base'
+    sm: '',
+    md: '',
+    lg: ''
   }[size];
 
   // Handle jump to page
@@ -392,44 +392,44 @@ export const JumpPagination = forwardRef<HTMLDivElement, PaginationProps>(({
 
   // Variant classes
   const variantClasses = {
-    default: 'bg-white border border-gray-300 shadow-sm',
-    outline: 'bg-transparent border border-gray-300',
-    ghost: 'bg-transparent'
+    default: '   ',
+    outline: '  ',
+    ghost: ''
   }[variant];
 
   // Color classes for active/current page
   const colorClasses = {
-    primary: 'bg-blue-600 text-white border-blue-600',
-    secondary: 'bg-gray-600 text-white border-gray-600',
-    success: 'bg-green-600 text-white border-green-600',
-    warning: 'bg-yellow-600 text-white border-yellow-600',
-    error: 'bg-red-600 text-white border-red-600'
+    primary: '  ',
+    secondary: '  ',
+    success: '  ',
+    warning: '  ',
+    error: '  '
   }[color];
 
   // Button base classes
-  const buttonBaseClasses = 'inline-flex items-center justify-center font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-md disabled:opacity-50 disabled:cursor-not-allowed';
+  const buttonBaseClasses = '          ';
 
   // Page number button classes
-  const pageButtonClasses = `${buttonBaseClasses} ${sizeClasses} px-3 py-2 mx-0.5 ${variantClasses}`;
+  const pageButtonClasses = `${buttonBaseClasses} ${sizeClasses}    ${variantClasses}`;
 
   return (
     <nav
       ref={ref}
-      className={`flex items-center justify-center space-x-4 ${variantClasses} rounded-lg ${className || ''}`}
+      className={`    ${variantClasses}  ${className || ''}`}
       style={style}
       {...attributes}
       aria-current={undefined}
       aria-label="Jump pagination navigation"
     >
       {/* Standard pagination */}
-      <div className="flex items-center space-x-1">
+      <div className="  ">
         {/* Page numbers */}
         {pages.map((pageNum, index) => {
           if (pageNum === '...') {
             return (
               <span
                 key={`ellipsis-${index}`}
-                className={`px-2 py-1 ${sizeClasses} text-gray-500`}
+                className={`  ${sizeClasses} `}
                 aria-hidden={true}
               >
                 ...
@@ -441,7 +441,7 @@ export const JumpPagination = forwardRef<HTMLDivElement, PaginationProps>(({
           const pageClasses = `${pageButtonClasses} ${
             isActive
               ? colorClasses
-              : 'text-gray-700 hover:bg-gray-100'
+              : ' '
           }`;
 
           return (
@@ -460,8 +460,8 @@ export const JumpPagination = forwardRef<HTMLDivElement, PaginationProps>(({
       </div>
 
       {/* Jump input */}
-      <div className="flex items-center space-x-2">
-        <span className={`text-gray-600 ${sizeClasses}`}>Go to page:</span>
+      <div className="  ">
+        <span className={` ${sizeClasses}`}>Go to page:</span>
         <input
           type="number"
           min={1}
@@ -469,14 +469,14 @@ export const JumpPagination = forwardRef<HTMLDivElement, PaginationProps>(({
           value={jumpValue}
           onChange={(e) => setJumpValue(e.target.value)}
           onKeyPress={(e) => e.key === 'Enter' && handleJump()}
-          className={`w-16 px-2 py-1 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 ${sizeClasses}`}
+          className={`         ${sizeClasses}`}
           placeholder="1"
           aria-label="Jump to page number"
         />
         <button
           onClick={handleJump}
           disabled={!jumpValue || (parseInt(jumpValue) < 1 || parseInt(jumpValue) > state.totalPages)}
-          className={`${buttonBaseClasses} px-3 py-1 bg-${color}-600 text-white hover:bg-${color}-700 ${sizeClasses}`}
+          className={`${buttonBaseClasses}   bg-${color}-600  ${color}-700 ${sizeClasses}`}
           aria-label="Jump to page"
         >
           Go

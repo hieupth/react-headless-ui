@@ -49,11 +49,11 @@ export const RotateIn = forwardRef<HTMLDivElement, RotateInProps>(({
 
   // Base classes
   const baseClasses = [
-    'rotate-in',
-    state.isActive ? 'rotate-in-active' : 'rotate-in-inactive',
+    '',
+    state.isActive ? '' : '',
     /* c8 ignore start */ // reason: isPaused/isComplete classes — hook pause/complete states are covered by hook tests; the rAF+Date.now animation loop does not progress in jsdom via the component
-    state.isPaused ? 'rotate-in-paused' : '',
-    state.isComplete ? 'rotate-in-complete' : '',
+    state.isPaused ? '' : '',
+    state.isComplete ? '' : '',
     /* c8 ignore end */
     className
   ].filter(Boolean).join(' ');

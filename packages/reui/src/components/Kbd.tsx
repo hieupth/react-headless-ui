@@ -233,7 +233,7 @@ export const Kbd = forwardRef<HTMLElement, KbdProps>(({
     kbd
     kbd-${kbdProps.size || 'md'}
     kbd-${kbdProps.variant || 'default'}
-    kbd-${kbdProps.shape || 'rounded'}
+    kbd-${kbdProps.shape || ''}
     ${classes.base}
     ${classes.pressed}
     ${classes.hovered}

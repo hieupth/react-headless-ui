@@ -59,19 +59,19 @@ export const NavigationMenu = forwardRef<HTMLDivElement, NavigationMenuProps>(({
 
   // Variant classes
   const variantClasses = {
-    horizontal: 'flex flex-row items-center',
-    vertical: 'flex flex-col items-start',
-    mega: 'flex flex-col',
-    dropdown: 'flex flex-col'
+    horizontal: '  ',
+    vertical: '  ',
+    mega: ' ',
+    dropdown: ' '
   };
 
   // Base navigation menu classes
   const navigationMenuClasses = `
     navigation-menu
     ${variantClasses[state.variant]}
-    bg-white border border-gray-200 rounded-lg shadow-sm
-    ${state.disabled ? 'opacity-50 cursor-not-allowed' : ''}
-    ${state.position === 'top' || state.position === 'bottom' ? 'w-full' : 'w-auto'}
+        
+    ${state.disabled ? ' ' : ''}
+    ${state.position === 'top' || state.position === 'bottom' ? '' : ''}
     ${className || ''}
   `.trim().replace(/\s+/g, ' ');
 
@@ -81,8 +81,8 @@ export const NavigationMenu = forwardRef<HTMLDivElement, NavigationMenuProps>(({
       return (
         <div
           className={`
-            ${showSeparators ? 'border-t border-gray-200 my-1' : ''}
-            ${level === 0 ? 'px-4 py-1' : 'px-3 py-0.5'}
+            ${showSeparators ? '  ' : ''}
+            ${level === 0 ? ' ' : ' '}
           `}
           role="separator"
         />
@@ -93,8 +93,8 @@ export const NavigationMenu = forwardRef<HTMLDivElement, NavigationMenuProps>(({
       return (
         <div
           className={`
-            font-semibold text-gray-900 text-sm
-            ${level === 0 ? 'px-4 py-2' : 'px-3 py-1.5'}
+              
+            ${level === 0 ? ' ' : ' '}
           `}
           role="heading"
           aria-level={level + 1}
@@ -108,15 +108,15 @@ export const NavigationMenu = forwardRef<HTMLDivElement, NavigationMenuProps>(({
       <div
         className={`
           navigation-menu-item
-          flex items-center gap-3
-          ${level === 0 ? 'px-4 py-3' : 'px-3 py-2'}
-          ${item.disabled ? 'text-gray-400 cursor-not-allowed' : 'text-gray-700 hover:bg-gray-100 cursor-pointer'}
-          ${isFocused ? 'bg-blue-100 text-blue-700' : ''}
-          ${isActive ? 'bg-blue-50 text-blue-600' : ''}
-          ${item.variant === 'primary' ? 'text-blue-600 font-medium' : ''}
-          ${item.variant === 'secondary' ? 'text-gray-600' : ''}
-          transition-colors duration-150
-          select-none
+            
+          ${level === 0 ? ' ' : ' '}
+          ${item.disabled ? ' ' : '  '}
+          ${isFocused ? ' ' : ''}
+          ${isActive ? ' ' : ''}
+          ${item.variant === 'primary' ? ' ' : ''}
+          ${item.variant === 'secondary' ? '' : ''}
+           
+          
         `}
         onClick={() => {
           if (!item.disabled) {
@@ -145,22 +145,22 @@ export const NavigationMenu = forwardRef<HTMLDivElement, NavigationMenuProps>(({
       >
         {/* Item Icon */}
         {showIcons && item.icon && (
-          <span className="flex-shrink-0">
+          <span className="">
             {item.icon}
           </span>
         )}
 
         {/* Item Content */}
-        <div className="flex-1 min-w-0">
-          <div className="flex items-center gap-2">
+        <div className=" ">
+          <div className="  ">
             {/* Item Label */}
-            <span className="truncate font-medium">
+            <span className=" ">
               {item.label}
             </span>
 
             {/* Badge */}
             {showBadges && item.badge && (
-              <span className="flex-shrink-0 inline-flex items-center justify-center px-2 py-0.5 text-xs font-medium leading-none bg-blue-100 text-blue-800 rounded-full">
+              <span className="           ">
                 {item.badge}
               </span>
             )}
@@ -168,7 +168,7 @@ export const NavigationMenu = forwardRef<HTMLDivElement, NavigationMenuProps>(({
 
           {/* Description */}
           {showDescriptions && item.description && (
-            <p className="text-sm text-gray-500 mt-0.5 truncate">
+            <p className="   ">
               {item.description}
             </p>
           )}
@@ -176,9 +176,9 @@ export const NavigationMenu = forwardRef<HTMLDivElement, NavigationMenuProps>(({
 
         {/* Submenu Arrow */}
         {item.children && item.children.length > 0 && (
-          <span className="flex-shrink-0 ml-2">
+          <span className=" ">
             <svg
-              className="w-4 h-4"
+              className=" "
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -204,12 +204,12 @@ export const NavigationMenu = forwardRef<HTMLDivElement, NavigationMenuProps>(({
   const defaultRenderSubmenu = (items: any[], level: number) => {
     const submenuClasses = `
       navigation-submenu
-      absolute top-full left-0
-      bg-white border border-gray-200 rounded-lg shadow-lg
-      min-w-[200px]
-      z-50
-      ${level === 0 ? 'mt-1' : 'ml-1'}
-      ${state.variant === 'mega' ? 'w-96 p-4 grid grid-cols-2 gap-4' : 'py-2'}
+        
+          
+      
+      
+      ${level === 0 ? '' : ''}
+      ${state.variant === 'mega' ? '    ' : ''}
     `;
 
     if (state.variant === 'mega') {
@@ -236,7 +236,7 @@ export const NavigationMenu = forwardRef<HTMLDivElement, NavigationMenuProps>(({
       const isSubmenuOpen = state.openDropdownId === item.id;
 
       return (
-        <div key={item.id} className="navigation-menu-item-wrapper relative">
+        <div key={item.id} className="navigation-menu-item-wrapper ">
           {/* Menu Item */}
           {renderItem
             ? renderItem(item, level, isFocused, isActive)
@@ -263,13 +263,13 @@ export const NavigationMenu = forwardRef<HTMLDivElement, NavigationMenuProps>(({
 
     return (
       <button
-        className="mobile-menu-trigger p-2 text-gray-600 hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 rounded-md"
+        className="mobile-menu-trigger       "
         onClick={actions.toggleMobileMenu}
         aria-label="Toggle navigation menu"
         aria-expanded={state.isMobileMenuOpen}
       >
         <svg
-          className="w-6 h-6"
+          className=" "
           fill="none"
           stroke="currentColor"
           viewBox="0 0 24 24"
@@ -313,11 +313,11 @@ export const NavigationMenu = forwardRef<HTMLDivElement, NavigationMenuProps>(({
         <div className="navigation-menu-desktop">
           {/* Search for Mega Menu */}
           {state.variant === 'mega' && navigationMenuProps.enableSearch && (
-            <div className="search-container p-4 border-b border-gray-200">
+            <div className="search-container   ">
               <input
                 type="text"
                 placeholder="Search menu..."
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="        "
                 value={state.searchQuery}
                 onChange={(e) => actions.setSearchQuery(e.target.value)}
                 aria-label="Search navigation menu"
@@ -337,14 +337,14 @@ export const NavigationMenu = forwardRef<HTMLDivElement, NavigationMenuProps>(({
 
       {/* Mobile Menu */}
       {state.isMobile && state.isMobileMenuOpen && (
-        <div className="navigation-menu-mobile absolute top-full left-0 right-0 bg-white border border-gray-200 rounded-lg shadow-lg z-50 mt-1">
+        <div className="navigation-menu-mobile           ">
           {/* Mobile Search */}
           {navigationMenuProps.enableSearch && (
-            <div className="search-container p-4 border-b border-gray-200">
+            <div className="search-container   ">
               <input
                 type="text"
                 placeholder="Search menu..."
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="        "
                 value={state.searchQuery}
                 onChange={(e) => actions.setSearchQuery(e.target.value)}
                 aria-label="Search navigation menu"
@@ -353,7 +353,7 @@ export const NavigationMenu = forwardRef<HTMLDivElement, NavigationMenuProps>(({
           )}
 
           {/* Mobile Menu Items */}
-          <div className="max-h-96 overflow-y-auto">
+          <div className=" ">
             {renderItems(
               actions.filterItems(state.items, state.searchQuery),
               0
@@ -381,9 +381,9 @@ export const NavigationMenu = forwardRef<HTMLDivElement, NavigationMenuProps>(({
 
       {/* Empty State */}
       {state.items.length === 0 && (
-        <div className="flex flex-col items-center justify-center py-8 text-gray-500">
+        <div className="     ">
           <svg
-            className="w-12 h-12 mb-4"
+            className="  "
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"
@@ -395,15 +395,15 @@ export const NavigationMenu = forwardRef<HTMLDivElement, NavigationMenuProps>(({
               d="M4 6h16M4 12h16M4 18h16"
             />
           </svg>
-          <p className="text-sm">No navigation items</p>
+          <p className="">No navigation items</p>
         </div>
       )}
 
       {/* No Search Results */}
       {state.searchQuery && actions.filterItems(state.items, state.searchQuery).length === 0 && (
-        <div className="flex flex-col items-center justify-center py-8 text-gray-500">
+        <div className="     ">
           <svg
-            className="w-12 h-12 mb-4"
+            className="  "
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"
@@ -415,7 +415,7 @@ export const NavigationMenu = forwardRef<HTMLDivElement, NavigationMenuProps>(({
               d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
             />
           </svg>
-          <p className="text-sm">No results found for "{state.searchQuery}"</p>
+          <p className="">No results found for "{state.searchQuery}"</p>
         </div>
       )}
     </div>

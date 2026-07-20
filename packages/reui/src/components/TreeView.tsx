@@ -57,7 +57,7 @@ export const TreeView = forwardRef<HTMLDivElement, TreeViewProps>(({
   // Default icons
   const defaultExpandIcon = (
     <svg
-      className="w-4 h-4 transition-transform duration-200"
+      className="   "
       fill="none"
       stroke="currentColor"
       viewBox="0 0 24 24"
@@ -73,7 +73,7 @@ export const TreeView = forwardRef<HTMLDivElement, TreeViewProps>(({
 
   const defaultCollapseIcon = (
     <svg
-      className="w-4 h-4 transition-transform duration-200"
+      className="   "
       fill="none"
       stroke="currentColor"
       viewBox="0 0 24 24"
@@ -89,7 +89,7 @@ export const TreeView = forwardRef<HTMLDivElement, TreeViewProps>(({
 
   const defaultIcon = (
     <svg
-      className="w-4 h-4 text-gray-400"
+      className="  "
       fill="currentColor"
       viewBox="0 0 20 20"
     >
@@ -105,13 +105,13 @@ export const TreeView = forwardRef<HTMLDivElement, TreeViewProps>(({
   const defaultRenderNode = (node: any, level: number, isExpanded: boolean, isSelected: boolean) => (
     <div
       className={`
-        flex items-center gap-2 px-2 py-1 rounded cursor-pointer
-        transition-colors duration-150
+              
+         
         ${isSelected
-          ? 'bg-blue-100 text-blue-700'
-          : 'hover:bg-gray-100 text-gray-700'
+          ? ' '
+          : ' '
         }
-        ${node.disabled ? 'opacity-50 cursor-not-allowed' : ''}
+        ${node.disabled ? ' ' : ''}
       `}
       style={{ paddingLeft: `${level * 20 + 8}px` }}
     >
@@ -119,11 +119,11 @@ export const TreeView = forwardRef<HTMLDivElement, TreeViewProps>(({
       {node.children && node.children.length > 0 && (
         <button
           onClick={(e) => { e.stopPropagation(); actions.toggleNodeExpansion(node.id); }}
-          className="flex-shrink-0 p-1 rounded hover:bg-gray-200"
+          className="   "
           aria-label={isExpanded ? 'Collapse' : 'Expand'}
           aria-expanded={isExpanded}
         >
-          <span className={`transform transition-transform ${isExpanded ? 'rotate-90' : ''}`}>
+          <span className={`transform  ${isExpanded ? '' : ''}`}>
             {isExpanded ? (collapseIcon || defaultExpandIcon) : (expandIcon || defaultCollapseIcon)}
           </span>
         </button>
@@ -131,16 +131,16 @@ export const TreeView = forwardRef<HTMLDivElement, TreeViewProps>(({
 
       {/* Spacer for nodes without children */}
       {(!node.children || node.children.length === 0) && (
-        <span className="w-6 h-6 flex-shrink-0" />
+        <span className="  " />
       )}
 
       {/* Node Icon */}
-      <span className="flex-shrink-0">
+      <span className="">
         {node.icon || defaultNodeIcon || defaultIcon}
       </span>
 
       {/* Node Label */}
-      <span className="flex-1 truncate select-none">
+      <span className="  ">
         {node.label}
       </span>
     </div>
@@ -220,7 +220,7 @@ export const TreeView = forwardRef<HTMLDivElement, TreeViewProps>(({
           {hasChildren && isExpanded && (
             <div
               role="group"
-              className={showLines ? 'ml-4 border-l border-gray-300' : ''}
+              className={showLines ? '  ' : ''}
             >
               {renderNodes(node.children, level + 1)}
             </div>
@@ -234,7 +234,7 @@ export const TreeView = forwardRef<HTMLDivElement, TreeViewProps>(({
   const treeClasses = `
     tree-view
     ${className || ''}
-    ${height ? 'overflow-hidden' : ''}
+    ${height ? '' : ''}
   `.trim().replace(/\s+/g, ' ');
 
   return (
@@ -254,9 +254,9 @@ export const TreeView = forwardRef<HTMLDivElement, TreeViewProps>(({
 
       {/* Empty State */}
       {state.nodes.length === 0 && (
-        <div className="flex flex-col items-center justify-center py-8 text-gray-500">
+        <div className="     ">
           <svg
-            className="w-12 h-12 mb-4"
+            className="  "
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"
@@ -268,7 +268,7 @@ export const TreeView = forwardRef<HTMLDivElement, TreeViewProps>(({
               d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z"
             />
           </svg>
-          <p className="text-sm">No items to display</p>
+          <p className="">No items to display</p>
         </div>
       )}
     </div>
@@ -323,13 +323,13 @@ export const TreeViewNode = forwardRef<HTMLDivElement, TreeViewNodeProps>(({
   ...props
 }, ref) => {
   const nodeClasses = `
-    flex items-center gap-2 px-2 py-1 rounded cursor-pointer
-    transition-colors duration-150
+          
+     
     ${isSelected
-      ? 'bg-blue-100 text-blue-700'
-      : 'hover:bg-gray-100 text-gray-700'
+      ? ' '
+      : ' '
     }
-    ${node.disabled ? 'opacity-50 cursor-not-allowed' : ''}
+    ${node.disabled ? ' ' : ''}
     ${className || ''}
   `.trim().replace(/\s+/g, ' ');
 
@@ -355,11 +355,11 @@ export const TreeViewNode = forwardRef<HTMLDivElement, TreeViewNodeProps>(({
       {/* Expand/Collapse Icon */}
       {showExpandIcon && node.children && node.children.length > 0 && (
         <button
-          className="flex-shrink-0 p-1 rounded hover:bg-gray-200"
+          className="   "
           aria-label={isExpanded ? 'Collapse' : 'Expand'}
           aria-expanded={isExpanded}
         >
-          <span className={`transform transition-transform ${isExpanded ? 'rotate-90' : ''}`}>
+          <span className={`transform  ${isExpanded ? '' : ''}`}>
             {isExpanded ? collapseIcon : expandIcon}
           </span>
         </button>
@@ -367,13 +367,13 @@ export const TreeViewNode = forwardRef<HTMLDivElement, TreeViewNodeProps>(({
 
       {/* Node Icon */}
       {node.icon && (
-        <span className="flex-shrink-0">
+        <span className="">
           {node.icon}
         </span>
       )}
 
       {/* Node Label */}
-      <span className="flex-1 truncate select-none">
+      <span className="  ">
         {node.label}
       </span>
     </div>

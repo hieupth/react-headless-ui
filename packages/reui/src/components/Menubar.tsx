@@ -56,15 +56,15 @@ export const Menubar = forwardRef<HTMLDivElement, MenubarProps>(({
 
   // Orientation classes
   const orientationClasses = state.orientation === 'horizontal'
-    ? 'flex-row items-center'
-    : 'flex-col items-start';
+    ? ' '
+    : ' ';
 
   // Base menubar classes
   const menubarClasses = `
     menubar
-    flex ${orientationClasses}
-    bg-white border border-gray-200 rounded-lg shadow-sm
-    ${state.disabled ? 'opacity-50 cursor-not-allowed' : ''}
+     ${orientationClasses}
+        
+    ${state.disabled ? ' ' : ''}
     ${className || ''}
   `.trim().replace(/\s+/g, ' ');
 
@@ -74,8 +74,8 @@ export const Menubar = forwardRef<HTMLDivElement, MenubarProps>(({
       return (
         <div
           className={`
-            ${showSeparators ? 'border-t border-gray-200 my-1' : ''}
-            ${level === 0 ? 'px-4 py-1' : 'px-3 py-0.5'}
+            ${showSeparators ? '  ' : ''}
+            ${level === 0 ? ' ' : ' '}
           `}
           role="separator"
         />
@@ -86,13 +86,13 @@ export const Menubar = forwardRef<HTMLDivElement, MenubarProps>(({
       <div
         className={`
           menubar-item
-          flex items-center gap-2
-          ${level === 0 ? 'px-4 py-2' : 'px-3 py-1.5'}
-          ${item.disabled ? 'text-gray-400 cursor-not-allowed' : 'text-gray-700 hover:bg-gray-100 cursor-pointer'}
-          ${isFocused ? 'bg-blue-100 text-blue-700' : ''}
-          ${isActive ? 'bg-blue-50 text-blue-600' : ''}
-          transition-colors duration-150
-          select-none
+            
+          ${level === 0 ? ' ' : ' '}
+          ${item.disabled ? ' ' : '  '}
+          ${isFocused ? ' ' : ''}
+          ${isActive ? ' ' : ''}
+           
+          
         `}
         onClick={() => {
           if (!item.disabled) {
@@ -116,28 +116,28 @@ export const Menubar = forwardRef<HTMLDivElement, MenubarProps>(({
       >
         {/* Item Icon */}
         {showIcons && item.icon && (
-          <span className="flex-shrink-0">
+          <span className="">
             {item.icon}
           </span>
         )}
 
         {/* Item Label */}
-        <span className="flex-1 truncate">
+        <span className=" ">
           {item.label}
         </span>
 
         {/* Shortcut */}
         {showShortcuts && item.shortcut && (
-          <span className="text-xs text-gray-500 ml-auto">
+          <span className="  ml-auto">
             {item.shortcut}
           </span>
         )}
 
         {/* Submenu Arrow */}
         {item.children && item.children.length > 0 && (
-          <span className="flex-shrink-0 ml-2">
+          <span className=" ">
             <svg
-              className="w-4 h-4"
+              className=" "
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -159,11 +159,11 @@ export const Menubar = forwardRef<HTMLDivElement, MenubarProps>(({
   const defaultRenderSubmenu = (items: any[], level: number) => {
     const submenuClasses = `
       submenu
-      absolute top-full left-0
-      bg-white border border-gray-200 rounded-lg shadow-lg
-      min-w-[200px]
-      z-50
-      ${level === 0 ? 'mt-1' : 'ml-1'}
+        
+          
+      
+      
+      ${level === 0 ? '' : ''}
     `;
 
     return (
@@ -182,7 +182,7 @@ export const Menubar = forwardRef<HTMLDivElement, MenubarProps>(({
       const isSubmenuOpen = state.openSubmenuId === item.id;
 
       return (
-        <div key={item.id} className="menubar-item-wrapper relative">
+        <div key={item.id} className="menubar-item-wrapper ">
           {/* Menu Item */}
           {renderItem
             ? renderItem(item, level, isFocused, isActive)
@@ -238,9 +238,9 @@ export const Menubar = forwardRef<HTMLDivElement, MenubarProps>(({
 
       {/* Empty State */}
       {state.items.length === 0 && (
-        <div className="flex flex-col items-center justify-center py-8 text-gray-500">
+        <div className="     ">
           <svg
-            className="w-12 h-12 mb-4"
+            className="  "
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"
@@ -252,7 +252,7 @@ export const Menubar = forwardRef<HTMLDivElement, MenubarProps>(({
               d="M4 6h16M4 12h16M4 18h16"
             />
           </svg>
-          <p className="text-sm">No menu items</p>
+          <p className="">No menu items</p>
         </div>
       )}
     </div>
@@ -305,8 +305,8 @@ export const MenubarItem = forwardRef<HTMLDivElement, MenubarItemProps>(({
       <div
         ref={ref}
         className={`
-          border-t border-gray-200 my-1
-          ${level === 0 ? 'px-4 py-1' : 'px-3 py-0.5'}
+            
+          ${level === 0 ? ' ' : ' '}
           ${className || ''}
         `}
         style={style}
@@ -317,13 +317,13 @@ export const MenubarItem = forwardRef<HTMLDivElement, MenubarItemProps>(({
   }
 
   const itemClasses = `
-    flex items-center gap-2
-    ${level === 0 ? 'px-4 py-2' : 'px-3 py-1.5'}
-    ${item.disabled ? 'text-gray-400 cursor-not-allowed' : 'text-gray-700 hover:bg-gray-100 cursor-pointer'}
-    ${isFocused ? 'bg-blue-100 text-blue-700' : ''}
-    ${isActive ? 'bg-blue-50 text-blue-600' : ''}
-    transition-colors duration-150
-    select-none
+      
+    ${level === 0 ? ' ' : ' '}
+    ${item.disabled ? ' ' : '  '}
+    ${isFocused ? ' ' : ''}
+    ${isActive ? ' ' : ''}
+     
+    
     ${className || ''}
   `.trim().replace(/\s+/g, ' ');
 
@@ -344,28 +344,28 @@ export const MenubarItem = forwardRef<HTMLDivElement, MenubarItemProps>(({
     >
       {/* Item Icon */}
       {showIcons && item.icon && (
-        <span className="flex-shrink-0">
+        <span className="">
           {item.icon}
         </span>
       )}
 
       {/* Item Label */}
-      <span className="flex-1 truncate">
+      <span className=" ">
         {item.label}
       </span>
 
       {/* Shortcut */}
       {showShortcuts && item.shortcut && (
-        <span className="text-xs text-gray-500 ml-auto">
+        <span className="  ml-auto">
           {item.shortcut}
         </span>
       )}
 
       {/* Submenu Arrow */}
       {item.children && item.children.length > 0 && (
-        <span className="flex-shrink-0 ml-2">
+        <span className=" ">
           <svg
-            className="w-4 h-4"
+            className=" "
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"

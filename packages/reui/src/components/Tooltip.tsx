@@ -108,7 +108,7 @@ export const Tooltip = forwardRef<HTMLElement, TooltipProps>((props, ref) => {
     return (
       <div
         style={props.arrowStyles}
-        className="border-gray-900"
+        className=""
       />
     );
   };
@@ -145,8 +145,8 @@ export const Tooltip = forwardRef<HTMLElement, TooltipProps>((props, ref) => {
     const tooltipContent = props.open && (
       <div
         ref={props.tooltipRef}
-        className={`absolute z-50 px-2 py-1 text-xs text-white bg-gray-900 rounded shadow-lg pointer-events-none transition-opacity duration-150 ${
-          props.showing ? 'opacity-0' : props.hiding ? 'opacity-0' : 'opacity-100'
+        className={`         pointer-events-none   ${
+          props.showing ? '' : props.hiding ? '' : ''
         } ${className || ''}`}
         style={{
           ...props.tooltipStyles,
@@ -162,7 +162,7 @@ export const Tooltip = forwardRef<HTMLElement, TooltipProps>((props, ref) => {
         )}
 
         {/* Content */}
-        <div className="relative z-10">
+        <div className=" ">
           {renderContent ? renderContent(props) : defaultContentRender(props)}
         </div>
       </div>
@@ -286,15 +286,15 @@ export const RichTooltip = forwardRef<HTMLElement, RichTooltipProps>((props, ref
     ...tooltipProps
   } = props as RichTooltipProps;
   const content = (
-    <div className="max-w-sm">
+    <div className="">
       {title && (
-        <div className="font-medium text-gray-900 mb-1">{title}</div>
+        <div className="  ">{title}</div>
       )}
       {description && (
-        <div className="text-sm text-gray-600">{description}</div>
+        <div className=" ">{description}</div>
       )}
       {actions && (
-        <div className="mt-2 pt-2 border-t border-gray-200">{actions}</div>
+        <div className="   ">{actions}</div>
       )}
     </div>
   );
@@ -303,7 +303,7 @@ export const RichTooltip = forwardRef<HTMLElement, RichTooltipProps>((props, ref
     <Tooltip
       {...tooltipProps}
       content={content}
-      className={`bg-white border border-gray-200 shadow-lg ${className || ''}`}
+      className={`    ${className || ''}`}
       style={{
         maxWidth: 320,
         ...style

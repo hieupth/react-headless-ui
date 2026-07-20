@@ -50,10 +50,10 @@ export const ScaleInOut = forwardRef<HTMLDivElement, ScaleInOutProps>(({
 
   // Base classes
   const baseClasses = [
-    'scale-in-out',
-    state.isActive ? 'scale-in-out-active' : 'scale-in-out-inactive',
-    state.isPaused ? 'scale-in-out-paused' : '',
-    state.isComplete ? 'scale-in-out-complete' : '',
+    '',
+    state.isActive ? '' : '',
+    state.isPaused ? '' : '',
+    state.isComplete ? '' : '',
     className
   ].filter(Boolean).join(' ');
 

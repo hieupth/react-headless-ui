@@ -69,10 +69,10 @@ export const Badge = forwardRef<HTMLSpanElement, BadgeProps>(({
       return null;
     }
 
-    const baseClasses = `inline-flex items-center justify-center font-medium rounded-full transition-all duration-150 ${badge.variantClasses} ${badge.sizeClasses}`;
-    const interactiveClasses = badgeProps.onClick ? 'cursor-pointer hover:opacity-80 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500' : '';
-    const animationClasses = props.animating ? 'scale-110' : 'scale-100';
-    const dotClasses = badgeProps.dot ? 'rounded-full' : 'rounded-full';
+    const baseClasses = `       ${badge.variantClasses} ${badge.sizeClasses}`;
+    const interactiveClasses = badgeProps.onClick ? '     ' : '';
+    const animationClasses = props.animating ? '' : '';
+    const dotClasses = badgeProps.dot ? '' : '';
 
     return (
       <span
@@ -88,7 +88,7 @@ export const Badge = forwardRef<HTMLSpanElement, BadgeProps>(({
 
         {/* Dot indicator */}
         {badgeProps.dot && (
-          <span className="block w-full h-full rounded-full" />
+          <span className="   " />
         )}
       </span>
     );
@@ -145,18 +145,18 @@ export const BadgeWrapper = forwardRef<HTMLDivElement, BadgeWrapperProps>(({
 }, ref) => {
   const getPositionClasses = (pos: string) => {
     const positionMap = {
-      'top-right': 'top-0 right-0 -translate-y-1/2 translate-x-1/2',
-      'top-left': 'top-0 left-0 -translate-y-1/2 -translate-x-1/2',
-      'bottom-right': 'bottom-0 right-0 translate-y-1/2 translate-x-1/2',
-      'bottom-left': 'bottom-0 left-0 translate-y-1/2 -translate-x-1/2'
+      '': '  -translate-y-1/2 ',
+      '': '  -translate-y-1/2 -translate-x-1/2',
+      '': '   ',
+      '': '   -translate-x-1/2'
     };
-    return positionMap[pos as keyof typeof positionMap] || positionMap['top-right'];
+    return positionMap[pos as keyof typeof positionMap] || positionMap[''];
   };
 
   return (
     <div
       ref={ref}
-      className={`relative inline-flex items-center justify-center ${className || ''}`}
+      className={`    ${className || ''}`}
       style={style}
     >
       {/* Main content */}
@@ -164,7 +164,7 @@ export const BadgeWrapper = forwardRef<HTMLDivElement, BadgeWrapperProps>(({
 
       {/* Badge overlay */}
       {badge && (
-        <div className={`absolute ${getPositionClasses(position)} pointer-events-none`}>
+        <div className={` ${getPositionClasses(position)} pointer-events-none`}>
           {badge}
         </div>
       )}

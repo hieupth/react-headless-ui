@@ -110,40 +110,40 @@ export const HoverCard = forwardRef<HTMLDivElement, HoverCardProps>(({
   // Base trigger classes
   const triggerClasses = `
     hover-card-trigger
-    inline-flex items-center justify-center
-    ${preventTextSelection ? 'select-none' : ''}
-    ${state.isOverTrigger ? 'text-blue-600' : 'text-gray-600'}
-    hover:text-blue-600
-    cursor-pointer
-    transition-colors duration-150
+      
+    ${preventTextSelection ? '' : ''}
+    ${state.isOverTrigger ? '' : ''}
+    
+    
+     
     ${triggerClassName || ''}
   `.trim().replace(/\s+/g, ' ');
 
   // Base content classes
   const contentClasses = `
     hover-card-content
-    absolute z-50
-    bg-white border border-gray-200 rounded-lg shadow-lg
-    p-4
+     
+        
+    
     ${getContentPositionClass(state.placement)}
-    ${state.open ? 'opacity-100 scale-100' : 'opacity-0 scale-95 pointer-events-none'}
-    transition-all duration-150 ease-out
+    ${state.open ? ' ' : '  pointer-events-none'}
+      
     ${contentClassName || ''}
   `.trim().replace(/\s+/g, ' ');
 
   // Arrow classes
   const arrowClasses = `
     hover-card-arrow
-    absolute w-2 h-2 bg-white border border-gray-200
+         
     ${getArrowPositionClass(state.placement)}
-    ${state.open ? 'opacity-100' : 'opacity-0'}
-    transition-opacity duration-150
+    ${state.open ? '' : ''}
+     
   `;
 
   return (
     <div
       ref={ref}
-      className={`hover-card relative inline-block ${className}`}
+      className={`hover-card   ${className}`}
       style={style}
       data-testid="hover-card"
     >
@@ -161,7 +161,7 @@ export const HoverCard = forwardRef<HTMLDivElement, HoverCardProps>(({
       {/* Content Portal */}
       {state.open && (
         <div
-          className="hover-card-portal fixed inset-0 pointer-events-none z-50"
+          className="hover-card-portal   pointer-events-none "
           style={{ pointerEvents: 'none' }}
         >
           {/* Content */}

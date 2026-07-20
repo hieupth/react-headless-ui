@@ -59,26 +59,26 @@ export const Scrollspy = forwardRef<HTMLDivElement, ScrollspyProps>(({
 
   // Position classes
   const positionClasses = {
-    left: 'left-0 top-0',
-    right: 'right-0 top-0',
-    top: 'top-0 left-0',
-    bottom: 'bottom-0 left-0'
+    left: ' ',
+    right: ' ',
+    top: ' ',
+    bottom: ' '
   };
 
   // Orientation classes
   const orientationClasses = {
-    vertical: 'flex-col space-y-2',
-    horizontal: 'flex-row space-x-4'
+    vertical: ' ',
+    horizontal: ' '
   };
 
   // Base scrollspy classes
   const scrollspyClasses = `
     scrollspy
-    fixed ${positionClasses[position]} ${orientationClasses[orientation]}
-    bg-white border border-gray-200 rounded-lg shadow-sm p-4
-    ${state.disabled ? 'opacity-50 cursor-not-allowed' : ''}
-    ${orientation === 'vertical' ? 'w-64' : 'h-auto'}
-    ${orientation === 'horizontal' ? 'h-16 w-auto' : ''}
+     ${positionClasses[position]} ${orientationClasses[orientation]}
+         
+    ${state.disabled ? ' ' : ''}
+    ${orientation === 'vertical' ? '' : ''}
+    ${orientation === 'horizontal' ? ' ' : ''}
     ${className || ''}
   `.trim().replace(/\s+/g, ' ');
 
@@ -91,18 +91,18 @@ export const Scrollspy = forwardRef<HTMLDivElement, ScrollspyProps>(({
     // indicator dot, and the active arrow) are unreachable here. The standalone
     // ScrollspySection component covers the isActive=true path via its prop.
     /* c8 ignore next */
-    const activeStateClass = isActive ? 'bg-blue-100 text-blue-700 font-medium' : '';
+    const activeStateClass = isActive ? '  ' : '';
     /* c8 ignore next */
     const ariaCurrent = isActive ? ('true' as const) : undefined;
     /* c8 ignore next */
     const tabIndex = isActive ? 0 : -1;
     /* c8 ignore next */
-    const indicatorClass = isActive ? 'bg-blue-600' : 'bg-gray-300';
+    const indicatorClass = isActive ? '' : '';
     /* c8 ignore next */
     const activeArrowNode = (isActive && orientation === 'vertical') ? (
-      <span className="flex-shrink-0">
+      <span className="">
         <svg
-          className="w-4 h-4 text-blue-600"
+          className="  "
           fill="currentColor"
           viewBox="0 0 20 20"
         >
@@ -118,15 +118,15 @@ export const Scrollspy = forwardRef<HTMLDivElement, ScrollspyProps>(({
     // true, which jsdom can't drive (see note above); ignored for coverage.
     /* c8 ignore next */
     const stateClass = section.disabled
-      ? 'text-gray-400 cursor-not-allowed'
+      ? ' '
       : isActive
         ? activeStateClass
-        : 'text-gray-600 hover:bg-gray-100 hover:text-gray-900';
+        : '  ';
 
     const sectionClasses = `
       scrollspy-section
-      flex items-center gap-3 px-3 py-2 rounded-md
-      transition-all duration-200 cursor-pointer
+           
+        
       ${stateClass}
     `.trim().replace(/\s+/g, ' ');
 
@@ -143,20 +143,20 @@ export const Scrollspy = forwardRef<HTMLDivElement, ScrollspyProps>(({
         {/* Indicator */}
         {showIndicators && (
           <div className={`
-            flex-shrink-0 w-2 h-2 rounded-full
+               
             ${indicatorClass}
           `} />
         )}
 
         {/* Section Icon */}
         {showIcons && section.icon && (
-          <span className="flex-shrink-0">
+          <span className="">
             {section.icon}
           </span>
         )}
 
         {/* Section Label */}
-        <span className="flex-1 truncate">
+        <span className=" ">
           {section.label}
         </span>
 
@@ -174,14 +174,14 @@ export const Scrollspy = forwardRef<HTMLDivElement, ScrollspyProps>(({
     const progress = state.sections.length > 0 ? ((activeIndex + 1) / state.sections.length) * 100 : 0;
 
     return (
-      <div className="progress-container absolute bottom-0 left-0 right-0 p-4">
-        <div className="progress-bar bg-gray-200 rounded-full h-1">
+      <div className="progress-container     ">
+        <div className="progress-bar   ">
           <div
-            className="progress-fill bg-blue-600 h-1 rounded-full transition-all duration-300"
+            className="progress-fill     "
             style={{ width: `${progress}%` }}
           />
         </div>
-        <div className="progress-text text-xs text-gray-500 mt-1 text-center">
+        <div className="progress-text    ">
           {activeIndex + 1} / {state.sections.length}
         </div>
       </div>
@@ -235,14 +235,14 @@ export const Scrollspy = forwardRef<HTMLDivElement, ScrollspyProps>(({
       data-testid="scrollspy"
     >
       {/* Header */}
-      <div className="scrollspy-header mb-4">
-        <h3 className="text-sm font-semibold text-gray-900 uppercase tracking-wider">
+      <div className="scrollspy-header ">
+        <h3 className="    ">
           Table of Contents
         </h3>
       </div>
 
       {/* Sections */}
-      <div className="scrollspy-sections space-y-1">
+      <div className="scrollspy-sections ">
         {state.sections.map((section) => {
           const isActive = actions.isSectionActive(section.id);
           return (
@@ -261,9 +261,9 @@ export const Scrollspy = forwardRef<HTMLDivElement, ScrollspyProps>(({
 
       {/* Empty State */}
       {state.sections.length === 0 && (
-        <div className="flex flex-col items-center justify-center py-8 text-gray-500">
+        <div className="     ">
           <svg
-            className="w-12 h-12 mb-4"
+            className="  "
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"
@@ -275,18 +275,18 @@ export const Scrollspy = forwardRef<HTMLDivElement, ScrollspyProps>(({
               d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"
             />
           </svg>
-          <p className="text-sm">No sections available</p>
+          <p className="">No sections available</p>
         </div>
       )}
 
       {/* Scroll Position Indicator */}
       {showProgress && orientation === 'horizontal' && (
-        <div className="scroll-position-indicator mt-4">
-          <div className="flex items-center gap-2 text-xs text-gray-500">
+        <div className="scroll-position-indicator ">
+          <div className="    ">
             <span>Position:</span>
-            <div className="flex-1 bg-gray-200 rounded-full h-1">
+            <div className="   ">
               <div
-                className="bg-blue-600 h-1 rounded-full transition-all duration-200"
+                className="    "
                 style={{ width: `${Math.min((state.scrollPosition / (document.documentElement.scrollHeight - window.innerHeight)) * 100, 100)}%` }}
               />
             </div>
@@ -331,13 +331,13 @@ export const ScrollspySection = forwardRef<HTMLDivElement, ScrollspySectionProps
   ...props
 }, ref) => {
   const sectionClasses = `
-    flex items-center gap-3 px-3 py-2 rounded-md
-    transition-all duration-200 cursor-pointer
+         
+      
     ${section.disabled
-      ? 'text-gray-400 cursor-not-allowed'
+      ? ' '
       : isActive
-        ? 'bg-blue-100 text-blue-700 font-medium'
-        : 'text-gray-600 hover:bg-gray-100 hover:text-gray-900'
+        ? '  '
+        : '  '
     }
     ${className || ''}
   `.trim().replace(/\s+/g, ' ');
@@ -358,31 +358,31 @@ export const ScrollspySection = forwardRef<HTMLDivElement, ScrollspySectionProps
       {/* Indicator */}
       {showIndicators && (
         <div className={`
-          flex-shrink-0 w-2 h-2 rounded-full
+             
           ${isActive
-            ? 'bg-blue-600'
-            : 'bg-gray-300'
+            ? ''
+            : ''
           }
         `} />
       )}
 
       {/* Section Icon */}
       {showIcons && section.icon && (
-        <span className="flex-shrink-0">
+        <span className="">
           {section.icon}
         </span>
       )}
 
       {/* Section Label */}
-      <span className="flex-1 truncate">
+      <span className=" ">
         {section.label}
       </span>
 
       {/* Active indicator arrow */}
       {isActive && (
-        <span className="flex-shrink-0">
+        <span className="">
           <svg
-            className="w-4 h-4 text-blue-600"
+            className="  "
             fill="currentColor"
             viewBox="0 0 20 20"
           >

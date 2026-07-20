@@ -83,20 +83,20 @@ export const ContextMenu = forwardRef<HTMLDivElement, ContextMenuProps>(
 
     // Size classes
     const sizeClasses = {
-      default: 'py-1 min-w-[160px]',
-      compact: 'py-0.5 min-w-[140px]',
-      minimal: 'py-0 min-w-[120px]'
+      default: ' ',
+      compact: ' ',
+      minimal: ' '
     };
 
     // Alignment classes
     const alignmentClasses = {
-      start: direction === 'rtl' ? 'right-0' : 'left-0',
-      center: 'left-1/2 transform -translate-x-1/2',
-      end: direction === 'rtl' ? 'left-0' : 'right-0'
+      start: direction === 'rtl' ? '' : '',
+      center: ' transform -translate-x-1/2',
+      end: direction === 'rtl' ? '' : ''
     };
 
     const menuClasses = `
-      bg-white border border-gray-200 rounded-lg shadow-lg
+          
       ${sizeClasses[variant]}
       ${alignmentClasses[alignment]}
       ${className}
@@ -118,7 +118,7 @@ export const ContextMenu = forwardRef<HTMLDivElement, ContextMenuProps>(
         return (
           <div
             key={item.id || `separator-${index}`}
-            className="my-1 border-t border-gray-200"
+            className="  "
             role="separator"
             aria-orientation="horizontal"
           />
@@ -132,7 +132,7 @@ export const ContextMenu = forwardRef<HTMLDivElement, ContextMenuProps>(
         focused: isFocused,
         onClick: () => handlers.handleItemClick(item, itemIndex),
         onFocus: () => handlers.handleItemFocus(itemIndex),
-        className: isFocused ? 'bg-gray-100' : ''
+        className: isFocused ? '' : ''
       };
 
       if (itemRenderer) {
@@ -251,11 +251,11 @@ const ContextMenuItemComponent: React.FC<ContextMenuItemProps> = ({
 
   // Base classes
   const baseClasses = `
-    px-3 py-2 text-sm cursor-pointer transition-colors duration-200
-    flex items-center justify-between
-    ${item.disabled ? 'text-gray-400 cursor-not-allowed' : 'text-gray-700 hover:bg-gray-100'}
-    ${focused ? 'bg-gray-100' : ''}
-    ${item.destructive ? 'text-red-600 hover:bg-red-50' : ''}
+         
+      
+    ${item.disabled ? ' ' : ' '}
+    ${focused ? '' : ''}
+    ${item.destructive ? ' ' : ''}
     ${className}
   `;
 
@@ -273,49 +273,49 @@ const ContextMenuItemComponent: React.FC<ContextMenuItemProps> = ({
       onFocus={onFocus}
       data-testid={`context-menu-item-${item.id}`}
     >
-      <div className="flex items-center flex-1 min-w-0">
+      <div className="   ">
         {/* Icon */}
         {item.icon && (
-          <span className="mr-3 flex-shrink-0">
+          <span className=" ">
             {item.icon}
           </span>
         )}
 
         {/* Label */}
-        <span className="flex-1 truncate">
+        <span className=" ">
           {item.label}
         </span>
 
         {/* Description */}
         {item.description && (
-          <span className="ml-2 text-xs text-gray-500">
+          <span className="  ">
             {item.description}
           </span>
         )}
 
         {/* Shortcut */}
         {item.shortcut && (
-          <span className="ml-2 text-xs text-gray-500">
+          <span className="  ">
             {item.shortcut}
           </span>
         )}
 
         {/* Checkbox/Radio indicator */}
         {item.type === 'checkbox' && (
-          <span className="ml-2 flex-shrink-0">
+          <span className=" ">
             {item.checked ? '✓' : ''}
           </span>
         )}
 
         {item.type === 'radio' && (
-          <span className="ml-2 flex-shrink-0">
+          <span className=" ">
             {item.checked ? '●' : ''}
           </span>
         )}
 
         {/* Submenu indicator */}
         {item.type === 'submenu' && (
-          <span className="ml-2 flex-shrink-0">
+          <span className=" ">
             ▶
           </span>
         )}

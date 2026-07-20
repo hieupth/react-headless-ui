@@ -88,14 +88,14 @@ export const Resizable = forwardRef<HTMLDivElement, ResizableProps>(({
   // Default handle renderer
   const defaultRenderHandle = (handle: HandlePosition, isActive: boolean, attributes: any, styles: React.CSSProperties) => {
     const handleClasses = `
-      resize-handle
-      resize-handle-${handle}
-      ${isActive ? 'resize-handle-active' : ''}
-      ${state.disabled ? 'resize-handle-disabled' : ''}
-      ${handleSize === 'sm' ? 'resize-handle-sm' : ''}
-      ${handleSize === 'lg' ? 'resize-handle-lg' : ''}
-      ${handleColor === 'primary' ? 'resize-handle-primary' : ''}
-      ${handleColor === 'secondary' ? 'resize-handle-secondary' : ''}
+      
+      ${handle}
+      ${isActive ? '' : ''}
+      ${state.disabled ? '' : ''}
+      ${handleSize === 'sm' ? '' : ''}
+      ${handleSize === 'lg' ? '' : ''}
+      ${handleColor === 'primary' ? '' : ''}
+      ${handleColor === 'secondary' ? '' : ''}
     `.trim().replace(/\s+/g, ' ');
 
     // Corner handles (larger)
@@ -107,11 +107,11 @@ export const Resizable = forwardRef<HTMLDivElement, ResizableProps>(({
           style={styles}
           data-testid={`resize-handle-${handle}`}
         >
-          <div className="resize-handle-corner">
-            <div className="resize-handle-corner-dot" />
-            <div className="resize-handle-corner-dot" />
-            <div className="resize-handle-corner-dot" />
-            <div className="resize-handle-corner-dot" />
+          <div className="">
+            <div className="" />
+            <div className="" />
+            <div className="" />
+            <div className="" />
           </div>
         </div>
       );
@@ -125,7 +125,7 @@ export const Resizable = forwardRef<HTMLDivElement, ResizableProps>(({
         style={styles}
         data-testid={`resize-handle-${handle}`}
       >
-        <div className="resize-handle-line" />
+        <div className="" />
       </div>
     );
   };
@@ -166,7 +166,7 @@ export const Resizable = forwardRef<HTMLDivElement, ResizableProps>(({
         const isActive = state.activeHandle === handle;
 
         return (
-          <div key={handle} className="resize-handle-wrapper">
+          <div key={handle} className="">
             {renderHandle
               ? renderHandle(handle, isActive, attributes, styles)
               : defaultRenderHandle(handle, isActive, attributes, styles)}

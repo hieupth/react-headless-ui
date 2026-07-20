@@ -110,24 +110,24 @@ export const Select = forwardRef<HTMLElement, SelectProps>(({
 
   // Size classes
   const sizeClasses = {
-    sm: 'px-3 py-1.5 text-sm',
-    md: 'px-4 py-2 text-base',
-    lg: 'px-4 py-3 text-lg'
+    sm: '  ',
+    md: '  ',
+    lg: '  '
   }[size];
 
   // Variant classes
   const variantClasses = {
-    default: 'bg-white border border-gray-300 hover:border-gray-400 focus:border-blue-500 focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50',
-    outlined: 'bg-transparent border-2 border-gray-300 hover:border-gray-400 focus:border-blue-500 focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50',
-    filled: 'bg-gray-100 border border-transparent hover:bg-gray-200 focus:bg-white focus:border-blue-500 focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50'
+    default: '       ',
+    outlined: '       ',
+    filled: '        '
   }[variant];
 
   // Default option render function
   const defaultOptionRender = (option: SelectOption, props: SelectOptionRenderProps) => {
-    const baseClasses = 'flex items-center px-3 py-2 cursor-default transition-colors';
-    const disabledClasses = option.disabled ? 'opacity-50 cursor-not-allowed' : 'hover:bg-gray-100';
-    const highlightedClasses = props.highlighted ? 'bg-blue-50 text-blue-700' : 'text-gray-700';
-    const selectedClasses = props.selected ? 'bg-blue-100 text-blue-800 font-medium' : '';
+    const baseClasses = '     ';
+    const disabledClasses = option.disabled ? ' ' : '';
+    const highlightedClasses = props.highlighted ? ' ' : '';
+    const selectedClasses = props.selected ? '  ' : '';
 
     return (
       <li
@@ -139,23 +139,23 @@ export const Select = forwardRef<HTMLElement, SelectProps>(({
       >
         {/* Icon */}
         {option.icon && (
-          <span className="mr-3 flex-shrink-0 w-4 h-4">
+          <span className="   ">
             {option.icon}
           </span>
         )}
 
         {/* Content */}
-        <div className="flex-1 min-w-0">
-          <div className="truncate font-medium">{option.label}</div>
+        <div className=" ">
+          <div className=" ">{option.label}</div>
           {option.description && (
-            <div className="text-sm text-gray-500 truncate">{option.description}</div>
+            <div className="  ">{option.description}</div>
           )}
         </div>
 
         {/* Selection indicator */}
         {props.selected && (
-          <span className="ml-3 flex-shrink-0">
-            <svg className="w-4 h-4 text-blue-600" fill="currentColor" viewBox="0 0 20 20">
+          <span className=" ">
+            <svg className="  " fill="currentColor" viewBox="0 0 20 20">
               <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
             </svg>
           </span>
@@ -169,7 +169,7 @@ export const Select = forwardRef<HTMLElement, SelectProps>(({
     return (
       <button
         ref={props.triggerRef}
-        className={`select-trigger w-full text-left flex items-center justify-between ${sizeClasses} ${variantClasses} rounded-md shadow-sm transition-colors ${className || ''} ${select.disabled ? 'opacity-50 cursor-not-allowed bg-gray-100' : 'bg-white'}`}
+        className={`      ${sizeClasses} ${variantClasses}    ${className || ''} ${select.disabled ? '  ' : ''}`}
         style={style}
         onClick={props.handleTriggerClick}
         onKeyDown={props.handleKeyDown}
@@ -177,16 +177,16 @@ export const Select = forwardRef<HTMLElement, SelectProps>(({
         {...props.triggerAttributes}
       >
         {/* Selected value or placeholder */}
-        <span className="flex-1 truncate">
+        <span className=" ">
           {props.selectedOption ? props.selectedOption.label : placeholder}
         </span>
 
         {/* Chevron icon */}
         {showChevron && (
-          <span className="ml-2 flex-shrink-0 transition-transform duration-200" style={{
+          <span className="   " style={{
             transform: props.open ? 'rotate(180deg)' : 'rotate(0deg)'
           }}>
-            <svg className="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg className="  " fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
             </svg>
           </span>
@@ -196,7 +196,7 @@ export const Select = forwardRef<HTMLElement, SelectProps>(({
         {select.allowClear && props.selectedOption && (
           <button
             type="button"
-            className="ml-2 flex-shrink-0 text-gray-400 hover:text-gray-600 focus:outline-none"
+            className="    "
             onClick={(e: any) => {
               // reason: clearSelection is always provided by useSelect; the prior
               // `...(x ? {...} : {})` defensive spread false-arm was dead code.
@@ -205,7 +205,7 @@ export const Select = forwardRef<HTMLElement, SelectProps>(({
             }}
             aria-label="Clear selection"
           >
-            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg className=" " fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
             </svg>
           </button>
@@ -221,7 +221,7 @@ export const Select = forwardRef<HTMLElement, SelectProps>(({
     // Calculate dropdown position and size
     const dropdownContent = (
       <div
-        className="fixed z-50 w-full"
+        className="  "
         style={{
           minWidth: props.triggerRef.current?.offsetWidth || 200,
           maxWidth: 400
@@ -229,7 +229,7 @@ export const Select = forwardRef<HTMLElement, SelectProps>(({
       >
         <ul
           ref={props.listboxRef}
-          className={`py-1 bg-white border border-gray-200 rounded-lg shadow-lg overflow-y-auto ${className || ''}`}
+          className={`       ${className || ''}`}
           style={{
             // reason: useSelect defaults maxDropdownHeight to 300, so the prior
             // `|| 300` fallback was unreachable dead code.
@@ -241,11 +241,11 @@ export const Select = forwardRef<HTMLElement, SelectProps>(({
         >
           {/* Search input */}
           {select.searchable && (
-            <li className="px-3 py-2 border-b border-gray-100">
+            <li className="   ">
               <input
                 ref={props.inputRef}
                 type="text"
-                className="w-full px-3 py-1 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="         "
                 placeholder="Search..."
                 value={props.inputValue}
                 onChange={(e: any) => props.handleInputChange(e.target.value)}
@@ -273,7 +273,7 @@ export const Select = forwardRef<HTMLElement, SelectProps>(({
               return renderOption ? renderOption(option, optionProps) : defaultOptionRender(option, optionProps);
             })
           ) : (
-            <li className="px-3 py-2 text-gray-500 text-center">
+            <li className="   ">
               {props.inputValue ? 'No options found' : 'No options available'}
             </li>
           )}
@@ -287,7 +287,7 @@ export const Select = forwardRef<HTMLElement, SelectProps>(({
   // Default render function
   const defaultRender = (props: SelectRenderProps) => {
     return (
-      <div className="select-container relative">
+      <div className=" ">
         {/* Trigger */}
         {renderTrigger ? renderTrigger(props) : defaultTriggerRender(props)}
 
@@ -366,7 +366,7 @@ export const SelectGroup = forwardRef<HTMLLIElement, SelectGroupProps>(({
     style={style}
   >
     {label && (
-      <div className="px-3 py-1 text-xs font-semibold text-gray-500 uppercase tracking-wider bg-gray-50">
+      <div className="       ">
         {label}
       </div>
     )}

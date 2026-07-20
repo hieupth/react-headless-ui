@@ -70,7 +70,7 @@ export const Avatar = forwardRef<HTMLDivElement, AvatarProps>(({
   // Default fallback render function
   const defaultFallbackRender = (props: AvatarRenderProps) => {
     return (
-      <div className={`flex items-center justify-center w-full h-full font-medium ${props.sizeClasses}`}>
+      <div className={`      ${props.sizeClasses}`}>
         {props.fallbackText}
       </div>
     );
@@ -78,9 +78,9 @@ export const Avatar = forwardRef<HTMLDivElement, AvatarProps>(({
 
   // Default render function
   const defaultRender = (props: AvatarRenderProps) => {
-    const baseClasses = `relative inline-flex items-center justify-center rounded-full bg-gray-100 text-gray-600 overflow-hidden ${props.sizeClasses} ${className || ''}`;
-    const interactiveClasses = props.semanticAttributes.role === 'button' ? 'cursor-pointer hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500' : '';
-    const stateClasses = props.loading ? 'animate-pulse bg-gray-200' : '';
+    const baseClasses = `        ${props.sizeClasses} ${className || ''}`;
+    const interactiveClasses = props.semanticAttributes.role === 'button' ? '     ' : '';
+    const stateClasses = props.loading ? ' ' : '';
 
     return (
       <div
@@ -95,7 +95,7 @@ export const Avatar = forwardRef<HTMLDivElement, AvatarProps>(({
             ref={props.imageRef}
             src={src}
             alt={alt}
-            className={`w-full h-full object-cover ${props.loading ? 'opacity-0' : 'opacity-100'} transition-opacity duration-200`}
+            className={`  object-cover ${props.loading ? '' : ''}  `}
             onLoad={props.handleImageLoad}
             onError={props.handleImageError}
           />
@@ -108,14 +108,14 @@ export const Avatar = forwardRef<HTMLDivElement, AvatarProps>(({
 
         {/* Loading indicator */}
         {props.loading && (
-          <div className="absolute inset-0 flex items-center justify-center">
-            <div className="w-2 h-2 bg-gray-400 rounded-full animate-pulse"></div>
+          <div className="    ">
+            <div className="    "></div>
           </div>
         )}
 
         {/* Children (overlay content) */}
         {children && (
-          <div className="absolute inset-0 flex items-center justify-center">
+          <div className="    ">
             {children}
           </div>
         )}

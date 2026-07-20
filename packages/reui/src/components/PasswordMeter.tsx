@@ -97,29 +97,29 @@ export const PasswordMeter = forwardRef<HTMLDivElement, PasswordMeterProps>(({
   // Size classes
   const sizeClasses = {
     sm: {
-      bar: 'h-1',
-      circle: 'w-16 h-16',
-      dots: 'gap-1',
-      text: 'text-sm'
+      bar: '',
+      circle: ' ',
+      dots: '',
+      text: ''
     },
     md: {
-      bar: 'h-2',
-      circle: 'w-20 h-20',
-      dots: 'gap-2',
-      text: 'text-base'
+      bar: '',
+      circle: ' ',
+      dots: '',
+      text: ''
     },
     lg: {
-      bar: 'h-3',
-      circle: 'w-24 h-24',
-      dots: 'gap-3',
-      text: 'text-lg'
+      bar: '',
+      circle: ' ',
+      dots: '',
+      text: ''
     }
   };
 
   // Base meter classes
   const meterClasses = `
     password-meter
-    ${state.disabled ? 'opacity-50 cursor-not-allowed' : ''}
+    ${state.disabled ? ' ' : ''}
     ${className || ''}
   `.trim().replace(/\s+/g, ' ');
 
@@ -146,14 +146,14 @@ export const PasswordMeter = forwardRef<HTMLDivElement, PasswordMeterProps>(({
         <div
           className={`
             strength-bar ${sizeClasses[size].bar}
-            bg-gray-200 rounded-full overflow-hidden
-            ${animated ? 'transition-all duration-300 ease-out' : ''}
+              
+            ${animated ? '  ' : ''}
           `}
         >
           <div
             className={`
-              strength-bar-fill h-full
-              ${animated ? 'transition-all duration-300 ease-out' : ''}
+              strength-bar-fill 
+              ${animated ? '  ' : ''}
             `}
             style={{
               width: `${percentage}%`,
@@ -162,7 +162,7 @@ export const PasswordMeter = forwardRef<HTMLDivElement, PasswordMeterProps>(({
           />
         </div>
         {showScore && (
-          <div className="strength-score mt-1 text-sm font-medium" style={{ color: strengthColor }}>
+          <div className="strength-score   " style={{ color: strengthColor }}>
             {percentage}%
           </div>
         )}
@@ -181,7 +181,7 @@ export const PasswordMeter = forwardRef<HTMLDivElement, PasswordMeterProps>(({
     const strokeDashoffset = circumference - (percentage / 100) * circumference;
 
     return (
-      <div className="strength-circle-container flex items-center">
+      <div className="strength-circle-container  ">
         <svg
           className={sizeClasses[size].circle}
           viewBox="0 0 100 100"
@@ -208,7 +208,7 @@ export const PasswordMeter = forwardRef<HTMLDivElement, PasswordMeterProps>(({
             strokeDashoffset={strokeDashoffset}
             strokeLinecap="round"
             transform="rotate(-90 50 50)"
-            className={animated ? 'transition-all duration-300 ease-out' : ''}
+            className={animated ? '  ' : ''}
           />
           {/* Center text */}
           <text
@@ -216,7 +216,7 @@ export const PasswordMeter = forwardRef<HTMLDivElement, PasswordMeterProps>(({
             y="50"
             textAnchor="middle"
             dominantBaseline="middle"
-            className="font-semibold"
+            className=""
             fill={strengthColor}
             fontSize={size === 'sm' ? '14' : size === 'md' ? '16' : '18'}
           >
@@ -252,14 +252,14 @@ export const PasswordMeter = forwardRef<HTMLDivElement, PasswordMeterProps>(({
     };
 
     return (
-      <div className={`strength-dots flex ${sizeClasses[size].dots}`}>
+      <div className={`strength-dots  ${sizeClasses[size].dots}`}>
         {dots.map((index) => (
           <div
             key={index}
             className={`
-              strength-dot rounded-full
-              ${size === 'sm' ? 'w-2 h-2' : size === 'md' ? 'w-3 h-3' : 'w-4 h-4'}
-              ${animated ? 'transition-all duration-300 ease-out' : ''}
+              strength-dot 
+              ${size === 'sm' ? ' ' : size === 'md' ? ' ' : ' '}
+              ${animated ? '  ' : ''}
             `}
             style={{
               backgroundColor: getDotColor(index)
@@ -284,16 +284,16 @@ export const PasswordMeter = forwardRef<HTMLDivElement, PasswordMeterProps>(({
       <div className="strength-text">
         <span
           className={`
-            font-medium capitalize
+             
             ${sizeClasses[size].text}
-            ${animated ? 'transition-colors duration-300 ease-out' : ''}
+            ${animated ? '  ' : ''}
           `}
           style={{ color: strengthColor }}
         >
           {strengthText}
         </span>
         {showScore && (
-          <span className="ml-2 text-gray-500">
+          <span className=" ">
             ({actions.getStrengthPercentage()}%)
           </span>
         )}
@@ -311,7 +311,7 @@ export const PasswordMeter = forwardRef<HTMLDivElement, PasswordMeterProps>(({
 
     if (!state.analysis) {
       return (
-        <div className="strength-empty text-gray-400 text-sm">
+        <div className="strength-empty  ">
           Enter a password to see strength
         </div>
       );
@@ -341,24 +341,24 @@ export const PasswordMeter = forwardRef<HTMLDivElement, PasswordMeterProps>(({
     }
 
     return (
-      <div className="criteria-list space-y-2">
+      <div className="criteria-list ">
         {state.analysis.criteria.map((criterion: any, index: number) => (
           <div
             key={index}
             className={`
-              criteria-item flex items-center gap-2 text-sm
-              ${criterion.met ? 'text-green-600' : 'text-gray-500'}
-              ${animated ? 'transition-colors duration-200' : ''}
+              criteria-item    
+              ${criterion.met ? '' : ''}
+              ${animated ? ' ' : ''}
             `}
           >
             <div
               className={`
-                criteria-icon w-4 h-4 rounded-full flex items-center justify-center
-                ${criterion.met ? 'bg-green-100' : 'bg-gray-100'}
+                criteria-icon      
+                ${criterion.met ? '' : ''}
               `}
             >
               {criterion.met ? (
-                <svg className="w-3 h-3 text-green-600" fill="currentColor" viewBox="0 0 20 20">
+                <svg className="  " fill="currentColor" viewBox="0 0 20 20">
                   <path
                     fillRule="evenodd"
                     d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414l4.586 4.586a1 1 0 001.414 0z"
@@ -366,7 +366,7 @@ export const PasswordMeter = forwardRef<HTMLDivElement, PasswordMeterProps>(({
                   />
                 </svg>
               ) : (
-                <div className="w-2 h-2 bg-gray-400 rounded-full" />
+                <div className="   " />
               )}
             </div>
             <span>{criterion.description}</span>
@@ -383,12 +383,12 @@ export const PasswordMeter = forwardRef<HTMLDivElement, PasswordMeterProps>(({
     if (!showSuggestions || !state.analysis?.suggestions.length) return null;
 
     return (
-      <div className="suggestions mt-3">
-        <h4 className="text-sm font-medium text-gray-700 mb-2">Suggestions:</h4>
-        <ul className="space-y-1">
+      <div className="suggestions ">
+        <h4 className="   ">Suggestions:</h4>
+        <ul className="">
           {state.analysis.suggestions.map((suggestion: string, index: number) => (
-            <li key={index} className="text-sm text-blue-600 flex items-start gap-1">
-              <span className="text-blue-400">•</span>
+            <li key={index} className="    ">
+              <span className="">•</span>
               <span>{suggestion}</span>
             </li>
           ))}
@@ -404,10 +404,10 @@ export const PasswordMeter = forwardRef<HTMLDivElement, PasswordMeterProps>(({
     if (!showWarnings || !state.analysis?.warnings.length) return null;
 
     return (
-      <div className="warnings mt-3">
+      <div className="warnings ">
         {state.analysis.warnings.map((warning: string, index: number) => (
-          <div key={index} className="text-sm text-amber-600 flex items-center gap-1">
-            <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+          <div key={index} className="    ">
+            <svg className=" " fill="currentColor" viewBox="0 0 20 20">
               <path
                 fillRule="evenodd"
                 d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z"
@@ -428,14 +428,14 @@ export const PasswordMeter = forwardRef<HTMLDivElement, PasswordMeterProps>(({
     if (!state.analysis) return null;
 
     return (
-      <div className="additional-info mt-3 space-y-1">
+      <div className="additional-info  ">
         {showEntropy && (
-          <div className="text-sm text-gray-600">
+          <div className=" ">
             Entropy: {state.analysis.entropy} bits
           </div>
         )}
         {showCrackTime && state.analysis.estimatedCrackTime && (
-          <div className="text-sm text-gray-600">
+          <div className=" ">
             Crack time: {state.analysis.estimatedCrackTime}
           </div>
         )}
@@ -444,7 +444,7 @@ export const PasswordMeter = forwardRef<HTMLDivElement, PasswordMeterProps>(({
             batching), so it is never true at a render boundary. The prior
             `{state.analyzing && <div>Analyzing...</div>}` was unreachable dead code. */}
         {state.error && (
-          <div className="text-sm text-red-600" id="password-meter-error">
+          <div className=" " id="password-meter-error">
             Error: {state.error}
           </div>
         )}
@@ -462,12 +462,12 @@ export const PasswordMeter = forwardRef<HTMLDivElement, PasswordMeterProps>(({
       <button
         type="button"
         onClick={actions.toggleVisibility}
-        className="visibility-toggle p-2 text-gray-400 hover:text-gray-600 transition-colors"
+        className="visibility-toggle    "
         aria-label={state.visible ? 'Hide password' : 'Show password'}
         disabled={state.disabled}
       >
         {state.visible ? (
-          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <svg className=" " fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path
               strokeLinecap="round"
               strokeLinejoin="round"
@@ -476,7 +476,7 @@ export const PasswordMeter = forwardRef<HTMLDivElement, PasswordMeterProps>(({
             />
           </svg>
         ) : (
-          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <svg className=" " fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path
               strokeLinecap="round"
               strokeLinejoin="round"
@@ -504,16 +504,16 @@ export const PasswordMeter = forwardRef<HTMLDivElement, PasswordMeterProps>(({
       data-testid="password-meter"
     >
       {/* Password Input with Visibility Toggle */}
-      <div className="password-input-container flex items-center gap-2">
+      <div className="password-input-container   ">
         <input
           ref={passwordInputRef}
           type={state.visible ? 'text' : 'password'}
           value={state.password}
           onChange={(e) => actions.setPassword(e.target.value)}
           className={`
-            password-input flex-1 px-3 py-2 border border-gray-300 rounded-md
-            focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent
-            ${state.disabled ? 'bg-gray-50 text-gray-400' : ''}
+            password-input      
+               
+            ${state.disabled ? ' ' : ''}
           `}
           placeholder="Enter password"
           disabled={state.disabled}
@@ -524,10 +524,10 @@ export const PasswordMeter = forwardRef<HTMLDivElement, PasswordMeterProps>(({
       </div>
 
       {/* Strength Indicator */}
-      <div className="strength-indicator mt-3">
+      <div className="strength-indicator ">
         {showStrengthText && state.analysis && (
-          <div className="strength-label mb-2">
-            <span className="text-sm font-medium text-gray-700">Password Strength</span>
+          <div className="strength-label ">
+            <span className="  ">Password Strength</span>
           </div>
         )}
         {renderStrengthIndicator()}
@@ -546,17 +546,17 @@ export const PasswordMeter = forwardRef<HTMLDivElement, PasswordMeterProps>(({
       {renderAdditionalInfo()}
 
       {/* Actions */}
-      <div className="meter-actions mt-4 flex gap-2">
+      <div className="meter-actions   ">
         <button
           onClick={actions.clear}
-          className="px-3 py-1 text-sm bg-gray-100 hover:bg-gray-200 rounded transition-colors"
+          className="      "
           disabled={state.disabled || !state.password}
         >
           Clear
         </button>
         <button
           onClick={() => actions.analyze(state.password)}
-          className="px-3 py-1 text-sm bg-blue-100 hover:bg-blue-200 text-blue-700 rounded transition-colors"
+          className="       "
           disabled={state.disabled || !state.password || state.analyzing}
         >
           {/* reason: state.analyzing is never true at a render boundary (see note above),

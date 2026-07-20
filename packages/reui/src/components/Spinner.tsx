@@ -146,41 +146,41 @@ export const Spinner = forwardRef<HTMLDivElement, SpinnerProps>(({
 
   // Size classes
   const sizeClasses = {
-    xs: 'w-4 h-4',
-    sm: 'w-6 h-6',
-    md: 'w-8 h-8',
-    lg: 'w-12 h-12',
-    xl: 'w-16 h-16',
-    '2xl': 'w-20 h-20',
-    '3xl': 'w-24 h-24',
-    '4xl': 'w-32 h-32'
+    xs: ' ',
+    sm: ' ',
+    md: ' ',
+    lg: ' ',
+    xl: ' ',
+    '2xl': ' ',
+    '3xl': ' ',
+    '4xl': ' '
   }[spinnerHook.config.size];
 
   // Speed classes
   const speedClasses = {
-    slow: 'animate-spin-slow',
-    normal: 'animate-spin',
-    fast: 'animate-spin-fast'
+    slow: '',
+    normal: '',
+    fast: ''
   }[spinnerHook.config.speed];
 
   // Variant classes
   const variantClasses = {
-    spin: 'border-4 border-t-transparent border-b-transparent border-l-transparent',
-    pulse: 'animate-pulse',
-    bounce: 'animate-bounce',
-    dots: 'flex space-x-1',
-    bars: 'flex space-x-1',
-    ring: 'relative'
+    spin: '   ',
+    pulse: '',
+    bounce: '',
+    dots: ' ',
+    bars: ' ',
+    ring: ''
   }[spinnerHook.config.variant];
 
   // Color classes
   const colorClasses = {
-    primary: 'border-blue-600',
-    success: 'border-green-600',
-    warning: 'border-yellow-600',
-    error: 'border-red-600',
-    info: 'border-cyan-600',
-    gray: 'border-gray-600'
+    primary: '',
+    success: '',
+    warning: '',
+    error: '',
+    info: '',
+    gray: ''
   }[color];
 
   // Animation classes
@@ -197,12 +197,12 @@ export const Spinner = forwardRef<HTMLDivElement, SpinnerProps>(({
         return (
           <div
             className={`
-              rounded-full
+              
               ${sizeClasses}
               ${variantClasses}
               ${colorClasses}
               ${animating ? animationClasses : ''}
-              ${props.disabled ? 'opacity-50' : ''}
+              ${props.disabled ? '' : ''}
               ${props.className}
             `}
             style={props.style}
@@ -213,11 +213,11 @@ export const Spinner = forwardRef<HTMLDivElement, SpinnerProps>(({
         return (
           <div
             className={`
-              rounded-full
+              
               ${sizeClasses}
               ${colorClasses}
-              ${animating ? 'animate-pulse' : ''}
-              ${props.disabled ? 'opacity-50' : ''}
+              ${animating ? '' : ''}
+              ${props.disabled ? '' : ''}
               ${props.className}
             `}
             style={props.style}
@@ -230,9 +230,9 @@ export const Spinner = forwardRef<HTMLDivElement, SpinnerProps>(({
             className={`
               ${sizeClasses}
               ${colorClasses}
-              ${animating ? 'animate-bounce' : ''}
-              ${props.disabled ? 'opacity-50' : ''}
-              rounded-full
+              ${animating ? '' : ''}
+              ${props.disabled ? '' : ''}
+              
               ${props.className}
             `}
             style={props.style}
@@ -243,8 +243,8 @@ export const Spinner = forwardRef<HTMLDivElement, SpinnerProps>(({
         return (
           <div
             className={`
-              flex items-center
-              ${props.disabled ? 'opacity-50' : ''}
+               
+              ${props.disabled ? '' : ''}
               ${props.className}
             `}
             style={props.style}
@@ -254,18 +254,18 @@ export const Spinner = forwardRef<HTMLDivElement, SpinnerProps>(({
                 key={index}
                 className={`
                   ${{
-                    xs: 'w-1 h-1',
-                    sm: 'w-1.5 h-1.5',
-                    md: 'w-2 h-2',
-                    lg: 'w-3 h-3',
-                    xl: 'w-4 h-4',
-                    '2xl': 'w-5 h-5',
-                    '3xl': 'w-6 h-6',
-                    '4xl': 'w-8 h-8'
+                    xs: ' ',
+                    sm: ' ',
+                    md: ' ',
+                    lg: ' ',
+                    xl: ' ',
+                    '2xl': ' ',
+                    '3xl': ' ',
+                    '4xl': ' '
                   }[size]}
                   ${colorClasses.replace('border-', 'bg-')}
-                  rounded-full
-                  ${animating ? 'animate-pulse' : ''}
+                  
+                  ${animating ? '' : ''}
                   ${index === 0 ? 'delay-0' : index === 1 ? 'delay-75' : 'delay-150'}
                 `}
                 style={{
@@ -281,8 +281,8 @@ export const Spinner = forwardRef<HTMLDivElement, SpinnerProps>(({
         return (
           <div
             className={`
-              flex items-center
-              ${props.disabled ? 'opacity-50' : ''}
+               
+              ${props.disabled ? '' : ''}
               ${props.className}
             `}
             style={props.style}
@@ -292,17 +292,17 @@ export const Spinner = forwardRef<HTMLDivElement, SpinnerProps>(({
                 key={index}
                 className={`
                   ${{
-                    xs: 'w-0.5 h-3',
-                    sm: 'w-1 h-4',
-                    md: 'w-1 h-6',
-                    lg: 'w-1.5 h-8',
-                    xl: 'w-2 h-10',
-                    '2xl': 'w-2.5 h-12',
-                    '3xl': 'w-3 h-14',
-                    '4xl': 'w-4 h-16'
+                    xs: ' ',
+                    sm: ' ',
+                    md: ' ',
+                    lg: ' ',
+                    xl: ' ',
+                    '2xl': ' ',
+                    '3xl': ' ',
+                    '4xl': ' '
                   }[size]}
                   ${colorClasses.replace('border-', 'bg-')}
-                  ${animating ? 'animate-pulse' : ''}
+                  ${animating ? '' : ''}
                   ${index === 0 ? 'delay-0' : `delay-${index * 100}`}
                 `}
                 style={{
@@ -318,9 +318,9 @@ export const Spinner = forwardRef<HTMLDivElement, SpinnerProps>(({
         return (
           <div
             className={`
-              relative
+              
               ${sizeClasses}
-              ${props.disabled ? 'opacity-50' : ''}
+              ${props.disabled ? '' : ''}
               ${props.className}
             `}
             style={props.style}
@@ -328,21 +328,21 @@ export const Spinner = forwardRef<HTMLDivElement, SpinnerProps>(({
             {/* Background ring */}
             <div
               className={`
-                absolute inset-0
-                rounded-full
-                border-4
+                 
+                
+                
                 ${colorClasses.replace('border-', 'border-') + '-200'}
               `}
             />
             {/* Progress ring */}
             <div
               className={`
-                absolute inset-0
-                rounded-full
-                border-4
-                border-t-transparent
-                border-b-transparent
-                border-l-transparent
+                 
+                
+                
+                
+                
+                
                 ${colorClasses}
                 ${animating ? animationClasses : ''}
               `}
@@ -368,10 +368,10 @@ export const Spinner = forwardRef<HTMLDivElement, SpinnerProps>(({
     const labelText = props.animating ? props.label : 'Idle';
 
     const baseLabelClasses = `
-      text-sm
-      font-medium
-      ${props.animating ? 'text-gray-600' : 'text-gray-400'}
-      ${props.disabled ? 'opacity-50' : ''}
+      
+      
+      ${props.animating ? '' : ''}
+      ${props.disabled ? '' : ''}
       ${props.className}
     `;
 
@@ -435,12 +435,12 @@ export const Spinner = forwardRef<HTMLDivElement, SpinnerProps>(({
         });
 
     const baseSpinnerClasses = `
-      inline-flex
-      flex-col
-      items-center
-      justify-center
-      space-y-2
-      ${props.disabled ? 'opacity-50 cursor-not-allowed' : 'cursor-default'}
+      
+      
+      
+      
+      
+      ${props.disabled ? ' ' : ''}
       ${props.className}
     `;
 
@@ -449,9 +449,9 @@ export const Spinner = forwardRef<HTMLDivElement, SpinnerProps>(({
         <div
           ref={props.spinnerRef}
           className={`
-            relative
+            
             ${dimension ? `w-${dimension} h-${dimension}` : sizeClasses}
-            ${props.disabled ? 'opacity-50 cursor-not-allowed' : 'cursor-default'}
+            ${props.disabled ? ' ' : ''}
           `}
           onFocus={props.onFocus}
           onBlur={props.onBlur}
@@ -468,7 +468,7 @@ export const Spinner = forwardRef<HTMLDivElement, SpinnerProps>(({
         </div>
         {labelElement}
         {showTooltip && tooltipText && (
-          <div className="absolute top-full mt-2 px-2 py-1 text-xs text-white bg-gray-800 rounded shadow-lg whitespace-nowrap">
+          <div className="          ">
             {tooltipText}
           </div>
         )}

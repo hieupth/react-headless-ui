@@ -45,10 +45,10 @@ interface EmptyStateActionProps {
 
 const EmptyStateAction = forwardRef<HTMLButtonElement, EmptyStateActionProps>(
   ({ children, onClick, variant = 'primary', className = '', ...props }, ref) => {
-    const baseClasses = 'px-4 py-2 rounded-md font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2';
+    const baseClasses = '       ';
     const variantClasses = variant === 'primary'
-      ? 'bg-blue-600 text-white hover:bg-blue-700 focus:ring-blue-500'
-      : 'bg-gray-200 text-gray-900 hover:bg-gray-300 focus:ring-gray-500';
+      ? '   '
+      : '   ';
 
     return (
       <button
@@ -91,13 +91,13 @@ export const EmptyState = forwardRef<HTMLDivElement, EmptyStateProps>(
       return null;
     }
 
-    const baseClasses = 'flex flex-col items-center justify-center text-center p-8 rounded-lg border-2 border-dashed border-gray-300 bg-gray-50';
+    const baseClasses = '          ';
     const variantClasses = {
-      'no-data': 'border-gray-300 bg-gray-50',
-      'no-results': 'border-yellow-300 bg-yellow-50',
-      'no-connection': 'border-red-300 bg-red-50',
-      'error': 'border-red-300 bg-red-50',
-      'loading': 'border-blue-300 bg-blue-50'
+      'no-data': ' ',
+      'no-results': ' ',
+      'no-connection': ' ',
+      'error': ' ',
+      'loading': ' '
     };
 
     return (
@@ -110,35 +110,35 @@ export const EmptyState = forwardRef<HTMLDivElement, EmptyStateProps>(
       >
         {/* Icon/Illustration */}
         {icon && (
-          <div className="mb-4 text-4xl" role="img" aria-hidden={true}>
+          <div className=" " role="img" aria-hidden={true}>
             {icon}
           </div>
         )}
 
         {/* Title */}
         {title && (
-          <h3 className="text-lg font-semibold text-gray-900 mb-2">
+          <h3 className="   ">
             {title}
           </h3>
         )}
 
         {/* Description */}
         {description && (
-          <p className="text-gray-600 mb-6 max-w-md">
+          <p className="  ">
             {description}
           </p>
         )}
 
         {/* Custom content */}
         {children && (
-          <div className="mb-6">
+          <div className="">
             {children}
           </div>
         )}
 
         {/* Action buttons */}
         {state.showActions && (primaryActionText || secondaryActionText) && (
-          <div className="flex flex-col sm:flex-row gap-3">
+          <div className="   ">
             {primaryActionText && (
               <EmptyStateAction onClick={handlers.handlePrimaryAction} variant="primary">
                 {primaryActionText}
@@ -155,7 +155,7 @@ export const EmptyState = forwardRef<HTMLDivElement, EmptyStateProps>(
         {/* Dismiss button */}
         {state.dismissible && (
           <button
-            className="absolute top-2 right-2 p-1 text-gray-400 hover:text-gray-600 focus:outline-none focus:text-gray-600"
+            className="       "
             onClick={handlers.handleDismiss}
             aria-label="Dismiss empty state"
           >

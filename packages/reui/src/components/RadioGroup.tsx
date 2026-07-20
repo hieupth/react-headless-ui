@@ -102,37 +102,37 @@ export const RadioGroup = forwardRef<HTMLDivElement, RadioGroupProps>(({
   // Size classes
   const sizeClasses = {
     sm: {
-      radio: 'w-3 h-3',
-      container: 'text-sm',
-      spacing: state.orientation === 'horizontal' ? 'space-x-3' : 'space-y-2'
+      radio: ' ',
+      container: '',
+      spacing: state.orientation === 'horizontal' ? '' : ''
     },
     md: {
-      radio: 'w-4 h-4',
-      container: 'text-base',
-      spacing: state.orientation === 'horizontal' ? 'space-x-4' : 'space-y-3'
+      radio: ' ',
+      container: '',
+      spacing: state.orientation === 'horizontal' ? '' : ''
     },
     lg: {
-      radio: 'w-5 h-5',
-      container: 'text-lg',
-      spacing: state.orientation === 'horizontal' ? 'space-x-5' : 'space-y-4'
+      radio: ' ',
+      container: '',
+      spacing: state.orientation === 'horizontal' ? '' : ''
     }
   }[size];
 
   // Color classes
   const colorClasses = {
-    primary: 'border-blue-600 bg-blue-600',
-    secondary: 'border-gray-600 bg-gray-600',
-    success: 'border-green-600 bg-green-600',
-    warning: 'border-yellow-600 bg-yellow-600',
-    error: 'border-red-600 bg-red-600'
+    primary: ' ',
+    secondary: ' ',
+    success: ' ',
+    warning: ' ',
+    error: ' '
   }[color];
 
   // Base classes
   const radioGroupClasses = `
     radio-group
-    ${state.orientation === 'horizontal' ? 'flex items-center' : 'flex flex-col'}
+    ${state.orientation === 'horizontal' ? ' ' : ' '}
     ${sizeClasses.spacing}
-    ${state.disabled ? 'opacity-50 cursor-not-allowed' : ''}
+    ${state.disabled ? ' ' : ''}
     ${className || ''}
   `.trim().replace(/\s+/g, ' ');
 
@@ -148,7 +148,7 @@ export const RadioGroup = forwardRef<HTMLDivElement, RadioGroupProps>(({
     // element; driving that through the component render in jsdom is unreliable,
     // so the focused ring branch is covered by the deep hook tests instead.
     /* c8 ignore start */
-    const focusRing = isFocused ? 'ring-2 ring-blue-500 ring-offset-2 rounded-md' : '';
+    const focusRing = isFocused ? '' : '';
     /* c8 ignore end */
 
     return (
@@ -156,10 +156,10 @@ export const RadioGroup = forwardRef<HTMLDivElement, RadioGroupProps>(({
         key={value}
         className={`
           radio-option
-          ${state.orientation === 'horizontal' ? 'flex items-center' : 'flex items-start'}
+          ${state.orientation === 'horizontal' ? ' ' : ' '}
           ${focusRing}
-          ${!state.disabled ? 'cursor-pointer' : 'cursor-not-allowed'}
-          p-2 rounded-md transition-all duration-150
+          ${!state.disabled ? '' : ''}
+             
         `}
         onClick={() => actions.selectOption(value)}
         {...optionAttributes}
@@ -169,21 +169,21 @@ export const RadioGroup = forwardRef<HTMLDivElement, RadioGroupProps>(({
         {/* Radio Button */}
         <div className={`
           radio-button
-          relative
+          
           ${sizeClasses.radio}
-          border-2 rounded-full
-          ${isSelected ? colorClasses : 'border-gray-300 bg-white'}
-          ${!state.disabled && !isSelected ? 'hover:border-gray-400' : ''}
-          transition-colors duration-150
-          flex-shrink-0
+           
+          ${isSelected ? colorClasses : ' '}
+          ${!state.disabled && !isSelected ? '' : ''}
+           
+          
         `}>
           {/* Inner circle for selected state */}
           {isSelected && (
             <div className="
-              absolute inset-1
-              bg-white
-              rounded-full
-              transform scale-50
+               
+              
+              
+              transform 
             " />
           )}
         </div>
@@ -191,24 +191,24 @@ export const RadioGroup = forwardRef<HTMLDivElement, RadioGroupProps>(({
         {/* Label and Description */}
         {showLabels && (
           <div className={`
-            ${state.orientation === 'horizontal' ? 'ml-2' : 'ml-3'}
-            flex-1
+            ${state.orientation === 'horizontal' ? '' : ''}
+            
           `}>
             <div
               id={labelId}
               className={`
-              font-medium
-              ${isSelected ? 'text-gray-900' : 'text-gray-700'}
-              ${state.disabled ? 'text-gray-500' : ''}
+              
+              ${isSelected ? '' : ''}
+              ${state.disabled ? '' : ''}
             `}>
               {label}
             </div>
             {description && (
               <div className={`
-                text-sm
-                text-gray-500
-                mt-0.5
-                ${state.disabled ? 'text-gray-400' : ''}
+                
+                
+                
+                ${state.disabled ? '' : ''}
               `}>
                 {description}
               </div>
@@ -239,9 +239,9 @@ export const RadioGroup = forwardRef<HTMLDivElement, RadioGroupProps>(({
 
       {/* Empty state */}
       {state.options.length === 0 && (
-        <div className="flex flex-col items-center justify-center py-8 text-gray-500">
+        <div className="     ">
           <div className={sizeClasses.radio} />
-          <p className="text-sm mt-2">No options available</p>
+          <p className=" ">No options available</p>
         </div>
       )}
     </div>

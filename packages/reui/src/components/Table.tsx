@@ -69,9 +69,9 @@ export const Table = forwardRef<HTMLTableElement, TableProps>(({
   // Size classes
   const getSizeClasses = () => {
     const sizes = {
-      sm: 'text-xs',
-      md: 'text-sm',
-      lg: 'text-base'
+      sm: '',
+      md: '',
+      lg: ''
     };
     return sizes[size];
   };
@@ -80,16 +80,16 @@ export const Table = forwardRef<HTMLTableElement, TableProps>(({
   const getVariantClasses = () => {
     const variants = {
       default: '',
-      bordered: 'border border-gray-200',
-      striped: 'divide-y divide-gray-200'
+      bordered: ' ',
+      striped: ' '
     };
     return variants[variant];
   };
 
   // Base table classes
   const tableClasses = `
-    table
-    w-full
+    
+    
     ${getSizeClasses()}
     ${getVariantClasses()}
     ${compact ? 'table-auto' : 'table-fixed'}
@@ -105,10 +105,10 @@ export const Table = forwardRef<HTMLTableElement, TableProps>(({
 
   // Default empty state
   const defaultRenderEmpty = () => (
-    <div className="flex items-center justify-center py-8 text-gray-500">
-      <div className="text-center">
+    <div className="    ">
+      <div className="">
         <svg
-          className="mx-auto h-12 w-12 text-gray-400"
+          className="mx-auto   "
           fill="none"
           stroke="currentColor"
           viewBox="0 0 24 24"
@@ -120,8 +120,8 @@ export const Table = forwardRef<HTMLTableElement, TableProps>(({
             d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
           />
         </svg>
-        <h3 className="mt-2 text-sm font-medium text-gray-900">No data</h3>
-        <p className="mt-1 text-sm text-gray-500">
+        <h3 className="   ">No data</h3>
+        <p className="  ">
           No items to display
         </p>
       </div>
@@ -130,10 +130,10 @@ export const Table = forwardRef<HTMLTableElement, TableProps>(({
 
   // Default loading state
   const defaultRenderLoading = () => (
-    <div className="flex items-center justify-center py-8">
-      <div className="flex items-center space-x-2">
-        <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-gray-900"></div>
-        <span className="text-gray-600">Loading...</span>
+    <div className="   ">
+      <div className="  ">
+        <div className="     "></div>
+        <span className="">Loading...</span>
       </div>
     </div>
   );
@@ -148,31 +148,31 @@ export const Table = forwardRef<HTMLTableElement, TableProps>(({
     const endIndex = Math.min(startIndex + pageSize - 1, total);
 
     return (
-      <div className="flex items-center justify-between px-4 py-3 bg-white border-t border-gray-200 sm:px-6">
-        <div className="flex items-center">
-          <p className="text-sm text-gray-700">
-            Showing <span className="font-medium">{startIndex}</span> to{' '}
-            <span className="font-medium">{endIndex}</span> of{' '}
-            <span className="font-medium">{total}</span> results
+      <div className="        ">
+        <div className=" ">
+          <p className=" ">
+            Showing <span className="">{startIndex}</span> to{' '}
+            <span className="">{endIndex}</span> of{' '}
+            <span className="">{total}</span> results
           </p>
         </div>
-        <div className="flex items-center space-x-2">
+        <div className="  ">
           <button
             onClick={() => actions.setPage(page - 1)}
             disabled={page === 0}
-            className="relative inline-flex items-center px-2 py-1 rounded-md text-sm font-medium text-gray-700 bg-white border border-gray-300 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
+            className="              "
           >
             Previous
           </button>
-          <div className="flex items-center space-x-1">
+          <div className="  ">
             {Array.from({ length: totalPages }, (_, i) => (
               <button
                 key={i}
                 onClick={() => actions.setPage(i)}
-                className={`relative inline-flex items-center px-3 py-1 text-sm font-medium rounded-md ${
+                className={`        ${
                   i === page
-                    ? 'bg-blue-600 text-white'
-                    : 'text-gray-700 bg-white border border-gray-300 hover:bg-gray-50'
+                    ? ' '
+                    : '    '
                 }`}
               >
                 {i + 1}
@@ -182,7 +182,7 @@ export const Table = forwardRef<HTMLTableElement, TableProps>(({
           <button
             onClick={() => actions.setPage(page + 1)}
             disabled={page === totalPages - 1}
-            className="relative inline-flex items-center px-2 py-1 rounded-md text-sm font-medium text-gray-700 bg-white border border-gray-300 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
+            className="              "
           >
             Next
           </button>
@@ -210,7 +210,7 @@ export const Table = forwardRef<HTMLTableElement, TableProps>(({
   }
 
   return (
-    <div className="w-full" data-testid="table-container">
+    <div className="" data-testid="table-container">
       <table
         ref={ref}
         className={tableClasses}
@@ -219,14 +219,14 @@ export const Table = forwardRef<HTMLTableElement, TableProps>(({
       >
         {/* Table Header */}
         {showHeaders && (
-          <thead className="bg-gray-50">
+          <thead className="">
             <tr>
               {/* Selection column */}
               {state.selection && (
-                <th className="px-6 py-3 text-left">
+                <th className="  ">
                   <input
                     type="checkbox"
-                    className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+                    className="     "
                     checked={computed.allRowsSelected}
                     onChange={(e) => {
                       if (e.target.checked) {
@@ -242,14 +242,14 @@ export const Table = forwardRef<HTMLTableElement, TableProps>(({
 
               {/* Expansion column */}
               {state.enableExpansion && (
-                <th className="px-6 py-3 text-left">
+                <th className="  ">
                   <span className="sr-only">Expand</span>
                 </th>
               )}
 
               {/* Row number column */}
               {showRowNumbers && (
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                <th className="       ">
                   #
                 </th>
               )}
@@ -266,22 +266,22 @@ export const Table = forwardRef<HTMLTableElement, TableProps>(({
                     {...attributes}
                     onClick={() => handleHeaderClick(column)}
                     className={`
-                      px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider
-                      ${column.sortable ? 'cursor-pointer hover:bg-gray-100' : ''}
-                      ${column.align === 'center' ? 'text-center' : ''}
-                      ${column.align === 'right' ? 'text-right' : ''}
+                             
+                      ${column.sortable ? ' ' : ''}
+                      ${column.align === 'center' ? '' : ''}
+                      ${column.align === 'right' ? '' : ''}
                     `}
                     style={{ width: column.width }}
                   >
-                    <div className="flex items-center space-x-1">
+                    <div className="  ">
                       <span>
                         {renderHeader ? renderHeader(column, columnIndex) : column.title}
                       </span>
                       {column.sortable && (
-                        <span className="flex flex-col">
+                        <span className=" ">
                           <svg
-                            className={`w-3 h-3 -mb-1 ${
-                              isSorted && sortDirection === 'asc' ? 'text-blue-600' : 'text-gray-400'
+                            className={`   ${
+                              isSorted && sortDirection === 'asc' ? '' : ''
                             }`}
                             fill="currentColor"
                             viewBox="0 0 20 20"
@@ -293,8 +293,8 @@ export const Table = forwardRef<HTMLTableElement, TableProps>(({
                             />
                           </svg>
                           <svg
-                            className={`w-3 h-3 ${
-                              isSorted && sortDirection === 'desc' ? 'text-blue-600' : 'text-gray-400'
+                            className={`  ${
+                              isSorted && sortDirection === 'desc' ? '' : ''
                             }`}
                             fill="currentColor"
                             viewBox="0 0 20 20"
@@ -316,7 +316,7 @@ export const Table = forwardRef<HTMLTableElement, TableProps>(({
         )}
 
         {/* Table Body */}
-        <tbody className="bg-white divide-y divide-gray-200">
+        <tbody className="  ">
           {computed.paginatedData.map((row, rowIndex) => {
             const rowAttributes = getRowAttributes(row, rowIndex);
             const rowKey = state.selection?.getRowKey(row) || `row-${rowIndex}`;
@@ -327,17 +327,17 @@ export const Table = forwardRef<HTMLTableElement, TableProps>(({
                 <tr
                   {...rowAttributes}
                   className={`
-                    hover:bg-gray-50
-                    ${rowIndex % 2 === 1 && variant === 'striped' ? 'bg-gray-50' : ''}
-                    ${state.selection?.selectedRowKeys.includes(rowKey) ? 'bg-blue-50' : ''}
+                    
+                    ${rowIndex % 2 === 1 && variant === 'striped' ? '' : ''}
+                    ${state.selection?.selectedRowKeys.includes(rowKey) ? '' : ''}
                   `}
                 >
                   {/* Selection checkbox */}
                   {state.selection && (
-                    <td className="px-6 py-4 whitespace-nowrap">
+                    <td className="  ">
                       <input
                         type="checkbox"
-                        className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+                        className="     "
                         {...getSelectionCheckboxAttributes(row)}
                       />
                     </td>
@@ -345,13 +345,13 @@ export const Table = forwardRef<HTMLTableElement, TableProps>(({
 
                   {/* Expansion button */}
                   {state.enableExpansion && (
-                    <td className="px-6 py-4 whitespace-nowrap">
+                    <td className="  ">
                       <button
                         {...getExpanderAttributes(row)}
-                        className="flex items-center text-gray-500 hover:text-gray-700"
+                        className="   "
                       >
                         <svg
-                          className={`w-4 h-4 transform transition-transform ${isExpanded ? 'rotate-90' : ''}`}
+                          className={`  transform  ${isExpanded ? '' : ''}`}
                           fill="none"
                           stroke="currentColor"
                           viewBox="0 0 24 24"
@@ -369,7 +369,7 @@ export const Table = forwardRef<HTMLTableElement, TableProps>(({
 
                   {/* Row number */}
                   {showRowNumbers && (
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                    <td className="    ">
                       {rowIndex + 1}
                     </td>
                   )}
@@ -384,9 +384,9 @@ export const Table = forwardRef<HTMLTableElement, TableProps>(({
                         key={`${column.key}-${rowIndex}`}
                         {...cellAttributes}
                         className={`
-                          px-6 py-4 whitespace-nowrap text-sm text-gray-900
-                          ${column.align === 'center' ? 'text-center' : ''}
-                          ${column.align === 'right' ? 'text-right' : ''}
+                              
+                          ${column.align === 'center' ? '' : ''}
+                          ${column.align === 'right' ? '' : ''}
                         `}
                       >
                         {renderCell
@@ -411,11 +411,11 @@ export const Table = forwardRef<HTMLTableElement, TableProps>(({
                         1 +
                         (showRowNumbers ? 1 : 0)
                       }
-                      className="px-6 py-4 bg-gray-50"
+                      className="  "
                     >
-                      <div className="text-sm text-gray-600">
-                        <h4 className="font-medium text-gray-900 mb-2">Row Details</h4>
-                        <pre className="whitespace-pre-wrap">{JSON.stringify(row, null, 2)}</pre>
+                      <div className=" ">
+                        <h4 className="  ">Row Details</h4>
+                        <pre className="">{JSON.stringify(row, null, 2)}</pre>
                       </div>
                     </td>
                   </tr>

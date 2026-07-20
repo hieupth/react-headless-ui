@@ -389,7 +389,7 @@ export const Chart = forwardRef<SVGSVGElement, ChartProps>(
                       fill={color}
                       stroke="white"
                       strokeWidth={2}
-                      className="chart-pie-slice cursor-pointer"
+                      className="chart-pie-slice "
                       {...shapeAttributes}
                       style={{
                         transform: `scale(${animationProgress})`,
@@ -573,7 +573,7 @@ export const ChartPoint: React.FC<ChartPointProps> = ({
       fill={color}
       stroke={selected ? '#1f2937' : hovered ? '#6b7280' : 'none'}
       strokeWidth={selected ? 2 : hovered ? 1 : 0}
-      className={`chart-point cursor-pointer transition-all duration-150 ${selected ? 'chart-point-selected' : ''} ${hovered ? 'chart-point-hovered' : ''} ${className}`}
+      className={`chart-point    ${selected ? 'chart-point-selected' : ''} ${hovered ? 'chart-point-hovered' : ''} ${className}`}
       {...(onClick ? { onClick } : {})}
       style={style}
     />
@@ -645,7 +645,7 @@ export const ChartBar: React.FC<ChartBarProps> = ({
       fill={color}
       stroke={color}
       strokeWidth={1}
-      className={`chart-bar cursor-pointer transition-all duration-150 ${selected ? 'chart-bar-selected' : ''} ${hovered ? 'chart-bar-hovered' : ''} ${className}`}
+      className={`chart-bar    ${selected ? 'chart-bar-selected' : ''} ${hovered ? 'chart-bar-hovered' : ''} ${className}`}
       {...(onClick ? { onClick } : {})}
       style={style}
     />

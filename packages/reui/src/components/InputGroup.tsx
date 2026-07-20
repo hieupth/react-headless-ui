@@ -63,40 +63,40 @@ export const InputGroup = forwardRef<HTMLDivElement, InputGroupProps>(({
 
   // Size classes
   const sizeClasses = {
-    sm: 'text-sm',
-    md: 'text-base',
-    lg: 'text-lg'
+    sm: '',
+    md: '',
+    lg: ''
   };
 
   // Spacing classes
   const spacingClasses = {
-    tight: state.layout === 'horizontal' || state.layout === 'inline' ? 'gap-2' : 'gap-1',
-    normal: state.layout === 'horizontal' || state.layout === 'inline' ? 'gap-4' : 'gap-3',
-    loose: state.layout === 'horizontal' || state.layout === 'inline' ? 'gap-6' : 'gap-4'
+    tight: state.layout === 'horizontal' || state.layout === 'inline' ? '' : '',
+    normal: state.layout === 'horizontal' || state.layout === 'inline' ? '' : '',
+    loose: state.layout === 'horizontal' || state.layout === 'inline' ? '' : ''
   };
 
   // Border radius classes
   const borderRadiusClasses = {
-    none: 'rounded-none',
-    sm: 'rounded-sm',
-    md: 'rounded-md',
-    lg: 'rounded-lg',
-    full: 'rounded-full'
+    none: '',
+    sm: '',
+    md: '',
+    lg: '',
+    full: ''
   };
 
   // Layout classes
   const getLayoutClasses = () => {
     switch (state.layout) {
       case 'horizontal':
-        return 'flex items-center';
+        return '';
       case 'vertical':
-        return 'flex flex-col';
+        return '';
       case 'stacked':
-        return 'flex flex-col space-y-1';
+        return '';
       case 'inline':
-        return 'flex items-center flex-wrap';
+        return '';
       default:
-        return 'flex flex-col';
+        return '';
     }
   };
 
@@ -106,7 +106,7 @@ export const InputGroup = forwardRef<HTMLDivElement, InputGroupProps>(({
     ${getLayoutClasses()}
     ${spacingClasses[spacing]}
     ${sizeClasses[state.size]}
-    ${state.disabled ? 'opacity-50 cursor-not-allowed' : ''}
+    ${state.disabled ? ' ' : ''}
     ${className || ''}
   `.trim().replace(/\s+/g, ' ');
 
@@ -121,15 +121,15 @@ export const InputGroup = forwardRef<HTMLDivElement, InputGroupProps>(({
         return (
           <div key={item.id} className={`
             input-item
-            ${state.layout === 'stacked' ? 'relative' : ''}
-            ${state.layout === 'horizontal' || state.layout === 'inline' ? 'flex-1' : ''}
+            ${state.layout === 'stacked' ? '' : ''}
+            ${state.layout === 'horizontal' || state.layout === 'inline' ? '' : ''}
           `}>
             {/* Label */}
             {showLabels && item.content && (
               <label className={`
-                block text-sm font-medium text-gray-700 mb-1
-                ${state.disabled ? 'text-gray-400' : ''}
-                ${item.required ? 'after:content-["*"] after:ml-1 after:text-red-500' : ''}
+                    
+                ${state.disabled ? '' : ''}
+                ${item.required ? '  ' : ''}
               `}>
                 {item.content}
               </label>
@@ -147,14 +147,14 @@ export const InputGroup = forwardRef<HTMLDivElement, InputGroupProps>(({
               onBlur={() => actions.blurItem(item.id)}
               className={`
                 input-field
-                w-full px-3 py-2
-                ${showBorders ? 'border' : 'border-0'}
-                ${hasError ? 'border-red-500 ring-1 ring-red-500' : 'border-gray-300'}
+                  
+                ${showBorders ? '' : ''}
+                ${hasError ? '  ' : ''}
                 ${borderRadiusClasses[borderRadius]}
-                ${state.disabled ? 'bg-gray-50 text-gray-400' : 'bg-white text-gray-900'}
-                focus:outline-none
-                ${hasError ? 'focus:ring-red-500 focus:border-red-500' : 'focus:ring-blue-500 focus:border-blue-500'}
-                transition-colors duration-200
+                ${state.disabled ? ' ' : ' '}
+                
+                ${hasError ? ' ' : ' '}
+                 
               `}
               placeholder={item.placeholder}
               disabled={item.disabled || state.disabled}
@@ -171,14 +171,14 @@ export const InputGroup = forwardRef<HTMLDivElement, InputGroupProps>(({
 
             {/* Error messages */}
             {showErrors && itemErrors && itemErrors.length > 0 && (
-              <div className="error-messages mt-1">
+              <div className="error-messages ">
                 {renderError ? (
                   renderError(item.id, itemErrors)
                 ) : (
-                  <div className="text-xs text-red-600">
+                  <div className=" ">
                     {itemErrors.map((error: string, errorIndex: number) => (
-                      <div key={errorIndex} className="flex items-start gap-1">
-                        <span className="text-red-400">•</span>
+                      <div key={errorIndex} className="  ">
+                        <span className="">•</span>
                         <span>{error}</span>
                       </div>
                     ))}
@@ -193,12 +193,12 @@ export const InputGroup = forwardRef<HTMLDivElement, InputGroupProps>(({
         return (
           <div key={item.id} className={`
             label-item
-            ${state.layout === 'horizontal' || state.layout === 'inline' ? 'flex-shrink-0 mr-2' : 'mb-2'}
+            ${state.layout === 'horizontal' || state.layout === 'inline' ? ' ' : ''}
           `}>
             <label className={`
-              block text-sm font-medium text-gray-700
-              ${state.disabled ? 'text-gray-400' : ''}
-              ${item.required ? 'after:content-["*"] after:ml-1 after:text-red-500' : ''}
+                 
+              ${state.disabled ? '' : ''}
+              ${item.required ? '  ' : ''}
             `}>
               {item.content}
             </label>
@@ -209,8 +209,8 @@ export const InputGroup = forwardRef<HTMLDivElement, InputGroupProps>(({
         return (
           <div key={item.id} className={`
             helper-item
-            text-sm text-gray-500
-            ${state.layout === 'horizontal' || state.layout === 'inline' ? 'flex-shrink-0 ml-2' : 'mt-1'}
+             
+            ${state.layout === 'horizontal' || state.layout === 'inline' ? ' ' : ''}
           `}>
             {item.content}
           </div>
@@ -220,8 +220,8 @@ export const InputGroup = forwardRef<HTMLDivElement, InputGroupProps>(({
         return (
           <div key={item.id} className={`
             error-item
-            text-sm text-red-600
-            ${state.layout === 'horizontal' || state.layout === 'inline' ? 'flex-shrink-0 ml-2' : 'mt-1'}
+             
+            ${state.layout === 'horizontal' || state.layout === 'inline' ? ' ' : ''}
           `}>
             {item.content}
           </div>
@@ -231,10 +231,10 @@ export const InputGroup = forwardRef<HTMLDivElement, InputGroupProps>(({
         return (
           <div key={item.id} className={`
             prefix-item
-            flex items-center
-            ${state.layout === 'horizontal' || state.layout === 'inline' ? 'flex-shrink-0' : 'mb-2'}
+             
+            ${state.layout === 'horizontal' || state.layout === 'inline' ? '' : ''}
           `}>
-            <span className="text-gray-500 mr-2">{item.content}</span>
+            <span className=" ">{item.content}</span>
           </div>
         );
 
@@ -242,10 +242,10 @@ export const InputGroup = forwardRef<HTMLDivElement, InputGroupProps>(({
         return (
           <div key={item.id} className={`
             suffix-item
-            flex items-center
-            ${state.layout === 'horizontal' || state.layout === 'inline' ? 'flex-shrink-0 ml-2' : 'mb-2'}
+             
+            ${state.layout === 'horizontal' || state.layout === 'inline' ? ' ' : ''}
           `}>
-            <span className="text-gray-500 ml-2">{item.content}</span>
+            <span className=" ">{item.content}</span>
           </div>
         );
 
@@ -253,7 +253,7 @@ export const InputGroup = forwardRef<HTMLDivElement, InputGroupProps>(({
         return (
           <div key={item.id} className={`
             action-item
-            ${state.layout === 'horizontal' || state.layout === 'inline' ? 'flex-shrink-0 ml-2' : 'mt-2'}
+            ${state.layout === 'horizontal' || state.layout === 'inline' ? ' ' : ''}
           `}>
             <button
               onClick={() => {
@@ -262,7 +262,7 @@ export const InputGroup = forwardRef<HTMLDivElement, InputGroupProps>(({
                   item.content(state.values, actions);
                 }
               }}
-              className="px-3 py-1 text-sm bg-blue-100 hover:bg-blue-200 text-blue-700 rounded transition-colors"
+              className="       "
               disabled={state.disabled}
               data-testid={`action-${item.id}`}
             >
@@ -285,15 +285,15 @@ export const InputGroup = forwardRef<HTMLDivElement, InputGroupProps>(({
     if (!showErrors || !state.errors.group || state.errors.group.length === 0) return null;
 
     return (
-      <div className="group-errors mt-2" id="input-group-errors">
+      <div className="group-errors " id="input-group-errors">
         {renderError ? (
           renderError('group', state.errors.group)
         ) : (
-          <div className="text-sm text-red-600 bg-red-50 border border-red-200 rounded-md p-3">
-            <div className="font-medium mb-1">Form Errors:</div>
+          <div className="      ">
+            <div className=" ">Form Errors:</div>
             {state.errors.group.map((error: string, index: number) => (
-              <div key={index} className="flex items-start gap-1">
-                <span className="text-red-400">•</span>
+              <div key={index} className="  ">
+                <span className="">•</span>
                 <span>{error}</span>
               </div>
             ))}
@@ -306,24 +306,24 @@ export const InputGroup = forwardRef<HTMLDivElement, InputGroupProps>(({
   // Form actions
   const renderFormActions = () => {
     return (
-      <div className="form-actions flex gap-2 mt-4">
+      <div className="form-actions   ">
         <button
           onClick={actions.validate}
-          className="px-4 py-2 text-sm bg-blue-600 hover:bg-blue-700 text-white rounded transition-colors"
+          className="       "
           disabled={state.disabled}
         >
           Validate
         </button>
         <button
           onClick={actions.reset}
-          className="px-4 py-2 text-sm bg-gray-100 hover:bg-gray-200 text-gray-700 rounded transition-colors"
+          className="       "
           disabled={state.disabled}
         >
           Reset
         </button>
         <button
           onClick={actions.clear}
-          className="px-4 py-2 text-sm bg-red-100 hover:bg-red-200 text-red-700 rounded transition-colors"
+          className="       "
           disabled={state.disabled}
         >
           Clear
@@ -337,10 +337,10 @@ export const InputGroup = forwardRef<HTMLDivElement, InputGroupProps>(({
     if (!state.isDirty) return null;
 
     return (
-      <div className="status-indicator text-xs mt-2">
+      <div className="status-indicator  ">
         {state.isValid ? (
-          <div className="flex items-center gap-1 text-green-600">
-            <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+          <div className="   ">
+            <svg className=" " fill="currentColor" viewBox="0 0 20 20">
               <path
                 fillRule="evenodd"
                 d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
@@ -350,8 +350,8 @@ export const InputGroup = forwardRef<HTMLDivElement, InputGroupProps>(({
             <span>Valid</span>
           </div>
         ) : (
-          <div className="flex items-center gap-1 text-red-600">
-            <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+          <div className="   ">
+            <svg className=" " fill="currentColor" viewBox="0 0 20 20">
               <path
                 fillRule="evenodd"
                 d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z"
@@ -392,9 +392,9 @@ export const InputGroup = forwardRef<HTMLDivElement, InputGroupProps>(({
 
       {/* Empty state */}
       {state.items.length === 0 && (
-        <div className="empty-state flex flex-col items-center justify-center py-8 text-gray-500">
-          <div className="w-16 h-16 bg-gray-100 rounded-lg flex items-center justify-center mb-3">
-            <svg className="w-8 h-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <div className="empty-state      ">
+          <div className="       ">
+            <svg className="  " fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path
                 strokeLinecap="round"
                 strokeLinejoin="round"
@@ -403,8 +403,8 @@ export const InputGroup = forwardRef<HTMLDivElement, InputGroupProps>(({
               />
             </svg>
           </div>
-          <p className="text-sm font-medium">No form fields</p>
-          <p className="text-xs text-gray-400 mt-1">Add items to create a form</p>
+          <p className=" ">No form fields</p>
+          <p className="  ">Add items to create a form</p>
         </div>
       )}
     </div>

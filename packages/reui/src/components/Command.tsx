@@ -205,10 +205,10 @@ export const Command = forwardRef<HTMLDivElement, CommandProps>(
       }
 
       return (
-        <div className="command-search p-3 border-b border-gray-200">
+        <div className="command-search   ">
           <input
             {...searchInputAttributes}
-            className={`w-full px-3 py-2 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 ${className}`}
+            className={`           ${className}`}
             data-testid="command-input"
           />
         </div>
@@ -233,29 +233,29 @@ export const Command = forwardRef<HTMLDivElement, CommandProps>(
           {...itemAttributes}
           key={item.id || index}
           className={`
-            px-3 py-2 text-sm cursor-pointer transition-colors duration-150
-            ${selectedIndex === index ? 'bg-blue-50 text-blue-700' : 'text-gray-700 hover:bg-gray-50'}
-            ${item.disabled ? 'opacity-50 cursor-not-allowed' : ''}
+                 
+            ${selectedIndex === index ? ' ' : ' '}
+            ${item.disabled ? ' ' : ''}
             ${className}
           `}
           style={overrideAttributes?.style}
           data-testid="command-item"
         >
-          <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-2">
+          <div className="  ">
+            <div className="  ">
               {item.icon && (
-                <span className="w-4 h-4 flex items-center justify-center">
+                <span className="    ">
                   {item.icon}
                 </span>
               )}
-              <span className="font-medium">{item.label}</span>
+              <span className="">{item.label}</span>
             </div>
             {item.shortcut && (
-              <div className="flex space-x-1">
+              <div className=" ">
                 {item.shortcut.map((key, i) => (
                   <kbd
                     key={i}
-                    className="px-1.5 py-0.5 text-xs font-mono bg-gray-100 border border-gray-300 rounded"
+                    className="       "
                   >
                     {key}
                   </kbd>
@@ -264,7 +264,7 @@ export const Command = forwardRef<HTMLDivElement, CommandProps>(
             )}
           </div>
           {item.description && (
-            <p className="text-xs text-gray-500 mt-1 ml-6">
+            <p className="   ">
               {item.description}
             </p>
           )}
@@ -280,7 +280,7 @@ export const Command = forwardRef<HTMLDivElement, CommandProps>(
 
       return (
         <div key={group.id} className="command-group" data-testid="command-group">
-          <div className="px-3 py-1.5 text-xs font-semibold text-gray-500 uppercase tracking-wider bg-gray-50">
+          <div className="       ">
             {group.heading}
           </div>
           <div className="command-group-items">
@@ -304,7 +304,7 @@ export const Command = forwardRef<HTMLDivElement, CommandProps>(
       }
 
       return (
-        <div className="p-4 text-center text-gray-500 text-sm" data-testid="command-empty">
+        <div className="   " data-testid="command-empty">
           {props.noResultsMessage || 'No results found.'}
         </div>
       );
@@ -315,7 +315,7 @@ export const Command = forwardRef<HTMLDivElement, CommandProps>(
       <div
         ref={commandRef}
         className={`
-          fixed bg-white border border-gray-200 rounded-lg shadow-lg overflow-hidden
+                
           ${className}
         `}
         style={{
@@ -335,7 +335,7 @@ export const Command = forwardRef<HTMLDivElement, CommandProps>(
         <div
           ref={listRef}
           {...listAttributes}
-          className="command-list overflow-y-auto"
+          className="command-list "
           style={{ ...listAttributes.style, maxHeight: virtualizeEnabled ? VIRTUAL_MAX_HEIGHT : undefined }}
         >
           {props.groups && filteredGroups.length > 0 ? (
@@ -413,7 +413,7 @@ export const CommandInput: React.FC<CommandInputProps> = ({
     <div className={`command-input-wrapper ${className}`} style={style}>
       <input
         {...inputProps}
-        className={`w-full px-3 py-2 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 ${className}`}
+        className={`           ${className}`}
         data-testid="command-input"
       />
     </div>
@@ -430,7 +430,7 @@ export const CommandList: React.FC<CommandListProps> = ({
 }) => {
   return (
     <div
-      className={`command-list overflow-y-auto ${className}`}
+      className={`command-list  ${className}`}
       style={style}
       role="listbox"
       data-testid="command-list"
@@ -463,8 +463,8 @@ export const CommandItem: React.FC<CommandItemProps> = ({
   return (
     <div
       className={`
-        px-3 py-2 text-sm cursor-pointer transition-colors duration-150
-        ${disabled ? 'opacity-50 cursor-not-allowed' : 'text-gray-700 hover:bg-gray-50'}
+             
+        ${disabled ? ' ' : ' '}
         ${className}
       `}
       style={style}
@@ -474,21 +474,21 @@ export const CommandItem: React.FC<CommandItemProps> = ({
       data-disabled={disabled}
       data-testid="command-item"
     >
-      <div className="flex items-center justify-between">
-        <div className="flex items-center space-x-2">
+      <div className="  ">
+        <div className="  ">
           {icon && (
-            <span className="w-4 h-4 flex items-center justify-center">
+            <span className="    ">
               {icon}
             </span>
           )}
-          <span className="font-medium">{children}</span>
+          <span className="">{children}</span>
         </div>
         {shortcut && (
-          <div className="flex space-x-1">
+          <div className=" ">
             {shortcut.map((key, i) => (
               <kbd
                 key={i}
-                className="px-1.5 py-0.5 text-xs font-mono bg-gray-100 border border-gray-300 rounded"
+                className="       "
               >
                 {key}
               </kbd>
@@ -497,7 +497,7 @@ export const CommandItem: React.FC<CommandItemProps> = ({
         )}
       </div>
       {description && (
-        <p className="text-xs text-gray-500 mt-1 ml-6">
+        <p className="   ">
           {description}
         </p>
       )}
@@ -516,7 +516,7 @@ export const CommandGroup: React.FC<CommandGroupProps> = ({
 }) => {
   return (
     <div className={`command-group ${className}`} style={style} data-testid="command-group">
-      <div className="px-3 py-1.5 text-xs font-semibold text-gray-500 uppercase tracking-wider bg-gray-50">
+      <div className="       ">
         {heading}
       </div>
       <div className="command-group-items">
@@ -535,7 +535,7 @@ export const CommandSeparator: React.FC<CommandSeparatorProps> = ({
 }) => {
   return (
     <div
-      className={`border-t border-gray-200 my-1 ${className}`}
+      className={`   ${className}`}
       style={style}
       role="separator"
       data-testid="command-separator"
@@ -553,7 +553,7 @@ export const CommandEmpty: React.FC<CommandEmptyProps> = ({
 }) => {
   return (
     <div
-      className={`p-4 text-center text-gray-500 text-sm ${className}`}
+      className={`    ${className}`}
       style={style}
       data-testid="command-empty"
     >

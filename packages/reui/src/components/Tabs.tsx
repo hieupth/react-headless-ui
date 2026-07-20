@@ -179,37 +179,37 @@ export const Tabs = forwardRef<HTMLDivElement, TabsProps>(({
 
   // Size classes
   const sizeClasses = {
-    sm: 'text-sm',
-    md: 'text-base',
-    lg: 'text-lg'
+    sm: '',
+    md: '',
+    lg: ''
   }[size];
 
   // Variant classes
   const variantClasses = {
-    default: 'border-b border-gray-200',
-    underline: 'border-b-2 border-transparent',
-    pills: 'bg-gray-100 rounded-lg p-1',
-    enclosed: 'border border-gray-200 rounded-lg'
+    default: ' ',
+    underline: ' ',
+    pills: '  ',
+    enclosed: '  '
   }[variant];
 
   // Default tab render function
   const defaultTabRender = (tab: TabItem, props: TabRenderProps) => {
-    const baseClasses = 'flex items-center px-4 py-2 font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50';
-    const disabledClasses = tab.disabled ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer';
+    const baseClasses = '         ';
+    const disabledClasses = tab.disabled ? ' ' : '';
 
     let variantSpecificClasses = '';
     if (variant === 'default' || variant === 'enclosed') {
       variantSpecificClasses = props.selected
-        ? 'text-blue-600 border-b-2 border-blue-600 -mb-px'
-        : 'text-gray-600 hover:text-gray-800 border-b-2 border-transparent -mb-px';
+        ? '   -mb-px'
+        : '    -mb-px';
     } else if (variant === 'underline') {
       variantSpecificClasses = props.selected
-        ? 'text-blue-600 border-b-2 border-blue-600'
-        : 'text-gray-600 hover:text-gray-800 border-b-2 border-transparent';
+        ? '  '
+        : '   ';
     } else if (variant === 'pills') {
       variantSpecificClasses = props.selected
-        ? 'bg-white text-blue-600 shadow-sm rounded'
-        : 'text-gray-600 hover:text-gray-800 rounded';
+        ? '   '
+        : '  ';
     }
 
     return (
@@ -225,17 +225,17 @@ export const Tabs = forwardRef<HTMLDivElement, TabsProps>(({
       >
         {/* Icon */}
         {tab.icon && (
-          <span className="mr-2 flex-shrink-0 w-4 h-4">
+          <span className="   ">
             {tab.icon}
           </span>
         )}
 
         {/* Label */}
-        <span className="truncate">{tab.label}</span>
+        <span className="">{tab.label}</span>
 
         {/* Badge */}
         {tab.badge && (
-          <span className="ml-2 px-2 py-0.5 text-xs bg-blue-100 text-blue-600 rounded-full">
+          <span className="      ">
             {tab.badge}
           </span>
         )}
@@ -247,13 +247,13 @@ export const Tabs = forwardRef<HTMLDivElement, TabsProps>(({
   const defaultTabPanelRender = (tab: TabItem, props: TabPanelRenderProps) => {
     if (!showContent || !tab.content) return null;
 
-    const animationClasses = animated ? 'transition-all duration-200 ease-in-out' : '';
+    const animationClasses = animated ? '  ' : '';
 
     return (
       <div
         key={`${tab.key}-panel`}
         id={`${tab.key}-panel`}
-        className={`p-6 ${animationClasses}`}
+        className={` ${animationClasses}`}
         style={{
           display: props.selected ? 'block' : 'none',
           opacity: props.selected ? 1 : 0,
@@ -271,7 +271,7 @@ export const Tabs = forwardRef<HTMLDivElement, TabsProps>(({
     const isVertical = tabsProps.orientation === 'vertical';
 
     return (
-      <div className={`flex ${isVertical ? 'flex-col' : 'flex-row'} ${variantClasses}`}>
+      <div className={` ${isVertical ? '' : ''} ${variantClasses}`}>
         {props.items.map((tab, index) => {
           const isSelected = tab.key === props.selectedKey;
           const isHighlighted = index === props.highlightedIndex;
@@ -326,29 +326,29 @@ export const Tabs = forwardRef<HTMLDivElement, TabsProps>(({
     // Layout based on tab position
     if (contentPosition === 'bottom') {
       return (
-        <div className={`tabs-container ${isVertical ? 'flex' : 'block'}`}>
+        <div className={`tabs-container ${isVertical ? '' : ''}`}>
           {tabPanels}
           {tabListElement}
         </div>
       );
     } else if (contentPosition === 'left') {
       return (
-        <div className={`tabs-container flex ${isVertical ? 'flex-col' : ''}`}>
-          <div className="flex-shrink-0 w-64">
+        <div className={`tabs-container  ${isVertical ? '' : ''}`}>
+          <div className=" ">
             {tabListElement}
           </div>
-          <div className="flex-1">
+          <div className="">
             {tabPanels}
           </div>
         </div>
       );
     } else if (contentPosition === 'right') {
       return (
-        <div className={`tabs-container flex ${isVertical ? 'flex-col-reverse' : ''}`}>
-          <div className="flex-1">
+        <div className={`tabs-container  ${isVertical ? '' : ''}`}>
+          <div className="">
             {tabPanels}
           </div>
-          <div className="flex-shrink-0 w-64">
+          <div className=" ">
             {tabListElement}
           </div>
         </div>

@@ -202,13 +202,13 @@ export const DataGrid = forwardRef<HTMLTableElement, DataGridProps>(
       if (cellType === 'boolean') {
         const boolValue = Boolean(cell.value);
         content = (
-          <span className={`inline-flex items-center ${boolValue ? 'text-green-600' : 'text-gray-400'}`}>
+          <span className={`  ${boolValue ? '' : ''}`}>
             {boolValue ? '✓' : '✗'}
           </span>
         );
       } else if (cellType === 'number') {
         content = (
-          <span className="text-right block w-full">
+          <span className="  ">
             {column.format ? column.format(cell.value) : cell.value}
           </span>
         );
@@ -218,14 +218,14 @@ export const DataGrid = forwardRef<HTMLTableElement, DataGridProps>(
       } else if (cellType === 'actions') {
         const actions = (Array.isArray(cell.value) ? cell.value : []) as GridAction[];
         content = (
-          <div className="flex gap-1">
+          <div className=" ">
             {actions.map((action, index: number) => {
               const handleAction = action.onClick;
               return (
               <button
                 key={index}
                 {...(handleAction ? { onClick: () => handleAction(row) } : {})}
-                className="px-2 py-1 text-xs bg-blue-100 text-blue-700 rounded hover:bg-blue-200 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="         "
                 disabled={Boolean(action.disabled)}
               >
                 {action.label}
@@ -255,7 +255,7 @@ export const DataGrid = forwardRef<HTMLTableElement, DataGridProps>(
         'data-sortable': column.sortable,
         'data-sorted': isSorted,
         'data-sort-direction': isSorted ? sortDirection : undefined,
-        className: `data-grid-header-cell ${column.className || ''} ${column.sortable ? 'cursor-pointer hover:bg-gray-50' : ''}`,
+        className: `data-grid-header-cell ${column.className || ''} ${column.sortable ? ' ' : ''}`,
         ...(column.sortable ? { onClick: (e: React.MouseEvent) => handlers.handleHeaderClick(column, e) } : {}),
         ...(getHeaderCellProps?.(column) || {})
       };
@@ -266,19 +266,19 @@ export const DataGrid = forwardRef<HTMLTableElement, DataGridProps>(
 
       return (
         <th {...headerProps}>
-          <div className="flex items-center justify-between">
-            <span className="font-medium">{column.title}</span>
+          <div className="  ">
+            <span className="">{column.title}</span>
             {column.sortable && (
-              <div className="flex flex-col ml-2">
+              <div className="  ">
                 <svg
-                  className={`w-3 h-3 ${isSorted && sortDirection === 'asc' ? 'text-blue-600' : 'text-gray-400'}`}
+                  className={`  ${isSorted && sortDirection === 'asc' ? '' : ''}`}
                   fill="currentColor"
                   viewBox="0 0 20 20"
                 >
                   <path fillRule="evenodd" d="M14.707 12.707a1 1 0 01-1.414 0L10 9.414l-3.293 3.293a1 1 0 01-1.414-1.414l4-4a1 1 0 011.414 0l4 4a1 1 0 010 1.414z" clipRule="evenodd" />
                 </svg>
                 <svg
-                  className={`w-3 h-3 -mt-1 ${isSorted && sortDirection === 'desc' ? 'text-blue-600' : 'text-gray-400'}`}
+                  className={`   ${isSorted && sortDirection === 'desc' ? '' : ''}`}
                   fill="currentColor"
                   viewBox="0 0 20 20"
                 >
@@ -298,13 +298,13 @@ export const DataGrid = forwardRef<HTMLTableElement, DataGridProps>(
       const filterValue = filter?.column === column.id ? filter.value : '';
 
       return (
-        <th key={`filter-${column.id}`} className="p-2 border-b border-gray-200">
+        <th key={`filter-${column.id}`} className="  ">
           <input
             type="text"
             value={filterValue}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) => handlers.handleFilter(column.id, e.target.value)}
             placeholder={`Filter ${column.title}...`}
-            className="w-full px-2 py-1 text-xs border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="         "
             data-testid={`data-grid-filter-${column.id}`}
           />
         </th>
@@ -321,14 +321,14 @@ export const DataGrid = forwardRef<HTMLTableElement, DataGridProps>(
       return (
         <td
           key="selection"
-          className="data-grid-selection-cell p-2 border-b border-gray-200"
+          className="data-grid-selection-cell   "
           data-testid={`data-grid-selection-${rowIndex}`}
         >
           <input
             type="checkbox"
             checked={isSelected}
             onChange={() => handlers.handleRowClick(row, {} as React.MouseEvent)}
-            className="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
+            className="     "
             aria-label={`Select row ${rowIndex + 1}`}
           />
         </td>
@@ -344,7 +344,7 @@ export const DataGrid = forwardRef<HTMLTableElement, DataGridProps>(
       return (
         <td
           key="row-number"
-          className="data-grid-row-number p-2 border-b border-gray-200 text-gray-500 text-sm"
+          className="data-grid-row-number     "
           data-testid={`data-grid-row-number-${rowIndex}`}
         >
           {actualRowIndex}
@@ -358,7 +358,7 @@ export const DataGrid = forwardRef<HTMLTableElement, DataGridProps>(
         key: keyOverride ?? row.id,
         'data-testid': `data-grid-row-${rowIndex}`,
         'data-row-id': row.id,
-        className: `data-grid-row hover:bg-gray-50 ${selectedRows.includes(row.id) ? 'bg-blue-50' : ''}`,
+        className: `data-grid-row  ${selectedRows.includes(row.id) ? '' : ''}`,
         ...(getRowProps?.(row, rowIndex) || {})
       };
 
@@ -389,7 +389,7 @@ export const DataGrid = forwardRef<HTMLTableElement, DataGridProps>(
           <tr>
             <td
               colSpan={columns.length + (showSelection ? 1 : 0) + (showRowNumbers ? 1 : 0)}
-              className="p-8 text-center text-gray-500"
+              className="  "
               data-testid="data-grid-empty"
             >
               {emptyRenderer ? emptyRenderer() : 'No data available'}
@@ -436,26 +436,26 @@ export const DataGrid = forwardRef<HTMLTableElement, DataGridProps>(
       const endIndex = Math.min(startIndex + pagination.pageSize, pagination.total);
 
       return (
-        <div className="flex items-center justify-between p-4 border-t border-gray-200" data-testid="data-grid-pagination">
-          <div className="text-sm text-gray-700">
+        <div className="     " data-testid="data-grid-pagination">
+          <div className=" ">
             Showing {pagination.total === 0 ? 0 : startIndex + 1} to {endIndex} of {pagination.total} items
           </div>
-          <div className="flex gap-2">
+          <div className=" ">
             <button
               onClick={() => handlers.handlePagination(pagination.page - 1)}
               disabled={pagination.page === 1}
-              className="px-3 py-1 text-sm bg-white border border-gray-300 rounded hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="            "
               data-testid="data-grid-prev-page"
             >
               Previous
             </button>
-            <span className="px-3 py-1 text-sm">
+            <span className="  ">
               Page {pagination.page} of {pagination.totalPages}
             </span>
             <button
               onClick={() => handlers.handlePagination(pagination.page + 1)}
               disabled={pagination.page === pagination.totalPages}
-              className="px-3 py-1 text-sm bg-white border border-gray-300 rounded hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="            "
               data-testid="data-grid-next-page"
             >
               Next
@@ -469,14 +469,14 @@ export const DataGrid = forwardRef<HTMLTableElement, DataGridProps>(
     if (loading) {
       return (
         <div
-          className={`data-grid-loading flex items-center justify-center p-8 ${className}`}
+          className={`data-grid-loading     ${className}`}
           style={{ minHeight: 200, ...style }}
           data-testid="data-grid-loading"
         >
           {loadingRenderer ? loadingRenderer() : (
-            <div className="flex flex-col items-center">
-              <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
-              <span className="mt-2 text-gray-600">Loading...</span>
+            <div className="  ">
+              <div className="     "></div>
+              <span className=" ">Loading...</span>
             </div>
           )}
         </div>
@@ -486,7 +486,7 @@ export const DataGrid = forwardRef<HTMLTableElement, DataGridProps>(
     return (
       <div
         ref={scrollRef}
-        className={`data-grid-container overflow-auto ${className}`}
+        className={`data-grid-container  ${className}`}
         style={{ ...style, maxHeight: virtualizeEnabled ? VIRTUAL_MAX_HEIGHT : style?.maxHeight }}
         data-testid="data-grid"
         {...tableContainerProps}
@@ -495,23 +495,23 @@ export const DataGrid = forwardRef<HTMLTableElement, DataGridProps>(
           ref={ref}
           {...attributes}
           {...tableProps}
-          className={`data-grid min-w-full divide-y divide-gray-200 ${tableProps.className || ''}`}
+          className={`data-grid    ${tableProps.className || ''}`}
         >
-          <thead {...theadProps} className="bg-gray-50">
+          <thead {...theadProps} className="">
             <tr>
               {showSelection && (
-                <th className="p-2 border-b border-gray-200">
+                <th className="  ">
                   <input
                     type="checkbox"
                     checked={selectedRows.length === data.length && data.length > 0}
                     onChange={() => handlers.handleSelectAll()}
-                    className="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
+                    className="     "
                     data-testid="data-grid-select-all"
                   />
                 </th>
               )}
               {showRowNumbers && (
-                <th className="p-2 border-b border-gray-200 text-gray-500 text-sm font-medium">
+                <th className="     ">
                   #
                 </th>
               )}
@@ -519,13 +519,13 @@ export const DataGrid = forwardRef<HTMLTableElement, DataGridProps>(
             </tr>
             {showColumnFilters && (
               <tr>
-                {showSelection && <th className="p-2 border-b border-gray-200"></th>}
-                {showRowNumbers && <th className="p-2 border-b border-gray-200"></th>}
+                {showSelection && <th className="  "></th>}
+                {showRowNumbers && <th className="  "></th>}
                 {columns.map(renderFilterInput)}
               </tr>
             )}
           </thead>
-          <tbody {...tbodyProps} className="bg-white divide-y divide-gray-200">
+          <tbody {...tbodyProps} className="  ">
             {renderRows()}
           </tbody>
         </table>

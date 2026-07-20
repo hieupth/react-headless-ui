@@ -77,47 +77,47 @@ export const ButtonGroup = forwardRef<HTMLDivElement, ButtonGroupProps>(({
 
   // Base classes for the button group container
   const baseClasses = [
-    'inline-flex',
-    orientation === 'vertical' ? 'flex-col' : 'flex-row',
+    '',
+    orientation === 'vertical' ? '' : '',
     attached
       ? orientation === 'vertical'
-        ? 'divide-y divide-gray-200'
-        : 'divide-x divide-gray-200'
+        ? ' '
+        : ' '
       : orientation === 'vertical'
-        ? 'space-y-1'
-        : 'space-x-1',
-    disabled ? 'opacity-50 cursor-not-allowed' : '',
+        ? ''
+        : '',
+    disabled ? ' ' : '',
     className
   ].filter(Boolean).join(' ');
 
   // Button size classes
   const sizeClasses = {
-    sm: 'px-2 py-1 text-sm',
-    md: 'px-3 py-2 text-sm',
-    lg: 'px-4 py-3 text-base'
+    sm: '  ',
+    md: '  ',
+    lg: '  '
   };
 
   // Button variant classes
   const variantClasses = {
-    primary: 'bg-blue-600 text-white border-blue-600 hover:bg-blue-700 focus:ring-blue-500',
-    secondary: 'bg-gray-600 text-white border-gray-600 hover:bg-gray-700 focus:ring-gray-500',
-    outline: 'bg-white text-gray-700 border-gray-300 hover:bg-gray-50 focus:ring-blue-500',
-    ghost: 'bg-transparent text-gray-700 border-transparent hover:bg-gray-100 focus:ring-gray-500'
+    primary: '    ',
+    secondary: '    ',
+    outline: '    ',
+    ghost: '    '
   };
 
   // Button base classes
   const buttonBaseClasses = [
-    'inline-flex',
-    'items-center',
-    'justify-center',
-    'font-medium',
-    'border',
-    'focus:outline-none',
-    'focus:ring-2',
-    'focus:ring-offset-2',
-    'transition-colors',
-    'duration-200',
-    disabled ? 'opacity-50 cursor-not-allowed' : ''
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    disabled ? ' ' : ''
   ].filter(Boolean).join(' ');
 
   // Render individual button
@@ -134,20 +134,20 @@ export const ButtonGroup = forwardRef<HTMLDivElement, ButtonGroupProps>(({
       buttonBaseClasses,
       sizeClasses[size],
       variantClasses[variant],
-      attached ? '' : 'rounded-md',
+      attached ? '' : '',
       attached && orientation === 'horizontal' ? (
-        index === 0 ? 'rounded-l-md rounded-r-none' :
-        index === buttons.length - 1 ? 'rounded-r-md rounded-l-none' : 'rounded-none'
+        index === 0 ? ' ' :
+        index === buttons.length - 1 ? ' ' : ''
       ) : '',
       attached && orientation === 'vertical' ? (
-        index === 0 ? 'rounded-t-md rounded-b-none' :
-        index === buttons.length - 1 ? 'rounded-b-md rounded-t-none' : 'rounded-none'
+        index === 0 ? ' ' :
+        index === buttons.length - 1 ? ' ' : ''
       ) : '',
       isSelected ? [
-        variant === 'primary' ? 'bg-blue-700 border-blue-700' : '',
-        variant === 'secondary' ? 'bg-gray-700 border-gray-700' : '',
-        variant === 'outline' ? 'bg-blue-50 border-blue-500 text-blue-700' : '',
-        variant === 'ghost' ? 'bg-gray-200 text-gray-900' : ''
+        variant === 'primary' ? ' ' : '',
+        variant === 'secondary' ? ' ' : '',
+        variant === 'outline' ? '  ' : '',
+        variant === 'ghost' ? ' ' : ''
       ].filter(Boolean).join(' ') : ''
     ].filter(Boolean).join(' ');
 

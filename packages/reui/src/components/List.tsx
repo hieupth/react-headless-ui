@@ -207,16 +207,16 @@ export const List = forwardRef<HTMLElement, ListProps>(({
     list
     list-${orientation}
     list-${itemSize}
-    ${compact ? 'list-compact' : 'list-normal'}
+    ${compact ? '' : ''}
     ${classes.base}
     ${classes.loading}
     ${classes.disabled}
     ${classes.searchable}
     ${classes.timeline}
     ${classes.paginated}
-    ${showBorders ? 'list-bordered' : 'list-borderless'}
-    ${showDividers ? 'list-divided' : 'list-undivided'}
-    ${showNumbers ? 'list-numbered' : 'list-unnumbered'}
+    ${showBorders ? '' : ''}
+    ${showDividers ? '' : ''}
+    ${showNumbers ? '' : ''}
     ${className || ''}
   `.trim().replace(/\s+/g, ' ');
 

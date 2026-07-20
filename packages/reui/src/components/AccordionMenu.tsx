@@ -104,9 +104,9 @@ export const AccordionMenu = forwardRef<HTMLDivElement, AccordionMenuProps>((pro
 
   // Size classes
   const sizeClasses: Record<string, string> = {
-    sm: 'text-sm',
-    md: 'text-base',
-    lg: 'text-lg'
+    sm: '',
+    md: '',
+    lg: ''
   };
 
   // Depth-based padding classes
@@ -144,31 +144,31 @@ export const AccordionMenu = forwardRef<HTMLDivElement, AccordionMenuProps>((pro
         <div
           {...headerProps}
           className={`
-            flex items-center justify-between w-full px-3 py-2 text-left
-            rounded-md hover:bg-gray-100 focus:bg-gray-100 focus:outline-none
-            transition-colors duration-150 cursor-pointer
-            ${item.disabled ? 'opacity-50 cursor-not-allowed' : ''}
-            ${isOpen ? 'bg-gray-50' : ''}
+                  
+               
+              
+            ${item.disabled ? ' ' : ''}
+            ${isOpen ? '' : ''}
           `}
         >
-          <div className="flex items-center min-w-0 flex-1">
+          <div className="   ">
             {/* Icon */}
             {showIcons && item.icon && (
-              <span className="mr-3 flex-shrink-0 w-5 h-5 text-gray-400">
+              <span className="    ">
                 {item.icon}
               </span>
             )}
 
             {/* Label */}
-            <span className="font-medium text-gray-700 truncate">
+            <span className="  ">
               {item.label}
             </span>
           </div>
 
-          <div className="flex items-center space-x-2">
+          <div className="  ">
             {/* Badge */}
             {showBadges && item.badge && (
-              <span className="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-blue-100 text-blue-800">
+              <span className="        ">
                 {item.badge}
               </span>
             )}
@@ -177,8 +177,8 @@ export const AccordionMenu = forwardRef<HTMLDivElement, AccordionMenuProps>((pro
             {hasChildren && (
               <span
                 className={`
-                  flex-shrink-0 w-4 h-4 text-gray-400 transition-transform duration-200
-                  ${isOpen ? 'rotate-90' : ''}
+                       
+                  ${isOpen ? '' : ''}
                 `}
               >
                 <svg fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -194,12 +194,12 @@ export const AccordionMenu = forwardRef<HTMLDivElement, AccordionMenuProps>((pro
           <div
             {...contentProps}
             className={`
-              overflow-hidden
-              ${isOpen ? 'max-h-screen opacity-100' : 'max-h-0 opacity-0'}
-              transition-all duration-${animationDuration}
+              
+              ${isOpen ? ' ' : ' '}
+               duration-${animationDuration}
             `}
           >
-            <div className="py-1">
+            <div className="">
               {actions.getItemChildren(item.id).map((child) => renderItem(child, depth + 1))}
             </div>
           </div>
@@ -210,13 +210,13 @@ export const AccordionMenu = forwardRef<HTMLDivElement, AccordionMenuProps>((pro
 
   // Base classes for menu container
   const baseClasses = [
-    'w-full',
-    'bg-white',
-    'border',
-    'border-gray-200',
-    'rounded-lg',
-    'shadow-sm',
-    'overflow-hidden'
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    ''
   ].filter(Boolean).join(' ');
 
   const navMenuProps = menuProps as React.HTMLAttributes<HTMLElement>;
@@ -229,7 +229,7 @@ export const AccordionMenu = forwardRef<HTMLDivElement, AccordionMenuProps>((pro
       className={`${baseClasses} ${className}`}
       {...navSemanticAttributes}
     >
-      <div className="py-1">
+      <div className="">
         {items.map((item) => renderItem(item))}
       </div>
     </nav>

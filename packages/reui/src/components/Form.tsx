@@ -98,22 +98,22 @@ export const Form = forwardRef<HTMLFormElement, FormProps>(({
   // Size classes
   const sizeClasses = {
     sm: {
-      container: 'text-sm',
-      input: 'px-2 py-1 text-sm',
-      button: 'px-3 py-1 text-sm',
-      spacing: 'gap-2'
+      container: '',
+      input: '  ',
+      button: '  ',
+      spacing: ''
     },
     md: {
-      container: 'text-base',
-      input: 'px-3 py-2 text-base',
-      button: 'px-4 py-2 text-base',
-      spacing: 'gap-4'
+      container: '',
+      input: '  ',
+      button: '  ',
+      spacing: ''
     },
     lg: {
-      container: 'text-lg',
-      input: 'px-4 py-3 text-lg',
-      button: 'px-6 py-3 text-lg',
-      spacing: 'gap-6'
+      container: '',
+      input: '  ',
+      button: '  ',
+      spacing: ''
     }
   };
 
@@ -122,31 +122,31 @@ export const Form = forwardRef<HTMLFormElement, FormProps>(({
     const spacing = sizeClasses[size].spacing;
     switch (layout) {
       case 'horizontal':
-        return `flex items-center ${spacing}`;
+        return `${spacing}`;
       case 'inline':
-        return `flex items-center flex-wrap ${spacing}`;
+        return `${spacing}`;
       case 'grid':
-        return `grid grid-cols-1 md:grid-cols-2 gap-4`;
+        return `${spacing}`;
       case 'vertical':
       default:
-        return `flex flex-col ${spacing}`;
+        return `${spacing}`;
     }
   };
 
   // Border radius classes
   const borderRadiusClasses = {
-    none: 'rounded-none',
-    sm: 'rounded-sm',
-    md: 'rounded-md',
-    lg: 'rounded-lg',
-    full: 'rounded-full'
+    none: '',
+    sm: '',
+    md: '',
+    lg: '',
+    full: ''
   };
 
   // Field spacing classes
   const fieldSpacingClasses = {
-    tight: 'mb-2',
-    normal: 'mb-4',
-    loose: 'mb-6'
+    tight: '',
+    normal: '',
+    loose: ''
   };
 
   // Base form classes
@@ -154,7 +154,7 @@ export const Form = forwardRef<HTMLFormElement, FormProps>(({
     form
     ${getLayoutClasses()}
     ${sizeClasses[size].container}
-    ${state.disabled ? 'opacity-50 cursor-not-allowed' : ''}
+    ${state.disabled ? ' ' : ''}
     ${state.loading ? 'pointer-events-none' : ''}
     ${className || ''}
   `.trim().replace(/\s+/g, ' ');
@@ -172,24 +172,24 @@ export const Form = forwardRef<HTMLFormElement, FormProps>(({
     // set and default fieldProps hardcode required=false (and always set label),
     // so these expressions' secondary outcomes are unreachable (see errorId).
     /* c8 ignore start */
-    const labelErrorClass = fieldError ? 'text-red-600' : '';
-    const inputErrorClass = fieldError ? 'border-red-500 ring-1 ring-red-500' : '';
+    const labelErrorClass = fieldError ? '' : '';
+    const inputErrorClass = fieldError ? '  ' : '';
     const labelText = fieldProps.label || fieldName;
-    const requiredMarker = fieldProps.required ? <span className="text-red-500 ml-1">*</span> : null;
+    const requiredMarker = fieldProps.required ? <span className=" ">*</span> : null;
     /* c8 ignore end */
 
     return (
       <div key={fieldName} className={`
         form-field
         ${fieldSpacingClasses[fieldSpacing]}
-        ${layout === 'horizontal' || layout === 'inline' ? 'flex-shrink-0' : ''}
+        ${layout === 'horizontal' || layout === 'inline' ? '' : ''}
       `}>
         {/* Field label */}
         <label
           htmlFor={fieldId}
           className={`
-            block text-sm font-medium text-gray-700 mb-1
-            ${state.disabled ? 'text-gray-400' : ''}
+                
+            ${state.disabled ? '' : ''}
             ${labelErrorClass}
           `}
         >
@@ -208,13 +208,13 @@ export const Form = forwardRef<HTMLFormElement, FormProps>(({
             {...register(fieldName)}
             disabled={state.disabled || fieldProps.disabled}
             className={`
-              w-full px-3 py-2 border border-gray-300
+                  
               ${borderRadiusClasses[borderRadius]}
-              ${fieldError ? 'border-red-500 ring-1 ring-red-500' : ''}
-              ${state.disabled ? 'bg-gray-50 text-gray-400' : 'bg-white text-gray-900'}
-              focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent
+              ${fieldError ? '  ' : ''}
+              ${state.disabled ? ' ' : ' '}
+                 
               ${sizeClasses[size].input}
-              transition-colors duration-200
+               
             `}
             {...getFieldAttributes(fieldName)}
             id={fieldId}
@@ -232,57 +232,57 @@ export const Form = forwardRef<HTMLFormElement, FormProps>(({
             rows={fieldProps.rows || 3}
             disabled={state.disabled || fieldProps.disabled}
             className={`
-              w-full px-3 py-2 border border-gray-300 resize-none
+                   
               ${borderRadiusClasses[borderRadius]}
-              ${fieldError ? 'border-red-500 ring-1 ring-red-500' : ''}
-              ${state.disabled ? 'bg-gray-50 text-gray-400' : 'bg-white text-gray-900'}
-              focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent
+              ${fieldError ? '  ' : ''}
+              ${state.disabled ? ' ' : ' '}
+                 
               ${sizeClasses[size].input}
-              transition-colors duration-200
+               
             `}
             {...getFieldAttributes(fieldName)}
             id={fieldId}
           />
         ) : fieldProps.type === 'checkbox' ? (
-          <div className="flex items-center">
+          <div className=" ">
             <input
               type="checkbox"
               {...register(fieldName)}
               disabled={state.disabled || fieldProps.disabled}
               className={`
-                w-4 h-4 text-blue-600 border-gray-300 rounded
-                focus:ring-blue-500
-                ${fieldError ? 'border-red-500' : ''}
-                ${state.disabled ? 'opacity-50' : ''}
+                    
+                
+                ${fieldError ? '' : ''}
+                ${state.disabled ? '' : ''}
               `}
               {...getFieldAttributes(fieldName)}
               id={fieldId}
             />
-            <label htmlFor={fieldId} className="ml-2 text-sm text-gray-700">
+            <label htmlFor={fieldId} className="  ">
               {fieldProps.checkboxLabel}
             </label>
           </div>
         ) : fieldProps.type === 'radio' ? (
-          <div className="space-y-2">
+          <div className="">
             {fieldProps.options?.map((option: any) => (
-              <div key={option.value} className="flex items-center">
+              <div key={option.value} className=" ">
                 <input
                   type="radio"
                   value={option.value}
                   {...register(fieldName)}
                   disabled={state.disabled || fieldProps.disabled}
                   className={`
-                    w-4 h-4 text-blue-600 border-gray-300
-                    focus:ring-blue-500
-                    ${fieldError ? 'border-red-500' : ''}
-                    ${state.disabled ? 'opacity-50' : ''}
+                       
+                    
+                    ${fieldError ? '' : ''}
+                    ${state.disabled ? '' : ''}
                   `}
                   {...getFieldAttributes(fieldName)}
                   id={`${fieldId}-${option.value}`}
                 />
                 <label
                   htmlFor={`${fieldId}-${option.value}`}
-                  className="ml-2 text-sm text-gray-700"
+                  className="  "
                 >
                   {option.label}
                 </label>
@@ -297,13 +297,13 @@ export const Form = forwardRef<HTMLFormElement, FormProps>(({
             placeholder={fieldProps.placeholder}
             disabled={state.disabled || fieldProps.disabled}
             className={`
-              w-full px-3 py-2 border border-gray-300
+                  
               ${borderRadiusClasses[borderRadius]}
               ${inputErrorClass}
-              ${state.disabled ? 'bg-gray-50 text-gray-400' : 'bg-white text-gray-900'}
-              focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent
+              ${state.disabled ? ' ' : ' '}
+                 
               ${sizeClasses[size].input}
-              transition-colors duration-200
+               
             `}
             {...getFieldAttributes(fieldName)}
             id={fieldId}
@@ -312,7 +312,7 @@ export const Form = forwardRef<HTMLFormElement, FormProps>(({
 
         {/* Field helper text */}
         { /* c8 ignore next (default fieldProps never include a helper) */ fieldProps.helper && !fieldError && (
-          <div className="text-xs text-gray-500 mt-1">
+          <div className="  ">
             {fieldProps.helper}
           </div>
         )}
@@ -323,12 +323,12 @@ export const Form = forwardRef<HTMLFormElement, FormProps>(({
           const errorMessage =
             typeof fieldError.message === 'string' ? fieldError.message : undefined;
           return (
-            <div className="text-xs text-red-600 mt-1" id={errorId}>
+            <div className="  " id={errorId}>
               {renderError ? (
                 renderError(errorMessage, fieldName)
               ) : (
-                <div className="flex items-start gap-1">
-                  <span className="text-red-400">•</span>
+                <div className="  ">
+                  <span className="">•</span>
                   <span>{errorMessage}</span>
                 </div>
               )}
@@ -345,19 +345,19 @@ export const Form = forwardRef<HTMLFormElement, FormProps>(({
     return (
       <div className={`
         form-actions
-        ${layout === 'horizontal' || layout === 'inline' ? 'flex gap-2' : 'flex gap-2'}
-        ${layout === 'vertical' ? 'mt-6' : ''}
+        ${layout === 'horizontal' || layout === 'inline' ? ' ' : ' '}
+        ${layout === 'vertical' ? '' : ''}
       `}>
         <button
           type="submit"
           disabled={state.disabled || state.loading || state.isSubmitting}
           className={`
             ${sizeClasses[size].button}
-            bg-blue-600 hover:bg-blue-700 disabled:bg-gray-400
-            text-white font-medium
+              
+             
             ${borderRadiusClasses[borderRadius]}
-            transition-colors duration-200
-            disabled:cursor-not-allowed
+             
+            
           `}
         >
           {state.isSubmitting ? 'Submitting...' : submitText}
@@ -369,11 +369,11 @@ export const Form = forwardRef<HTMLFormElement, FormProps>(({
           disabled={state.disabled || state.loading || state.isSubmitting}
           className={`
             ${sizeClasses[size].button}
-            bg-gray-100 hover:bg-gray-200 disabled:bg-gray-50
-            text-gray-700 font-medium
+              
+             
             ${borderRadiusClasses[borderRadius]}
-            transition-colors duration-200
-            disabled:cursor-not-allowed
+             
+            
           `}
         >
           {resetText}
@@ -381,18 +381,18 @@ export const Form = forwardRef<HTMLFormElement, FormProps>(({
 
         {/* Multi-step form actions */}
         {multiStep?.enabled && (
-          <div className="flex gap-2 ml-auto">
+          <div className="  ml-auto">
             <button
               type="button"
               onClick={actions.previousStep}
               disabled={state.currentStep === 0 || state.isSubmitting}
               className={`
                 ${sizeClasses[size].button}
-                bg-gray-100 hover:bg-gray-200 disabled:bg-gray-50
-                text-gray-700 font-medium
+                  
+                 
                 ${borderRadiusClasses[borderRadius]}
-                transition-colors duration-200
-                disabled:cursor-not-allowed
+                 
+                
               `}
             >
               Previous
@@ -405,11 +405,11 @@ export const Form = forwardRef<HTMLFormElement, FormProps>(({
                 disabled={state.isSubmitting}
                 className={`
                   ${sizeClasses[size].button}
-                  bg-blue-600 hover:bg-blue-700 disabled:bg-gray-400
-                  text-white font-medium
+                    
+                   
                   ${borderRadiusClasses[borderRadius]}
-                  transition-colors duration-200
-                  disabled:cursor-not-allowed
+                   
+                  
                 `}
               >
                 Next
@@ -420,11 +420,11 @@ export const Form = forwardRef<HTMLFormElement, FormProps>(({
                 disabled={state.isSubmitting}
                 className={`
                   ${sizeClasses[size].button}
-                  bg-green-600 hover:bg-green-700 disabled:bg-gray-400
-                  text-white font-medium
+                    
+                   
                   ${borderRadiusClasses[borderRadius]}
-                  transition-colors duration-200
-                  disabled:cursor-not-allowed
+                   
+                  
                 `}
               >
                 Finish
@@ -441,10 +441,10 @@ export const Form = forwardRef<HTMLFormElement, FormProps>(({
     if (!showLoading || !state.loading) return null;
 
     return (
-      <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-        <div className="bg-white rounded-lg p-6 flex flex-col items-center">
-          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600 mb-4"></div>
-          <p className="text-gray-700">{loadingText}</p>
+      <div className="       ">
+        <div className="     ">
+          <div className="      "></div>
+          <p className="">{loadingText}</p>
         </div>
       </div>
     );
@@ -455,10 +455,10 @@ export const Form = forwardRef<HTMLFormElement, FormProps>(({
     if (!state.isSubmitted || !renderSuccess) return null;
 
     return (
-      <div className="mb-4 p-4 bg-green-50 border border-green-200 rounded-md">
-        <div className="flex">
-          <div className="flex-shrink-0">
-            <svg className="h-5 w-5 text-green-400" fill="currentColor" viewBox="0 0 20 20">
+      <div className="     ">
+        <div className="">
+          <div className="">
+            <svg className="  " fill="currentColor" viewBox="0 0 20 20">
               <path
                 fillRule="evenodd"
                 d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
@@ -466,8 +466,8 @@ export const Form = forwardRef<HTMLFormElement, FormProps>(({
               />
             </svg>
           </div>
-          <div className="ml-3">
-            <h3 className="text-sm font-medium text-green-800">Form submitted successfully!</h3>
+          <div className="">
+            <h3 className="  ">Form submitted successfully!</h3>
           </div>
         </div>
       </div>
@@ -479,18 +479,18 @@ export const Form = forwardRef<HTMLFormElement, FormProps>(({
     if (!multiStep?.enabled) return null;
 
     return (
-      <div className="mb-6">
-        <div className="flex items-center justify-between">
+      <div className="">
+        <div className="  ">
           {Array.from({ length: state.totalSteps }, (_, index) => (
-            <div key={index} className="flex items-center">
+            <div key={index} className=" ">
               <div
                 className={`
-                  w-8 h-8 rounded-full flex items-center justify-center text-sm font-medium
+                         
                   ${index < state.currentStep
-                    ? 'bg-blue-600 text-white'
+                    ? ' '
                     : index === state.currentStep
-                    ? 'bg-blue-100 text-blue-600 border-2 border-blue-600'
-                    : 'bg-gray-100 text-gray-600 border-2 border-gray-300'
+                    ? '   '
+                    : '   '
                   }
                 `}
               >
@@ -499,8 +499,8 @@ export const Form = forwardRef<HTMLFormElement, FormProps>(({
               {index < state.totalSteps - 1 && (
                 <div
                   className={`
-                    flex-1 h-1 mx-2
-                    ${index < state.currentStep ? 'bg-blue-600' : 'bg-gray-300'}
+                      
+                    ${index < state.currentStep ? '' : ''}
                   `}
                 />
               )}
@@ -530,10 +530,10 @@ export const Form = forwardRef<HTMLFormElement, FormProps>(({
 
         {/* Form submission error */}
         {showErrors && state.submissionError && (
-          <div className="mb-4 p-4 bg-red-50 border border-red-200 rounded-md">
-            <div className="flex">
-              <div className="flex-shrink-0">
-                <svg className="h-5 w-5 text-red-400" fill="currentColor" viewBox="0 0 20 20">
+          <div className="     ">
+            <div className="">
+              <div className="">
+                <svg className="  " fill="currentColor" viewBox="0 0 20 20">
                   <path
                     fillRule="evenodd"
                     d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z"
@@ -541,9 +541,9 @@ export const Form = forwardRef<HTMLFormElement, FormProps>(({
                   />
                 </svg>
               </div>
-              <div className="ml-3">
-                <h3 className="text-sm font-medium text-red-800">Submission Error</h3>
-                <div className="mt-2 text-sm text-red-700">
+              <div className="">
+                <h3 className="  ">Submission Error</h3>
+                <div className="  ">
                   {state.submissionError}
                 </div>
               </div>

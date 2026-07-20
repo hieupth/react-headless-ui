@@ -45,24 +45,24 @@ export const Toast = forwardRef<HTMLDivElement, ToastProps>(({
   // Position classes
   const getPositionClasses = (position: string) => {
     const positions = {
-      'top-left': 'top-4 left-4',
-      'top-right': 'top-4 right-4',
-      'top-center': 'top-4 left-1/2 transform -translate-x-1/2',
-      'bottom-left': 'bottom-4 left-4',
-      'bottom-right': 'bottom-4 right-4',
-      'bottom-center': 'bottom-4 left-1/2 transform -translate-x-1/2'
+      '': ' ',
+      '': ' ',
+      '': '  transform -translate-x-1/2',
+      '': ' ',
+      '': ' ',
+      '': '  transform -translate-x-1/2'
     };
-    return positions[position as keyof typeof positions] || 'top-right';
+    return positions[position as keyof typeof positions] || '';
   };
 
   // Variant classes
   const getVariantClasses = (variant: string) => {
     const variants = {
-      default: 'bg-gray-800 text-white',
-      success: 'bg-green-600 text-white',
-      error: 'bg-red-600 text-white',
-      warning: 'bg-yellow-600 text-white',
-      info: 'bg-blue-600 text-white'
+      default: ' ',
+      success: ' ',
+      error: ' ',
+      warning: ' ',
+      info: ' '
     };
     return variants[variant as keyof typeof variants] || variants.default;
   };
@@ -70,8 +70,8 @@ export const Toast = forwardRef<HTMLDivElement, ToastProps>(({
   // Base container classes
   const containerClasses = `
     toast-container
-    fixed z-50
-    flex flex-col
+     
+     
     pointer-events-none
     ${getPositionClasses(state.position)}
     ${className || ''}
@@ -89,27 +89,27 @@ export const Toast = forwardRef<HTMLDivElement, ToastProps>(({
         className={`
           toast-item
           ${variantClasses}
-          p-4 rounded-lg shadow-lg border border-gray-700
-          min-w-[300px] max-w-md
+              
+           
           pointer-events-auto
-          transition-all duration-300 ease-out
-          ${index > 0 ? 'mt-2' : ''}
-          ${state.isPaused ? 'opacity-100' : 'opacity-100'}
+            
+          ${index > 0 ? '' : ''}
+          ${state.isPaused ? '' : ''}
         `}
         onMouseEnter={() => actions.pause()}
         onMouseLeave={() => actions.resume()}
         data-testid={`toast-${toast.id}`}
       >
         {/* Toast content */}
-        <div className="flex items-start justify-between">
+        <div className="  ">
           {/* Message */}
-          <div className="flex-1 pr-2">
+          <div className=" ">
             {toast.title && (
-              <h4 className="font-semibold text-sm mb-1">
+              <h4 className="  ">
                 {toast.title}
               </h4>
             )}
-            <p className="text-sm leading-relaxed">
+            <p className=" ">
               {toast.message}
             </p>
 
@@ -117,7 +117,7 @@ export const Toast = forwardRef<HTMLDivElement, ToastProps>(({
             {toast.action && (
               <button
                 onClick={toast.action.onClick}
-                className="mt-2 text-sm font-medium underline hover:no-underline focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-transparent rounded"
+                className="          "
               >
                 {toast.action.label}
               </button>
@@ -128,12 +128,12 @@ export const Toast = forwardRef<HTMLDivElement, ToastProps>(({
           {toast.dismissible && (
             <button
               onClick={onDismiss}
-              className="flex-shrink-0 ml-2 text-white/80 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-transparent rounded"
+              className="         "
               aria-label="Dismiss notification"
             >
               {closeButtonContent || (
                 <svg
-                  className="w-4 h-4"
+                  className=" "
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
@@ -152,10 +152,10 @@ export const Toast = forwardRef<HTMLDivElement, ToastProps>(({
 
         {/* Progress bar */}
         {showProgressProp && toast.duration > 0 && (
-          <div className="mt-3">
-            <div className="bg-white/20 rounded-full h-1">
+          <div className="">
+            <div className="  ">
               <div
-                className="bg-white rounded-full h-1 transition-all duration-100"
+                className="    "
                 style={{
                   width: `${100 - progress}%`
                 }}

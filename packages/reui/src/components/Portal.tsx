@@ -166,7 +166,7 @@ export const Portal = forwardRef<HTMLDivElement, PortalProps>(({
   const wrapperClasses = `
     portal-wrapper
     ${className || ''}
-    /* c8 ignore start */ // reason: mounting/unmounting classes — the hook flips these transition flags true→false within a single async mount/unmount block; React batches the updates so the component never commits a render with the flag true
+    /* c8 ignore start */ // reason: mounting/unmounting classes — the hook flips these  flags true→false within a single async mount/unmount block; React batches the updates so the component never commits a render with the flag true
     ${state.mounting ? 'portal-mounting' : ''}
     ${state.unmounting ? 'portal-unmounting' : ''}
     /* c8 ignore end */

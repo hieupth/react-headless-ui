@@ -75,33 +75,33 @@ export const FileUpload = forwardRef<HTMLDivElement, FileUploadProps>(
 
     // Size classes
     const sizeClasses = {
-      sm: 'p-4 text-sm',
-      md: 'p-8 text-base',
-      lg: 'p-12 text-lg'
+      sm: ' ',
+      md: ' ',
+      lg: ' '
     };
 
     // Variant classes
     const variantClasses = {
-      outline: 'border-2 border-dashed border-gray-300 hover:border-gray-400',
-      filled: 'border-0 bg-gray-50 hover:bg-gray-100',
-      ghost: 'border-0 hover:bg-gray-50'
+      outline: '   ',
+      filled: '  ',
+      ghost: ' '
     };
 
     // State classes
     const stateClasses = `
-      ${state.isDragging ? 'border-blue-500 bg-blue-50' : ''}
-      ${state.error ? 'border-red-500 bg-red-50' : ''}
-      ${state.disabled ? 'opacity-60 cursor-not-allowed' : ''}
-      ${state.focused ? 'ring-2 ring-blue-500 ring-offset-2' : ''}
+      ${state.isDragging ? ' ' : ''}
+      ${state.error ? ' ' : ''}
+      ${state.disabled ? ' ' : ''}
+      ${state.focused ? '  ' : ''}
     `;
 
     const uploadClasses = `
-      relative flex flex-col items-center justify-center
-      rounded-lg transition-all duration-200 cursor-pointer
+          
+         
       ${sizeClasses[sizeVariant]}
       ${variantClasses[variantName]}
       ${stateClasses}
-      ${disabledFlag ? 'cursor-not-allowed' : 'hover:border-blue-500'}
+      ${disabledFlag ? '' : ''}
       ${classNameStr}
     `;
 
@@ -143,7 +143,7 @@ export const FileUpload = forwardRef<HTMLDivElement, FileUploadProps>(
           accept={acceptTypes}
           disabled={disabledFlag}
           required={requiredFlag}
-          className="hidden"
+          className=""
           onChange={(e) => handlers.handleFileSelect(e.target.files)}
           onFocus={handlers.handleFocus}
           onBlur={handlers.handleBlur}
@@ -166,34 +166,34 @@ export const FileUpload = forwardRef<HTMLDivElement, FileUploadProps>(
           aria-required={requiredFlag}
         >
           {/* Upload Icon */}
-          <div className="mb-4">
+          <div className="">
             {state.isDragging ? (
-              <svg className="w-12 h-12 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg className="  " fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
               </svg>
             ) : (
-              <svg className="w-12 h-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg className="  " fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
               </svg>
             )}
           </div>
 
           {/* Upload Text */}
-          <div className="text-center">
-            <p className={`font-medium ${state.disabled ? 'text-gray-400' : 'text-gray-700'}`}>
+          <div className="">
+            <p className={` ${state.disabled ? '' : ''}`}>
               {state.isDragging ? 'Drop files here' : uploadLabel}
             </p>
-            <p className={`text-sm mt-2 ${state.disabled ? 'text-gray-400' : 'text-gray-500'}`}>
+            <p className={`  ${state.disabled ? '' : ''}`}>
               {dragLabel}
             </p>
-            <p className={`text-sm mt-1 ${state.disabled ? 'text-gray-400' : 'text-blue-600'}`}>
+            <p className={`  ${state.disabled ? '' : ''}`}>
               {browseLabel}
             </p>
           </div>
 
           {/* Requirements */}
           {(maxSizeBytes || maxFilesCount || acceptTypes) && (
-            <div className="text-xs text-gray-500 mt-4 text-center">
+            <div className="   ">
               {maxSizeBytes && (
                 <p>Maximum file size: {formatFileSize(maxSizeBytes)}</p>
               )}
@@ -209,38 +209,38 @@ export const FileUpload = forwardRef<HTMLDivElement, FileUploadProps>(
 
         {/* Error Message */}
         {state.error && (
-          <div id="file-upload-error" className="mt-2 text-sm text-red-600" role="alert">
+          <div id="file-upload-error" className="  " role="alert">
             {state.error}
           </div>
         )}
 
         {/* File List */}
         {showFileListFlag && state.files.length > 0 && (
-          <div className="mt-4 space-y-2">
-            <h4 className="text-sm font-medium text-gray-700">
+          <div className=" ">
+            <h4 className="  ">
               Files ({state.files.length})
             </h4>
-            <div className="space-y-2">
+            <div className="">
               {state.files.map((file, index) => (
                 <div
                   key={index}
-                  className="flex items-center justify-between p-3 bg-gray-50 rounded-lg"
+                  className="     "
                   role="listitem"
                 >
-                  <div className="flex items-center space-x-3 flex-1 min-w-0">
+                  <div className="    ">
                     {/* File Icon */}
-                    <div className="flex-shrink-0">
-                      <svg className="w-8 h-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <div className="">
+                      <svg className="  " fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                       </svg>
                     </div>
 
                     {/* File Info */}
-                    <div className="flex-1 min-w-0">
-                      <p className="text-sm font-medium text-gray-900 truncate">
+                    <div className=" ">
+                      <p className="   ">
                         {file.name}
                       </p>
-                      <p className="text-xs text-gray-500">
+                      <p className=" ">
                         {formatFileType(file)} • {formatFileSize(file.size)}
                       </p>
                     </div>
@@ -249,7 +249,7 @@ export const FileUpload = forwardRef<HTMLDivElement, FileUploadProps>(
                   {/* Remove Button */}
                   <button
                     type="button"
-                    className="flex-shrink-0 p-1 text-gray-400 hover:text-red-600 focus:outline-none focus:text-red-600 rounded"
+                    className="      "
                     onClick={() => handleRemoveFile(index)}
                     aria-label={`Remove ${file.name}`}
                     disabled={disabledFlag}

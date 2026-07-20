@@ -50,43 +50,43 @@ export const Progress = forwardRef<HTMLDivElement, ProgressProps>(({
 
   // Size classes
   const sizeClasses = {
-    sm: 'h-2',
-    md: 'h-4',
-    lg: 'h-6',
-    xl: 'h-8'
+    sm: '',
+    md: '',
+    lg: '',
+    xl: ''
   }[size];
 
   // Variant classes
   const variantClasses = {
-    default: 'bg-gray-200',
-    solid: 'bg-gray-100',
-    outline: 'border-2 border-gray-300 bg-transparent',
-    gradient: 'bg-gradient-to-r from-gray-100 to-gray-200'
+    default: '',
+    solid: '',
+    outline: '  ',
+    gradient: '  '
   }[variant];
 
   // Color classes
   const colorClasses = {
-    primary: 'bg-blue-600',
-    success: 'bg-green-600',
-    warning: 'bg-yellow-600',
-    error: 'bg-red-600',
-    info: 'bg-cyan-600'
+    primary: '',
+    success: '',
+    warning: '',
+    error: '',
+    info: ''
   }[color];
 
   return (
     <div
       ref={ref}
-      className={`relative overflow-hidden ${sizeClasses} ${variantClasses} rounded-md ${className || ''}`}
+      className={`  ${sizeClasses} ${variantClasses}  ${className || ''}`}
       style={style}
       {...progressHook.progressAttributes}
       {...ariaProps}
     >
       <div
-        className={`absolute top-0 left-0 h-full ${colorClasses} transition-all duration-300 ease-in-out`}
+        className={`    ${colorClasses}   `}
         style={{ width: `${progressHook.state.percentage}%` }}
       />
       {showPercentage && (
-        <div className="absolute inset-0 flex items-center justify-center text-sm font-medium">
+        <div className="      ">
           {Math.round(progressHook.state.percentage)}%
         </div>
       )}
@@ -111,28 +111,28 @@ export const SimpleProgress = forwardRef<HTMLDivElement, ProgressProps>(({
   });
 
   const sizeClasses = {
-    sm: 'h-1',
-    md: 'h-2',
-    lg: 'h-3',
-    xl: 'h-4'
+    sm: '',
+    md: '',
+    lg: '',
+    xl: ''
   }[size];
 
   const colorClasses = {
-    primary: 'bg-blue-500',
-    success: 'bg-green-500',
-    warning: 'bg-yellow-500',
-    error: 'bg-red-500',
-    info: 'bg-cyan-500'
+    primary: '',
+    success: '',
+    warning: '',
+    error: '',
+    info: ''
   }[color];
 
   return (
     <div
       ref={ref}
-      className={`relative overflow-hidden bg-gray-100 ${sizeClasses} rounded-full ${className || ''}`}
+      className={`   ${sizeClasses}  ${className || ''}`}
       {...progressHook.progressAttributes}
     >
       <div
-        className={`absolute top-0 left-0 h-full ${colorClasses} transition-all duration-200 ease-out`}
+        className={`    ${colorClasses}   `}
         style={{ width: `${progressHook.state.percentage}%` }}
       />
     </div>
@@ -165,11 +165,11 @@ export const CircularProgress = forwardRef<HTMLDivElement, ProgressProps>(({
   }[size];
 
   const colorClasses = {
-    primary: 'text-blue-600',
-    success: 'text-green-600',
-    warning: 'text-yellow-600',
-    error: 'text-red-600',
-    info: 'text-cyan-600'
+    primary: '',
+    success: '',
+    warning: '',
+    error: '',
+    info: ''
   }[color];
 
   const { width, height, strokeWidth } = sizeDimensions;
@@ -181,7 +181,7 @@ export const CircularProgress = forwardRef<HTMLDivElement, ProgressProps>(({
   return (
     <div
       ref={ref}
-      className={`relative inline-flex items-center justify-center ${className || ''}`}
+      className={`    ${className || ''}`}
       style={{ width, height, ...style }}
       {...progressHook.progressAttributes}
     >
@@ -197,7 +197,7 @@ export const CircularProgress = forwardRef<HTMLDivElement, ProgressProps>(({
           stroke="currentColor"
           strokeWidth={strokeWidth}
           fill="none"
-          className="text-gray-200"
+          className=""
         />
         <circle
           cx={center}
@@ -208,12 +208,12 @@ export const CircularProgress = forwardRef<HTMLDivElement, ProgressProps>(({
           fill="none"
           strokeDasharray={circumference}
           strokeDashoffset={strokeDashoffset}
-          className="transition-all duration-300 ease-in-out"
+          className="  "
           strokeLinecap="round"
         />
       </svg>
       {showPercentage && (
-        <div className="absolute inset-0 flex items-center justify-center text-xs font-medium">
+        <div className="      ">
           {Math.round(progressHook.state.percentage)}%
         </div>
       )}
@@ -238,34 +238,34 @@ export const LoadingProgress = forwardRef<HTMLDivElement, ProgressProps>(({
   });
 
   const sizeClasses = {
-    sm: 'h-2',
-    md: 'h-4',
-    lg: 'h-6',
-    xl: 'h-8'
+    sm: '',
+    md: '',
+    lg: '',
+    xl: ''
   }[size];
 
   const colorClasses = {
-    primary: 'bg-blue-600',
-    success: 'bg-green-600',
-    warning: 'bg-yellow-600',
-    error: 'bg-red-600',
-    info: 'bg-cyan-600'
+    primary: '',
+    success: '',
+    warning: '',
+    error: '',
+    info: ''
   }[color];
 
   return (
     <div
       ref={ref}
-      className={`relative overflow-hidden bg-gray-200 ${sizeClasses} rounded-full ${className || ''}`}
+      className={`   ${sizeClasses}  ${className || ''}`}
       {...progressHook.progressAttributes}
     >
       <div
-        className={`absolute top-0 left-0 h-full ${colorClasses} transition-all duration-500 ease-out relative`}
+        className={`    ${colorClasses}    `}
         style={{ width: `${progressHook.state.percentage}%` }}
       >
-        <div className="absolute inset-0 bg-white opacity-20 animate-pulse" />
+        <div className="    " />
       </div>
       <div
-        className="absolute top-0 left-0 h-full bg-gradient-to-r from-transparent via-white to-transparent opacity-30 animate-shimmer"
+        className="         "
         style={{
           width: '100%',
           animation: 'shimmer 2s infinite'

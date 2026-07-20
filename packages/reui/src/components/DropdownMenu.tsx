@@ -106,16 +106,16 @@ export const DropdownMenu = forwardRef<HTMLDivElement, DropdownMenuProps>((props
 
   // Size classes
   const sizeClasses = useMemo(() => ({
-    sm: 'text-sm',
-    md: 'text-base',
-    lg: 'text-lg'
+    sm: '',
+    md: '',
+    lg: ''
   }), []);
 
   // Variant classes
   const variantClasses = useMemo(() => ({
-    default: 'py-1',
-    dense: 'py-0.5',
-    loose: 'py-2'
+    default: '',
+    dense: '',
+    loose: ''
   }), []);
 
   // Render individual menu item
@@ -138,24 +138,24 @@ export const DropdownMenu = forwardRef<HTMLDivElement, DropdownMenuProps>((props
         key={item.id}
         {...itemProps}
         className={`
-          relative flex items-center px-3 py-2 text-left cursor-pointer
-          transition-colors duration-150 outline-none
+                
+            
           ${sizeClasses[size]}
           ${item.disabled
-            ? 'opacity-50 cursor-not-allowed'
-            : 'hover:bg-gray-100 focus:bg-gray-100'
+            ? ' '
+            : ' '
           }
-          ${item.checked ? 'bg-blue-50' : ''}
-          ${item.destructive ? 'text-red-600 hover:bg-red-50 focus:bg-red-50' : 'text-gray-700'}
+          ${item.checked ? '' : ''}
+          ${item.destructive ? '  ' : ''}
         `}
       >
         {/* Checkbox/Radio indicator */}
         {item.checked !== undefined && (
-          <span className="mr-3 flex-shrink-0 w-4 h-4">
+          <span className="   ">
             {item.role === 'menuitemradio' ? (
               // Radio button
               <svg
-                className="w-4 h-4"
+                className=" "
                 fill="currentColor"
                 viewBox="0 0 20 20"
               >
@@ -164,7 +164,7 @@ export const DropdownMenu = forwardRef<HTMLDivElement, DropdownMenuProps>((props
             ) : (
               // Checkbox
               <svg
-                className="w-4 h-4"
+                className=" "
                 fill="none"
                 stroke="currentColor"
                 strokeWidth="2"
@@ -182,35 +182,35 @@ export const DropdownMenu = forwardRef<HTMLDivElement, DropdownMenuProps>((props
 
         {/* Icon */}
         {showIcons && item.icon && !item.checked && (
-          <span className="mr-3 flex-shrink-0 w-5 h-5 text-gray-400">
+          <span className="    ">
             {item.icon}
           </span>
         )}
 
         {/* Label */}
-        <span {...labelProps} className="flex-1 min-w-0 truncate">
+        <span {...labelProps} className="  ">
           {item.label}
         </span>
 
         {/* Right side content */}
-        <div className="flex items-center space-x-2 ml-2">
+        <div className="   ">
           {/* Shortcut */}
           {showShortcuts && item.shortcut && (
-            <span className="text-xs text-gray-400 font-mono">
+            <span className="  ">
               {item.shortcut}
             </span>
           )}
 
           {/* Badge */}
           {showBadges && item.badge && (
-            <span className="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-blue-100 text-blue-800">
+            <span className="        ">
               {item.badge}
             </span>
           )}
 
           {/* Submenu indicator */}
           {item.hasSubmenu && (
-            <span className="flex-shrink-0 w-4 h-4 text-gray-400">
+            <span className="   ">
               <svg
                 fill="none"
                 stroke="currentColor"
@@ -232,23 +232,23 @@ export const DropdownMenu = forwardRef<HTMLDivElement, DropdownMenuProps>((props
 
   // Menu content classes
   const menuClasses = [
-    'absolute z-50 min-w-48 py-1 bg-white border border-gray-200 rounded-md shadow-lg',
-    'focus:outline-none',
+    '        ',
+    '',
     variantClasses[variant],
     sizeClasses[size]
   ].filter(Boolean).join(' ');
 
   // Trigger classes
   const triggerClasses = [
-    'inline-flex items-center justify-center px-3 py-2 text-sm font-medium',
-    'text-gray-700 bg-white border border-gray-300 rounded-md',
-    'hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500',
-    'transition-colors duration-150',
-    state.open ? 'bg-gray-50' : ''
+    '      ',
+    '    ',
+    '    ',
+    ' ',
+    state.open ? '' : ''
   ].filter(Boolean).join(' ');
 
   return (
-    <div className={`relative inline-block ${className}`} {...triggerAttributes}>
+    <div className={`  ${className}`} {...triggerAttributes}>
       {/* Trigger */}
       <button
         {...(triggerRest as React.ButtonHTMLAttributes<HTMLButtonElement>)}
@@ -258,8 +258,8 @@ export const DropdownMenu = forwardRef<HTMLDivElement, DropdownMenuProps>((props
       >
         Menu
         <svg
-          className={`ml-2 w-4 h-4 transition-transform duration-200 ${
-            state.open ? 'rotate-180' : ''
+          className={`     ${
+            state.open ? '' : ''
           }`}
           fill="none"
           stroke="currentColor"
@@ -303,7 +303,7 @@ export const DropdownMenuTrigger: React.FC<{
 }> = ({ children, className = '', onClick }) => {
   return (
     <button
-      className={`inline-flex items-center ${className}`}
+      className={`  ${className}`}
       onClick={onClick}
       aria-haspopup="menu"
     >
@@ -324,7 +324,7 @@ export const DropdownMenuItem: React.FC<{
 }> = ({ item, className = '', onClick }) => {
   return (
     <div
-      className={`relative flex items-center px-3 py-2 text-left cursor-pointer transition-colors duration-150 outline-none ${className}`}
+      className={`          ${className}`}
       role="menuitem"
       tabIndex={-1}
       onClick={onClick}
@@ -347,7 +347,7 @@ export const DropdownMenuSeparator: React.FC<{
 }> = ({ className = '' }) => {
   return (
     <div
-      className={`my-1 h-px bg-gray-200 ${className}`}
+      className={`   ${className}`}
       role="separator"
       aria-orientation="horizontal"
     />
@@ -365,7 +365,7 @@ export const DropdownMenuLabel: React.FC<{
 }> = ({ children, className = '' }) => {
   return (
     <div
-      className={`px-3 py-2 text-sm font-medium text-gray-500 ${className}`}
+      className={`     ${className}`}
       role="none"
     >
       {children}

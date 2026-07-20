@@ -100,23 +100,23 @@ export const Card = forwardRef<HTMLDivElement, CardProps>(({
     return (
       <div
         ref={props.headerRef}
-        className="flex items-start justify-between mb-4"
+        className="   "
       >
-        <div className="flex-1 min-w-0">
+        <div className=" ">
           {title && (
             <h3
               id={`${props.semanticAttributes.role || 'card'}-title`}
-              className="text-lg font-semibold text-gray-900 truncate"
+              className="   "
             >
               {title}
             </h3>
           )}
           {subtitle && (
-            <p className="text-sm text-gray-500 mt-1">{subtitle}</p>
+            <p className="  ">{subtitle}</p>
           )}
         </div>
         {actions && (
-          <div className="flex-shrink-0 ml-4">
+          <div className=" ">
             {actions}
           </div>
         )}
@@ -129,18 +129,18 @@ export const Card = forwardRef<HTMLDivElement, CardProps>(({
     return (
       <div
         ref={props.bodyRef}
-        className="flex-1"
+        className=""
       >
         {description && (
           <p
             id={`${props.semanticAttributes.role || 'card'}-description`}
-            className="text-gray-600 text-sm mb-4"
+            className="  "
           >
             {description}
           </p>
         )}
         {children && (
-          <div className="text-gray-700">
+          <div className="">
             {children}
           </div>
         )}
@@ -155,7 +155,7 @@ export const Card = forwardRef<HTMLDivElement, CardProps>(({
     return (
       <div
         ref={props.footerRef}
-        className="mt-4 pt-4 border-t border-gray-200"
+        className="   "
       >
         {footer}
       </div>
@@ -164,12 +164,12 @@ export const Card = forwardRef<HTMLDivElement, CardProps>(({
 
   // Default render function
   const defaultRender = (props: CardRenderProps) => {
-    const baseClasses = `rounded-lg transition-all duration-200 ${card.variantClasses} ${card.sizeClasses}`;
-    const interactiveClasses = cardProps.interactive ? 'cursor-pointer' : '';
-    const hoverClasses = props.hovered && cardProps.hoverable ? 'transform -translate-y-1 shadow-lg' : '';
-    const focusClasses = props.focused ? 'ring-2 ring-blue-500 ring-offset-2' : '';
-    const selectedClasses = props.selected ? 'ring-2 ring-blue-500 ring-offset-2 bg-blue-50' : '';
-    const disabledClasses = props.disabled ? 'opacity-50 cursor-not-allowed' : '';
+    const baseClasses = `   ${card.variantClasses} ${card.sizeClasses}`;
+    const interactiveClasses = cardProps.interactive ? '' : '';
+    const hoverClasses = props.hovered && cardProps.hoverable ? 'transform -translate-y-1 ' : '';
+    const focusClasses = props.focused ? '  ' : '';
+    const selectedClasses = props.selected ? '   ' : '';
+    const disabledClasses = props.disabled ? ' ' : '';
 
     return (
       <div
@@ -241,7 +241,7 @@ export const CardHeader = forwardRef<HTMLDivElement, CardSectionProps>(({
 }, ref) => (
   <div
     ref={ref}
-    className={`flex items-start justify-between mb-4 ${className || ''}`}
+    className={`    ${className || ''}`}
     style={style}
   >
     {children}
@@ -257,7 +257,7 @@ export const CardBody = forwardRef<HTMLDivElement, CardSectionProps>(({
 }, ref) => (
   <div
     ref={ref}
-    className={`flex-1 ${className || ''}`}
+    className={` ${className || ''}`}
     style={style}
   >
     {children}
@@ -273,7 +273,7 @@ export const CardFooter = forwardRef<HTMLDivElement, CardSectionProps>(({
 }, ref) => (
   <div
     ref={ref}
-    className={`mt-4 pt-4 border-t border-gray-200 ${className || ''}`}
+    className={`    ${className || ''}`}
     style={style}
   >
     {children}
@@ -301,7 +301,7 @@ export const CardTitle = forwardRef<HTMLHeadingElement, CardTitleProps>(({
 }, ref) => (
   <h3
     ref={ref}
-    className={`text-lg font-semibold text-gray-900 truncate ${className || ''}`}
+    className={`    ${className || ''}`}
     style={style}
   >
     {children}
@@ -320,7 +320,7 @@ export const CardSubtitle = forwardRef<HTMLParagraphElement, CardTitleProps>(({
 }, ref) => (
   <p
     ref={ref}
-    className={`text-sm text-gray-500 mt-1 ${className || ''}`}
+    className={`   ${className || ''}`}
     style={style}
   >
     {children}
@@ -339,7 +339,7 @@ export const CardDescription = forwardRef<HTMLParagraphElement, CardTitleProps>(
 }, ref) => (
   <p
     ref={ref}
-    className={`text-gray-600 text-sm mb-4 ${className || ''}`}
+    className={`   ${className || ''}`}
     style={style}
   >
     {children}

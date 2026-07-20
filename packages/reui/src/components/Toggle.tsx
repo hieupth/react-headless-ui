@@ -121,48 +121,48 @@ export const FormatToggle: React.FC<ToggleProps & {
   const formatIcons = {
     bold: {
       pressed: (
-        <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+        <svg className=" " fill="currentColor" viewBox="0 0 20 20">
           <path fillRule="evenodd" d="M6 4v12h4.5c2.485 0 4.5-1.79 4.5-4s-2.015-4-4.5-4H9V4h3zm1.5 7H9v3h1.5c1.38 0 2.5-1.12 2.5-2.5S8.88 9 7.5 9z" clipRule="evenodd" />
         </svg>
       ),
       unpressed: (
-        <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+        <svg className=" " fill="currentColor" viewBox="0 0 20 20">
           <path d="M6 4v12h4.5c2.485 0 4.5-1.79 4.5-4s-2.015-4-4.5-4H9V4h3zm1.5 7H9v3h1.5c1.38 0 2.5-1.12 2.5-2.5S8.88 9 7.5 9z" />
         </svg>
       )
     },
     italic: {
       pressed: (
-        <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+        <svg className=" " fill="currentColor" viewBox="0 0 20 20">
           <path fillRule="evenodd" d="M8 4v3h2.5l-2 10H5v3h10v-3h-2.5l2-10H15V4H8z" clipRule="evenodd" />
         </svg>
       ),
       unpressed: (
-        <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+        <svg className=" " fill="currentColor" viewBox="0 0 20 20">
           <path d="M8 4v3h2.5l-2 10H5v3h10v-3h-2.5l2-10H15V4H8z" />
         </svg>
       )
     },
     underline: {
       pressed: (
-        <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+        <svg className=" " fill="currentColor" viewBox="0 0 20 20">
           <path fillRule="evenodd" d="M6 3v7c0 2.21 1.79 4 4 4s4-1.79 4-4V3h-3v7c0 .55-.45 1-1 1s-1-.45-1-1V3H6zm-2 14v2h12v-2H4z" clipRule="evenodd" />
         </svg>
       ),
       unpressed: (
-        <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+        <svg className=" " fill="currentColor" viewBox="0 0 20 20">
           <path d="M6 3v7c0 2.21 1.79 4 4 4s4-1.79 4-4V3h-3v7c0 .55-.45 1-1 1s-1-.45-1-1V3H6zm-2 14v2h12v-2H4z" />
         </svg>
       )
     },
     strikethrough: {
       pressed: (
-        <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+        <svg className=" " fill="currentColor" viewBox="0 0 20 20">
           <path fillRule="evenodd" d="M4 9h12v2H4V9zm2-2v2h8V7h2v4h2V7c0-1.1-.9-2-2-2h-3c0-1.1-.9-2-2-2H8c-1.1 0-2 .9-2 2zm2 8v2h6v-2h2v4H6v-4h2z" clipRule="evenodd" />
         </svg>
       ),
       unpressed: (
-        <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+        <svg className=" " fill="currentColor" viewBox="0 0 20 20">
           <path d="M4 9h12v2H4V9zm2-2v2h8V7h2v4h2V7c0-1.1-.9-2-2-2h-3c0-1.1-.9-2-2-2H8c-1.1 0-2 .9-2 2zm2 8v2h6v-2h2v4H6v-4h2z" />
         </svg>
       )

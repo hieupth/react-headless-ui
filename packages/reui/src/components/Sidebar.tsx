@@ -53,64 +53,64 @@ export const Sidebar = forwardRef<HTMLDivElement, SidebarProps>(({
 
   // Size classes
   const sizeClasses = {
-    sm: 'w-16',
-    md: 'w-64',
-    lg: 'w-80',
-    xl: 'w-96'
+    sm: '',
+    md: '',
+    lg: '',
+    xl: ''
   }[state.size];
 
   // Position classes
   const positionClasses = {
-    left: 'left-0',
-    right: 'right-0'
+    left: '',
+    right: ''
   }[state.position];
 
   // Variant classes
   const variantClasses = {
-    permanent: 'relative transform translate-x-0',
-    persistent: `fixed ${state.isMobile ? 'transform -translate-x-full' : 'transform translate-x-0'} transition-transform duration-300 ease-in-out`,
-    temporary: `fixed transform -translate-x-full transition-transform duration-300 ease-in-out`
+    permanent: ' transform ',
+    persistent: ` ${state.isMobile ? 'transform -translate-x-full' : 'transform '}   `,
+    temporary: ` transform -translate-x-full   `
   }[state.variant];
 
   // Collapse classes
   const collapseClasses = state.collapsed
-    ? 'w-16'
+    ? ''
     : sizeClasses;
 
   // Open state classes
   const openClasses = state.open
-    ? 'translate-x-0'
+    ? ''
     : state.position === 'left'
       ? '-translate-x-full'
-      : 'translate-x-full';
+      : '';
 
   // Base sidebar classes
   const sidebarClasses = `
     ${variantClasses}
     ${positionClasses}
     ${openClasses}
-    ${state.variant !== 'permanent' ? 'fixed top-0 h-full z-50' : 'h-full'}
+    ${state.variant !== 'permanent' ? '   ' : ''}
     ${collapseClasses}
-    bg-white border border-gray-200 shadow-lg
-    flex flex-col
+       
+     
     ${className || ''}
   `.trim().replace(/\s+/g, ' ');
 
   // Overlay classes
   const overlayClasses = `
-    fixed inset-0 bg-black bg-opacity-50 z-40
-    ${state.showOverlay ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}
-    transition-opacity duration-300 ease-in-out
+        
+    ${state.showOverlay ? ' pointer-events-auto' : ' pointer-events-none'}
+      
   `;
 
   // Trigger button classes
   const triggerButtonClasses = `
-    inline-flex items-center justify-center
-    p-2 rounded-md
-    bg-gray-100 hover:bg-gray-200
-    text-gray-600 hover:text-gray-900
-    transition-colors duration-200
-    focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2
+      
+     
+     
+     
+     
+       
   `;
 
   return (
@@ -136,7 +136,7 @@ export const Sidebar = forwardRef<HTMLDivElement, SidebarProps>(({
                 disabled={state.disabled}
               >
                 <svg
-                  className="w-6 h-6"
+                  className=" "
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
@@ -175,19 +175,19 @@ export const Sidebar = forwardRef<HTMLDivElement, SidebarProps>(({
       >
         {/* Header */}
         {header && (
-          <div className="sidebar-header flex-shrink-0 p-4 border-b border-gray-200">
+          <div className="sidebar-header    ">
             {header}
           </div>
         )}
 
         {/* Content */}
-        <div className="sidebar-content flex-1 overflow-y-auto p-4">
+        <div className="sidebar-content   ">
           {children}
         </div>
 
         {/* Footer */}
         {footer && (
-          <div className="sidebar-footer flex-shrink-0 p-4 border-t border-gray-200">
+          <div className="sidebar-footer    ">
             {footer}
           </div>
         )}
@@ -196,12 +196,12 @@ export const Sidebar = forwardRef<HTMLDivElement, SidebarProps>(({
         {(state.variant === 'permanent' || state.variant === 'persistent') && !state.isMobile && (
           <button
             onClick={actions.toggleCollapse}
-            className="absolute top-4 right-2 p-1 rounded hover:bg-gray-100"
+            className="     "
             aria-label={state.collapsed ? 'Expand sidebar' : 'Collapse sidebar'}
             aria-expanded={!state.collapsed}
           >
             <svg
-              className="w-4 h-4 text-gray-500"
+              className="  "
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -255,15 +255,15 @@ export const SidebarItem = forwardRef<HTMLDivElement, SidebarItemProps>(({
   disabled = false
 }, ref) => {
   const itemClasses = `
-    flex items-center gap-3 px-3 py-2 rounded-md
-    transition-colors duration-200
+         
+     
     ${active
-      ? 'bg-blue-100 text-blue-700 font-medium'
-      : 'text-gray-700 hover:bg-gray-100 hover:text-gray-900'
+      ? '  '
+      : '  '
     }
     ${disabled
-      ? 'opacity-50 cursor-not-allowed'
-      : 'cursor-pointer'
+      ? ' '
+      : ''
     }
     ${className || ''}
   `.trim().replace(/\s+/g, ' ');
@@ -279,11 +279,11 @@ export const SidebarItem = forwardRef<HTMLDivElement, SidebarItemProps>(({
       data-testid="sidebar-item"
     >
       {icon && (
-        <span className="flex-shrink-0 w-5 h-5">
+        <span className="  ">
           {icon}
         </span>
       )}
-      <span className="flex-1 truncate">
+      <span className=" ">
         {children}
       </span>
     </div>
@@ -315,16 +315,16 @@ export const SidebarGroup = forwardRef<HTMLDivElement, SidebarGroupProps>(({
   return (
     <div
       ref={ref}
-      className={`sidebar-group mb-4 ${className}`}
+      className={`sidebar-group  ${className}`}
       style={style}
       data-testid="sidebar-group"
     >
       {label && (
-        <div className="sidebar-group-label px-3 py-1 text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2">
+        <div className="sidebar-group-label        ">
           {label}
         </div>
       )}
-      <div className="sidebar-group-items space-y-1">
+      <div className="sidebar-group-items ">
         {children}
       </div>
     </div>
@@ -350,7 +350,7 @@ export const SidebarDivider = forwardRef<HTMLDivElement, SidebarDividerProps>(({
   return (
     <div
       ref={ref}
-      className={`my-4 border-t border-gray-200 ${className}`}
+      className={`   ${className}`}
       style={style}
       role="separator"
       aria-orientation="horizontal"

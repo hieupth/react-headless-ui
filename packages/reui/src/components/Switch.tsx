@@ -136,37 +136,37 @@ export const Switch = forwardRef<HTMLButtonElement, SwitchProps>(({
 
   // Size classes
   const sizeClasses = {
-    sm: 'w-8 h-5',
-    md: 'w-11 h-6',
-    lg: 'w-14 h-8'
+    sm: ' ',
+    md: ' ',
+    lg: ' '
   }[size];
 
   // Thumb size classes
   const thumbSizeClasses = {
-    sm: 'w-4 h-4',
-    md: 'w-5 h-5',
-    lg: 'w-6 h-6'
+    sm: ' ',
+    md: ' ',
+    lg: ' '
   }[size];
 
   // Variant classes
   const variantClasses = {
-    default: 'bg-gray-200',
-    outline: 'border-2 border-gray-300 bg-transparent',
-    solid: 'bg-gray-100'
+    default: '',
+    outline: '  ',
+    solid: ''
   }[variant];
 
   // Animation classes
-  const animationClasses = animated ? 'transition-all duration-200 ease-in-out' : '';
+  const animationClasses = animated ? '  ' : '';
 
   // Default thumb render function
   const defaultThumbRender = (props: SwitchThumbRenderProps) => {
     const baseThumbClasses = `
       ${thumbSizeClasses}
-      rounded-full
-      bg-white
-      shadow-sm
-      border border-gray-200
-      ${props.disabled ? 'opacity-50' : ''}
+      
+      
+      
+       
+      ${props.disabled ? '' : ''}
       ${animationClasses}
     `;
 
@@ -197,10 +197,10 @@ export const Switch = forwardRef<HTMLButtonElement, SwitchProps>(({
     if (!props.text) return null;
 
     const baseLabelClasses = `
-      text-sm
-      font-medium
-      ${props.disabled ? 'text-gray-400' : 'text-gray-700'}
-      ${props.checked ? 'text-blue-600' : ''}
+      
+      
+      ${props.disabled ? '' : ''}
+      ${props.checked ? '' : ''}
     `;
 
     return (
@@ -217,21 +217,21 @@ export const Switch = forwardRef<HTMLButtonElement, SwitchProps>(({
   const defaultRender = (props: SwitchRenderProps) => {
     // Compute track background color
     const trackBgColor = props.checked
-      ? checkedColor || 'bg-blue-600'
+      ? checkedColor || ''
       : uncheckedColor || variantClasses;
 
     // hovered is driven by mouseenter/mouseleave via useSwitch handlers.
     const hoverClass = props.hovered && !props.disabled ? 'brightness-110' : '';
 
     const baseSwitchClasses = `
-      relative
-      inline-flex
-      items-center
+      
+      
+      
       ${sizeClasses}
       ${trackBgColor}
-      rounded-full
-      ${props.disabled ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'}
-      ${props.focused ? 'ring-2 ring-blue-500 ring-opacity-50 ring-offset-2' : ''}
+      
+      ${props.disabled ? ' ' : ''}
+      ${props.focused ? '   ' : ''}
       ${hoverClass}
       ${animationClasses}
       ${props.className}
@@ -294,8 +294,8 @@ export const Switch = forwardRef<HTMLButtonElement, SwitchProps>(({
     );
 
     if (labelElement) {
-      const containerClasses = `inline-flex items-center gap-2 ${
-        labelPosition === 'left' ? 'flex-row-reverse' : 'flex-row'
+      const containerClasses = `   ${
+        labelPosition === 'left' ? '' : ''
       }`;
 
       return (

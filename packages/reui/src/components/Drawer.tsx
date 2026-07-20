@@ -106,43 +106,43 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
     // Drawer component never invokes (it has no built-in open trigger; only the
     // close button / Escape call handleClose, covered by closingClass below).
     /* c8 ignore next */
-    const openingClass = state.opening ? 'animate-pulse' : '';
-    const closingClass = state.closing ? 'animate-pulse' : '';
+    const openingClass = state.opening ? '' : '';
+    const closingClass = state.closing ? '' : '';
 
     // Size classes
     const sizeClasses = {
-      sm: 'max-w-sm',
-      md: 'max-w-md',
-      lg: 'max-w-lg',
-      xl: 'max-w-xl',
-      full: 'max-w-full'
+      sm: '',
+      md: '',
+      lg: '',
+      xl: '',
+      full: ''
     };
 
     // Side classes
     const sideClasses = {
-      left: 'left-0 top-0 h-full',
-      right: 'right-0 top-0 h-full',
-      top: 'top-0 left-0 w-full',
-      bottom: 'bottom-0 left-0 w-full'
+      left: '  ',
+      right: '  ',
+      top: '  ',
+      bottom: '  '
     };
 
     // Animation classes
     const animationClasses = {
-      left: state.open ? 'translate-x-0' : '-translate-x-full',
-      right: state.open ? 'translate-x-0' : 'translate-x-full',
-      top: state.open ? 'translate-y-0' : '-translate-y-full',
-      bottom: state.open ? 'translate-y-0' : 'translate-y-full'
+      left: state.open ? '' : '-translate-x-full',
+      right: state.open ? '' : '',
+      top: state.open ? '' : '-translate-y-full',
+      bottom: state.open ? '' : ''
     };
 
     const drawerClasses = `
-      fixed bg-white shadow-xl transition-transform duration-300 ease-in-out
+           
       ${sideClasses[side]}
       ${sizeClasses[size]}
       ${animationClasses[side]}
       ${openingClass}
       ${closingClass}
-      ${side === 'left' || side === 'right' ? 'w-full' : 'h-full'}
-      ${side === 'top' || side === 'bottom' ? 'max-h-96' : ''}
+      ${side === 'left' || side === 'right' ? '' : ''}
+      ${side === 'top' || side === 'bottom' ? '' : ''}
       ${className}
     `;
 
@@ -168,7 +168,7 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
           {...overlayAttributes}
           data-testid="drawer-overlay"
           className={`
-            fixed inset-0 transition-opacity duration-300
+               
             ${overlayOpacity}
             ${overlayOpening}
             ${overlayClosing}
@@ -191,15 +191,15 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
       }
 
       return (
-        <div className="flex items-center justify-between p-4 border-b border-gray-200">
+        <div className="     ">
           <div>
             {title && (
-              <h2 className="text-lg font-semibold text-gray-900" id={attributes['aria-labelledby']}>
+              <h2 className="  " id={attributes['aria-labelledby']}>
                 {title}
               </h2>
             )}
             {subtitle && (
-              <p className="text-sm text-gray-500 mt-1" id={attributes['aria-describedby']}>
+              <p className="  " id={attributes['aria-describedby']}>
                 {subtitle}
               </p>
             )}
@@ -208,7 +208,7 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
             <button
               type="button"
               onClick={handlers.handleClose}
-              className="p-2 text-gray-400 hover:text-gray-600 focus:outline-none focus:text-gray-600 rounded-lg hover:bg-gray-100"
+              className="      "
               aria-label="Close drawer"
             >
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -225,7 +225,7 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
       if (!footerRenderer) return null;
 
       return (
-        <div className="border-t border-gray-200 p-4">
+        <div className="  ">
           {footerRenderer({ onClose: handlers.handleClose })}
         </div>
       );
@@ -247,7 +247,7 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
         {renderHeader()}
 
         {/* Main content */}
-        <div className="flex-1 overflow-auto" data-testid="drawer-content">
+        <div className=" " data-testid="drawer-content">
           {children}
         </div>
 

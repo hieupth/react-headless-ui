@@ -118,50 +118,50 @@ export const Popover = forwardRef<HTMLDivElement, PopoverProps>(({
   // Base trigger classes
   const triggerClasses = `
     popover-trigger
-    inline-flex items-center justify-center
-    ${state.disabled ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'}
-    text-gray-600
-    hover:text-blue-600
-    transition-colors duration-150
+      
+    ${state.disabled ? ' ' : ''}
+    
+    
+     
     ${triggerClassName || ''}
   `.trim().replace(/\s+/g, ' ');
 
   // Base content classes
   const contentClasses = `
     popover-content
-    absolute z-50
-    bg-white border border-gray-200 rounded-lg shadow-lg
-    p-4
+     
+        
+    
     ${getContentPositionClass(state.position)}
-    ${state.open ? 'opacity-100 scale-100' : 'opacity-0 scale-95 pointer-events-none'}
-    transition-all duration-150 ease-out
+    ${state.open ? ' ' : '  pointer-events-none'}
+      
     ${contentClassName || ''}
   `.trim().replace(/\s+/g, ' ');
 
   // Arrow classes
   const arrowClasses = `
     popover-arrow
-    absolute w-2 h-2 bg-white border border-gray-200
+         
     ${getArrowPositionClass(state.position)}
-    ${state.open ? 'opacity-100' : 'opacity-0'}
-    transition-opacity duration-150
+    ${state.open ? '' : ''}
+     
   `;
 
   // Close button classes
   const closeButtonClasses = `
     popover-close-button
-    absolute top-2 right-2
-    flex items-center justify-center
-    w-6 h-6
-    text-gray-400 hover:text-gray-600
-    transition-colors duration-150
-    focus:outline-none focus:ring-2 focus:ring-blue-500 rounded
+      
+      
+     
+     
+     
+       
   `;
 
   return (
     <div
       ref={ref}
-      className={`popover relative inline-block ${className}`}
+      className={`popover   ${className}`}
       style={style}
       data-testid="popover"
     >
@@ -183,7 +183,7 @@ export const Popover = forwardRef<HTMLDivElement, PopoverProps>(({
       {/* Content Portal */}
       {state.open && (
         <div
-          className="popover-portal fixed inset-0 pointer-events-none z-50"
+          className="popover-portal   pointer-events-none "
           style={{ pointerEvents: 'none' }}
         >
           {/* Content */}
@@ -207,7 +207,7 @@ export const Popover = forwardRef<HTMLDivElement, PopoverProps>(({
               >
                 {closeButtonContent || (
                   <svg
-                    className="w-4 h-4"
+                    className=" "
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"

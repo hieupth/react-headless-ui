@@ -90,50 +90,50 @@ export const Field = forwardRef<HTMLInputElement, FieldProps>(
 
     // Size classes
     const sizeClasses = {
-      sm: 'px-3 py-1.5 text-sm',
-      md: 'px-4 py-2 text-base',
-      lg: 'px-5 py-3 text-lg'
+      sm: '  ',
+      md: '  ',
+      lg: '  '
     };
 
     // Variant classes
     const variantClasses = {
-      outline: 'border border-gray-300 focus:border-blue-500 focus:ring-blue-500',
-      filled: 'border-0 bg-gray-100 focus:bg-white focus:ring-blue-500',
-      underline: 'border-0 border-b-2 border-gray-300 rounded-none focus:border-blue-500 focus:ring-0'
+      outline: '   ',
+      filled: '   ',
+      underline: '     '
     };
 
     // State classes
     const stateClasses = `
-      ${state.focused ? 'ring-2' : ''}
-      ${state.invalid ? 'border-red-500 focus:border-red-500 focus:ring-red-500' : ''}
-      ${state.disabled ? 'bg-gray-50 cursor-not-allowed opacity-60' : ''}
-      ${state.filled ? 'bg-gray-50' : ''}
+      ${state.focused ? '' : ''}
+      ${state.invalid ? '  ' : ''}
+      ${state.disabled ? '  ' : ''}
+      ${state.filled ? '' : ''}
     `;
 
     const inputClasses = `
-      w-full rounded-md transition-colors duration-200
+         
       ${sizeClasses[sizeProp]}
       ${variantClasses[variantProp]}
       ${stateClasses}
-      ${prefix || startAdornment ? 'pl-10' : ''}
-      ${suffix || endAdornment || clearable ? 'pr-10' : ''}
-      focus:outline-none focus:ring-2 focus:ring-offset-2
-      disabled:cursor-not-allowed
+      ${prefix || startAdornment ? '' : ''}
+      ${suffix || endAdornment || clearable ? '' : ''}
+        
+      
     `;
 
     return (
       <div
-        className={`field-container ${orientation === 'horizontal' ? 'flex items-start gap-4' : 'space-y-2'} ${className}`}
+        className={`field-container ${orientation === 'horizontal' ? '  ' : ''} ${className}`}
         style={style}
       >
         {/* Label */}
         {label && labelPosition !== 'inside' && (
           <label
             className={`
-              block text-sm font-medium
-              ${state.disabled ? 'text-gray-400' : 'text-gray-700'}
-              ${orientation === 'horizontal' ? 'mt-2.5 flex-shrink-0' : ''}
-              ${required ? 'after:content-["*"] after:ml-1 after:text-red-500' : ''}
+                
+              ${state.disabled ? '' : ''}
+              ${orientation === 'horizontal' ? ' ' : ''}
+              ${required ? '  ' : ''}
             `}
           >
             {label}
@@ -141,10 +141,10 @@ export const Field = forwardRef<HTMLInputElement, FieldProps>(
         )}
 
         {/* Field Wrapper */}
-        <div className="relative flex-1">
+        <div className=" ">
           {/* Start Adornment */}
           {(startAdornment || prefix) && (
-            <div className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500">
+            <div className="   transform -translate-y-1/2 ">
               {startAdornment || prefix}
             </div>
           )}
@@ -157,12 +157,12 @@ export const Field = forwardRef<HTMLInputElement, FieldProps>(
           />
 
           {/* End Adornment */}
-          <div className="absolute right-3 top-1/2 transform -translate-y-1/2 flex items-center gap-1">
+          <div className="   transform -translate-y-1/2   ">
             {/* Clear Button */}
             {clearable && state.filled && !disabled && !readOnly && (
               <button
                 type="button"
-                className="p-1 text-gray-400 hover:text-gray-600 focus:outline-none focus:text-gray-600 rounded"
+                className="     "
                 onClick={handlers.handleClear}
                 aria-label="Clear input"
               >
@@ -174,7 +174,7 @@ export const Field = forwardRef<HTMLInputElement, FieldProps>(
 
             {/* Suffix */}
             {suffix && (
-              <span className="text-gray-500">
+              <span className="">
                 {suffix}
               </span>
             )}
@@ -185,7 +185,7 @@ export const Field = forwardRef<HTMLInputElement, FieldProps>(
 
           {/* Inside Label */}
           {label && labelPosition === 'inside' && !state.filled && !state.focused && (
-            <div className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500 pointer-events-none">
+            <div className="   transform -translate-y-1/2  pointer-events-none">
               {label}
             </div>
           )}
@@ -193,18 +193,18 @@ export const Field = forwardRef<HTMLInputElement, FieldProps>(
 
         {/* Helper Text, Error Message, and Character Count */}
         {(helperText || state.error || showCount) && (
-          <div className="flex justify-between items-start">
-            <div className="flex-1">
+          <div className="  ">
+            <div className="">
               {/* Error Message */}
               {state.error && (
-                <p className="text-sm text-red-600 mt-1" role="alert">
+                <p className="  " role="alert">
                   {state.error}
                 </p>
               )}
 
               {/* Helper Text */}
               {!state.error && helperText && (
-                <p className="text-sm text-gray-500 mt-1">
+                <p className="  ">
                   {helperText}
                 </p>
               )}
@@ -212,8 +212,8 @@ export const Field = forwardRef<HTMLInputElement, FieldProps>(
 
             {/* Character Count */}
             {showCount && maxLength && (
-              <span className={`text-sm mt-1 ml-2 ${
-                state.value.length > maxLength * 0.9 ? 'text-orange-600' : 'text-gray-500'
+              <span className={`   ${
+                state.value.length > maxLength * 0.9 ? '' : ''
               }`}>
                 {state.value.length}/{maxLength}
               </span>
@@ -223,14 +223,14 @@ export const Field = forwardRef<HTMLInputElement, FieldProps>(
 
         {/* Description */}
         {description && (
-          <p className="text-sm text-gray-600 mt-1">
+          <p className="  ">
             {description}
           </p>
         )}
 
         {/* Validation Requirements */}
         {(minLength || maxLength) && (
-          <p className="text-xs text-gray-500 mt-1">
+          <p className="  ">
             {minLength && `Minimum ${minLength} characters`}
             {minLength && maxLength && ' • '}
             {maxLength && `Maximum ${maxLength} characters`}
