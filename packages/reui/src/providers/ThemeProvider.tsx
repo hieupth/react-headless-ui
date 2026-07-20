@@ -143,6 +143,34 @@ const defaultTheme: Theme = {
 const ThemeContext = createContext<Theme>(defaultTheme);
 
 /**
+ * Deep-merge two theme objects, section by section.
+ *
+ * reason: a shallow merge (`{...defaultTheme, ...theme}`) replaces an entire
+ * section (e.g. `colors`) when a consumer overrides only part of it, leaving
+ * sibling keys (background, foreground, border) undefined. Each theme section
+ * is a plain object of token → value, so we recurse into object-valued keys
+ * rather than cloning them wholesale. Non-object values fall back to the
+ * default, exactly as before.
+ */
+const isPlainObject = (value: unknown): value is Record<string, unknown> =>
+  typeof value === 'object' && value !== null && !Array.isArray(value);
+
+const mergeTheme = (base: Theme, override: Partial<Theme>): Theme => {
+  const out: Record<string, unknown> = { ...(base as unknown as Record<string, unknown>) };
+  for (const key of Object.keys(override)) {
+    const baseValue = out[key];
+    const overrideValue = (override as Record<string, unknown>)[key];
+    if (isPlainObject(baseValue) && isPlainObject(overrideValue)) {
+      // Recurse one level: token key → value within the section.
+      out[key] = { ...baseValue, ...overrideValue };
+    } else if (overrideValue !== undefined) {
+      out[key] = overrideValue;
+    }
+  }
+  return out as unknown as Theme;
+};
+
+/**
  * Theme provider for component tree.
  * @param props - Provider configuration
  * @returns Theme context provider
@@ -151,7 +179,7 @@ export const ThemeProvider: React.FC<{
   children: React.ReactNode;
   theme?: Partial<Theme>;
 }> = ({ children, theme }) => {
-  const mergedTheme = theme ? { ...defaultTheme, ...theme } : defaultTheme;
+  const mergedTheme = theme ? mergeTheme(defaultTheme, theme) : defaultTheme;
 
   return (
     <ThemeContext.Provider value={mergedTheme}>

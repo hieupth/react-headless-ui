@@ -21,7 +21,7 @@ describe('ThemeProvider', () => {
     expect(captured?.spacing).toBeDefined();
   });
 
-  it('overrides top-level theme keys (shallow merge)', () => {
+  it('overrides a full section without touching other sections', () => {
     const customSpacing = { xs: '10px', sm: '20px', md: '30px', lg: '40px', xl: '50px' };
     let captured: Theme | undefined;
     render(
@@ -30,8 +30,23 @@ describe('ThemeProvider', () => {
       </ThemeProvider>
     );
     expect(captured?.spacing.xs).toBe('10px');
-    // other top-level keys are untouched by the shallow merge
+    // other top-level keys are untouched
     expect(typeof captured?.colors.primary).toBe('string');
+  });
+
+  it('deep-merges a partial section so sibling keys stay defined', () => {
+    let captured: Theme | undefined;
+    render(
+      <ThemeProvider theme={{ colors: { primary: '#f00' } } as Partial<Theme>}>
+        <ThemeReader onTheme={(t) => (captured = t)} />
+      </ThemeProvider>
+    );
+    // the override wins
+    expect(captured?.colors.primary).toBe('#f00');
+    // sibling palette keys must NOT be bricked by the shallow-replace bug
+    expect(captured?.colors.background).toBe('#ffffff');
+    expect(captured?.colors.foreground).toBe('#000000');
+    expect(captured?.colors.border).toBeDefined();
   });
 
   it('useTheme returns the default theme when rendered without a provider', () => {
