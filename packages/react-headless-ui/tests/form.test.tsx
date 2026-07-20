@@ -496,3 +496,97 @@ describe('useForm (hook actions)', () => {
     expect(ref.current?.tagName).toBe('FORM');
   });
 });
+
+describe('useForm validationRules wiring', () => {
+  function setup(props: Parameters<typeof useForm>[0]) {
+    const result: { current: ReturnType<typeof useForm> } = { current: null as any };
+    function Probe() {
+      result.current = useForm(props);
+      return null;
+    }
+    render(<Probe />);
+    return result;
+  }
+
+  it('blocks submit when a required validationRule fails on an empty field', async () => {
+    const onSubmit = vi.fn().mockResolvedValue(undefined);
+    const res = setup({
+      defaultValues: { name: '' },
+      validationRules: [
+        {
+          field: 'name',
+          name: 'required',
+          message: 'name is required',
+          validate: (v: string) => (v && v.trim() !== '') || false
+        }
+      ],
+      onSubmit
+    });
+    // Field is empty -> validation should fail and submit must not call onSubmit.
+    await act(async () => { await res.current.actions.submit(); });
+    expect(onSubmit).not.toHaveBeenCalled();
+    expect(typeof res.current.actions.getFieldError('name')).toBe('string');
+    expect(res.current.actions.getFieldError('name')).toBe('name is required');
+  });
+
+  it('allows submit once the rule passes after the field is filled', async () => {
+    const onSubmit = vi.fn().mockResolvedValue(undefined);
+    const res = setup({
+      defaultValues: { name: '' },
+      validationRules: [
+        {
+          field: 'name',
+          name: 'required',
+          message: 'name is required',
+          validate: (v: string) => (v && v.trim() !== '') || false
+        }
+      ],
+      onSubmit
+    });
+    act(() => res.current.actions.setFieldValue('name', 'Alice'));
+    await act(async () => { await res.current.actions.submit(); });
+    expect(onSubmit).toHaveBeenCalledTimes(1);
+    expect(res.current.actions.getFieldError('name')).toBeUndefined();
+  });
+
+  it('honors a string return from validate as the error message', async () => {
+    const onSubmit = vi.fn().mockResolvedValue(undefined);
+    const res = setup({
+      defaultValues: { name: 'a' },
+      validationRules: [
+        {
+          field: 'name',
+          name: 'minLength',
+          message: 'fallback',
+          validate: (v: string) => (v.length >= 3 ? true : 'too short')
+        }
+      ],
+      onSubmit
+    });
+    await act(async () => { await res.current.actions.submit(); });
+    expect(onSubmit).not.toHaveBeenCalled();
+    expect(res.current.actions.getFieldError('name')).toBe('too short');
+  });
+
+  it('passes a consumer-supplied resolver through to React Hook Form', async () => {
+    // A resolver that always marks the form invalid should block submit,
+    // proving the resolver reached useReactHookForm instead of being dropped.
+    const resolver = vi.fn(() => ({ values: {} as Record<string, never>, errors: { name: { type: 'x', message: 'blocked' } } }));
+    const onSubmit = vi.fn().mockResolvedValue(undefined);
+    const res = setup({
+      defaultValues: { name: 'x' },
+      resolver: resolver as any,
+      onSubmit
+    });
+    await act(async () => { await res.current.actions.submit(); });
+    expect(resolver).toHaveBeenCalled();
+    expect(onSubmit).not.toHaveBeenCalled();
+  });
+
+  it('does not validate when no validationRules and no resolver are provided', async () => {
+    const onSubmit = vi.fn().mockResolvedValue(undefined);
+    const res = setup({ defaultValues: { name: '' }, onSubmit });
+    await act(async () => { await res.current.actions.submit(); });
+    expect(onSubmit).toHaveBeenCalledTimes(1);
+  });
+});
