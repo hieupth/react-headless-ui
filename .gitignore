@@ -37,3 +37,8 @@ blob-report/
 
 # Generated at publish from root README (single source of truth)
 packages/reui/README.md
+packages/reui/LICENSE
+
+# Env (defense-in-depth)
+.env
+**/.env

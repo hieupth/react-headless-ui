@@ -1,0 +1,89 @@
+{
+  "name": "@hieupth/reui",
+  "version": "0.1.0",
+  "description": "Headless React UI primitives — composition over inheritance, behavior mixins, semantic-first accessibility.",
+  "type": "module",
+  "main": "dist/index.cjs",
+  "module": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "CHANGELOG.md",
+    "LICENSE"
+  ],
+  "sideEffects": false,
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "coverage": "vitest run --coverage",
+    "typecheck": "tsc --noEmit",
+    "prepublishOnly": "pnpm build && cp ../../README.md README.md && cp ../../LICENSE LICENSE"
+  },
+  "keywords": [
+    "react",
+    "ui",
+    "components",
+    "headless",
+    "accessibility",
+    "typescript"
+  ],
+  "author": "Hieu Pham",
+  "license": "AGPL-3.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/hieupth/react-headless-ui.git",
+    "directory": "packages/reui"
+  },
+  "homepage": "https://github.com/hieupth/react-headless-ui#readme",
+  "bugs": {
+    "url": "https://github.com/hieupth/react-headless-ui/issues"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "peerDependencies": {
+    "react": ">=18",
+    "react-dom": ">=18",
+    "framer-motion": "^12",
+    "react-hook-form": "^7"
+  },
+  "peerDependenciesMeta": {
+    "framer-motion": {
+      "optional": true
+    },
+    "react-hook-form": {
+      "optional": true
+    }
+  },
+  "devDependencies": {
+    "@testing-library/jest-dom": "^6.9.1",
+    "@testing-library/react": "^16.3.2",
+    "@testing-library/user-event": "^14.6.1",
+    "@types/react": "^19.1.15",
+    "@types/react-dom": "^19.1.15",
+    "@vitest/coverage-v8": "^4.1.9",
+    "framer-motion": "^12.23.24",
+    "jest-axe": "^10.0.0",
+    "jsdom": "^29.1.1",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0",
+    "react-hook-form": "^7.65.0",
+    "tsup": "^8.5.0",
+    "typescript": "^5.9.2",
+    "vitest": "^4.1.9"
+  }
+}

@@ -1,0 +1,116 @@
+name: CI
+
+on:
+  push:
+    branches: [main, claude2]
+  pull_request:
+
+# Cancel superseded runs on the same ref.
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  # Hard gate: the library must type-check, pass its unit suite, and build
+  # (emitting .d.ts). Blocks merge on any regression.
+  library:
+    name: typecheck + unit + build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@b906affcce14559ad1aafd4ab0e942779e9f58b1 # v4
+
+      - name: Setup Node
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: 20
+          cache: pnpm
+
+      - name: Install deps
+        run: pnpm install --frozen-lockfile
+
+      - name: Type-check (tsc --noEmit, 0 errors required)
+        run: pnpm typecheck
+
+      - name: Unit tests (Vitest)
+        run: pnpm test
+
+      - name: Build package (must emit .d.ts)
+        run: pnpm build
+
+      - name: Verify types shipped
+        run: test -f packages/reui/dist/index.d.ts
+
+      - name: Upload build artifact
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: dist
+          path: packages/reui/dist/
+
+  # Coverage gate: the library must hold 100% coverage (lines/statements/
+  # functions/branches) on src/. Runs sequentially with a raised heap — the
+  # full 5000+ test suite under v8 instrumentation is memory-heavy, so this
+  # avoids worker OOM and keeps the gate reliable on a 7 GB runner.
+  coverage:
+    name: coverage 100% gate
+    runs-on: ubuntu-latest
+    needs: library
+    steps:
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
+      - name: Install pnpm
+        uses: pnpm/action-setup@b906affcce14559ad1aafd4ab0e942779e9f58b1 # v4
+      - name: Setup Node
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: 20
+          cache: pnpm
+      - name: Install deps
+        run: pnpm install --frozen-lockfile
+      - name: Coverage (100% required on lines/branches/functions/statements)
+        run: pnpm --filter @hieupth/reui exec vitest run --no-file-parallelism --coverage
+        env:
+          NODE_OPTIONS: --max-old-space-size=6144
+
+  # Consumer build: the example Next.js app must build against the package.
+  # Runs on real CI runners (not the restricted dev sandbox where Turbopack's
+  # PostCSS worker spawn is blocked).
+  example-build:
+    name: example (Next) build
+    runs-on: ubuntu-latest
+    needs: library
+    steps:
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
+      - uses: pnpm/action-setup@b906affcce14559ad1aafd4ab0e942779e9f58b1 # v4
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: 20
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - name: Build package
+        run: pnpm build
+      - name: Build example (static export)
+        run: pnpm --filter example build
+
+  # E2E: Playwright smoke tests against the example app. Runs on a real CI
+  # runner (the dev sandbox blocks the Next dev server's network-interface
+  # enumeration, so E2E is verified here, not locally).
+  e2e:
+    name: E2E (Playwright)
+    runs-on: ubuntu-latest
+    needs: library
+    steps:
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
+      - uses: pnpm/action-setup@b906affcce14559ad1aafd4ab0e942779e9f58b1 # v4
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: 20
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - name: Build package (E2E needs dist/ for Next to resolve the workspace dep)
+        run: pnpm build
+      - name: Install Playwright browser
+        run: pnpm exec playwright install --with-deps chromium
+      - name: Run E2E
+        run: pnpm test:e2e

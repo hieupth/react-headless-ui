@@ -33,5 +33,10 @@
     "@types/react": "^19.1.15",
     "tsup": "^8.5.0",
     "typescript": "^5.9.2"
+  },
+  "pnpm": {
+    "overrides": {
+      "serialize-javascript": ">=7.0.3"
+    }
   }
 }

@@ -1,0 +1,56 @@
+# Publish @hieupth/reui to npm when a version tag is pushed.
+#
+# Setup (one-time):
+#   1. Add an `NPM_TOKEN` secret — a granular npm access token with publish
+#      rights on @hieupth/reui.
+#   2. For npm provenance signing, your npm account + the GitHub repo must be
+#      public and provenance enabled. Drop `--provenance` below if you opt out.
+#   3. Publish: `git tag v0.1.0 && git push origin v0.1.0`.
+#
+# `prepublishOnly` (package.json) rebuilds dist/ before the tarball is packed.
+
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+permissions:
+  contents: read
+
+jobs:
+  publish:
+    name: Publish to npm
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write # required for npm provenance
+
+    steps:
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@b906affcce14559ad1aafd4ab0e942779e9f58b1 # v4
+
+      - name: Setup Node
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: 20
+          registry-url: https://registry.npmjs.org
+          cache: pnpm
+
+      - name: Install deps
+        run: pnpm install --frozen-lockfile
+
+      - name: Build package (must emit .d.ts)
+        run: pnpm build
+
+      - name: Verify types shipped
+        run: test -f packages/reui/dist/index.d.ts
+
+      - name: Publish to npm
+        run: npm publish --provenance --access public
+        working-directory: packages/reui
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
