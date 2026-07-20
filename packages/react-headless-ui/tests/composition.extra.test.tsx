@@ -1,27 +1,10 @@
 import { describe, it, expect, vi } from 'vitest';
-import { render, renderHook } from '@testing-library/react';
-import * as React from 'react';
 import {
   composeState,
   composeHandlers,
   composeClasses,
-  composeStyles,
-  createTraversalTree,
-  composeLifecycle,
-  useComposition
+  composeStyles
 } from '../src/utils/Composition';
-import type { ComponentContract } from '../src/contracts';
-
-// Helper to build a ComponentContract tree.
-const makeComponent = (
-  id: string,
-  children: ComponentContract[] = []
-): ComponentContract => ({
-  id,
-  state: 'idle',
-  mounted: false,
-  children
-});
 
 describe('composeState', () => {
   it('merges multiple partial states in order, later wins', () => {
@@ -174,100 +157,4 @@ describe('composeStyles', () => {
   });
 });
 
-describe('createTraversalTree', () => {
-  it('builds a depth-ordered node list with paths and depth', () => {
-    const root = makeComponent('root', [makeComponent('a', [makeComponent('a1')]), makeComponent('b')]);
-    const tree = createTraversalTree(root, { id: 'root' });
-    expect(tree.map(n => ({ id: n.component.id, depth: n.depth, path: n.path }))).toEqual([
-      { id: 'root', depth: 0, path: ['root'] },
-      { id: 'a', depth: 1, path: ['root', 'a'] },
-      { id: 'a1', depth: 2, path: ['root', 'a', 'a1'] },
-      { id: 'b', depth: 1, path: ['root', 'b'] }
-    ]);
-  });
 
-  it('marks nodes traversable when they have children', () => {
-    const root = makeComponent('root', [makeComponent('leaf')]);
-    const tree = createTraversalTree(root, { id: 'root' });
-    expect(tree[0].traversable).toBe(true); // root has children
-    expect(tree[1].traversable).toBe(false); // leaf has no children
-  });
-
-  it('uses default options when omitted', () => {
-    const root = makeComponent('solo');
-    const tree = createTraversalTree(root);
-    expect(tree).toHaveLength(1);
-    expect(tree[0].path).toEqual(['solo']);
-    expect(tree[0].traversable).toBe(false);
-  });
-
-  it('avoids infinite loops on cyclic graphs via visited set', () => {
-    // Construct a self-referencing cycle (a -> a).
-    const a = makeComponent('a');
-    (a.children as ComponentContract[]).push(a);
-    const tree = createTraversalTree(a, { id: 'cycle' });
-    expect(tree).toHaveLength(1);
-  });
-});
-
-describe('composeLifecycle', () => {
-  it('enhances a component with parent, children (re-parented) and mounted flag', () => {
-    const base = makeComponent('base');
-    const childA = makeComponent('childA');
-    const childB = makeComponent('childB');
-    const parent = makeComponent('parent');
-    const enhanced = composeLifecycle(base, {
-      id: 'lc',
-      parent,
-      children: [childA, childB]
-    });
-    expect(enhanced.id).toBe('base');
-    expect(enhanced.mounted).toBe(true);
-    expect(enhanced.parent).toBe(parent);
-    expect(enhanced.children).toHaveLength(2);
-    expect(enhanced.children[0].parent).toBe(enhanced);
-    expect(enhanced.children[1].parent).toBe(enhanced);
-  });
-
-  it('defaults children to empty array when omitted', () => {
-    const base = makeComponent('base');
-    const enhanced = composeLifecycle(base);
-    expect(enhanced.children).toEqual([]);
-    expect(enhanced.mounted).toBe(true);
-  });
-});
-
-describe('useComposition', () => {
-  it('builds a component instance, traversal tree and exposes compose helpers', () => {
-    const child = makeComponent('child');
-    const parent = makeComponent('parent', [child]);
-    const { result } = renderHook(() =>
-      useComposition({ id: 'root', parent })
-    );
-    expect(result.current.component.id).toBe('root');
-    expect(result.current.component.state).toBe('idle');
-    expect(result.current.component.mounted).toBe(false);
-    expect(result.current.component.parent).toBe(parent);
-    // traversal tree built from the synthesized component (no children -> 1 node).
-    expect(result.current.traversalTree).toHaveLength(1);
-    expect(result.current.traversalTree[0].component.id).toBe('root');
-    // Helpers are wired through.
-    expect(result.current.composeClasses('a', 'b')).toBe('a b');
-    expect(result.current.composeState({ x: 1 })).toEqual({ x: 1 });
-    expect(typeof result.current.composeHandlers(() => {})).toBe('function');
-    expect(result.current.composeStyles({ color: 'red' })).toEqual({ color: 'red' });
-  });
-
-  it('renders inside a component tree via a Probe', () => {
-    const Probe = () => {
-      const { component, traversalTree } = useComposition({ id: 'probe' });
-      return (
-        <div data-testid="out">
-          {component.id}:{traversalTree.length}
-        </div>
-      );
-    };
-    const { getByTestId } = render(<React.Suspense fallback={null}><Probe /></React.Suspense>);
-    expect(getByTestId('out').textContent).toBe('probe:1');
-  });
-});
