@@ -116,12 +116,16 @@ describe('Drawer renderer branches', () => {
     expect(screen.getByTestId('drawer-footer')).toBeInTheDocument();
   });
 
-  it('renders sides and sizes (top/bottom get max-h, left/right get w-full)', () => {
+  it('renders sides and sizes (data-side/data-size reflect the choices)', () => {
     const { rerender } = render(<Drawer open side="left" size="sm">X</Drawer>);
     let drawer = screen.getByTestId('drawer');
-    expect(drawer.className).toContain('w-full');
+    // Headless: the w-full/max-h-96 layout classes are removed; side and size
+    // are still exposed via data-side / data-size attributes.
+    expect(drawer.getAttribute('data-side')).toBe('left');
+    expect(drawer.getAttribute('data-size')).toBe('sm');
     rerender(<Drawer open side="top" size="full">X</Drawer>);
     drawer = screen.getByTestId('drawer');
-    expect(drawer.className).toContain('max-h-96');
+    expect(drawer.getAttribute('data-side')).toBe('top');
+    expect(drawer.getAttribute('data-size')).toBe('full');
   });
 });

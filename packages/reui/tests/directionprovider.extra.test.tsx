@@ -166,7 +166,8 @@ describe('DirectionProvider subcomponents', () => {
     );
     const fb = b.querySelector('[data-testid="directional-flex"]') as HTMLElement;
     expect(fb.style.justifyContent).toBe('flex-end');
-    expect(fb.className).toContain('flex-rtl');
+    // Headless: the flex-rtl class is removed; the RTL mapping is already proven
+    // by justifyContent=flex-end (column + justify=start maps to flex-end under RTL).
     const { container: c } = render(
       <DirectionProvider defaultLayoutDirection="rtl">
         <DirectionalFlex direction="column" justify="end"><span /></DirectionalFlex>

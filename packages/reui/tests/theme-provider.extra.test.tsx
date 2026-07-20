@@ -51,24 +51,24 @@ describe('ThemeProvider (extra coverage)', () => {
     expect(captured?.fontWeights.bold).toBe('700');
   });
 
-  it('overrides a top-level section with a full replacement object (shallow merge)', () => {
-    const customColors: Theme['colors'] = {
-      background: '#000',
-      foreground: '#fff',
+  it('deep-merges a partial top-level section, keeping sibling keys default', () => {
+    // mergeTheme deep-merges each section (documented): a partial colors
+    // override merges key-by-key rather than replacing the whole section.
+    const customColors = {
       primary: '#ff0000',
       secondary: '#00ff00',
-      muted: '#111',
-      border: '#222',
-      destructive: '#f00',
     };
     let captured: Theme['colors'] | undefined;
     render(
-      <ThemeProvider theme={{ colors: customColors }}>
+      <ThemeProvider theme={{ colors: customColors } as any}>
         <Captured pick={(t) => t.colors} onCapture={(v) => (captured = v)} />
       </ThemeProvider>,
     );
-    expect(captured).toEqual(customColors);
     expect(captured?.primary).toBe('#ff0000');
+    expect(captured?.secondary).toBe('#00ff00');
+    // Untouched sibling keys keep their default values.
+    expect(captured?.background).toBe(DEFAULT_COLORS.background);
+    expect(captured?.foreground).toBe(DEFAULT_COLORS.foreground);
   });
 
   it('merges multiple top-level overrides while leaving others default', () => {

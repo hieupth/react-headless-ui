@@ -535,10 +535,10 @@ describe('List (rendering branches)', () => {
       <List items={fruits} compact showDividers showBorders={false} />
     );
     const list = screen.getByTestId('list');
-    expect(list.className).toContain('list-compact');
-    expect(list.className).toContain('list-divided');
-    expect(list.className).toContain('list-borderless');
-    expect(list.className).toContain('list-unnumbered');
+    // Headless: the compact/divided/borderless/unnumbered classes are removed;
+    // assert the list renders its items without crashing under those flags.
+    expect(list).toBeInTheDocument();
+    expect(screen.getAllByTestId('list-item')).toHaveLength(fruits.length);
     expect(container).toBeTruthy();
   });
 
@@ -668,8 +668,10 @@ describe('ListTimeline / ListCompact', () => {
   it('ListCompact renders a compact list', () => {
     render(<ListCompact items={fruits} />);
     const list = screen.getByTestId('list');
-    expect(list.className).toContain('list-compact');
+    // Headless: the list-compact class is removed; ListCompact still selects the
+    // small item size, exposed via data-item-size.
     expect(list).toHaveAttribute('data-item-size', 'sm');
+    expect(screen.getAllByTestId('list-item')).toHaveLength(fruits.length);
   });
 });
 

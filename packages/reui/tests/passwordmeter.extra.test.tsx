@@ -60,11 +60,12 @@ describe('PasswordMeter — variant fallback and dots coverage', () => {
     expect((text as HTMLElement).style.color).not.toBe('');
   });
 
-  it('disabled meter shows the disabled container class', () => {
-    const { container } = renderMeter({ disabled: true });
-    expect(container.querySelector('.password-meter')!.className).toContain(
-      'cursor-not-allowed'
-    );
+  it('disabled meter disables the password input', () => {
+    renderMeter({ disabled: true });
+    // Headless: the cursor-not-allowed container class is removed; the disabled
+    // state is reflected on the password input itself.
+    expect(screen.getByTestId('password-input')).toBeDisabled();
+    expect(screen.getByTestId('password-meter')).toBeInTheDocument();
   });
 
   it('hides the strength label when showStrengthText is false', async () => {

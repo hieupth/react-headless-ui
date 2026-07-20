@@ -81,19 +81,25 @@ describe('Spinner', () => {
 
   it('renders three dots for the dots variant', () => {
     const { container } = render(<Spinner active variant="dots" />);
-    // dots variant renders 3 child dots inside a flex container
-    const flex = container.querySelector('.flex.items-center');
-    expect(flex).not.toBeNull();
+    // Headless: the dots variant renders exactly 3 child dot elements, each
+    // carrying an animationDelay style.
+    const dots = container.querySelectorAll('[style*="animation-delay"], [style*="animationDelay"]');
+    expect(dots.length).toBe(3);
   });
 
   it('renders four bars for the bars variant', () => {
     const { container } = render(<Spinner active variant="bars" />);
-    expect(container.querySelector('.flex.items-center')).not.toBeNull();
+    // Headless: the bars variant renders exactly 4 child bar elements, each
+    // carrying an animationDelay style.
+    const bars = container.querySelectorAll('[style*="animation-delay"], [style*="animationDelay"]');
+    expect(bars.length).toBe(4);
   });
 
-  it('applies color variant classes', () => {
+  it('renders with a color variant applied', () => {
     const { container } = render(<Spinner active color="error" />);
-    expect(container.querySelector('.border-red-600')).not.toBeNull();
+    // Headless: color classes are removed; assert the spinner renders without
+    // crashing with the error color variant.
+    expect(container.firstChild).not.toBeNull();
   });
 
   it('renders a tooltip when showTooltip and tooltipText are set', () => {

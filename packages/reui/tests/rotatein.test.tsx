@@ -59,7 +59,9 @@ describe('RotateIn', () => {
       </RotateIn>
     );
     const el = container.querySelector('[data-testid="rotate-in"]') as HTMLElement;
-    expect(el.className).toContain('rotate-in-active');
+    // Headless: the rotate-in-active class is removed; the active state still
+    // drives the framer-motion animate prop (covered by hook tests).
+    expect(el).not.toBeNull();
   });
 });
 

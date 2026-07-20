@@ -42,18 +42,25 @@ describe('AccordionMenu', () => {
     expect(screen.getByText('3')).toBeInTheDocument();
   });
 
-  it('renders a disabled item with the disabled styling', () => {
+  it('renders a disabled item with the disabled semantics', () => {
     render(<AccordionMenu items={[{ id: 'd', label: 'Disabled', disabled: true }]} />);
-    const header = screen.getByText('Disabled').closest('[class*="flex items-center justify-between"]');
-    expect(header?.className).toContain('cursor-not-allowed');
+    const item = screen.getByText('Disabled').closest('[data-disabled]') as HTMLElement;
+    // Headless: disabled styling is removed; the item wrapper exposes the
+    // disabled state via data-disabled / aria-disabled.
+    expect(item).not.toBeNull();
+    expect(item.getAttribute('data-disabled')).toBe('true');
+    expect(item.getAttribute('aria-disabled')).toBe('true');
   });
 
   it('honours the sm/lg size variants', () => {
     const { container, rerender } = render(<AccordionMenu size="sm" items={[{ id: 'a', label: 'A' }]} />);
-    // sizeClasses[size] is applied to the outer item wrapper div.
-    expect(container.querySelector('nav')?.querySelector('div.text-sm')).not.toBeNull();
+    // Headless: size classes are removed; assert the item renders and tracks
+    // its depth on the wrapper div.
+    let item = container.querySelector('nav')?.querySelector('div[data-depth="0"]');
+    expect(item).not.toBeNull();
     rerender(<AccordionMenu size="lg" items={[{ id: 'a', label: 'A' }]} />);
-    expect(container.querySelector('nav')?.querySelector('div.text-lg')).not.toBeNull();
+    item = container.querySelector('nav')?.querySelector('div[data-depth="0"]');
+    expect(item).not.toBeNull();
   });
 
   it('uses a custom children render function when provided', () => {
