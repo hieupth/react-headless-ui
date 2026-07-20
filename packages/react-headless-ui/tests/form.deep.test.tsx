@@ -201,16 +201,13 @@ describe('useForm hook - multi-step', () => {
     expect(result.current.state.totalSteps).toBe(3);
     let advanced: boolean | undefined;
     await act(async () => {
-      advanced = result.current.actions.nextStep();
+      advanced = await result.current.actions.nextStep();
     });
     expect(advanced).toBe(true);
-    await waitFor(() => {
-      // nextStep sets state asynchronously inside a promise
-    });
     expect(result.current.state.currentStep).toBe(1);
     let jumped: boolean | undefined;
     await act(async () => {
-      jumped = result.current.actions.goToStep(2);
+      jumped = await result.current.actions.goToStep(2);
     });
     expect(jumped).toBe(true);
     let wentPrev: boolean | undefined;
@@ -220,13 +217,13 @@ describe('useForm hook - multi-step', () => {
     expect(wentPrev).toBe(true);
   });
 
-  it('nextStep returns false when not multi-step or at last step', () => {
+  it('nextStep returns false when not multi-step or at last step', async () => {
     const single = renderHook(() =>
       useForm<Values>({ onSubmit: vi.fn(), defaultValues: { name: '', email: '' } })
     );
-    expect(single.result.current.actions.nextStep()).toBe(false);
+    await expect(single.result.current.actions.nextStep()).resolves.toBe(false);
     expect(single.result.current.actions.previousStep()).toBe(false);
-    expect(single.result.current.actions.goToStep(0)).toBe(false);
+    await expect(single.result.current.actions.goToStep(0)).resolves.toBe(false);
   });
 
   it('validateStep falls back to validate when not multi-step', async () => {
@@ -266,10 +263,10 @@ describe('useForm hook - multi-step', () => {
       })
     );
     // advance to the last step (step index 1 of 2)
-    await act(async () => { result.current.actions.nextStep(); });
+    await act(async () => { await result.current.actions.nextStep(); });
     await waitFor(() => expect(result.current.state.currentStep).toBe(1));
     let atLast: boolean | undefined;
-    act(() => { atLast = result.current.actions.nextStep(); });
+    await act(async () => { atLast = await result.current.actions.nextStep(); });
     expect(atLast).toBe(false);
   });
 
@@ -284,7 +281,7 @@ describe('useForm hook - multi-step', () => {
     expect(result.current.actions.previousStep()).toBe(false);
   });
 
-  it('multi-step: goToStep returns false for an out-of-range step', () => {
+  it('multi-step: goToStep returns false for an out-of-range step', async () => {
     const { result } = renderHook(() =>
       useForm<Values>({
         onSubmit: vi.fn(),
@@ -292,8 +289,8 @@ describe('useForm hook - multi-step', () => {
         multiStep: { enabled: true, totalSteps: 2 },
       })
     );
-    expect(result.current.actions.goToStep(5)).toBe(false);
-    expect(result.current.actions.goToStep(-1)).toBe(false);
+    await expect(result.current.actions.goToStep(5)).resolves.toBe(false);
+    await expect(result.current.actions.goToStep(-1)).resolves.toBe(false);
   });
 
   it('multi-step: nextStep does not advance when step validation fails', async () => {
@@ -306,11 +303,11 @@ describe('useForm hook - multi-step', () => {
         onStepChange: onStep,
       })
     );
-    let scheduled: boolean | undefined;
-    act(() => { scheduled = result.current.actions.nextStep(); });
-    // nextStep returns true (validation scheduled) but the step must not advance.
-    expect(scheduled).toBe(true);
-    await waitFor(() => expect(onStep).not.toHaveBeenCalled());
+    let result_bool: boolean | undefined;
+    await act(async () => { result_bool = await result.current.actions.nextStep(); });
+    // validation failed -> nextStep resolves false and the step must not advance.
+    expect(result_bool).toBe(false);
+    expect(onStep).not.toHaveBeenCalled();
     expect(result.current.state.currentStep).toBe(0);
   });
 
@@ -324,10 +321,10 @@ describe('useForm hook - multi-step', () => {
         onStepChange: onStep,
       })
     );
-    let scheduled: boolean | undefined;
-    act(() => { scheduled = result.current.actions.goToStep(1); });
-    expect(scheduled).toBe(true);
-    await waitFor(() => expect(onStep).not.toHaveBeenCalled());
+    let result_bool: boolean | undefined;
+    await act(async () => { result_bool = await result.current.actions.goToStep(1); });
+    expect(result_bool).toBe(false);
+    expect(onStep).not.toHaveBeenCalled();
     expect(result.current.state.currentStep).toBe(0);
   });
 
