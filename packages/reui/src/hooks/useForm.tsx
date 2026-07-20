@@ -4,7 +4,7 @@
  * Manages form state with React Hook Form integration.
  */
 
-import { useForm as useReactHookForm, UseFormProps as RHFUseFormProps, UseFormReturn, FieldValues, SubmitHandler, SubmitErrorHandler, DefaultValues } from 'react-hook-form';
+import { useForm as useReactHookForm, UseFormProps as RHFUseFormProps, UseFormReturn, FieldValues, SubmitHandler, SubmitErrorHandler, DefaultValues, Resolver } from 'react-hook-form';
 import { useState, useCallback, useRef, useEffect, useMemo } from 'react';
 import { useFocusableMixin, usePressableMixin, useSemanticMixin } from '../mixins';
 
@@ -109,7 +109,7 @@ export interface MultiStepFormConfig {
 /**
  * Props for useForm hook
  */
-export interface UseFormProps<TFieldValues extends FieldValues = FieldValues> extends Omit<RHFUseFormProps<TFieldValues>, 'resolver' | 'defaultValues' | 'mode'> {
+export interface UseFormProps<TFieldValues extends FieldValues = FieldValues> extends Omit<RHFUseFormProps<TFieldValues>, 'defaultValues' | 'mode'> {
   /** Whether form is disabled */
   disabled?: boolean;
   /** Whether form is loading */
@@ -178,6 +178,7 @@ export function useForm<TFieldValues extends FieldValues = FieldValues>(
     readOnly: initialReadOnly = false,
     defaultValues,
     mode = 'onSubmit',
+    resolver,
     validationRules = [],
     multiStep,
     onSubmit,
@@ -204,10 +205,54 @@ export function useForm<TFieldValues extends FieldValues = FieldValues>(
   const internalRef = useRef<HTMLFormElement>(null);
   const formElementRef = formRef || internalRef;
 
+  // Effective validation resolver.
+  // A consumer-supplied resolver (e.g. zod/yup) takes precedence. Otherwise,
+  // if validationRules are provided, synthesize a resolver from them so the
+  // rules are actually enforced by React Hook Form without the consumer having
+  // to hand-wire register(name, { rules }) for each field.
+  const effectiveResolver: Resolver<TFieldValues> | undefined = useMemo(() => {
+    if (resolver) return resolver;
+    if (!validationRules || validationRules.length === 0) return undefined;
+    const rulesByField = new Map<string, FormValidationRule<TFieldValues>[]>();
+    for (const rule of validationRules) {
+      const key = String(rule.field);
+      const list = rulesByField.get(key);
+      if (list) list.push(rule); else rulesByField.set(key, [rule]);
+    }
+    return async (values) => {
+      const errors: Record<string, { type: string; message: string }> = {};
+      for (const [field, rules] of rulesByField) {
+        for (const rule of rules) {
+          try {
+            const outcome = await rule.validate((values as any)[field], values);
+            if (outcome === false) {
+              errors[field] = { type: rule.name || 'validation', message: rule.message };
+              break;
+            } else if (typeof outcome === 'string') {
+              errors[field] = { type: rule.name || 'validation', message: outcome };
+              break;
+            }
+          } catch (err) {
+            errors[field] = {
+              type: rule.name || 'validation',
+              message: err instanceof Error ? err.message : rule.message
+            };
+            break;
+          }
+        }
+      }
+      if (Object.keys(errors).length > 0) {
+        return { values: {} as Record<string, never>, errors: errors as any };
+      }
+      return { values, errors: {} as Record<string, never> };
+    };
+  }, [resolver, validationRules]);
+
   // React Hook Form instance
   const rhf = useReactHookForm<TFieldValues>({
     defaultValues: defaultValues as DefaultValues<TFieldValues> | undefined,
     mode,
+    resolver: effectiveResolver,
     disabled,
     reValidateMode: 'onChange'
   });
