@@ -7,7 +7,7 @@ import React, { forwardRef, useEffect } from 'react';
 import { useButton } from '../hooks';
 import type { UseButtonProps } from '../hooks';
 
-export interface ButtonProps extends UseButtonProps {
+export interface ButtonProps extends UseButtonProps, Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, keyof UseButtonProps | 'children'> {
   /** Additional CSS class names */
   className?: string;
   /** Custom style object */
@@ -22,8 +22,6 @@ export interface ButtonProps extends UseButtonProps {
   loadingIndicator?: React.ReactNode;
   /** Custom render function */
   render?: (props: ButtonRenderProps) => React.ReactElement;
-  /** Additional HTML attributes */
-  [key: string]: any;
 }
 
 export interface ButtonRenderProps {

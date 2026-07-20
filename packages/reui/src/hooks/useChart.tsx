@@ -21,8 +21,12 @@ export interface ChartDataPoint {
   label?: string;
   /** Optional color */
   color?: string;
-  /** Additional data */
-  [key: string]: any;
+  /** Pre-scale numeric x, augmented on flattened render points (Chart.tsx) */
+  originalX?: number;
+  /** Pre-scale numeric y, augmented on flattened render points (Chart.tsx) */
+  originalY?: number;
+  /** Source dataset index, augmented on flattened points by useChart */
+  datasetIndex?: number;
 }
 
 /**
@@ -43,8 +47,6 @@ export interface ChartDataset {
   borderWidth?: number;
   /** Fill area under line */
   fill?: boolean;
-  /** Additional properties */
-  [key: string]: any;
 }
 
 /**

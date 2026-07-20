@@ -214,8 +214,8 @@ export const Chart = forwardRef<SVGSVGElement, ChartProps>(
           stroke={stroke}
           strokeWidth={strokeWidth}
           className={pointClassName}
-          onClick={(e) => handlers.handleDataPointClick(dataset, { x: point.originalX, y: point.originalY }, e)}
-          onMouseEnter={() => handlers.handleDataPointHover(dataset, { x: point.originalX, y: point.originalY })}
+          onClick={(e) => handlers.handleDataPointClick(dataset, { x: point.originalX ?? point.x, y: point.originalY ?? point.y }, e)}
+          onMouseEnter={() => handlers.handleDataPointHover(dataset, { x: point.originalX ?? point.x, y: point.originalY ?? point.y })}
           onMouseLeave={() => handlers.handleDataPointLeave()}
           {...shapeAttributes}
         />
@@ -317,8 +317,8 @@ export const Chart = forwardRef<SVGSVGElement, ChartProps>(
                 stroke={dataset.borderColor || color}
                 strokeWidth={dataset.borderWidth || 1}
                 className={barClassName}
-                onClick={(e) => handlers.handleDataPointClick(dataset, { x: point.originalX, y: point.originalY }, e)}
-                onMouseEnter={() => handlers.handleDataPointHover(dataset, { x: point.originalX, y: point.originalY })}
+                onClick={(e) => handlers.handleDataPointClick(dataset, { x: point.originalX ?? point.x, y: point.originalY ?? point.y }, e)}
+                onMouseEnter={() => handlers.handleDataPointHover(dataset, { x: point.originalX ?? point.x, y: point.originalY ?? point.y })}
                 onMouseLeave={() => handlers.handleDataPointLeave()}
                 {...shapeAttributes}
                 style={{

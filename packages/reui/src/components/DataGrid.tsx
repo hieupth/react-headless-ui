@@ -209,7 +209,7 @@ export const DataGrid = forwardRef<HTMLTableElement, DataGridProps>(
       } else if (cellType === 'number') {
         content = (
           <span className="  ">
-            {column.format ? column.format(cell.value) : cell.value}
+            {column.format ? column.format(cell.value) : String(cell.value ?? '')}
           </span>
         );
       } else if (cellType === 'date') {
