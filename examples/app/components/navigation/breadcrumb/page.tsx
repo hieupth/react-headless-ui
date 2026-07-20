@@ -1,6 +1,5 @@
 'use client';
 
-import { useState } from 'react';
 import { Breadcrumb } from '@hieupth/reui';
 import { Demo } from '@/components/demo';
 import { PropsTable } from '@/components/props-table';
@@ -15,7 +14,7 @@ const basicItems = [
 ];
 
 export default function BreadcrumbPage() {
-  const [path, setPath] = useState('Home / Projects / reui');
+  const path = 'Home / Projects / reui';
 
   const clickableItems = [
     { id: 'home', label: 'Home' },

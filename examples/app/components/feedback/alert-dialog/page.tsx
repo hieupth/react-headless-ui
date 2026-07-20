@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { AlertDialog, AlertDialogTrigger } from '@hieupth/reui';
+import { AlertDialog } from '@hieupth/reui';
 import { Demo } from '@/components/demo';
 import { PropsTable } from '@/components/props-table';
 

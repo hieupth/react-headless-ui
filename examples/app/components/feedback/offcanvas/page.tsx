@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { Offcanvas, OffcanvasTrigger } from '@hieupth/reui';
+import { Offcanvas } from '@hieupth/reui';
 import { Demo } from '@/components/demo';
 import { PropsTable } from '@/components/props-table';
 

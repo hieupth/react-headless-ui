@@ -1,7 +1,6 @@
 'use client';
 
 import { useState } from 'react';
-import { Tooltip, SimpleTooltip } from '@hieupth/reui';
 import { Demo } from '@/components/demo';
 import { PropsTable } from '@/components/props-table';
 

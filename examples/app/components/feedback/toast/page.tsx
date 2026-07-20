@@ -19,7 +19,7 @@ const variantChip: Record<string, string> = {
 };
 
 function ToastPlayground() {
-  const { state, actions, success, error, warning, info } = useToast({
+  const { state, actions, success, error, warning } = useToast({
     position: 'top-right',
     maxToasts: 4,
     defaultDuration: 4000,

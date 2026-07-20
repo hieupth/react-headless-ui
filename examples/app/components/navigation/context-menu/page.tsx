@@ -1,19 +1,11 @@
 'use client';
 
-import { ContextMenu } from '@hieupth/reui';
 import { Demo } from '@/components/demo';
 import { PropsTable } from '@/components/props-table';
 
 // ContextMenu (the dedicated renderer) opens at the cursor via the headless
 // useContextMenu hook and portals its list to document.body at a fixed {x, y}.
 // A live preview in the Demo frame is misleading, so the snippets show the API.
-const items = [
-  { id: 'copy', label: 'Copy', icon: '⧉' },
-  { id: 'cut', label: 'Cut' },
-  { id: 'paste', label: 'Paste', disabled: true },
-  { id: 'rename', label: 'Rename', type: 'action' },
-  { id: 'delete', label: 'Delete', type: 'action' },
-];
 
 export default function ContextMenuPage() {
   return (
