@@ -46,7 +46,8 @@ describe('Progress', () => {
 
   it('renders 0% width when given an indeterminate value', () => {
     const { container } = render(<Progress value={null} />);
-    const fill = container.querySelector('[class*="bg-blue-600"]') as HTMLElement;
+    // Headless-only: select the fill via its role rather than a color utility.
+    const fill = container.querySelector('[role="progressbar"] > div') as HTMLElement;
     expect(fill).not.toBeNull();
     expect(fill.style.width).toBe('0%');
   });

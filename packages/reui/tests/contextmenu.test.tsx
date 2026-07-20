@@ -138,7 +138,7 @@ describe('ContextMenu', () => {
     // Drive focus via keyboard: menu's onKeyDown comes from the hook attributes.
     act(() => { fireEvent.keyDown(menu, { key: 'ArrowDown' }); });
     const first = screen.getByTestId('context-menu-item-copy');
-    expect(first.className).toContain('bg-gray-100');
+    // Headless-only: focus is exposed via tabindex, not a visual bg class.
     expect(first).toHaveAttribute('tabindex', '0');
   });
 

@@ -20,13 +20,14 @@ describe('TreeView rendering options', () => {
     render(<TreeView nodes={tree} showLines />);
     await user.click(screen.getByLabelText('Expand'));
     expect(await screen.findByText('Child 1')).toBeInTheDocument();
-    expect(document.querySelector('.border-l.border-gray-300')).not.toBeNull();
+    // Headless-only: showLines no longer emits a border utility; expansion is
+    // proven by the child rendering above.
   });
 
-  it('applies a height and overflow-hidden when height is set', () => {
+  it('applies a height when height is set', () => {
     render(<TreeView nodes={tree} height={300} />);
     const tv = screen.getByTestId('tree-view');
-    expect(tv.className).toContain('overflow-hidden');
+    // Headless-only: height is a style; overflow no longer emits a utility.
     expect((tv.style as any).height).toBe('300px');
   });
 
@@ -309,8 +310,8 @@ describe('TreeView default render details', () => {
   it('renders a spacer for leaf nodes without children', () => {
     render(<TreeView nodes={[{ id: 'leaf', label: 'Leaf' }]} />);
     const node = screen.getByTestId('tree-node-leaf');
-    // leaf node has a spacer span (w-6 h-6)
-    expect(node.querySelector('span.w-6')).not.toBeNull();
+    // Headless-only: the leaf spacer no longer emits a size utility; the node renders.
+    expect(node).toBeInTheDocument();
   });
 
   it('aria-expanded reflects expanded state and is undefined for leaves', async () => {
@@ -353,7 +354,7 @@ describe('TreeViewNode (standalone)', () => {
     const node = screen.getByTestId('tree-node-x');
     expect(node.getAttribute('aria-selected')).toBe('true');
     expect(node.getAttribute('aria-disabled')).toBe('true');
-    expect(node.className).toContain('opacity-50');
+    // Headless-only: disabled is exposed via aria-disabled, not an opacity class.
   });
 
   it('renders an expand button only when showExpandIcon and node has children', () => {

@@ -31,31 +31,12 @@ describe('Form', () => {
     const { container } = render(<Form disabled defaultValues={{ name: '' }} />);
     const input = container.querySelector('input') as HTMLInputElement;
     expect(input).toBeDisabled();
-    // disabled label class branch
-    expect(container.querySelector('label')!.className).toContain('text-gray-400');
+    // Headless-only: the disabled label no longer emits a gray text utility;
+    // the disabled behavior is covered by the input's disabled attribute above.
   });
 
-  it.each([
-    ['tight' as const],
-    ['normal' as const],
-    ['loose' as const],
-  ])('applies fieldSpacing=%s to default fields', (fieldSpacing) => {
-    const { container } = render(
-      <Form fieldSpacing={fieldSpacing} defaultValues={{ name: '' }} />
-    );
-    const field = container.querySelector('.form-field')!;
-    expect(field.className).toContain(`mb-${fieldSpacing === 'tight' ? 2 : fieldSpacing === 'normal' ? 4 : 6}`);
-  });
-
-  it.each([
-    ['horizontal' as const],
-    ['inline' as const],
-  ])('default fields get flex-shrink-0 under layout=%s', (layout) => {
-    const { container } = render(
-      <Form layout={layout} defaultValues={{ name: '' }} />
-    );
-    expect(container.querySelector('.form-field')!.className).toContain('flex-shrink-0');
-  });
+  // The fieldSpacing/layout spacing tests asserted only removed Tailwind
+  // spacing utilities (mb-2/4/6, flex-shrink-0) and were removed headless-only.
 
   it('default field input reflects isSubmitting submit-button text', () => {
     // Submit button shows "Submitting..." only while submitting; here we assert
@@ -85,9 +66,11 @@ describe('Form layout / size / state classes', () => {
     expect(screen.getByRole('form')).toBeInTheDocument();
   });
 
-  it('adds disabled classes when disabled', () => {
+  it('disables the submit button when disabled', () => {
     render(<Form disabled>{() => null}</Form>);
-    expect(screen.getByRole('form').className).toContain('opacity-50');
+    // Headless-only: the disabled form no longer emits an opacity utility;
+    // the disabled state is exposed via the submit button's disabled attribute.
+    expect(screen.getByRole('button', { name: 'Submit' })).toBeDisabled();
   });
 
   it('adds pointer-events-none when loading', () => {

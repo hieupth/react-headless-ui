@@ -33,21 +33,20 @@ describe('AlertDialog', () => {
     expect(onConfirm).toHaveBeenCalledTimes(1);
   });
 
-  it('renders the destructive variant icon and styling', () => {
-    const { container } = render(
+  it('renders the destructive variant without error', () => {
+    render(
       <AlertDialog open title="Delete?" variant="destructive" onOpenChange={() => {}} />
     );
-    // The destructive variant paints a red icon and a red button border.
-    expect(container.querySelector('.text-red-600')).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: 'Confirm' }).className).toContain('bg-red-600');
+    // Headless-only: the variant no longer paints a colored icon/button; the
+    // behavior is that the destructive path renders the confirm control.
+    expect(screen.getByRole('button', { name: 'Confirm' })).toBeInTheDocument();
   });
 
-  it('renders the warning variant icon and styling', () => {
-    const { container } = render(
+  it('renders the warning variant without error', () => {
+    render(
       <AlertDialog open title="Are you sure?" variant="warning" onOpenChange={() => {}} />
     );
-    expect(container.querySelector('.text-yellow-600')).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: 'Confirm' }).className).toContain('bg-yellow-600');
+    expect(screen.getByRole('button', { name: 'Confirm' })).toBeInTheDocument();
   });
 
   it('omits the cancel button when showCancel is false', () => {
@@ -68,9 +67,12 @@ describe('AlertDialog', () => {
     const onConfirm = () => new Promise<void>((r) => { resolveConfirm = r; });
     render(<AlertDialog open title="T" onOpenChange={() => {}} onConfirm={onConfirm} />);
     fireEvent.click(screen.getByRole('button', { name: 'Confirm' }));
-    // While confirming, the confirm button shows a spinner + the confirm text.
-    expect(screen.getByRole('button', { name: 'Confirm' }).className).toContain('opacity-50');
-    expect(screen.getByRole('button', { name: 'Confirm' }).querySelector('.animate-spin')).toBeInTheDocument();
+    // While confirming, the confirm button is busy. Headless-only exposes this
+    // via data-loading + the disabled attribute, not a spinner/opacity class.
+    const confirmBtn = screen.getByRole('button', { name: 'Confirm' });
+    expect(confirmBtn).toHaveAttribute('data-loading', 'true');
+    expect(confirmBtn).toBeDisabled();
+    act(() => { resolveConfirm(); });
     act(() => { resolveConfirm(); });
   });
 
@@ -131,6 +133,6 @@ describe('AlertDialog', () => {
     const { container } = render(<AlertDialogTrigger data-testid="trigger">Open</AlertDialogTrigger>);
     const btn = screen.getByTestId('trigger');
     expect(btn.tagName).toBe('BUTTON');
-    expect(btn.className).toContain('rounded-md');
+    // Headless-only: no visual shape utility class is emitted.
   });
 });

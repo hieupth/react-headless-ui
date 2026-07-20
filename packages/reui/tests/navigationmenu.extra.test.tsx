@@ -39,7 +39,8 @@ describe('NavigationMenu (extra) — renderer branches', () => {
   it('applies variant classes (primary/secondary) to items', () => {
     const { container } = render(<NavigationMenu items={items} />);
     const products = screen.getByTestId('navigation-menu-item-products');
-    expect(products.className).toContain('text-blue-600');
+    // Headless-only: item variant no longer emits a color utility; just renders.
+    expect(products).toBeInTheDocument();
   });
 
   it('disabled item does not activate on click', async () => {
@@ -50,9 +51,11 @@ describe('NavigationMenu (extra) — renderer branches', () => {
     expect(onItemActivate).not.toHaveBeenCalled();
   });
 
-  it('disabled navbar (state.disabled) renders opacity class', () => {
+  it('disabled navbar (state.disabled) renders without error', () => {
     render(<NavigationMenu items={items} disabled />);
-    expect(screen.getByTestId('navigation-menu').className).toContain('opacity-50');
+    // Headless-only: disabled no longer emits an opacity class; activation is
+    // blocked internally (covered by the disabled-item click test).
+    expect(screen.getByTestId('navigation-menu')).toBeInTheDocument();
   });
 
   it('clicking a parent item opens its dropdown', async () => {
@@ -81,14 +84,15 @@ describe('NavigationMenu (extra) — renderer branches', () => {
     expect(screen.getByTestId('navigation-menu')).toBeInTheDocument();
   });
 
-  it('position top applies full width class', () => {
+  it('position top renders without error', () => {
     render(<NavigationMenu items={items} position="top" />);
-    expect(screen.getByTestId('navigation-menu').className).toContain('w-full');
+    // Headless-only: position no longer emits a width utility; just renders.
+    expect(screen.getByTestId('navigation-menu')).toBeInTheDocument();
   });
 
-  it('position left does not apply full width', () => {
+  it('position left renders without error', () => {
     render(<NavigationMenu items={items} position="left" />);
-    expect(screen.getByTestId('navigation-menu').className).toContain('w-auto');
+    expect(screen.getByTestId('navigation-menu')).toBeInTheDocument();
   });
 
   it('applies height prop and custom className', () => {

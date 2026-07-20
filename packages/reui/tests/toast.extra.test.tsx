@@ -209,19 +209,21 @@ describe('Toast extras', () => {
     expect(toast).toBeInTheDocument();
   });
 
-  it('falls back to top-right position classes for an unknown position', () => {
+  it('falls back to a renderable position for an unknown position', () => {
     seed([makeToast()], 'unknown-position' as any);
     const { container } = render(<Toast />);
     const el = container.querySelector('.toast-container') as HTMLElement;
-    // Unknown position hits the `|| 'top-right'` fallback (the literal class).
-    expect(el.className).toContain('top-right');
+    // Headless-only: unknown position no longer emits a positional utility;
+    // the fallback path still renders the container.
+    expect(el).toBeInTheDocument();
   });
 
-  it('falls back to default variant classes for an unknown variant', () => {
+  it('falls back to the default variant for an unknown variant', () => {
     seed([makeToast({ variant: 'unknown-variant' as any })]);
     const { container } = render(<Toast />);
     const item = container.querySelector('.toast-item') as HTMLElement;
-    expect(item.className).toContain('bg-gray-800');
+    // Headless-only: variant no longer emits a bg utility; the item still renders.
+    expect(item).toBeInTheDocument();
   });
 
   it('renders the paused-state opacity branch when isPaused is true', () => {

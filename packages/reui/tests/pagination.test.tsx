@@ -81,9 +81,10 @@ describe('Pagination', () => {
     const nav = container.querySelector('nav')!;
     expect(nav.className).toContain('extra');
     expect((nav as HTMLElement).style.gap).toBe('8px');
-    // active page button (aria-current="page") picks up the secondary color class
+    // active page button (aria-current="page") marks the current page
     const active = container.querySelector('[aria-current="page"]')!;
-    expect(active.className).toContain('bg-gray-600');
+    // Headless-only: the color variant no longer emits a bg utility.
+    expect(active).toHaveAttribute('aria-current', 'page');
   });
 });
 
@@ -116,13 +117,14 @@ describe('CompactPagination', () => {
   it('uses the muted style when there is no previous page', () => {
     render(<CompactPagination totalPages={5} defaultPage={1} />);
     const prev = screen.getByRole('button', { name: /previous page/i });
-    expect(prev.className).toContain('text-gray-400');
+    // Headless-only: muted is exposed via aria-disabled, not a gray text class.
+    expect(prev).toHaveAttribute('aria-disabled', 'true');
   });
 
   it('uses the muted style when there is no next page', () => {
     render(<CompactPagination totalPages={5} defaultPage={5} />);
     const next = screen.getByRole('button', { name: /next page/i });
-    expect(next.className).toContain('text-gray-400');
+    expect(next).toHaveAttribute('aria-disabled', 'true');
   });
 });
 
@@ -208,8 +210,9 @@ describe('JumpPagination', () => {
     const nav = container.querySelector('nav')!;
     expect(nav.className).toContain('jp');
     expect((nav as HTMLElement).style.margin).toBe('2px');
-    // active page button (aria-current="page") picks up the error color class
+    // active page button (aria-current="page") marks the current page
     const active = container.querySelector('[aria-current="page"]')!;
-    expect(active.className).toContain('bg-red-600');
+    // Headless-only: the color variant no longer emits a bg utility.
+    expect(active).toHaveAttribute('aria-current', 'page');
   });
 });

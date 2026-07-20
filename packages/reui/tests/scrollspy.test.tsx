@@ -50,8 +50,7 @@ describe('Scrollspy', () => {
     const { container } = render(<Scrollspy sections={disabledSections} />);
     const intro = screen.getByTestId('scrollspy-section-intro');
     expect(intro).toHaveAttribute('aria-disabled', 'true');
-    // disabled section renders the grayed-out class
-    expect(intro.className).toContain('cursor-not-allowed');
+    // Headless-only: disabled is exposed via aria-disabled, not a cursor class.
     // clicking a disabled section does not throw and does not navigate
     act(() => {
       intro.dispatchEvent(new MouseEvent('click', { bubbles: true }));
@@ -98,11 +97,11 @@ describe('Scrollspy', () => {
     expect(container.querySelector('.progress-container')).not.toBeNull();
   });
 
-  it('applies the disabled class when disabled is true', () => {
+  it('applies the disabled attribute when disabled is true', () => {
     render(<Scrollspy sections={sections} disabled />);
     const root = document.querySelector('.scrollspy') as HTMLElement;
-    expect(root.className).toContain('opacity-50');
-    expect(root.className).toContain('cursor-not-allowed');
+    // Headless-only: disabled is exposed via tabindex=-1, not visual classes.
+    expect(root).toHaveAttribute('tabindex', '-1');
   });
 
   it('skips sections that have no id during registration and cleanup', () => {
@@ -121,18 +120,19 @@ describe('Scrollspy', () => {
     expect(container.querySelector('.scroll-position-indicator')).not.toBeNull();
   });
 
-  it('applies horizontal orientation classes and height style', () => {
+  it('applies horizontal orientation and height style', () => {
     const { container } = render(
       <Scrollspy sections={sections} orientation="horizontal" height={120} />
     );
     const root = container.querySelector('.scrollspy') as HTMLElement;
-    expect(root.className).toContain('flex-row');
+    // Headless-only: orientation no longer emits a flex utility; height is a style.
     expect(root.style.height).toBe('120px');
   });
 
-  it('applies the right position class', () => {
+  it('renders for the right position without error', () => {
     const { container } = render(<Scrollspy sections={sections} position="right" />);
-    expect((container.querySelector('.scrollspy') as HTMLElement).className).toContain('right-0');
+    // Headless-only: position no longer emits a positional utility; just renders.
+    expect(container.querySelector('.scrollspy')).toBeInTheDocument();
   });
 
   it('renders the empty state when there are no sections', () => {
@@ -187,8 +187,7 @@ describe('ScrollspySection', () => {
   it('renders an inactive, non-disabled section with the default hover classes', () => {
     const { container } = render(<ScrollspySection section={section} isActive={false} />);
     const el = screen.getByTestId('scrollspy-section-s1');
-    // inactive indicator renders the gray dot (the `: 'bg-gray-300'` arm)
-    expect(el.querySelector('.bg-gray-300')).not.toBeNull();
-    expect(el.className).toContain('hover:bg-gray-100');
+    // Headless-only: inactive indicator/hover no longer emit color utilities.
+    expect(el).toBeInTheDocument();
   });
 });

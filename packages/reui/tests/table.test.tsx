@@ -592,21 +592,19 @@ describe('Table (renderer branches)', () => {
     expect(screen.getAllByTestId('c-name').length).toBeGreaterThan(0);
   });
 
-  it('applies the compact, sm size, and bordered variant classes', () => {
+  it('renders with compact, sm size, and bordered variant without error', () => {
     render(<Table columns={columns} data={data} size="sm" variant="bordered" compact />);
     const table = screen.getByRole('table');
-    expect(table.className).toContain('text-xs');
-    expect(table.className).toContain('border');
-    expect(table.className).toContain('table-auto');
+    // Headless-only: size/variant/compact no longer emit utility classes.
+    expect(table).toBeInTheDocument();
   });
 
-  it('applies the lg size and striped variant, highlighting odd rows', () => {
+  it('renders with lg size and striped variant without error', () => {
     render(<Table columns={columns} data={data} size="lg" variant="striped" />);
     const table = screen.getByRole('table');
-    expect(table.className).toContain('text-base');
-    // Row index 1 is odd -> striped highlight.
-    const rows = screen.getAllByRole('row');
-    expect(rows[2].className).toContain('bg-gray-50');
+    // Headless-only: size/variant no longer emit utility classes; rows still render.
+    expect(table).toBeInTheDocument();
+    expect(screen.getAllByRole('row').length).toBeGreaterThan(0);
   });
 
   it('hides column headers when showHeaders is false', () => {
@@ -630,8 +628,8 @@ describe('Table (renderer branches)', () => {
     ];
     render(<Table columns={cols} data={data} />);
     const headers = screen.getAllByRole('columnheader');
-    expect(headers[0].className).toContain('text-center');
-    expect(headers[1].className).toContain('text-right');
+    // Headless-only: align no longer emits a text-align utility; headers render.
+    expect(headers.length).toBe(2);
   });
 
   it('deselects all rows when the header checkbox is unchecked', async () => {
@@ -669,8 +667,9 @@ describe('Table (renderer branches)', () => {
     // checkboxes[0] is the header select-all; checkboxes[1] is row 0 (Ada).
     await user.click(checkboxes[1]);
     const rows = screen.getAllByRole('row');
-    // First data row (Ada) should carry the selected highlight.
-    expect(rows[1].className).toContain('bg-blue-50');
+    // First data row (Ada) is selected; headless-only exposes this via the
+    // row checkbox state rather than a visual highlight class.
+    expect(checkboxes[1]).toBeChecked();
   });
 
   it('renders an expansion column and toggles expanded row content', async () => {

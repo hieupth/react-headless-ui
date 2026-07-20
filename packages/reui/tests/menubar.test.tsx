@@ -26,8 +26,10 @@ describe('Menubar', () => {
       <Menubar items={items} orientation="vertical" height={200} disabled className="extra" />
     );
     const root = screen.getByTestId('menubar');
-    expect(root.className).toContain('flex-col');
-    expect(root.className).toContain('opacity-50');
+    // Headless-only: orientation is exposed via aria-orientation, not flex-col.
+    expect(root).toHaveAttribute('aria-orientation', 'vertical');
+    // Headless-only: disabled is exposed via tabindex=-1, not an opacity class.
+    expect(root).toHaveAttribute('tabindex', '-1');
     expect(root.className).toContain('extra');
     expect((root as HTMLElement).style.height).toBe('200px');
   });
@@ -137,8 +139,9 @@ describe('Menubar', () => {
       />
     );
     const item = container.querySelector('[data-testid="menubar-item-top"]') as HTMLElement;
-    expect(item.className).toContain('text-gray-400');
-    expect(item.className).toContain('px-4');
+    // Headless-only: disabled is exposed via aria-disabled, not a gray text class.
+    expect(item).toHaveAttribute('aria-disabled', 'true');
+    // Headless-only: level indent no longer emits a padding utility.
   });
 
   it('MenubarItem renders a level-1 separator (submenu indent)', () => {
@@ -146,7 +149,8 @@ describe('Menubar', () => {
       <MenubarItem item={{ id: 'subsep', separator: true } as any} level={1} isFocused={false} isActive={false} />
     );
     const sep = container.querySelector('[role="separator"]') as HTMLElement;
-    expect(sep.className).toContain('px-3');
+    // Headless-only: the separator still renders; indent is no longer a class.
+    expect(sep).toBeInTheDocument();
   });
 
   it('opens a submenu that uses a custom renderItem for submenu entries', () => {
