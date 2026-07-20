@@ -116,6 +116,8 @@ export const Switch = forwardRef<HTMLButtonElement, SwitchProps>(({
 }: SwitchProps, ref) => {
   const switchHook = useSwitch({
     ...switchProps,
+    className,
+    style,
     // Merge external ref with internal ref
     switchRef: ref as React.RefObject<HTMLButtonElement>
   });
@@ -218,9 +220,7 @@ export const Switch = forwardRef<HTMLButtonElement, SwitchProps>(({
       ? checkedColor || 'bg-blue-600'
       : uncheckedColor || variantClasses;
 
-    // useSwitch always returns state.hovered = false, so the hovered-true
-    // outcome below is unreachable through the component.
-    /* c8 ignore next */
+    // hovered is driven by mouseenter/mouseleave via useSwitch handlers.
     const hoverClass = props.hovered && !props.disabled ? 'brightness-110' : '';
 
     const baseSwitchClasses = `
@@ -232,7 +232,7 @@ export const Switch = forwardRef<HTMLButtonElement, SwitchProps>(({
       rounded-full
       ${props.disabled ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'}
       ${props.focused ? 'ring-2 ring-blue-500 ring-opacity-50 ring-offset-2' : ''}
-      ${hoverClass /* reason: useSwitch always returns state.hovered=false; the hovered-true outcome is unreachable. next-line c8 ignore */}
+      ${hoverClass}
       ${animationClasses}
       ${props.className}
     `;
@@ -311,7 +311,7 @@ export const Switch = forwardRef<HTMLButtonElement, SwitchProps>(({
 
   // Render props
   const renderProps: SwitchRenderProps = {
-    className: className || '',
+    className: switchHook.className,
     checked: switchHook.state.checked,
     focused: switchHook.state.focused,
     pressed: switchHook.state.pressed,

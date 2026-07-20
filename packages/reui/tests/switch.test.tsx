@@ -1,5 +1,5 @@
 import { describe, it, expect, vi } from 'vitest';
-import { render, screen } from '@testing-library/react';
+import { render, screen, fireEvent } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { Switch, SimpleSwitch, LabeledSwitch } from '../src/components/Switch';
 
@@ -23,6 +23,16 @@ describe('Switch', () => {
     render(<Switch disabled onCheckedChange={onChange} />);
     await user.click(screen.getByRole('switch'));
     expect(onChange).not.toHaveBeenCalled();
+  });
+
+  it('toggles the switch-hovered class on mouse enter/leave', () => {
+    render(<Switch aria-label="s" />);
+    const sw = screen.getByRole('switch');
+    expect(sw.className).not.toContain('switch-hovered');
+    fireEvent.mouseEnter(sw);
+    expect(sw.className).toContain('switch-hovered');
+    fireEvent.mouseLeave(sw);
+    expect(sw.className).not.toContain('switch-hovered');
   });
 });
 
