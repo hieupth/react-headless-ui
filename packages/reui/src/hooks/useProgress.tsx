@@ -5,7 +5,6 @@
  */
 
 import { useMemo, useState, useEffect, useRef, useCallback } from 'react';
-import type { ComponentContract } from '../contracts/ComponentContract';
 import type { SemanticContract } from '../contracts/SemanticContract';
 import { useFocusableMixin } from '../mixins/FocusableMixin';
 import { useSemanticMixin } from '../mixins/SemanticMixin';
