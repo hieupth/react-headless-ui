@@ -83,6 +83,10 @@ export interface SwitchActions {
   focus: () => void;
   /** Blur switch */
   blur: () => void;
+  /** Hover switch */
+  hover: () => void;
+  /** Unhover switch */
+  unhover: () => void;
 }
 
 /**
@@ -153,6 +157,7 @@ export const useSwitch = (props: UseSwitchProps): SwitchReturns => {
 
   // Internal state for uncontrolled mode
   const [internalChecked, setInternalChecked] = useState(defaultChecked);
+  const [hovered, setHovered] = useState(false);
 
   // Determine if component is controlled or uncontrolled
   const isControlled = controlledChecked !== undefined;
@@ -229,6 +234,20 @@ export const useSwitch = (props: UseSwitchProps): SwitchReturns => {
   }, [switchRef]);
 
   /**
+   * Hover switch
+   */
+  const hover = useCallback(() => {
+    setHovered(true);
+  }, []);
+
+  /**
+   * Unhover switch
+   */
+  const unhover = useCallback(() => {
+    setHovered(false);
+  }, []);
+
+  /**
    * Handle click events
    */
   const handleClick = useCallback((event: React.MouseEvent) => {
@@ -286,6 +305,7 @@ export const useSwitch = (props: UseSwitchProps): SwitchReturns => {
    */
   const handleMouseEnter = useCallback((event: React.MouseEvent) => {
     pressable.handleMouseEnter(event);
+    setHovered(true);
   }, [pressable.handleMouseEnter]);
 
   /**
@@ -293,6 +313,7 @@ export const useSwitch = (props: UseSwitchProps): SwitchReturns => {
    */
   const handleMouseLeave = useCallback((event: React.MouseEvent) => {
     pressable.handleMouseLeave(event);
+    setHovered(false);
   }, [pressable.handleMouseLeave]);
 
   // Compose state from mixins
@@ -300,7 +321,7 @@ export const useSwitch = (props: UseSwitchProps): SwitchReturns => {
     checked,
     focused: focusable.focused,
     pressed: pressable.pressed,
-    hovered: false,
+    hovered,
     disabled,
     readOnly
   });
@@ -315,8 +336,8 @@ export const useSwitch = (props: UseSwitchProps): SwitchReturns => {
     onMouseLeave: handleMouseLeave
   };
 
-  // Compose class names
-  const composedClassName = composeClasses(className);
+  // Compose class names (include hovered class so it reflects DOM hover state)
+  const composedClassName = composeClasses(className, hovered && 'switch-hovered');
 
   // Compose styles
   const composedStyle = composeStyles(style);
@@ -326,7 +347,9 @@ export const useSwitch = (props: UseSwitchProps): SwitchReturns => {
     toggle,
     setChecked,
     focus,
-    blur
+    blur,
+    hover,
+    unhover
   };
 
   // Create semantic attributes
