@@ -54,7 +54,7 @@ function Harness({ nodes, ...props }: { nodes: TreeNode[]; [k: string]: any }) {
         }}
         data-testid="probe-missing"
       >probeMissing</button>
-      <span data-testid="selected">{Array.from(state.selectedIds).join(',')}</span>
+      <span data-testid="selected">{Array.from(state.selectedKeys).join(',')}</span>
       <span data-testid="expanded">{Array.from(state.expandedIds).join(',')}</span>
       <span data-testid="focused">{state.focusedId ?? ''}</span>
     </div>
@@ -263,7 +263,7 @@ describe('useTreeView', () => {
 
   it('getSelectedNodes skips ids that no longer exist in the tree', () => {
     // A selected id absent from `nodes` exercises the `if (node)` false-arm.
-    render(<Harness nodes={tree} selectionMode="multiple" defaultSelectedIds={['ghost']} />);
+    render(<Harness nodes={tree} selectionMode="multiple" defaultSelectedKeys={['ghost']} />);
     document.addEventListener('probe', () => {});
     fireEvent.click(screen.getByTestId('probe'));
     const data = (window as any).__tv;

@@ -289,7 +289,7 @@ describe('List', () => {
     render(
       <HookHarness
         defaultItems={fruits}
-        defaultSelectedItems={['a']}
+        defaultSelectedKeys={['a']}
         onActions={(a) => (captured = a)}
       />
     );
@@ -363,7 +363,7 @@ describe('List', () => {
     render(
       <HookHarness
         defaultItems={fruits}
-        defaultSelectedItems={['a', 'b']}
+        defaultSelectedKeys={['a', 'b']}
         onSelectionChange={onSelectionChange}
         onActions={(a) => (captured = a)}
       />
@@ -395,7 +395,7 @@ describe('List', () => {
     render(
       <HookHarness
         defaultItems={fruits}
-        selectedItems={['b']}
+        selectedKeys={['b']}
         onActions={(a) => (captured = a)}
       />
     );
@@ -718,10 +718,10 @@ describe('List (remaining style + render branches)', () => {
       { id: 'a', value: 'a', label: 'Apple' },
       { id: 'b', value: 'b', label: 'Banana' },
     ];
-    const { rerender } = render(<List items={items} showTimeline defaultSelectedItems={['a']} timelinePosition="left" />);
+    const { rerender } = render(<List items={items} showTimeline defaultSelectedKeys={['a']} timelinePosition="left" />);
     expect(screen.getAllByTestId('list-timeline-dot')).toHaveLength(2);
 
-    rerender(<List items={items} showTimeline defaultSelectedItems={['a']} timelinePosition="right" />);
+    rerender(<List items={items} showTimeline defaultSelectedKeys={['a']} timelinePosition="right" />);
     expect(screen.getAllByTestId('list-timeline-dot')).toHaveLength(2);
   });
 
@@ -794,7 +794,7 @@ describe('List (remaining style + render branches)', () => {
           showNumbers
           showDividers
           itemSize="lg"
-          defaultSelectedItems={['a']}
+          defaultSelectedKeys={['a']}
         />
       </ThemeProvider>
     );

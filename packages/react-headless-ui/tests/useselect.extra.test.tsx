@@ -85,7 +85,7 @@ describe('useSelect hook — uncontrolled open & value', () => {
 
   it('selectOption updates value, fires onSelectionChange and closes when closeOnSelection', () => {
     const onSelectionChange = vi.fn();
-    const api = setup({ options, onSelectionChange });
+    const api = setup({ options, onValueChange: onSelectionChange });
     act(() => api.current.selectOption('banana'));
     expect(api.current.selectedValue).toBe('banana');
     expect(onSelectionChange).toHaveBeenCalledWith('banana');
@@ -102,7 +102,7 @@ describe('useSelect hook — uncontrolled open & value', () => {
 
   it('selectOption ignores disabled options and unknown values', () => {
     const onSelectionChange = vi.fn();
-    const api = setup({ options: optionsWithDisabled, onSelectionChange });
+    const api = setup({ options: optionsWithDisabled, onValueChange: onSelectionChange });
     act(() => api.current.selectOption('apple')); // disabled
     expect(api.current.selectedValue).toBeUndefined();
     act(() => api.current.selectOption('nonexistent'));
@@ -112,7 +112,7 @@ describe('useSelect hook — uncontrolled open & value', () => {
 
   it('clearSelection clears value, input and fires callback', () => {
     const onSelectionChange = vi.fn();
-    const api = setup({ options, defaultValue: 'apple', allowClear: true, onSelectionChange });
+    const api = setup({ options, defaultValue: 'apple', allowClear: true, onValueChange: onSelectionChange });
     act(() => api.current.clearSelection());
     expect(api.current.selectedValue).toBeUndefined();
     expect(onSelectionChange).toHaveBeenCalledWith(undefined);
@@ -149,7 +149,7 @@ describe('useSelect hook — controlled open & value', () => {
 
   it('controlled value does not mutate from selectOption, fires callback', () => {
     const onSelectionChange = vi.fn();
-    const api = setup({ options, value: 'apple', onSelectionChange });
+    const api = setup({ options, value: 'apple', onValueChange: onSelectionChange });
     act(() => api.current.selectOption('banana'));
     expect(api.current.selectedValue).toBe('apple'); // controlled, unchanged
     expect(onSelectionChange).toHaveBeenCalledWith('banana');
@@ -157,7 +157,7 @@ describe('useSelect hook — controlled open & value', () => {
 
   it('controlled value clear fires onSelectionChange(undefined) without mutating', () => {
     const onSelectionChange = vi.fn();
-    const api = setup({ options, value: 'apple', onSelectionChange });
+    const api = setup({ options, value: 'apple', onValueChange: onSelectionChange });
     act(() => api.current.clearSelection());
     expect(api.current.selectedValue).toBe('apple');
     expect(onSelectionChange).toHaveBeenCalledWith(undefined);
@@ -232,7 +232,7 @@ describe('useSelect hook — keyboard navigation', () => {
 
   it('Enter/Space open when closed, then select highlighted', () => {
     const onSelectionChange = vi.fn();
-    const api = setup({ options, onSelectionChange });
+    const api = setup({ options, onValueChange: onSelectionChange });
     act(() => api.current.handleKeyDown(key('Enter')));
     expect(api.current.open).toBe(true);
     // openSelect set highlight to 0 (apple). ArrowDown -> 1 (banana).
@@ -250,7 +250,7 @@ describe('useSelect hook — keyboard navigation', () => {
   it('Enter does nothing when no option highlighted (-1)', () => {
     const onSelectionChange = vi.fn();
     // focusStrategy 'selected' with no defaultValue keeps highlight at -1 on open.
-    const api = setup({ options, onSelectionChange, focusStrategy: 'selected' });
+    const api = setup({ options, onValueChange: onSelectionChange, focusStrategy: 'selected' });
     act(() => api.current.openSelect());
     expect(api.current.highlightedIndex).toBe(-1);
     act(() => api.current.handleKeyDown(key('Enter')));
@@ -259,7 +259,7 @@ describe('useSelect hook — keyboard navigation', () => {
 
   it('Enter on disabled highlighted option does not select', () => {
     const onSelectionChange = vi.fn();
-    const api = setup({ options: optionsWithDisabled, onSelectionChange });
+    const api = setup({ options: optionsWithDisabled, onValueChange: onSelectionChange });
     act(() => api.current.openSelect());
     // Move to Banana (1), then highlight the disabled Apple explicitly (no-op).
     act(() => api.current.handleKeyDown(key('End'))); // last enabled = Cherry (2)
@@ -317,7 +317,7 @@ describe('useSelect hook — backspace clear & trigger click', () => {
       searchable: true,
       allowClear: true,
       defaultValue: 'apple',
-      onSelectionChange,
+      onValueChange: onSelectionChange,
     });
     act(() => api.current.handleKeyDown(key('Backspace')));
     expect(api.current.selectedValue).toBeUndefined();
@@ -331,7 +331,7 @@ describe('useSelect hook — backspace clear & trigger click', () => {
       searchable: true,
       allowClear: true,
       defaultValue: 'apple',
-      onSelectionChange,
+      onValueChange: onSelectionChange,
     });
     act(() => api.current.handleInputChange('x'));
     act(() => api.current.handleKeyDown(key('Backspace')));
@@ -341,7 +341,7 @@ describe('useSelect hook — backspace clear & trigger click', () => {
 
   it('Backspace no-op when no selection', () => {
     const onSelectionChange = vi.fn();
-    const api = setup({ options, searchable: true, allowClear: true, onSelectionChange });
+    const api = setup({ options, searchable: true, allowClear: true, onValueChange: onSelectionChange });
     act(() => api.current.handleKeyDown(key('Backspace')));
     expect(onSelectionChange).not.toHaveBeenCalled();
   });
@@ -537,7 +537,7 @@ describe('useSelect hook — all-disabled and selected-strategy branches', () =>
       { key: 'd', label: 'Date', value: 'date', disabled: true },
       { key: 'b', label: 'Banana', value: 'banana' },
     ];
-    const api = setup({ options: optionsWithDisabled, filter, onSelectionChange });
+    const api = setup({ options: optionsWithDisabled, filter, onValueChange: onSelectionChange });
     act(() => api.current.openSelect());
     act(() => api.current.handleInputChange('d')); // highlight forced to 0 (Date, disabled)
     act(() => api.current.handleKeyDown(key('Enter')));

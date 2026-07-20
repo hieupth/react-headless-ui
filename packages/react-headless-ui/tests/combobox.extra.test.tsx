@@ -165,12 +165,10 @@ describe('useCombobox (extra hook tests)', () => {
 
   it('handleSelect updates value/input and closes on closeOnSelect', async () => {
     const onValueChange = vi.fn();
-    const onSelect = vi.fn();
     const onInputChange = vi.fn();
-    const api = setup({ options, defaultOpen: true, onValueChange, onSelect, onInputChange });
+    const api = setup({ options, defaultOpen: true, onValueChange, onInputChange });
     await act(async () => { api.current.handleSelect(options[1]); });
     expect(onValueChange).toHaveBeenCalledWith('b');
-    expect(onSelect).toHaveBeenCalledWith(options[1]);
     expect(api.current.inputValue).toBe('Banana');
     expect(api.current.open).toBe(false);
   });

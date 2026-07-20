@@ -31,7 +31,7 @@ describe('Select', () => {
     const user = userEvent.setup();
     const onSelectionChange = vi.fn();
     render(
-      <Select options={options} placeholder="Pick a fruit" onSelectionChange={onSelectionChange} />
+      <Select options={options} placeholder="Pick a fruit" onValueChange={onSelectionChange} />
     );
     await user.click(screen.getByText('Pick a fruit'));
     expect(await screen.findByText('Apple')).toBeInTheDocument();
@@ -48,7 +48,7 @@ describe('Select', () => {
   it('selects an option via click and fires onSelectionChange (uncontrolled)', async () => {
     const user = userEvent.setup();
     const onSelectionChange = vi.fn();
-    render(<Select options={options} onSelectionChange={onSelectionChange} placeholder="Pick" />);
+    render(<Select options={options} onValueChange={onSelectionChange} placeholder="Pick" />);
     await user.click(screen.getByText('Pick'));
     await user.click(await screen.findByText('Cherry'));
     expect(onSelectionChange).toHaveBeenCalledWith('cherry');
@@ -63,7 +63,7 @@ describe('Select', () => {
       <Select
         options={options}
         value="apple"
-        onSelectionChange={onSelectionChange}
+        onValueChange={onSelectionChange}
         placeholder="Pick"
         closeOnSelection={false}
       />
@@ -94,7 +94,7 @@ describe('Select', () => {
     const user = userEvent.setup();
     const onSelectionChange = vi.fn();
     render(
-      <Select options={options} onSelectionChange={onSelectionChange} placeholder="Pick" />
+      <Select options={options} onValueChange={onSelectionChange} placeholder="Pick" />
     );
     trigger().focus();
     await user.keyboard('{ArrowDown}');
@@ -155,7 +155,7 @@ describe('Select', () => {
     render(
       <Select
         options={optionsWithDisabled}
-        onSelectionChange={onSelectionChange}
+        onValueChange={onSelectionChange}
         placeholder="Pick"
         closeOnSelection={false}
       />
@@ -218,7 +218,7 @@ describe('Select', () => {
         options={options}
         defaultValue="apple"
         allowClear
-        onSelectionChange={onSelectionChange}
+        onValueChange={onSelectionChange}
         placeholder="Pick"
       />
     );
@@ -268,7 +268,7 @@ describe('Select', () => {
   it('SimpleSelect renders a select and reports selection', async () => {
     const user = userEvent.setup();
     const onSelectionChange = vi.fn();
-    render(<SimpleSelect options={options} onSelectionChange={onSelectionChange} placeholder="Pick one" />);
+    render(<SimpleSelect options={options} onValueChange={onSelectionChange} placeholder="Pick one" />);
     expect(screen.getByText('Pick one')).toBeInTheDocument();
   });
 

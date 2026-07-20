@@ -57,27 +57,23 @@ describe('useRadioGroup hook — extended branches', () => {
 
   it('disabled state sets aria-disabled and blocks selection', () => {
     const onValueChange = vi.fn();
-    const onOptionSelect = vi.fn();
     const hook = renderHook(() =>
-      useRadioGroup({ options: ['a', 'b'], disabled: true, onValueChange, onOptionSelect })
+      useRadioGroup({ options: ['a', 'b'], disabled: true, onValueChange })
     );
     expect(hook.result.current.attributes['aria-disabled']).toBe('true');
     actAndRerender(hook, () => hook.result.current.actions.selectOption('a'));
     expect(hook.result.current.state.value).toBeUndefined();
     expect(onValueChange).not.toHaveBeenCalled();
-    expect(onOptionSelect).not.toHaveBeenCalled();
   });
 
   it('selectOption fires callbacks and updates value (uncontrolled)', () => {
     const onValueChange = vi.fn();
-    const onOptionSelect = vi.fn();
     const hook = renderHook(() =>
-      useRadioGroup({ options: ['a', 'b', 'c'], onValueChange, onOptionSelect })
+      useRadioGroup({ options: ['a', 'b', 'c'], onValueChange })
     );
     actAndRerender(hook, () => hook.result.current.actions.selectOption('b'));
     expect(hook.result.current.state.value).toBe('b');
     expect(onValueChange).toHaveBeenCalledWith('b');
-    expect(onOptionSelect).toHaveBeenCalledWith('b');
   });
 
   it('selectOption ignores unknown values', () => {
@@ -247,10 +243,10 @@ describe('useRadioGroup hook — extended branches', () => {
   });
 
   it('Space/Enter select the focused option; End jumps to last', () => {
-    const onOptionSelect = vi.fn();
+    const onValueChange = vi.fn();
     const { api, getByTestId } = renderGroup({
       options: ['a', 'b', 'c'],
-      onOptionSelect,
+      onValueChange,
     });
     const el = getByTestId('rg') as HTMLElement;
     keyDown(el, 'Home');
@@ -259,7 +255,7 @@ describe('useRadioGroup hook — extended branches', () => {
     expect(api.state.focusedOption).toBe('b');
     keyDown(el, ' ');
     expect(api.state.value).toBe('b');
-    expect(onOptionSelect).toHaveBeenCalledWith('b');
+    expect(onValueChange).toHaveBeenCalledWith('b');
     keyDown(el, 'Enter');
     expect(api.state.value).toBe('b');
     keyDown(el, 'End');
