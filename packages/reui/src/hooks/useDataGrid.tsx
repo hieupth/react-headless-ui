@@ -594,10 +594,42 @@ export function useDataGrid(props: UseDataGridProps = {}) {
         case 'ArrowUp':
         case 'ArrowDown':
         case 'ArrowLeft':
-        case 'ArrowRight':
-          // Navigate cells (simplified implementation)
+        case 'ArrowRight': {
+          // Move the active cell within the grid bounds.
+          const colCount = state.columns.length;
+          const rowCount = state.rows.length;
+          if (colCount === 0 || rowCount === 0) break;
+
+          const current = selectedCell ?? { rowIndex: 0, columnId: state.columns[0].id };
+          const currentColIndex = Math.max(
+            0,
+            state.columns.findIndex(c => c.id === current.columnId)
+          );
+
+          let nextRow = current.rowIndex;
+          let nextCol = currentColIndex;
+          if (event.key === 'ArrowUp') nextRow -= 1;
+          else if (event.key === 'ArrowDown') nextRow += 1;
+          else if (event.key === 'ArrowLeft') nextCol -= 1;
+          else nextCol += 1;
+
+          // Clamp to grid bounds.
+          nextRow = Math.min(Math.max(nextRow, 0), rowCount - 1);
+          nextCol = Math.min(Math.max(nextCol, 0), colCount - 1);
+
+          const nextColumn = state.columns[nextCol];
+          if (
+            nextRow !== current.rowIndex ||
+            nextColumn?.id !== current.columnId
+          ) {
+            setSelectedCell({
+              rowIndex: nextRow,
+              columnId: nextColumn ? nextColumn.id : current.columnId
+            });
+          }
           event.preventDefault();
           break;
+        }
 
         case 'Enter':
         case ' ':
