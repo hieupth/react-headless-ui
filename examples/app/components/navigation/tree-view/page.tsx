@@ -109,7 +109,7 @@ export default function TreeViewPage() {
             {
               name: 'selectionMode',
               type: "'single' | 'multiple' | 'none'",
-              default: "'none'",
+              default: "'single'",
               description: 'How many nodes can be selected.',
             },
             {

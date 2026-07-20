@@ -123,7 +123,7 @@ export default function CollapsiblePage() {
               description: 'Animate the height transition.',
             },
             {
-              name: 'customTrigger / contentWrapper',
+              name: 'TriggerComponent / ContentComponent',
               type: 'component',
               default: '—',
               description: 'Override the trigger button / content wrapper element.',

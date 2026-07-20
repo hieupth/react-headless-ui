@@ -134,7 +134,7 @@ export default function CommandPage() {
               description: 'Input placeholder text.',
             },
             {
-              name: 'virtualizationThreshold / forceVirtualization',
+              name: 'virtualizeThreshold / virtualize',
               type: 'number / boolean',
               default: '100 / false',
               description: 'When to virtualize the list, or force it on/off.',

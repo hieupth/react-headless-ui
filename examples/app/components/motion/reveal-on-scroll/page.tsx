@@ -26,7 +26,8 @@ export default function RevealOnScrollPage() {
           otherwise it re-hides when it leaves. The hook exposes{' '}
           <code>reveal</code> / <code>hide</code> / <code>reset</code> actions and
           respects <code>prefers-reduced-motion</code>.{' '}
-          <strong>Scroll down to the demo</strong> to trigger it.
+          <strong>Scroll down to the demo</strong> to trigger it. Note:
+          framer-motion is a peer dependency for the Motion category.
         </p>
       </header>
 

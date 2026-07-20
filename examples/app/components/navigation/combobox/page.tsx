@@ -146,7 +146,7 @@ const [input, setInput] = useState('');
               description: 'Force the loading state (async fetches).',
             },
             {
-              name: 'virtualizationThreshold / forceVirtualization',
+              name: 'virtualizeThreshold / virtualize',
               type: 'number / boolean',
               default: '100 / false',
               description: 'When to virtualize the dropdown, or force it on/off.',
