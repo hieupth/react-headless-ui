@@ -368,15 +368,15 @@ describe('useForm (hook actions)', () => {
     await act(async () => { await res.current.actions.nextStep(); });
     // now at last step (1) -> nextStep returns false
     let moved = true;
-    await act(async () => { moved = res.current.actions.nextStep(); });
+    await act(async () => { moved = await res.current.actions.nextStep(); });
     expect(moved).toBe(false);
   });
 
   it('step actions are no-ops when multiStep is disabled', async () => {
     const res = setup({ defaultValues: { name: '' } });
-    expect(res.current.actions.nextStep()).toBe(false);
+    await expect(res.current.actions.nextStep()).resolves.toBe(false);
     expect(res.current.actions.previousStep()).toBe(false);
-    expect(res.current.actions.goToStep(1)).toBe(false);
+    await expect(res.current.actions.goToStep(1)).resolves.toBe(false);
     const v = await act(async () => await res.current.actions.validateStep());
     expect(typeof v).toBe('boolean');
   });
@@ -397,8 +397,8 @@ describe('useForm (hook actions)', () => {
       defaultValues: { name: '' },
       multiStep: { enabled: true, totalSteps: 2 },
     });
-    expect(res.current.actions.goToStep(99)).toBe(false);
-    expect(res.current.actions.goToStep(-1)).toBe(false);
+    await expect(res.current.actions.goToStep(99)).resolves.toBe(false);
+    await expect(res.current.actions.goToStep(-1)).resolves.toBe(false);
   });
 
   it('nextStep/goToStep do not advance when the step is invalid', async () => {
@@ -406,11 +406,46 @@ describe('useForm (hook actions)', () => {
       defaultValues: { name: '' },
       multiStep: { enabled: true, totalSteps: 3, stepValidation: async () => false },
     });
-    await act(async () => { res.current.actions.nextStep(); });
-    // stepValidation returns false -> no advance
+    // validation awaited -> nextStep resolves false and the step does not advance
+    let nextOk = true;
+    await act(async () => { nextOk = await res.current.actions.nextStep(); });
+    expect(nextOk).toBe(false);
     expect(res.current.state.currentStep).toBe(0);
-    await act(async () => { res.current.actions.goToStep(2); });
+    let jumpOk = true;
+    await act(async () => { jumpOk = await res.current.actions.goToStep(2); });
+    expect(jumpOk).toBe(false);
     expect(res.current.state.currentStep).toBe(0);
+  });
+
+  // Regression: nextStep() used to return true synchronously while validation
+  // ran in a detached .then(), so callers could not trust the return value.
+  // It must now await validation and resolve true only when the step advanced.
+  it('nextStep awaits validation and resolves true only when the step advances', async () => {
+    const { result } = renderHook(() =>
+      useForm<{ name: string }>({
+        onSubmit: vi.fn(),
+        defaultValues: { name: '' },
+        multiStep: { enabled: true, totalSteps: 3, stepValidation: async () => true },
+      })
+    );
+    let ok: boolean | undefined;
+    await act(async () => { ok = await result.current.actions.nextStep(); });
+    expect(ok).toBe(true);
+    expect(result.current.state.currentStep).toBe(1);
+  });
+
+  it('nextStep resolves false and does not advance when validation fails', async () => {
+    const { result } = renderHook(() =>
+      useForm<{ name: string }>({
+        onSubmit: vi.fn(),
+        defaultValues: { name: '' },
+        multiStep: { enabled: true, totalSteps: 3, stepValidation: async () => false },
+      })
+    );
+    let ok: boolean | undefined;
+    await act(async () => { ok = await result.current.actions.nextStep(); });
+    expect(ok).toBe(false);
+    expect(result.current.state.currentStep).toBe(0);
   });
 
   it('submit() handles a non-Error thrown value', async () => {

@@ -48,12 +48,12 @@ export interface FormActions<TFieldValues extends FieldValues = FieldValues> {
   setDisabled: (disabled: boolean) => void;
   /** Set read-only state */
   setReadOnly: (readOnly: boolean) => void;
-  /** Go to next step (for multi-step forms) */
-  nextStep: () => boolean;
+  /** Go to next step (for multi-step forms). Resolves true only if the step advanced. */
+  nextStep: () => Promise<boolean>;
   /** Go to previous step (for multi-step forms) */
   previousStep: () => boolean;
-  /** Go to specific step (for multi-step forms) */
-  goToStep: (step: number) => boolean;
+  /** Go to specific step (for multi-step forms). Resolves true only if the step advanced. */
+  goToStep: (step: number) => Promise<boolean>;
   /** Validate current step (for multi-step forms) */
   validateStep: (step?: number) => Promise<boolean>;
   /** Validate entire form */
@@ -311,23 +311,22 @@ export function useForm<TFieldValues extends FieldValues = FieldValues>(
   }, [multiStep, currentStep, validateAction, getValues]);
 
   /**
-   * Go to next step
+   * Go to next step.
+   * Awaits the current-step validation before advancing, so the returned
+   * boolean faithfully reports whether the step actually moved.
    */
-  const nextStepAction = useCallback((): boolean => {
+  const nextStepAction = useCallback(async (): Promise<boolean> => {
     if (!multiStep?.enabled) return false;
+    if (currentStep >= totalSteps - 1) return false;
 
-    if (currentStep < totalSteps - 1) {
-      validateStepAction().then((isValid) => {
-        if (isValid) {
-          const nextStep = currentStep + 1;
-          setCurrentStep(nextStep);
-          onStepChange?.(nextStep);
-          multiStep.onStepChange?.(currentStep, nextStep);
-        }
-      });
-      return true;
-    }
-    return false;
+    const isValid = await validateStepAction();
+    if (!isValid) return false;
+
+    const nextStep = currentStep + 1;
+    setCurrentStep(nextStep);
+    onStepChange?.(nextStep);
+    multiStep.onStepChange?.(currentStep, nextStep);
+    return true;
   }, [multiStep, currentStep, totalSteps, validateStepAction, onStepChange]);
 
   /**
@@ -347,22 +346,21 @@ export function useForm<TFieldValues extends FieldValues = FieldValues>(
   }, [multiStep, currentStep, onStepChange]);
 
   /**
-   * Go to specific step
+   * Go to specific step.
+   * Awaits validation of the current step before jumping, so the returned
+   * boolean faithfully reports whether the step actually moved.
    */
-  const goToStepAction = useCallback((step: number): boolean => {
+  const goToStepAction = useCallback(async (step: number): Promise<boolean> => {
     if (!multiStep?.enabled) return false;
+    if (step < 0 || step >= totalSteps) return false;
 
-    if (step >= 0 && step < totalSteps) {
-      validateStepAction(currentStep).then((isValid) => {
-        if (isValid) {
-          setCurrentStep(step);
-          onStepChange?.(step);
-          multiStep.onStepChange?.(currentStep, step);
-        }
-      });
-      return true;
-    }
-    return false;
+    const isValid = await validateStepAction(currentStep);
+    if (!isValid) return false;
+
+    setCurrentStep(step);
+    onStepChange?.(step);
+    multiStep.onStepChange?.(currentStep, step);
+    return true;
   }, [multiStep, currentStep, totalSteps, validateStepAction, onStepChange]);
 
   /**
