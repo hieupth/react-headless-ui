@@ -366,19 +366,9 @@ export function useChart(props: UseChartProps = {}) {
     onChartClick?.(event);
   }, [disabled, onChartClick]);
 
-  const handleMouseMove = useCallback((event: React.MouseEvent) => {
-    if (disabled) return;
-
-    onMouseMove?.(event);
-
-    // Find hovered point (simplified - in real implementation would use hit testing)
-    const rect = chartRef.current?.getBoundingClientRect();
-    if (rect) {
-      const x = event.clientX - rect.left;
-      const y = event.clientY - rect.top;
-      // Hit testing logic would go here
-    }
-  }, [disabled, onMouseMove]);
+  // handleMouseMove is defined below the `scales`/`chartDimensions` useMemo so
+  // the scaled-coordinate hit-test has those values initialized when the
+  // callback factory runs.
 
   const handleMouseLeave = useCallback(() => {
     setHoveredPoint(undefined);
@@ -496,6 +486,49 @@ export function useChart(props: UseChartProps = {}) {
       }
     };
   }, [chartDimensions, ranges]);
+
+  const handleMouseMove = useCallback((event: React.MouseEvent) => {
+    if (disabled) return;
+
+    onMouseMove?.(event);
+
+    // Hit-test against every data point. The scaled pixel position of each
+    // point matches the coordinates Chart.tsx paints (scale + offset + margin
+    // + padding), and event coords are converted to the same SVG-local space
+    // via getBoundingClientRect. The nearest point by Euclidean distance wins.
+    const rect = chartRef.current?.getBoundingClientRect();
+    if (!rect || allDataPoints.length === 0) return;
+
+    const mousePx = event.clientX - rect.left;
+    const mousePy = event.clientY - rect.top;
+    const marginLeft = margin.left ?? 40;
+    const marginTop = margin.top ?? 20;
+
+    let bestDataset: ChartDataset | undefined;
+    let bestPoint: ChartDataPoint | undefined;
+    let bestDist = Infinity;
+
+    for (const dataset of propDatasets) {
+      for (const point of dataset.data) {
+        const xValue = typeof point.x === 'number' ? point.x : 0;
+        const yValue = typeof point.y === 'number' ? point.y : 0;
+        const px = scales.x.scale * xValue + scales.x.offset + marginLeft + padding;
+        const py = scales.y.scale * yValue + scales.y.offset + marginTop + padding;
+        const dx = px - mousePx;
+        const dy = py - mousePy;
+        const dist = dx * dx + dy * dy;
+        if (dist < bestDist) {
+          bestDist = dist;
+          bestDataset = dataset;
+          bestPoint = point;
+        }
+      }
+    }
+
+    if (bestDataset && bestPoint) {
+      setHoveredPoint({ dataset: bestDataset, point: bestPoint });
+    }
+  }, [disabled, onMouseMove, allDataPoints, propDatasets, scales, margin, padding]);
 
   // Generate semantic attributes
   const semanticAttributes = useMemo(() => ({
