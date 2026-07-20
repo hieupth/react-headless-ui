@@ -53,12 +53,12 @@ describe('useChart hook', () => {
       } as unknown as React.MouseEvent;
 
       act(() => {
-        api.result.handlers.handleMouseMove(fakeEvent);
+        api.result.handleMouseMove(fakeEvent);
       });
 
-      expect(api.result.state.hoveredPoint).toBeDefined();
-      expect(api.result.state.hoveredPoint.point).toEqual({ x: 0, y: 0 });
-      expect(api.result.state.hoveredPoint.dataset).toBe(datasets[0]);
+      expect(api.result.hoveredPoint).toBeDefined();
+      expect(api.result.hoveredPoint.point).toEqual({ x: 0, y: 0 });
+      expect(api.result.hoveredPoint.dataset).toBe(datasets[0]);
     });
 
     it('clears hoveredPoint on mouseLeave', () => {
@@ -75,14 +75,14 @@ describe('useChart hook', () => {
       const targetPy = scales.y.scale * 0 + scales.y.offset + 20 + 20;
 
       act(() => {
-        api.result.handlers.handleMouseMove({ clientX: targetPx, clientY: targetPy } as unknown as React.MouseEvent);
+        api.result.handleMouseMove({ clientX: targetPx, clientY: targetPy } as unknown as React.MouseEvent);
       });
-      expect(api.result.state.hoveredPoint).toBeDefined();
+      expect(api.result.hoveredPoint).toBeDefined();
 
       act(() => {
-        api.result.handlers.handleMouseLeave();
+        api.result.handleMouseLeave();
       });
-      expect(api.result.state.hoveredPoint).toBeUndefined();
+      expect(api.result.hoveredPoint).toBeUndefined();
     });
   });
 });

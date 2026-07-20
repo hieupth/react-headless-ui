@@ -15,8 +15,8 @@ const data = [
 
 function HookHarness(props: UseDataGridProps & { onApi?: (api: any) => void }) {
   const { onApi, ...rest } = props;
-  const { state, handlers, attributes } = useDataGrid(rest);
-  onApi?.({ state, handlers, attributes });
+  const api = useDataGrid(rest);
+  onApi?.(api);
   return <div data-testid="harness" />;
 }
 
@@ -34,13 +34,13 @@ describe('DataGrid', () => {
   it('processes data into rows and defaults pagination/selection', () => {
     let api: any;
     render(<HookHarness data={data} columns={columns} onApi={(a) => (api = a)} />);
-    expect(api.state.rows.length).toBe(3);
-    expect(api.state.rows[0]).toMatchObject({ id: '1', selected: false, disabled: false });
-    expect(api.state.pagination.pageSize).toBe(10);
-    expect(api.state.selection.mode).toBe('multiple');
+    expect(api.rows.length).toBe(3);
+    expect(api.rows[0]).toMatchObject({ id: '1', selected: false, disabled: false });
+    expect(api.pagination.pageSize).toBe(10);
+    expect(api.selection.mode).toBe('multiple');
     // aliases present
-    expect(api.state.data).toBe(api.state.rows);
-    expect(api.state.sortedData).toBe(api.state.rows);
+    expect(api.data).toBe(api.rows);
+    expect(api.sortedData).toBe(api.rows);
   });
 
   it('falls back to generated row ids when items lack an id', () => {
@@ -52,8 +52,8 @@ describe('DataGrid', () => {
         onApi={(a) => (api = a)}
       />
     );
-    expect(api.state.rows[0].id).toBe('row-0');
-    expect(api.state.rows[1].id).toBe('row-1');
+    expect(api.rows[0].id).toBe('row-0');
+    expect(api.rows[1].id).toBe('row-1');
   });
 
   it('handles sorting through handleSort and the controlled callback', () => {
@@ -61,10 +61,10 @@ describe('DataGrid', () => {
     const onSortChange = vi.fn();
     render(<HookHarness data={data} columns={columns} onSortChange={onSortChange} onApi={(a) => (api = a)} />);
     act(() => {
-      api.handlers.handleSort('age', 'desc');
+      api.handleSort('age', 'desc');
     });
-    expect(api.state.sort).toEqual({ column: 'age', direction: 'desc' });
-    expect(api.state.rows[0].data.age).toBe(40);
+    expect(api.sort).toEqual({ column: 'age', direction: 'desc' });
+    expect(api.rows[0].data.age).toBe(40);
     expect(onSortChange).toHaveBeenCalledWith({ column: 'age', direction: 'desc' });
   });
 
@@ -72,15 +72,15 @@ describe('DataGrid', () => {
     let api: any;
     render(<HookHarness data={data} columns={columns} onApi={(a) => (api = a)} />);
     act(() => {
-      api.handlers.handleHeaderClick(columns[0], {} as any);
+      api.handleHeaderClick(columns[0], {} as any);
     });
-    expect(api.state.sort.column).toBe('name');
+    expect(api.sort.column).toBe('name');
     // first click on an unsorted column flips the default 'asc' -> 'desc'
-    expect(api.state.sort.direction).toBe('desc');
+    expect(api.sort.direction).toBe('desc');
     act(() => {
-      api.handlers.handleHeaderClick(columns[0], {} as any);
+      api.handleHeaderClick(columns[0], {} as any);
     });
-    expect(api.state.sort.direction).toBe('asc');
+    expect(api.sort.direction).toBe('asc');
   });
 
   it('does not sort when handleHeaderClick targets a non-sortable column', () => {
@@ -89,9 +89,9 @@ describe('DataGrid', () => {
     const cols: GridColumn[] = [{ id: 'name', header: 'Name', sortable: false }];
     render(<HookHarness data={data} columns={cols} onHeaderClick={onHeaderClick} onApi={(a) => (api = a)} />);
     act(() => {
-      api.handlers.handleHeaderClick(cols[0], {} as any);
+      api.handleHeaderClick(cols[0], {} as any);
     });
-    expect(api.state.sort.column).toBe('');
+    expect(api.sort.column).toBe('');
     expect(onHeaderClick).toHaveBeenCalled();
   });
 
@@ -100,24 +100,24 @@ describe('DataGrid', () => {
     const onFilterChange = vi.fn();
     render(<HookHarness data={data} columns={columns} onFilterChange={onFilterChange} onApi={(a) => (api = a)} />);
     act(() => {
-      api.handlers.handleFilter('name', 'ad', 'contains');
+      api.handleFilter('name', 'ad', 'contains');
     });
-    expect(api.state.filter).toEqual({ column: 'name', value: 'ad', operator: 'contains' });
-    expect(api.state.filteredData.length).toBe(1);
-    expect(api.state.filteredData[0].data.name).toBe('Ada');
-    expect(api.state.pagination.page).toBe(1);
+    expect(api.filter).toEqual({ column: 'name', value: 'ad', operator: 'contains' });
+    expect(api.filteredData.length).toBe(1);
+    expect(api.filteredData[0].data.name).toBe('Ada');
+    expect(api.pagination.page).toBe(1);
     expect(onFilterChange).toHaveBeenCalled();
   });
 
   it('supports equals / startsWith / endsWith filter operators', () => {
     let api: any;
     render(<HookHarness data={data} columns={columns} onApi={(a) => (api = a)} />);
-    act(() => api.handlers.handleFilter('name', 'Ada', 'equals'));
-    expect(api.state.filteredData.length).toBe(1);
-    act(() => api.handlers.handleFilter('name', 'Ad', 'startsWith'));
-    expect(api.state.filteredData.length).toBe(1);
-    act(() => api.handlers.handleFilter('name', 'in', 'endsWith'));
-    expect(api.state.filteredData.length).toBe(1);
+    act(() => api.handleFilter('name', 'Ada', 'equals'));
+    expect(api.filteredData.length).toBe(1);
+    act(() => api.handleFilter('name', 'Ad', 'startsWith'));
+    expect(api.filteredData.length).toBe(1);
+    act(() => api.handleFilter('name', 'in', 'endsWith'));
+    expect(api.filteredData.length).toBe(1);
   });
 
   it('paginates rows and reports total pages', () => {
@@ -130,43 +130,43 @@ describe('DataGrid', () => {
         onApi={(a) => (api = a)}
       />
     );
-    expect(api.state.rows.length).toBe(2);
-    expect(api.state.pagination.totalPages).toBe(2);
-    act(() => api.handlers.handlePagination(2, 2));
-    expect(api.state.pagination.page).toBe(2);
+    expect(api.rows.length).toBe(2);
+    expect(api.pagination.totalPages).toBe(2);
+    act(() => api.handlePagination(2, 2));
+    expect(api.pagination.page).toBe(2);
   });
 
   it('selects rows via handleSelection in single and multiple modes', () => {
     let api: any;
     const onSelectionChange = vi.fn();
     render(<HookHarness data={data} columns={columns} onSelectionChange={onSelectionChange} onApi={(a) => (api = a)} />);
-    act(() => api.handlers.handleSelection(['1', '2'], 'multiple'));
-    expect(api.state.selection.selectedRows).toEqual(['1', '2']);
+    act(() => api.handleSelection(['1', '2'], 'multiple'));
+    expect(api.selection.selectedRows).toEqual(['1', '2']);
     expect(onSelectionChange).toHaveBeenCalled();
-    act(() => api.handlers.handleSelection(['3'], 'single'));
-    expect(api.state.selection.mode).toBe('single');
+    act(() => api.handleSelection(['3'], 'single'));
+    expect(api.selection.mode).toBe('single');
   });
 
   it('handleSelectAll selects every row on the page and handleClearSelection empties it', () => {
     let api: any;
     render(<HookHarness data={data} columns={columns} onApi={(a) => (api = a)} />);
-    act(() => api.handlers.handleSelectAll());
-    expect(api.state.selection.selectedRows.length).toBe(api.state.rows.length);
-    act(() => api.handlers.handleClearSelection());
-    expect(api.state.selection.selectedRows).toHaveLength(0);
+    act(() => api.handleSelectAll());
+    expect(api.selection.selectedRows.length).toBe(api.rows.length);
+    act(() => api.handleClearSelection());
+    expect(api.selection.selectedRows).toHaveLength(0);
   });
 
   it('handleRowClick toggles selection for the row in multiple mode', () => {
     let api: any;
     const onRowClick = vi.fn();
     render(<HookHarness data={data} columns={columns} onRowClick={onRowClick} onApi={(a) => (api = a)} />);
-    const row = api.state.rows.find((r: any) => r.id === '1');
-    act(() => api.handlers.handleRowClick(row, {} as any));
-    expect(api.state.selection.selectedRows).toContain('1');
+    const row = api.rows.find((r: any) => r.id === '1');
+    act(() => api.handleRowClick(row, {} as any));
+    expect(api.selection.selectedRows).toContain('1');
     expect(onRowClick).toHaveBeenCalledWith(row);
     // click again deselects
-    act(() => api.handlers.handleRowClick(row, {} as any));
-    expect(api.state.selection.selectedRows).not.toContain('1');
+    act(() => api.handleRowClick(row, {} as any));
+    expect(api.selection.selectedRows).not.toContain('1');
   });
 
   it('handleRowClick replaces selection in single mode', () => {
@@ -179,20 +179,20 @@ describe('DataGrid', () => {
         onApi={(a) => (api = a)}
       />
     );
-    const r1 = api.state.rows.find((r: any) => r.id === '1');
-    const r2 = api.state.rows.find((r: any) => r.id === '2');
-    act(() => api.handlers.handleRowClick(r1, {} as any));
-    act(() => api.handlers.handleRowClick(r2, {} as any));
-    expect(api.state.selection.selectedRows).toEqual(['2']);
+    const r1 = api.rows.find((r: any) => r.id === '1');
+    const r2 = api.rows.find((r: any) => r.id === '2');
+    act(() => api.handleRowClick(r1, {} as any));
+    act(() => api.handleRowClick(r2, {} as any));
+    expect(api.selection.selectedRows).toEqual(['2']);
   });
 
   it('handleCellClick sets the selected cell and fires onCellClick', () => {
     let api: any;
     const onCellClick = vi.fn();
     render(<HookHarness data={data} columns={columns} onCellClick={onCellClick} onApi={(a) => (api = a)} />);
-    const row = api.state.rows.find((r: any) => r.id === '1');
-    act(() => api.handlers.handleCellClick(row, columns[0], {} as any));
-    expect(api.state.selectedCell).toEqual({ rowIndex: 0, columnId: 'name' });
+    const row = api.rows.find((r: any) => r.id === '1');
+    act(() => api.handleCellClick(row, columns[0], {} as any));
+    expect(api.selectedCell).toEqual({ rowIndex: 0, columnId: 'name' });
     expect(onCellClick).toHaveBeenCalledWith(row, columns[0], 'Ada');
   });
 
@@ -200,11 +200,11 @@ describe('DataGrid', () => {
     let api: any;
     const onSortChange = vi.fn();
     render(<HookHarness data={data} columns={columns} disabled onSortChange={onSortChange} onApi={(a) => (api = a)} />);
-    act(() => api.handlers.handleSort('name', 'asc'));
+    act(() => api.handleSort('name', 'asc'));
     expect(onSortChange).not.toHaveBeenCalled();
-    act(() => api.handlers.handleFilter('name', 'x'));
-    act(() => api.handlers.handleSelectAll());
-    expect(api.state.selection.selectedRows).toHaveLength(0);
+    act(() => api.handleFilter('name', 'x'));
+    act(() => api.handleSelectAll());
+    expect(api.selection.selectedRows).toHaveLength(0);
   });
 
   it('applies validateRow and processData transforms', () => {
@@ -219,7 +219,7 @@ describe('DataGrid', () => {
       />
     );
     // only Ada (30) and Bo (40) survive validation
-    expect(api.state.rows.length).toBe(2);
+    expect(api.rows.length).toBe(2);
   });
 
   it('applies a transformValue function during sort and filter', () => {
@@ -233,8 +233,8 @@ describe('DataGrid', () => {
         onApi={(a) => (api = a)}
       />
     );
-    act(() => api.handlers.handleFilter('name', 'ADA', 'equals'));
-    expect(api.state.filteredData.length).toBe(1);
+    act(() => api.handleFilter('name', 'ADA', 'equals'));
+    expect(api.filteredData.length).toBe(1);
   });
 
   it('uses a column accessor function for filtering', () => {
@@ -243,9 +243,9 @@ describe('DataGrid', () => {
       { id: 'upper', header: 'Upper', accessor: (row: any) => row.name.toUpperCase() },
     ];
     render(<HookHarness data={data} columns={cols} onApi={(a) => (api = a)} />);
-    act(() => api.handlers.handleFilter('upper', 'LIN', 'equals'));
-    expect(api.state.filteredData.length).toBe(1);
-    expect(api.state.filteredData[0].data.name).toBe('Lin');
+    act(() => api.handleFilter('upper', 'LIN', 'equals'));
+    expect(api.filteredData.length).toBe(1);
+    expect(api.filteredData[0].data.name).toBe('Lin');
   });
 
   it('keeps pagination controlled when controlledPagination is supplied', () => {
@@ -259,7 +259,7 @@ describe('DataGrid', () => {
         onApi={(a) => (api = a)}
       />
     );
-    expect(api.state.pagination).toEqual(controlled);
+    expect(api.pagination).toEqual(controlled);
   });
 
   it('exposes aria attributes including sort/filter state', () => {
@@ -272,7 +272,7 @@ describe('DataGrid', () => {
         onApi={(a) => (api = a)}
       />
     );
-    expect(api.attributes['aria-rowcount']).toBe(api.state.rows.length);
+    expect(api.attributes['aria-rowcount']).toBe(api.rows.length);
     expect(api.attributes['aria-busy']).toBe(true);
     expect(api.attributes['data-loading']).toBe(true);
     expect(typeof api.attributes.onKeyDown).toBe('function');
@@ -302,18 +302,18 @@ describe('DataGrid', () => {
 
     // Ctrl+A selects all rows on the page
     act(() => kd({ key: 'a', ctrlKey: true, preventDefault: () => {} }));
-    expect(api.state.selection.selectedRows.length).toBe(api.state.rows.length);
+    expect(api.selection.selectedRows.length).toBe(api.rows.length);
 
     // Escape clears the selected cell after one is set
-    act(() => api.handlers.handleCellClick(api.state.rows[0], columns[0], {} as any));
-    expect(api.state.selectedCell).toBeDefined();
+    act(() => api.handleCellClick(api.rows[0], columns[0], {} as any));
+    expect(api.selectedCell).toBeDefined();
     act(() => kd({ key: 'Escape', preventDefault: () => {} }));
-    expect(api.state.selectedCell).toBeUndefined();
+    expect(api.selectedCell).toBeUndefined();
 
     // Enter activates the selected cell (re-selects it via handleCellClick)
-    act(() => api.handlers.handleCellClick(api.state.rows[0], columns[0], {} as any));
+    act(() => api.handleCellClick(api.rows[0], columns[0], {} as any));
     const onCellClick = vi.fn();
-    api.handlers.handleCellClick; // ensure ref exists
+    api.handleCellClick; // ensure ref exists
     act(() => kd({ key: 'Enter', preventDefault: () => {} }));
 
     // default branch delegates to the focusable mixin without throwing

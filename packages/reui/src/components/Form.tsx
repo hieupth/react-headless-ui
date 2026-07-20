@@ -4,7 +4,7 @@
  */
 
 import React, { forwardRef, useRef, useEffect } from 'react';
-import { useForm, type UseFormProps } from '../hooks';
+import { useForm, type UseFormProps, type FormState, type FormActions } from '../hooks';
 import { useTheme } from '../providers/ThemeProvider';
 
 export interface FormProps<TFieldValues extends Record<string, any> = Record<string, any>>
@@ -44,8 +44,8 @@ export interface FormProps<TFieldValues extends Record<string, any> = Record<str
   /** Form content (fields, actions), or a render function receiving the form API */
   children?: React.ReactNode | ((
     rhf: import('../hooks').UseFormReturns<TFieldValues>['rhf'],
-    state: import('../hooks').UseFormReturns<TFieldValues>['state'],
-    actions: import('../hooks').UseFormReturns<TFieldValues>['actions']
+    state: FormState<TFieldValues>,
+    actions: FormActions<TFieldValues>
   ) => React.ReactNode);
 }
 
@@ -75,19 +75,78 @@ export const Form = forwardRef<HTMLFormElement, FormProps>(({
   ...formProps
 }: FormProps, ref) => {
   const theme = useTheme();
-  const {
-    state,
-    actions,
-    rhf,
-    attributes,
-    getFieldAttributes
-  } = useForm({
+  const formApi = useForm({
     ...formProps,
     // multiStep is destructured above (used for local UI gates) but must also
     // reach the hook so state.totalSteps / currentStep drive navigation.
     multiStep,
     formRef: ref as React.RefObject<HTMLFormElement>
   });
+  const {
+    rhf,
+    disabled,
+    loading,
+    readOnly,
+    currentStep,
+    totalSteps,
+    isSubmitting,
+    submissionError,
+    isSubmitted,
+    lastSubmittedAt,
+    submit,
+    reset,
+    setLoading,
+    setDisabled,
+    setReadOnly,
+    nextStep,
+    previousStep,
+    goToStep,
+    validateStep,
+    validate,
+    getFieldError,
+    getFieldValue,
+    setFieldValue,
+    clearFieldError,
+    focusField,
+    getData,
+    setData,
+    attributes,
+    getFieldAttributes
+  } = formApi;
+
+  // Grouped views over the flat hook return, retained for the render-prop
+  // contract (children(rhf, state, actions)) and internal JSX consumers.
+  const state = {
+    rhf,
+    disabled,
+    loading,
+    readOnly,
+    currentStep,
+    totalSteps,
+    isSubmitting,
+    submissionError,
+    isSubmitted,
+    lastSubmittedAt
+  };
+  const actions = {
+    submit,
+    reset,
+    setLoading,
+    setDisabled,
+    setReadOnly,
+    nextStep,
+    previousStep,
+    goToStep,
+    validateStep,
+    validate,
+    getFieldError,
+    getFieldValue,
+    setFieldValue,
+    clearFieldError,
+    focusField,
+    getData,
+    setData
+  };
 
   const {
     register,

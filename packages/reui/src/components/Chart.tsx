@@ -114,15 +114,22 @@ export const Chart = forwardRef<SVGSVGElement, ChartProps>(
     const { ...props } = componentProps;
 
     const {
-      state,
-      handlers,
+      type,
+      datasets,
+      dataPoints,
+      selectedPoint,
+      hoveredPoint,
+      animationProgress,
+      ranges,
+      handleDataPointClick,
+      handleDataPointHover,
+      handleDataPointLeave,
       attributes,
       dimensions,
       scales,
       colors
     } = useChart(props);
 
-    const { type, datasets, dataPoints, selectedPoint, hoveredPoint, animationProgress } = state;
     const { width, height, totalWidth, totalHeight } = dimensions;
 
     // The hook does not expose `margin` in its return value (it lives in the
@@ -214,9 +221,9 @@ export const Chart = forwardRef<SVGSVGElement, ChartProps>(
           stroke={stroke}
           strokeWidth={strokeWidth}
           className={pointClassName}
-          onClick={(e) => handlers.handleDataPointClick(dataset, { x: point.originalX ?? point.x, y: point.originalY ?? point.y }, e)}
-          onMouseEnter={() => handlers.handleDataPointHover(dataset, { x: point.originalX ?? point.x, y: point.originalY ?? point.y })}
-          onMouseLeave={() => handlers.handleDataPointLeave()}
+          onClick={(e) => handleDataPointClick(dataset, { x: point.originalX ?? point.x, y: point.originalY ?? point.y }, e)}
+          onMouseEnter={() => handleDataPointHover(dataset, { x: point.originalX ?? point.x, y: point.originalY ?? point.y })}
+          onMouseLeave={() => handleDataPointLeave()}
           {...shapeAttributes}
         />
       );
@@ -317,9 +324,9 @@ export const Chart = forwardRef<SVGSVGElement, ChartProps>(
                 stroke={dataset.borderColor || color}
                 strokeWidth={dataset.borderWidth || 1}
                 className={barClassName}
-                onClick={(e) => handlers.handleDataPointClick(dataset, { x: point.originalX ?? point.x, y: point.originalY ?? point.y }, e)}
-                onMouseEnter={() => handlers.handleDataPointHover(dataset, { x: point.originalX ?? point.x, y: point.originalY ?? point.y })}
-                onMouseLeave={() => handlers.handleDataPointLeave()}
+                onClick={(e) => handleDataPointClick(dataset, { x: point.originalX ?? point.x, y: point.originalY ?? point.y }, e)}
+                onMouseEnter={() => handleDataPointHover(dataset, { x: point.originalX ?? point.x, y: point.originalY ?? point.y })}
+                onMouseLeave={() => handleDataPointLeave()}
                 {...shapeAttributes}
                 style={{
                   transform: `scaleY(${animationProgress})`,
@@ -410,7 +417,7 @@ export const Chart = forwardRef<SVGSVGElement, ChartProps>(
 
     // Render axes
     const renderAxes = () => {
-      const { x: xRange, y: yRange } = state.ranges;
+      const { x: xRange, y: yRange } = ranges;
       const margin = (props.margin as { top?: number; right?: number; bottom?: number; left?: number } | undefined) ??
         { top: 20, right: 20, bottom: 40, left: 40 };
       const padding = (props.padding as number | undefined) ?? 20;

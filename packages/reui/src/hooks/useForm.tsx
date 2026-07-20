@@ -145,13 +145,8 @@ export interface UseFormProps<TFieldValues extends FieldValues = FieldValues> ex
 /**
  * Return type for useForm hook
  */
-export interface UseFormReturns<TFieldValues extends FieldValues = FieldValues> {
-  /** Current form state */
-  state: FormState<TFieldValues>;
-  /** Form actions */
-  actions: FormActions<TFieldValues>;
-  /** React Hook Form methods */
-  rhf: UseFormReturn<TFieldValues>;
+export interface UseFormReturns<TFieldValues extends FieldValues = FieldValues>
+  extends FormState<TFieldValues>, FormActions<TFieldValues> {
   /** Accessibility attributes */
   attributes: React.HTMLAttributes<HTMLElement>;
   /** Get attributes for a specific field */
@@ -556,8 +551,8 @@ export function useForm<TFieldValues extends FieldValues = FieldValues>(
     };
 
     return {
-      state,
-      actions,
+      ...state,
+      ...actions,
       rhf,
       attributes,
       getFieldAttributes,

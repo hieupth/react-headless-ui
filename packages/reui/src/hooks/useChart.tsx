@@ -559,8 +559,8 @@ export function useChart(props: UseChartProps = {}) {
   }), [handleDataPointClick, handleDatasetClick, handleChartClick, handleMouseMove, handleMouseLeave, handleDataPointHover, handleDataPointLeave, handleKeyDown]);
 
   return useMemo(() => ({
-    state,
-    handlers,
+    ...state,
+    ...handlers,
     attributes: semanticAttributes,
     dimensions: chartDimensions,
     scales,

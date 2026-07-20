@@ -136,8 +136,15 @@ export const Combobox = forwardRef<HTMLDivElement, ComboboxProps>(
     const comboboxRef = useRef<HTMLDivElement>(null);
     const listRef = useRef<HTMLDivElement>(null);
     const {
-      state,
-      handlers,
+      open,
+      inputValue,
+      filteredOptions,
+      filteredGroups,
+      selectedIndex,
+      loading: stateLoading,
+      closing,
+      opening,
+      handleInputKeyDown,
       attributes,
       inputAttributes,
       listAttributes,
@@ -145,8 +152,6 @@ export const Combobox = forwardRef<HTMLDivElement, ComboboxProps>(
       clearButtonAttributes,
       selectedOption
     } = useCombobox(props);
-
-    const { open, inputValue, filteredOptions, filteredGroups, selectedIndex } = state;
 
     // Virtualization engages only for the flat (non-grouped) list above the
     // configured threshold. Grouped lists keep their legacy render path so
@@ -173,7 +178,7 @@ export const Combobox = forwardRef<HTMLDivElement, ComboboxProps>(
     const showNoResults = props.showNoResults !== false;
     const showClearButton = props.showClearButton !== false;
     const showSearchIcon = props.showSearchIcon !== false;
-    const showLoading = props.loading !== undefined ? props.loading : state.loading;
+    const showLoading = props.loading !== undefined ? props.loading : stateLoading;
 
     // Render combobox option. `overrideStyle` carries virtualizer positioning
     // (absolute placement) so the same renderer serves both render paths.
@@ -337,8 +342,8 @@ export const Combobox = forwardRef<HTMLDivElement, ComboboxProps>(
         className={`
                    
           
-          ${state.opening ? '' : ''}
-          ${state.closing ? '' : ''}
+          ${opening ? '' : ''}
+          ${closing ? '' : ''}
         `}
         style={{
           ...listAttributes.style,
@@ -367,7 +372,7 @@ export const Combobox = forwardRef<HTMLDivElement, ComboboxProps>(
           {renderSearchIcon()}
           <input
             {...inputAttributes}
-            onKeyDown={handlers.handleInputKeyDown}
+            onKeyDown={handleInputKeyDown}
             {...(props.id ? { id: props.id } : {})}
             {...(props['data-testid'] ? { 'data-testid': props['data-testid'] } : {})}
             aria-autocomplete="list"
