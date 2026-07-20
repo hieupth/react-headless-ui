@@ -1,3 +1,5 @@
+'use client';
+
 import { Field } from '@hieupth/react-headless-ui';
 import { Demo } from '@/components/demo';
 import { PropsTable } from '@/components/props-table';
