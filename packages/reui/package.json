@@ -56,18 +56,17 @@
     "access": "public"
   },
   "peerDependencies": {
-    "react": ">=18",
-    "react-dom": ">=18",
-    "framer-motion": "^12",
-    "react-hook-form": "^7"
+    "react": ">=19",
+    "react-dom": ">=19",
+    "framer-motion": "^12"
   },
   "peerDependenciesMeta": {
     "framer-motion": {
       "optional": true
-    },
-    "react-hook-form": {
-      "optional": true
     }
+  },
+  "dependencies": {
+    "react-hook-form": "^7"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "^6.9.1",
