@@ -558,3 +558,42 @@ describe('useSelect hook — all-disabled and selected-strategy branches', () =>
     expect(api.current.highlightedIndex).toBe(-1);
   });
 });
+
+// Regression coverage for the systemic gap where tests only asserted initial
+// render: a controlled value/open change on rerender must resync internal
+// state via the dedicated sync effects. Otherwise an F3/F4-class prop-update
+// bug hides behind a passing initial-render assertion.
+describe('useSelect hook — controlled value/open resync on rerender', () => {
+  it('controlled value change resyncs selectedValue, selectedOption and trigger attributes', () => {
+    const api: { current: ReturnType<typeof useSelect> } = { current: null as any };
+    function Harness({ value }: { value: any }) {
+      const result = useSelect({ options, value });
+      api.current = result;
+      return null;
+    }
+    const { rerender } = render(<Harness value="apple" />);
+    expect(api.current.selectedValue).toBe('apple');
+    expect(api.current.selectedOption?.value).toBe('apple');
+
+    rerender(<Harness value="cherry" />);
+    expect(api.current.selectedValue).toBe('cherry');
+    expect(api.current.selectedOption?.value).toBe('cherry');
+  });
+
+  it('controlled open change resyncs open state and aria-expanded', () => {
+    const api: { current: ReturnType<typeof useSelect> } = { current: null as any };
+    function Harness({ open }: { open: boolean }) {
+      const result = useSelect({ options, open });
+      api.current = result;
+      return null;
+    }
+    const { rerender } = render(<Harness open={false} />);
+    expect(api.current.open).toBe(false);
+    expect(api.current.triggerAttributes['aria-expanded']).toBe(false);
+
+    rerender(<Harness open={true} />);
+    expect(api.current.open).toBe(true);
+    expect(api.current.triggerAttributes['aria-expanded']).toBe(true);
+    expect(api.current.triggerAttributes['data-state']).toBe('open');
+  });
+});

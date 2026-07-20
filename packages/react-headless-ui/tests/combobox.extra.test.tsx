@@ -348,3 +348,57 @@ describe('useCombobox (extra hook tests)', () => {
     expect(api.current.listAttributes.style.maxHeight).toBe('120px');
   });
 });
+
+// Regression coverage for the systemic gap where tests only asserted initial
+// render: controlled props must keep driving state after a rerender with new
+// values, otherwise a prop-update bug (F3/F4-class) can hide behind a passing
+// initial-render assertion.
+describe('useCombobox (controlled prop-update on rerender)', () => {
+  it('controlled value change reflects in state.value and selectedOption', () => {
+    const api: { current: any } = { current: null };
+    const { rerender } = render(
+      <ComboboxHarness hookProps={{ options, value: 'a' }} onApi={(a) => (api.current = a)} />
+    );
+    expect(api.current.state.value).toBe('a');
+    expect(api.current.selectedOption?.value).toBe('a');
+
+    rerender(
+      <ComboboxHarness hookProps={{ options, value: 'c' }} onApi={(a) => (api.current = a)} />
+    );
+    expect(api.current.state.value).toBe('c');
+    expect(api.current.selectedOption?.value).toBe('c');
+  });
+
+  it('controlled inputValue change reflects in state.inputValue and filteredOptions', () => {
+    const api: { current: any } = { current: null };
+    const { rerender } = render(
+      <ComboboxHarness hookProps={{ options, inputValue: '' }} onApi={(a) => (api.current = a)} />
+    );
+    expect(api.current.state.inputValue).toBe('');
+    expect(api.current.state.filteredOptions).toHaveLength(4);
+
+    rerender(
+      <ComboboxHarness hookProps={{ options, inputValue: 'an' }} onApi={(a) => (api.current = a)} />
+    );
+    expect(api.current.state.inputValue).toBe('an');
+    expect(api.current.state.filteredOptions.map((o: ComboboxOption) => o.label)).toEqual(['Banana']);
+  });
+
+  it('controlled open change reflects in state.open', () => {
+    const api: { current: any } = { current: null };
+    const { rerender } = render(
+      <ComboboxHarness hookProps={{ options, open: false }} onApi={(a) => (api.current = a)} />
+    );
+    expect(api.current.state.open).toBe(false);
+
+    rerender(
+      <ComboboxHarness hookProps={{ options, open: true }} onApi={(a) => (api.current = a)} />
+    );
+    expect(api.current.state.open).toBe(true);
+
+    rerender(
+      <ComboboxHarness hookProps={{ options, open: false }} onApi={(a) => (api.current = a)} />
+    );
+    expect(api.current.state.open).toBe(false);
+  });
+});
