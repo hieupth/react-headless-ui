@@ -8,7 +8,7 @@
   ],
   "scripts": {
     "build": "pnpm --filter @hieupth/react-headless-ui build",
-    "dev": "pnpm --filter example dev",
+    "dev": "pnpm --filter showcase dev",
     "test": "pnpm --filter @hieupth/react-headless-ui test",
     "test:e2e": "playwright test --config examples/next-demo/playwright.config.ts",
     "typecheck": "pnpm -r run typecheck",
