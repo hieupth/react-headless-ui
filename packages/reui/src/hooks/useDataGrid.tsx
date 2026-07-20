@@ -241,8 +241,6 @@ export interface DataGridState {
   selectedCell?: { rowIndex: number; columnId: string };
   /** Hovered cell */
   hoveredCell?: { rowIndex: number; columnId: string };
-  /** Editing cell */
-  editingCell?: { rowIndex: number; columnId: string; value: any };
 }
 
 /**
@@ -269,12 +267,6 @@ export interface DataGridHandlers {
   handleSelectAll: () => void;
   /** Handle clear selection */
   handleClearSelection: () => void;
-  /** Handle edit cell */
-  handleEditCell: (rowIndex: number, columnId: string, value: any) => void;
-  /** Handle save cell */
-  handleSaveCell: (rowIndex: number, columnId: string) => void;
-  /** Handle cancel edit */
-  handleCancelEdit: () => void;
 }
 
 /**
@@ -347,7 +339,6 @@ export function useDataGrid(props: UseDataGridProps = {}) {
   const [selection, setSelection] = useState<GridSelection>(controlledSelection || defaultSelection || { selectedRows: [], mode: 'multiple' });
   const [selectedCell, setSelectedCell] = useState<{ rowIndex: number; columnId: string } | undefined>();
   const [hoveredCell, setHoveredCell] = useState<{ rowIndex: number; columnId: string } | undefined>();
-  const [editingCell, setEditingCell] = useState<{ rowIndex: number; columnId: string; value: any } | undefined>();
 
   // Determine if component is controlled
   const isSortControlled = controlledSort !== undefined;
@@ -493,7 +484,6 @@ export function useDataGrid(props: UseDataGridProps = {}) {
     error: errorMessage,
     selectedCell,
     hoveredCell,
-    editingCell,
     // Aliases matching the DataGrid component's expected state shape.
     data: paginatedRows,
     selectedRows: selection.selectedRows,
@@ -501,7 +491,7 @@ export function useDataGrid(props: UseDataGridProps = {}) {
     sortedData: paginatedRows,
     filteredData: paginatedRows,
     paginatedData: paginatedRows
-  }), [paginatedRows, propColumns, sort, filter, pagination, selection, disabled, focusableMixin.focused, loading, errorMessage, selectedCell, hoveredCell, editingCell]);
+  }), [paginatedRows, propColumns, sort, filter, pagination, selection, disabled, focusableMixin.focused, loading, errorMessage, selectedCell, hoveredCell]);
 
   // Event handlers
   const handleSort = useCallback((column: string, direction: 'asc' | 'desc') => {
@@ -654,23 +644,6 @@ export function useDataGrid(props: UseDataGridProps = {}) {
     handleSelection([], selection.mode);
   }, [disabled, selection.mode, handleSelection]);
 
-  const handleEditCell = useCallback((rowIndex: number, columnId: string, value: any) => {
-    if (disabled) return;
-
-    setEditingCell({ rowIndex, columnId, value });
-  }, [disabled]);
-
-  const handleSaveCell = useCallback(() => {
-    if (disabled || !editingCell) return;
-
-    // Save logic would go here
-    setEditingCell(undefined);
-  }, [disabled, editingCell]);
-
-  const handleCancelEdit = useCallback(() => {
-    setEditingCell(undefined);
-  }, [editingCell]);
-
   // Generate semantic attributes
   const semanticAttributes = useMemo(() => ({
     ...semantic,
@@ -699,11 +672,8 @@ export function useDataGrid(props: UseDataGridProps = {}) {
     handleHeaderClick,
     handleKeyDown,
     handleSelectAll,
-    handleClearSelection,
-    handleEditCell,
-    handleSaveCell,
-    handleCancelEdit
-  }), [handleSort, handleFilter, handlePagination, handleSelection, handleRowClick, handleCellClick, handleHeaderClick, handleKeyDown, handleSelectAll, handleClearSelection, handleEditCell, handleSaveCell, handleCancelEdit]);
+    handleClearSelection
+  }), [handleSort, handleFilter, handlePagination, handleSelection, handleRowClick, handleCellClick, handleHeaderClick, handleKeyDown, handleSelectAll, handleClearSelection]);
 
   return useMemo(() => ({
     state,

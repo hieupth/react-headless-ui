@@ -204,27 +204,6 @@ describe('useDataGrid (extra hook tests)', () => {
     expect(api.current.state.selection.selectedRows).toEqual([]);
   });
 
-  it('handleEditCell/handleSaveCell/handleCancelEdit manage editingCell', () => {
-    const api = setup();
-    act(() => { api.current.handlers.handleEditCell(1, 'name', 'new'); });
-    expect(api.current.state.editingCell).toEqual({ rowIndex: 1, columnId: 'name', value: 'new' });
-    act(() => { api.current.handlers.handleSaveCell(); });
-    expect(api.current.state.editingCell).toBeUndefined();
-    act(() => { api.current.handlers.handleEditCell(0, 'age', 1); });
-    act(() => { api.current.handlers.handleCancelEdit(); });
-    expect(api.current.state.editingCell).toBeUndefined();
-  });
-
-  it('handleEditCell ignored when disabled; handleSaveCell no-op without edit', () => {
-    const api = setup({ disabled: true });
-    act(() => { api.current.handlers.handleEditCell(0, 'name', 'x'); });
-    expect(api.current.state.editingCell).toBeUndefined();
-    // saveCell on a non-disabled grid with no editing cell is a no-op
-    const api2 = setup();
-    act(() => { api2.current.handlers.handleSaveCell(); });
-    expect(api2.current.state.editingCell).toBeUndefined();
-  });
-
   it('handleKeyDown Enter/Space activates selected cell via handleCellClick', () => {
     const onCellClick = vi.fn();
     const api = setup({ onCellClick });

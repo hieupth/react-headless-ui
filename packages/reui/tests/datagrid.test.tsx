@@ -196,18 +196,6 @@ describe('DataGrid', () => {
     expect(onCellClick).toHaveBeenCalledWith(row, columns[0], 'Ada');
   });
 
-  it('edit cell handlers set, save, and cancel editing state', () => {
-    let api: any;
-    render(<HookHarness data={data} columns={columns} onApi={(a) => (api = a)} />);
-    act(() => api.handlers.handleEditCell(0, 'name', 'Adax'));
-    expect(api.state.editingCell).toEqual({ rowIndex: 0, columnId: 'name', value: 'Adax' });
-    act(() => api.handlers.handleSaveCell());
-    expect(api.state.editingCell).toBeUndefined();
-    act(() => api.handlers.handleEditCell(1, 'age', 99));
-    act(() => api.handlers.handleCancelEdit());
-    expect(api.state.editingCell).toBeUndefined();
-  });
-
   it('blocks handlers when disabled', () => {
     let api: any;
     const onSortChange = vi.fn();
