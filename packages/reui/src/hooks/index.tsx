@@ -90,6 +90,7 @@ export * from './useToolbar';
 export * from './useTooltip';
 export * from './useTreeView';
 export * from './useVisuallyHidden';
+export * from './useVirtualList';
 
 // Resolve name collision: both useMenu and useMenubar export 'MenuItem'.
 // Explicit re-export keeps the menubar one as the public 'MenuItem' (matches prior API).

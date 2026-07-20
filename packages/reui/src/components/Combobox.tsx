@@ -3,10 +3,22 @@
  * Provides visual representation for combobox components.
  */
 
-import React, { forwardRef, useRef, useEffect } from 'react';
+import React, { forwardRef, useRef, useEffect, useMemo } from 'react';
 import { createPortal } from 'react-dom';
 import { useCombobox } from '../hooks';
+import { useVirtualList } from '../hooks';
 import type { UseComboboxProps, ComboboxOption as ComboboxOptionData, ComboboxGroup as ComboboxGroupData } from '../hooks';
+
+/**
+ * Default item count above which the Combobox list virtualizes. Below this,
+ * every option renders directly (preserving the legacy DOM for small lists).
+ */
+const DEFAULT_VIRTUALIZE_THRESHOLD = 100;
+/** Estimated row height (px) used by the virtualizer when no DOM measurement. */
+const VIRTUAL_ROW_HEIGHT = 36;
+/** Max dropdown height (px) — bounds the scroll viewport so the virtualizer
+ *  has a real window to virtualize against. */
+const VIRTUAL_MAX_HEIGHT = 280;
 
 /**
  * Combobox component props
@@ -26,6 +38,10 @@ export interface ComboboxProps extends UseComboboxProps {
   noResultsRenderer?: () => React.ReactNode;
   /** Custom loading renderer */
   loadingRenderer?: () => React.ReactNode;
+  /** Force virtualization on/off regardless of option count. */
+  virtualize?: boolean;
+  /** Option count at/below which virtualization engages (default 100). */
+  virtualizeThreshold?: number;
 }
 
 /**
@@ -113,9 +129,12 @@ export const Combobox = forwardRef<HTMLDivElement, ComboboxProps>(
     groupRenderer,
     noResultsRenderer,
     loadingRenderer,
+    virtualize,
+    virtualizeThreshold = DEFAULT_VIRTUALIZE_THRESHOLD,
     ...props
   }: ComboboxProps, ref) => {
     const comboboxRef = useRef<HTMLDivElement>(null);
+    const listRef = useRef<HTMLDivElement>(null);
     const {
       state,
       handlers,
@@ -129,14 +148,40 @@ export const Combobox = forwardRef<HTMLDivElement, ComboboxProps>(
 
     const { open, inputValue, filteredOptions, filteredGroups, selectedIndex } = state;
 
+    // Virtualization engages only for the flat (non-grouped) list above the
+    // configured threshold. Grouped lists keep their legacy render path so
+    // group headings remain interleaved with their options.
+    const virtualizeEnabled = useMemo(
+      () => (virtualize ?? filteredOptions.length >= virtualizeThreshold) && !props.groups,
+      [virtualize, virtualizeThreshold, filteredOptions.length, props.groups]
+    );
+    const { virtualItems, totalSize, scrollToIndex } = useVirtualList({
+      count: filteredOptions.length,
+      getScrollElement: () => listRef.current,
+      estimateSize: VIRTUAL_ROW_HEIGHT,
+      enabled: virtualizeEnabled && open,
+    });
+
+    // Keep the active option in view while keyboard-navigating.
+    useEffect(() => {
+      if (virtualizeEnabled && selectedIndex >= 0) {
+        scrollToIndex(selectedIndex);
+      }
+    }, [virtualizeEnabled, selectedIndex, scrollToIndex]);
+
     // Mirror the hook defaults so omitted boolean props behave as "on".
     const showNoResults = props.showNoResults !== false;
     const showClearButton = props.showClearButton !== false;
     const showSearchIcon = props.showSearchIcon !== false;
     const showLoading = props.loading !== undefined ? props.loading : state.loading;
 
-    // Render combobox option
-    const renderOption = (option: ComboboxOptionData, index: number) => {
+    // Render combobox option. `overrideStyle` carries virtualizer positioning
+    // (absolute placement) so the same renderer serves both render paths.
+    const renderOption = (
+      option: ComboboxOptionData,
+      index: number,
+      overrideAttributes?: { style?: React.CSSProperties }
+    ) => {
       const optionAttributes = getOptionAttributes(option, index);
 
       if (optionRenderer) {
@@ -154,6 +199,7 @@ export const Combobox = forwardRef<HTMLDivElement, ComboboxProps>(
             ${selectedOption?.value === option.value ? 'bg-blue-100 text-blue-800 font-medium' : ''}
             ${className}
           `}
+          style={overrideAttributes?.style}
           data-testid="combobox-option"
         >
           <div className="flex items-center justify-between">
@@ -264,26 +310,44 @@ export const Combobox = forwardRef<HTMLDivElement, ComboboxProps>(
       );
     };
 
+    // Render the option list. When virtualized, only the visible window of
+    // options is mounted inside a sized spacer so the scroll viewport has a
+    // real total height to virtualize against.
+    const renderOptionList = () => {
+      if (props.groups && filteredGroups.length > 0) {
+        return filteredGroups.map(renderGroup);
+      }
+      if (!virtualizeEnabled) {
+        return filteredOptions.map((option, index) => renderOption(option, index));
+      }
+      return (
+        <div style={{ height: totalSize, position: 'relative' }}>
+          {virtualItems.map((vi) => renderOption(filteredOptions[vi.index], vi.index, {
+            style: { position: 'absolute', top: 0, left: 0, width: '100%', transform: `translateY(${vi.start}px)` },
+          }))}
+        </div>
+      );
+    };
+
     // Render dropdown content
     const dropdownContent = (
       <div
+        ref={listRef}
         {...listAttributes}
         className={`
           absolute top-full left-0 right-0 bg-white border border-gray-200 rounded-lg shadow-lg z-50
+          overflow-y-auto
           ${state.opening ? 'animate-pulse' : ''}
           ${state.closing ? 'animate-pulse' : ''}
         `}
         style={{
           ...listAttributes.style,
+          maxHeight: virtualizeEnabled ? VIRTUAL_MAX_HEIGHT : undefined,
           zIndex: props.zIndex ?? 1000
         }}
       >
         {renderLoading()}
-        {props.groups && filteredGroups.length > 0 ? (
-          filteredGroups.map(renderGroup)
-        ) : (
-          filteredOptions.map((option, index) => renderOption(option, index))
-        )}
+        {renderOptionList()}
         {renderNoResults()}
       </div>
     );

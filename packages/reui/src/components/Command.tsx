@@ -3,10 +3,21 @@
  * Provides visual representation for command palette/components.
  */
 
-import React, { forwardRef, useRef, useEffect } from 'react';
+import React, { forwardRef, useRef, useEffect, useMemo } from 'react';
 import { createPortal } from 'react-dom';
 import { useCommand } from '../hooks';
+import { useVirtualList } from '../hooks';
 import type { UseCommandProps, CommandItem as CommandItemData, CommandGroup as CommandGroupData } from '../hooks';
+
+/**
+ * Default item count above which the Command list virtualizes. Below this,
+ * every item renders directly (preserving the legacy DOM for small lists).
+ */
+const DEFAULT_VIRTUALIZE_THRESHOLD = 100;
+/** Estimated row height (px) used by the virtualizer when no DOM measurement. */
+const VIRTUAL_ROW_HEIGHT = 36;
+/** Max list height (px) — bounds the scroll viewport for virtualization. */
+const VIRTUAL_MAX_HEIGHT = 320;
 
 /**
  * Command component props
@@ -26,6 +37,10 @@ export interface CommandProps extends UseCommandProps {
   noResultsRenderer?: () => React.ReactNode;
   /** Custom search renderer */
   searchRenderer?: (attributes: any) => React.ReactNode;
+  /** Force virtualization on/off regardless of item count. */
+  virtualize?: boolean;
+  /** Item count at/above which virtualization engages (default 100). */
+  virtualizeThreshold?: number;
 }
 
 /**
@@ -140,9 +155,12 @@ export const Command = forwardRef<HTMLDivElement, CommandProps>(
     groupRenderer,
     noResultsRenderer,
     searchRenderer,
+    virtualize,
+    virtualizeThreshold = DEFAULT_VIRTUALIZE_THRESHOLD,
     ...props
   }: CommandProps, ref) => {
     const commandRef = useRef<HTMLDivElement>(null);
+    const listRef = useRef<HTMLDivElement>(null);
     const {
       state,
       handlers,
@@ -153,6 +171,27 @@ export const Command = forwardRef<HTMLDivElement, CommandProps>(
     } = useCommand(props);
 
     const { open, value, filteredItems, filteredGroups, selectedIndex } = state;
+
+    // Virtualization engages only for the flat (non-grouped) list above the
+    // configured threshold. Grouped lists keep their legacy render path so
+    // group headings remain interleaved with their items.
+    const virtualizeEnabled = useMemo(
+      () => (virtualize ?? filteredItems.length >= virtualizeThreshold) && !props.groups,
+      [virtualize, virtualizeThreshold, filteredItems.length, props.groups]
+    );
+    const { virtualItems, totalSize, scrollToIndex } = useVirtualList({
+      count: filteredItems.length,
+      getScrollElement: () => listRef.current,
+      estimateSize: VIRTUAL_ROW_HEIGHT,
+      enabled: virtualizeEnabled && open,
+    });
+
+    // Keep the active item in view while keyboard-navigating.
+    useEffect(() => {
+      if (virtualizeEnabled && selectedIndex >= 0) {
+        scrollToIndex(selectedIndex);
+      }
+    }, [virtualizeEnabled, selectedIndex, scrollToIndex]);
 
     // Mirror the hook default so an omitted showNoResults behaves as "on".
     const showNoResults = props.showNoResults !== false;
@@ -176,8 +215,13 @@ export const Command = forwardRef<HTMLDivElement, CommandProps>(
       );
     };
 
-    // Render command item
-    const renderItem = (item: CommandItemData, index: number) => {
+    // Render command item. `overrideAttributes` carries virtualizer positioning
+    // (absolute placement) so the same renderer serves both render paths.
+    const renderItem = (
+      item: CommandItemData,
+      index: number,
+      overrideAttributes?: { style?: React.CSSProperties }
+    ) => {
       const itemAttributes = getItemAttributes(item, index);
 
       if (itemRenderer) {
@@ -194,6 +238,7 @@ export const Command = forwardRef<HTMLDivElement, CommandProps>(
             ${item.disabled ? 'opacity-50 cursor-not-allowed' : ''}
             ${className}
           `}
+          style={overrideAttributes?.style}
           data-testid="command-item"
         >
           <div className="flex items-center justify-between">
@@ -287,9 +332,20 @@ export const Command = forwardRef<HTMLDivElement, CommandProps>(
         {renderSearch()}
 
         {/* Command List */}
-        <div {...listAttributes} className="command-list overflow-y-auto">
+        <div
+          ref={listRef}
+          {...listAttributes}
+          className="command-list overflow-y-auto"
+          style={{ ...listAttributes.style, maxHeight: virtualizeEnabled ? VIRTUAL_MAX_HEIGHT : undefined }}
+        >
           {props.groups && filteredGroups.length > 0 ? (
             filteredGroups.map(renderGroup)
+          ) : virtualizeEnabled ? (
+            <div style={{ height: totalSize, position: 'relative' }}>
+              {virtualItems.map((vi) => renderItem(filteredItems[vi.index], vi.index, {
+                style: { position: 'absolute', top: 0, left: 0, width: '100%', transform: `translateY(${vi.start}px)` },
+              }))}
+            </div>
           ) : (
             filteredItems.map((item, index) => renderItem(item, index))
           )}

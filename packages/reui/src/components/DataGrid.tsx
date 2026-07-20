@@ -3,9 +3,20 @@
  * Provides visual representation for data grid components using HTML table.
  */
 
-import React, { forwardRef, useMemo } from 'react';
+import React, { forwardRef, useMemo, useRef, useEffect } from 'react';
 import { useDataGrid } from '../hooks';
+import { useVirtualList } from '../hooks';
 import type { UseDataGridProps, GridColumn, GridRow, GridPagination } from '../hooks';
+
+/**
+ * Default row count above which the DataGrid body virtualizes. Below this,
+ * every row renders directly (preserving the legacy DOM for small grids).
+ */
+const DEFAULT_VIRTUALIZE_THRESHOLD = 100;
+/** Estimated row height (px) used by the virtualizer when no DOM measurement. */
+const VIRTUAL_ROW_HEIGHT = 40;
+/** Max body height (px) — bounds the scroll viewport for virtualization. */
+const VIRTUAL_MAX_HEIGHT = 400;
 
 /**
  * Action descriptor for action-type columns.
@@ -70,6 +81,10 @@ export interface DataGridProps extends UseDataGridProps {
   getCellProps?: (cell: GridCell, row: GridRow, column: GridColumn) => React.HTMLAttributes<HTMLTableCellElement>;
   /** Header cell props getter */
   getHeaderCellProps?: (column: GridColumn) => React.HTMLAttributes<HTMLTableCellElement>;
+  /** Force row virtualization on/off regardless of row count. */
+  virtualize?: boolean;
+  /** Row count at/above which virtualization engages (default 100). */
+  virtualizeThreshold?: number;
 }
 
 /**
@@ -94,6 +109,8 @@ export const DataGrid = forwardRef<HTMLTableElement, DataGridProps>(
     getRowProps,
     getCellProps,
     getHeaderCellProps,
+    virtualize,
+    virtualizeThreshold = DEFAULT_VIRTUALIZE_THRESHOLD,
     ...props
   }: Pick<DataGridProps,
     | 'className'
@@ -113,6 +130,8 @@ export const DataGrid = forwardRef<HTMLTableElement, DataGridProps>(
     | 'getRowProps'
     | 'getCellProps'
     | 'getHeaderCellProps'
+    | 'virtualize'
+    | 'virtualizeThreshold'
   >, ref) => {
     const {
       state,
@@ -130,6 +149,23 @@ export const DataGrid = forwardRef<HTMLTableElement, DataGridProps>(
       filter,
       pagination
     } = state;
+
+    // Scroll container for the table body; becomes the virtualizer viewport
+    // when row virtualization engages.
+    const scrollRef = useRef<HTMLDivElement>(null);
+    // Virtualization engages above the configured threshold. When active, only
+    // the visible window of rows is mounted, bracketed by spacer rows that
+    // preserve the total scrollable height of the table.
+    const virtualizeEnabled = useMemo(
+      () => virtualize ?? paginatedData.length >= virtualizeThreshold,
+      [virtualize, virtualizeThreshold, paginatedData.length]
+    );
+    const { virtualItems, totalSize } = useVirtualList({
+      count: paginatedData.length,
+      getScrollElement: () => scrollRef.current,
+      estimateSize: VIRTUAL_ROW_HEIGHT,
+      enabled: virtualizeEnabled,
+    });
 
     // Render table cell
     const renderCell = (cell: GridCell, row: GridRow, column: GridColumn, rowIndex: number) => {
@@ -316,7 +352,35 @@ export const DataGrid = forwardRef<HTMLTableElement, DataGridProps>(
       );
     };
 
-    // Render table rows
+    // Render a single table row for the given data row + index.
+    const renderRow = (row: GridRow, rowIndex: number, keyOverride?: React.Key) => {
+      const rowProps = {
+        key: keyOverride ?? row.id,
+        'data-testid': `data-grid-row-${rowIndex}`,
+        'data-row-id': row.id,
+        className: `data-grid-row hover:bg-gray-50 ${selectedRows.includes(row.id) ? 'bg-blue-50' : ''}`,
+        ...(getRowProps?.(row, rowIndex) || {})
+      };
+
+      return (
+        <tr {...rowProps}>
+          {renderSelectionCell(row, rowIndex)}
+          {renderRowNumber(rowIndex)}
+          {columns.map((column) => {
+            const cell: GridCell = {
+              value: typeof column.accessor === 'function'
+                ? column.accessor(row.data)
+                : row.data?.[column.id]
+            };
+            return renderCell(cell, row, column, rowIndex);
+          })}
+        </tr>
+      );
+    };
+
+    // Render table rows. When virtualization is enabled, mount only the rows
+    // in the visible window; spacer <tr>s above and below carry the scroll
+    // height of the skipped rows so the table's total height stays correct.
     const renderRows = () => {
       const dataToRender = paginatedData;
 
@@ -334,30 +398,30 @@ export const DataGrid = forwardRef<HTMLTableElement, DataGridProps>(
         );
       }
 
-      return dataToRender.map((row, rowIndex) => {
-        const rowProps = {
-          key: row.id,
-          'data-testid': `data-grid-row-${rowIndex}`,
-          'data-row-id': row.id,
-          className: `data-grid-row hover:bg-gray-50 ${selectedRows.includes(row.id) ? 'bg-blue-50' : ''}`,
-          ...(getRowProps?.(row, rowIndex) || {})
-        };
+      if (!virtualizeEnabled) {
+        return dataToRender.map((row, rowIndex) => renderRow(row, rowIndex));
+      }
 
-        return (
-          <tr {...rowProps}>
-            {renderSelectionCell(row, rowIndex)}
-            {renderRowNumber(rowIndex)}
-            {columns.map((column) => {
-              const cell: GridCell = {
-                value: typeof column.accessor === 'function'
-                  ? column.accessor(row.data)
-                  : row.data?.[column.id]
-              };
-              return renderCell(cell, row, column, rowIndex);
-            })}
-          </tr>
-        );
-      });
+      const first = virtualItems[0];
+      const last = virtualItems[virtualItems.length - 1];
+      const paddingTop = first ? first.start : 0;
+      const paddingBottom = last ? totalSize - last.end : 0;
+
+      return (
+        <>
+          {paddingTop > 0 && (
+            <tr data-testid="data-grid-virtual-spacer-top" aria-hidden="true" style={{ height: paddingTop }}>
+              <td style={{ height: paddingTop, padding: 0, border: 0 }} colSpan={columns.length + (showSelection ? 1 : 0) + (showRowNumbers ? 1 : 0)} />
+            </tr>
+          )}
+          {virtualItems.map((vi) => renderRow(dataToRender[vi.index], vi.index, vi.key))}
+          {paddingBottom > 0 && (
+            <tr data-testid="data-grid-virtual-spacer-bottom" aria-hidden="true" style={{ height: paddingBottom }}>
+              <td style={{ height: paddingBottom, padding: 0, border: 0 }} colSpan={columns.length + (showSelection ? 1 : 0) + (showRowNumbers ? 1 : 0)} />
+            </tr>
+          )}
+        </>
+      );
     };
 
     // Render pagination controls
@@ -421,8 +485,9 @@ export const DataGrid = forwardRef<HTMLTableElement, DataGridProps>(
 
     return (
       <div
+        ref={scrollRef}
         className={`data-grid-container overflow-auto ${className}`}
-        style={style}
+        style={{ ...style, maxHeight: virtualizeEnabled ? VIRTUAL_MAX_HEIGHT : style?.maxHeight }}
         data-testid="data-grid"
         {...tableContainerProps}
       >
