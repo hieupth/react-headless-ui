@@ -71,15 +71,23 @@ export const Checkbox: React.FC<CheckboxProps> = ({
     ? (checkedIcon || defaultCheckedIcon)
     : (uncheckedIcon || defaultUncheckedIcon);
 
-  // Combine custom classes with hook classes
+  // Combine custom classes with hook classes.
+  // Theme tokens that are CSS *values* (not class names) go to `style`,
+  // never into className — otherwise the hex/pixel string lands in the
+  // class attribute where it does nothing (category error).
   const combinedClassName = [
     'checkbox-component',
     hookClassName,
     className,
-    theme?.extensions?.color?.primary?.background,
     theme?.extensions?.spacing?.component?.padding,
     theme?.extensions?.typography?.body?.fontSize
   ].filter(Boolean).join(' ');
+
+  const themeStyle: React.CSSProperties = {
+    ...(theme?.extensions?.color?.primary?.background
+      ? { backgroundColor: theme.extensions.color.primary.background }
+      : null)
+  };
 
   const handleClick = (event: React.MouseEvent) => {
     event.preventDefault();
@@ -87,7 +95,7 @@ export const Checkbox: React.FC<CheckboxProps> = ({
   };
 
   return (
-    <div className={`checkbox-wrapper ${combinedClassName}`}>
+    <div className={`checkbox-wrapper ${combinedClassName}`} style={themeStyle}>
       <input
         ref={ref}
         type="checkbox"
