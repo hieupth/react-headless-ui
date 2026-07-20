@@ -18,6 +18,10 @@ export interface GridColumn {
   id: string;
   /** Column header text */
   header: string;
+  /** Column title (used for header label and filter placeholder) */
+  title?: string;
+  /** Additional CSS class for the column's cells and header */
+  className?: string;
   /** Column width */
   width?: number | string;
   /** Column is sortable */
@@ -40,8 +44,8 @@ export interface GridColumn {
   filterRenderer?: (column: GridColumn, value: any, onChange: (value: any) => void) => React.ReactNode;
   /** Column accessor */
   accessor?: string | ((row: any) => any);
-  /** Additional properties */
-  [key: string]: any;
+  /** Value formatter for number cells */
+  format?: (value: any) => string;
 }
 
 /**
@@ -60,8 +64,6 @@ export interface GridRow {
   height?: number;
   /** Row index */
   index?: number;
-  /** Additional properties */
-  [key: string]: any;
 }
 
 /**
