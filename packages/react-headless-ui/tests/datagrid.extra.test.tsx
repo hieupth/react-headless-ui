@@ -486,3 +486,83 @@ describe('useDataGrid (branch coverage)', () => {
     expect(onCellClick).not.toHaveBeenCalled();
   });
 });
+
+describe('useDataGrid (controlled prop resync)', () => {
+  it('controlled pagination.page updates internal state on rerender', () => {
+    const api: { current: any } = { current: null };
+    const { rerender } = render(
+      <HookHarness
+        data={data}
+        columns={columns}
+        pagination={{ page: 1, pageSize: 10, total: 100, totalPages: 10 }}
+        onApi={(a) => (api.current = a)}
+      />
+    );
+    expect(api.current.state.pagination.page).toBe(1);
+    // change the controlled prop 1 -> 5; internal state MUST follow.
+    rerender(
+      <HookHarness
+        data={data}
+        columns={columns}
+        pagination={{ page: 5, pageSize: 10, total: 100, totalPages: 10 }}
+        onApi={(a) => (api.current = a)}
+      />
+    );
+    expect(api.current.state.pagination.page).toBe(5);
+  });
+
+  it('controlled sort updates internal state on rerender', () => {
+    const api: { current: any } = { current: null };
+    const { rerender } = render(
+      <HookHarness data={data} columns={columns} sort={{ column: 'name', direction: 'asc' }} onApi={(a) => (api.current = a)} />
+    );
+    expect(api.current.state.sort).toEqual({ column: 'name', direction: 'asc' });
+    rerender(
+      <HookHarness data={data} columns={columns} sort={{ column: 'age', direction: 'desc' }} onApi={(a) => (api.current = a)} />
+    );
+    expect(api.current.state.sort).toEqual({ column: 'age', direction: 'desc' });
+  });
+
+  it('controlled filter updates internal state on rerender', () => {
+    const api: { current: any } = { current: null };
+    const { rerender } = render(
+      <HookHarness data={data} columns={columns} filter={{ column: 'name', value: 'A', operator: 'contains' }} onApi={(a) => (api.current = a)} />
+    );
+    expect(api.current.state.filter).toEqual({ column: 'name', value: 'A', operator: 'contains' });
+    rerender(
+      <HookHarness data={data} columns={columns} filter={{ column: 'age', value: 30, operator: 'equals' }} onApi={(a) => (api.current = a)} />
+    );
+    expect(api.current.state.filter).toEqual({ column: 'age', value: 30, operator: 'equals' });
+  });
+
+  it('controlled selection updates internal state on rerender', () => {
+    const api: { current: any } = { current: null };
+    const { rerender } = render(
+      <HookHarness data={data} columns={columns} selection={{ selectedRows: ['1'], mode: 'single' }} onApi={(a) => (api.current = a)} />
+    );
+    expect(api.current.state.selection.selectedRows).toEqual(['1']);
+    rerender(
+      <HookHarness data={data} columns={columns} selection={{ selectedRows: ['2', '3'], mode: 'multiple' }} onApi={(a) => (api.current = a)} />
+    );
+    expect(api.current.state.selection.selectedRows).toEqual(['2', '3']);
+    expect(api.current.state.selection.mode).toBe('multiple');
+  });
+
+  it('controlled handlers call onChange but do not mutate internal state', () => {
+    const onPaginationChange = vi.fn();
+    const api: { current: any } = { current: null };
+    render(
+      <HookHarness
+        data={data}
+        columns={columns}
+        pagination={{ page: 1, pageSize: 10, total: 100, totalPages: 10 }}
+        onPaginationChange={onPaginationChange}
+        onApi={(a) => (api.current = a)}
+      />
+    );
+    act(() => { api.current.handlers.handlePagination(7); });
+    expect(onPaginationChange).toHaveBeenCalledWith(expect.objectContaining({ page: 7 }));
+    // controlled → internal pagination.page stays at the controlled value (1), not 7.
+    expect(api.current.state.pagination.page).toBe(1);
+  });
+});

@@ -462,6 +462,24 @@ export function useDataGrid(props: UseDataGridProps = {}) {
     }
   }, [filteredRows, pagination.pageSize, isPaginationControlled]);
 
+  // Resync internal state when controlled props change after mount.
+  // Mirrors the useSelect pattern: derive current value from controlled || internal.
+  useEffect(() => {
+    if (isSortControlled) setSort(controlledSort as GridSort);
+  }, [isSortControlled, controlledSort]);
+
+  useEffect(() => {
+    if (isFilterControlled) setFilter(controlledFilter as GridFilter);
+  }, [isFilterControlled, controlledFilter]);
+
+  useEffect(() => {
+    if (isPaginationControlled) setPagination(controlledPagination as GridPagination);
+  }, [isPaginationControlled, controlledPagination]);
+
+  useEffect(() => {
+    if (isSelectionControlled) setSelection(controlledSelection as GridSelection);
+  }, [isSelectionControlled, controlledSelection]);
+
   // Compose data grid state
   const state = useMemo(() => ({
     rows: paginatedRows,
@@ -491,22 +509,22 @@ export function useDataGrid(props: UseDataGridProps = {}) {
     if (disabled) return;
 
     const newSort = { column, direction };
-    setSort(newSort);
+    if (!isSortControlled) setSort(newSort);
     onSortChange?.(newSort);
-  }, [disabled, onSortChange]);
+  }, [disabled, isSortControlled, onSortChange]);
 
   const handleFilter = useCallback((column: string, value: any, operator: GridFilter['operator'] = 'contains') => {
     if (disabled) return;
 
     const newFilter = { column, value, operator };
-    setFilter(newFilter);
+    if (!isFilterControlled) setFilter(newFilter);
     onFilterChange?.(newFilter);
 
     // Reset to first page when filtering
     if (!isPaginationControlled) {
       setPagination(prev => ({ ...prev, page: 1 }));
     }
-  }, [disabled, onFilterChange, isPaginationControlled]);
+  }, [disabled, isFilterControlled, onFilterChange, isPaginationControlled]);
 
   const handlePagination = useCallback((page: number, pageSize?: number) => {
     if (disabled) return;
@@ -516,9 +534,9 @@ export function useDataGrid(props: UseDataGridProps = {}) {
       page,
       ...(pageSize && { pageSize, totalPages: Math.ceil(pagination.total / pageSize) })
     };
-    setPagination(newPagination);
+    if (!isPaginationControlled) setPagination(newPagination);
     onPaginationChange?.(newPagination);
-  }, [disabled, pagination, onPaginationChange, isPaginationControlled]);
+  }, [disabled, pagination, isPaginationControlled, onPaginationChange]);
 
   const handleSelection = useCallback((rowIds: string[], mode: 'single' | 'multiple' = 'multiple') => {
     if (disabled) return;
@@ -527,9 +545,9 @@ export function useDataGrid(props: UseDataGridProps = {}) {
       selectedRows: rowIds,
       mode
     };
-    setSelection(newSelection);
+    if (!isSelectionControlled) setSelection(newSelection);
     onSelectionChange?.( newSelection);
-  }, [disabled, onSelectionChange]);
+  }, [disabled, isSelectionControlled, onSelectionChange]);
 
   const handleRowClick = useCallback((row: GridRow, event: React.MouseEvent) => {
     if (disabled || row.disabled) return;
