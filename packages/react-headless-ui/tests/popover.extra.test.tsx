@@ -91,15 +91,15 @@ describe('Popover (extra)', () => {
     expect(screen.queryByTestId('popover-content')).not.toBeInTheDocument();
   });
 
-  it('reflects disabled state via trigger classes and aria', () => {
+  it('reflects disabled state via trigger attributes and aria', () => {
     render(
       <Popover disabled trigger={<span>t</span>}>
         <span>x</span>
       </Popover>
     );
     const trigger = screen.getByTestId('popover-trigger');
-    expect(trigger).toHaveClass('opacity-50');
-    expect(trigger).toHaveClass('cursor-not-allowed');
+    // Headless-only: disabled is exposed via tabindex=-1, not visual classes.
+    expect(trigger).toHaveAttribute('tabindex', '-1');
   });
 
   it('fires onClose when the popover closes via Escape', async () => {

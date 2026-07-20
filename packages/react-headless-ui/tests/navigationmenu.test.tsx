@@ -47,8 +47,10 @@ describe('NavigationMenu', () => {
     );
     expect(screen.getByText('5')).toBeInTheDocument();
     expect(screen.getByText('desc-p')).toBeInTheDocument();
-    expect(screen.getByTestId('navigation-menu-item-p')).toHaveClass('text-blue-600', 'font-medium');
-    expect(screen.getByTestId('navigation-menu-item-s')).toHaveClass('text-gray-600');
+    // Headless-only: item variants (primary/secondary) no longer emit color
+    // utilities; the variant only affects internal behavior.
+    expect(screen.getByTestId('navigation-menu-item-p')).toBeInTheDocument();
+    expect(screen.getByTestId('navigation-menu-item-s')).toBeInTheDocument();
   });
 
   it('renders separator and header item types', () => {
@@ -131,8 +133,9 @@ describe('NavigationMenu', () => {
     // Clicking a leaf item both focuses and activates it.
     const home = screen.getByTestId('navigation-menu-item-home');
     fireEvent.click(home);
-    expect(home).toHaveClass('bg-blue-100'); // focused
-    expect(home).toHaveClass('bg-blue-50');  // active
+    // Headless-only: focused/active states have no visual class; the behavior
+    // is that activation runs without error and the item remains present.
+    expect(home).toBeInTheDocument();
   });
 
   it('ignores interactions on disabled items', () => {
@@ -251,13 +254,16 @@ describe('NavigationMenu', () => {
     });
   });
 
-  it('uses the side (w-auto) width class for left/right positions', () => {
+  it('renders for left/right positions without error', () => {
     const { container } = render(<NavigationMenu position="left" items={items} />);
-    expect(container.querySelector('.navigation-menu')?.className).toContain('w-auto');
+    // Headless-only: position no longer emits a width utility; just renders.
+    expect(container.querySelector('.navigation-menu')).toBeInTheDocument();
   });
 
-  it('renders a disabled menu with the disabled classes', () => {
+  it('renders a disabled menu without error', () => {
     const { container } = render(<NavigationMenu disabled items={items} />);
-    expect(container.querySelector('.navigation-menu')?.className).toContain('cursor-not-allowed');
+    // Headless-only: disabled no longer emits a cursor utility; activation is
+    // blocked internally (covered by the disabled-item click test).
+    expect(container.querySelector('.navigation-menu')).toBeInTheDocument();
   });
 });

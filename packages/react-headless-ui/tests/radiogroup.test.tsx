@@ -48,11 +48,13 @@ describe('RadioGroup', () => {
       />
     );
     const group = screen.getByTestId('radio-group');
-    expect(group.className).toContain('flex');
-    expect(group.className).toContain('cursor-not-allowed');
+    // Headless-only: orientation is exposed via aria-orientation, not flex.
+    expect(group).toHaveAttribute('aria-orientation', 'horizontal');
+    // Headless-only: disabled is exposed via aria-disabled, not a cursor class.
+    expect(group).toHaveAttribute('aria-disabled', 'true');
     expect(screen.getByText('First letter')).toBeInTheDocument();
-    // disabled option shows not-allowed cursor
-    expect(screen.getByTestId('radio-option-a').className).toContain('cursor-not-allowed');
+    // Headless-only: a disabled option is exposed via aria-disabled, not a cursor class.
+    expect(screen.getByTestId('radio-option-a')).toHaveAttribute('aria-disabled', 'true');
   });
 
   it('marks the selected option and a custom renderOption', () => {
@@ -77,7 +79,7 @@ describe('RadioGroup', () => {
     expect(container.firstChild).toBeNull();
   });
 
-  it('renders the disabled description in gray', () => {
+  it('renders the description when the group is disabled', () => {
     render(
       <RadioGroup
         options={['a']}
@@ -86,6 +88,8 @@ describe('RadioGroup', () => {
       />
     );
     const desc = screen.getByText('desc');
-    expect(desc.className).toContain('text-gray-400');
+    // Headless-only: disabled no longer grays out the description via a class;
+    // the behavior is that the description still renders.
+    expect(desc).toBeInTheDocument();
   });
 });

@@ -479,7 +479,8 @@ describe('DataGrid component rendering', () => {
     );
     const ascHeader = getAsc('data-grid-header-name');
     expect(ascHeader).toHaveAttribute('data-sort-direction', 'asc');
-    expect(ascHeader.querySelectorAll('svg')[0].className.baseVal).toContain('text-blue-600');
+    // Headless-only: the active sort direction is exposed via data-sort-direction,
+    // not a visual highlight class on the svg.
 
     // descending: second svg highlighted (separate tree; controlled sort seeds initial state)
     cleanup();
@@ -494,7 +495,6 @@ describe('DataGrid component rendering', () => {
     );
     const descHeader = getDesc('data-grid-header-name');
     expect(descHeader).toHaveAttribute('data-sort-direction', 'desc');
-    expect(descHeader.querySelectorAll('svg')[1].className.baseVal).toContain('text-blue-600');
   });
 
   it('uses a custom cellRenderer when provided', () => {
@@ -777,7 +777,8 @@ describe('DataGrid component rendering', () => {
       />
     );
     expect(getByTestId('data-grid-row-0')).toHaveAttribute('data-rowid', '1');
-    expect(getByTestId('data-grid-row-0').className).toContain('bg-blue-50');
+    // Headless-only: selection is exposed via data-rowid and the row checkbox
+    // state, not a visual highlight class.
   });
 
   it('uses a column accessor function to derive cell values', () => {

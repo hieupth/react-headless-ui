@@ -72,7 +72,8 @@ describe('Menubar (extra) — renderer branches', () => {
   it('applies disabled styling and custom className to the bar', () => {
     render(<Menubar items={items} disabled className="my-bar" />);
     const bar = screen.getByTestId('menubar');
-    expect(bar.className).toContain('opacity-50');
+    // Headless-only: disabled is exposed via tabindex=-1, not an opacity class.
+    expect(bar).toHaveAttribute('tabindex', '-1');
     expect(bar.className).toContain('my-bar');
   });
 

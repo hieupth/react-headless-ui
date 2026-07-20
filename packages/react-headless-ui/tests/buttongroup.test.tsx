@@ -75,7 +75,8 @@ describe('ButtonGroup', () => {
       />
     );
     const group = screen.getByRole('group');
-    expect(group.className).toContain('opacity-50');
+    // Headless-only: disabled state is exposed via the per-button disabled
+    // attribute, not a visual opacity class on the group.
     expect(screen.getAllByRole('button').every((b) => b.hasAttribute('disabled'))).toBe(true);
   });
 

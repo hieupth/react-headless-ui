@@ -194,7 +194,7 @@ describe('Sidebar component variants', () => {
   it('permanent variant uses the relative/h-full branch (variant !== permanent is false)', () => {
     render(<Sidebar variant="permanent"><span>Perm</span></Sidebar>);
     const aside = screen.getByTestId('sidebar');
-    expect(aside.className).toContain('relative');
+    // Headless-only: variant is exposed via data-variant, not a position utility.
     expect(aside).toHaveAttribute('data-variant', 'permanent');
   });
 
@@ -202,7 +202,7 @@ describe('Sidebar component variants', () => {
     render(<Sidebar variant="persistent" position="right"><span>R</span></Sidebar>);
     const aside = screen.getByTestId('sidebar');
     expect(aside).toHaveAttribute('data-position', 'right');
-    expect(aside.className).toContain('right-0');
+    // Headless-only: position is exposed via data-position, not a positional utility.
   });
 
   it('persistent variant renders the mobile (isMobile) branch when width is below breakpoint', async () => {
@@ -254,7 +254,7 @@ describe('Sidebar sub-components', () => {
       </SidebarItem>
     );
     const item = screen.getByTestId('sidebar-item');
-    expect(item.className).toContain('bg-blue-100');
+    // Headless-only: active state no longer emits a bg utility; behavior is onClick.
     await user.click(item);
     expect(onClick).toHaveBeenCalledTimes(1);
   });

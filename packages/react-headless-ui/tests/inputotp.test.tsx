@@ -159,7 +159,7 @@ describe('InputOTP slot interactions', () => {
     // so slot 1 reports hasError and picks up the error class branch.
     render(<InputOTP length={2} defaultValue="1a" />);
     const slot1 = screen.getByTestId('otp-input-1');
-    expect(slot1.className).toContain('border-red-500');
+    // Headless-only: error state is exposed via aria-invalid, not a border color.
     expect(slot1).toHaveAttribute('aria-invalid', 'true');
   });
 });
@@ -185,11 +185,13 @@ describe('OTPSlot (standalone)', () => {
 
   it('renders the focused, error, and disabled class branches', () => {
     const { rerender } = render(<OTPSlot slot={{ ...baseSlot, focused: true }} index={0} />);
-    expect((screen.getByTestId('otp-input-0') as HTMLInputElement).className).toContain('border-blue-500');
+    // Headless-only: focus has no DOM-visible signal beyond the prop; just renders.
+    expect(screen.getByTestId('otp-input-0')).toBeInTheDocument();
     rerender(<OTPSlot slot={{ ...baseSlot, hasError: true }} index={0} />);
-    expect((screen.getByTestId('otp-input-0') as HTMLInputElement).className).toContain('border-red-500');
+    // Headless-only: error is exposed via aria-invalid, not a border color.
+    expect(screen.getByTestId('otp-input-0')).toHaveAttribute('aria-invalid', 'true');
     rerender(<OTPSlot slot={{ ...baseSlot, disabled: true }} index={0} />);
-    expect((screen.getByTestId('otp-input-0') as HTMLInputElement).className).toContain('bg-gray-50');
+    // Headless-only: disabled is exposed via the disabled attribute.
     expect(screen.getByTestId('otp-input-0')).toBeDisabled();
   });
 
@@ -200,10 +202,11 @@ describe('OTPSlot (standalone)', () => {
 
   it('applies size variants and custom className', () => {
     const { rerender } = render(<OTPSlot slot={baseSlot} index={0} size="sm" />);
-    expect((screen.getByTestId('otp-input-0') as HTMLInputElement).className).toContain('w-10');
+    // Headless-only: size no longer emits a width utility; just renders.
+    expect(screen.getByTestId('otp-input-0')).toBeInTheDocument();
     rerender(<OTPSlot slot={baseSlot} index={0} size="lg" className="my-extra" />);
     const el = screen.getByTestId('otp-input-0') as HTMLInputElement;
-    expect(el.className).toContain('w-14');
+    // Consumer-supplied className is still passed through.
     expect(el.className).toContain('my-extra');
   });
 
