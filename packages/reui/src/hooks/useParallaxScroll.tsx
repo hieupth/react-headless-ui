@@ -79,7 +79,7 @@ export function useParallaxScroll(props: UseParallaxScrollProps = {}): UseParall
     easing = (t: number) => t, // Linear easing by default
     useDeviceOrientation = false,
     onParallaxChange,
-    container = window
+    container
   } = props;
 
   // Refs
@@ -227,7 +227,7 @@ export function useParallaxScroll(props: UseParallaxScrollProps = {}): UseParall
       return;
     }
 
-    const scrollPos = container === window
+    const scrollPos = !container || container === window
       ? window.pageYOffset
       : (container as HTMLElement).scrollTop;
 
@@ -356,7 +356,7 @@ export function useParallaxScroll(props: UseParallaxScrollProps = {}): UseParall
     }
 
     // Scroll listener
-    const scrollContainer = container === window ? window : container as HTMLElement;
+    const scrollContainer = !container || container === window ? window : container as HTMLElement;
     scrollContainer.addEventListener('scroll', handleScroll, { passive: true });
 
     // Device orientation listener

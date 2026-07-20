@@ -1,3 +1,5 @@
+'use client';
+
 import { Textarea } from '@hieupth/reui';
 import { Demo } from '@/components/demo';
 import { PropsTable } from '@/components/props-table';
