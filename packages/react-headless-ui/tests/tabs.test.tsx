@@ -345,31 +345,37 @@ describe('Tabs renderer', () => {
     }
   });
 
-  it('renders the bottom position with vertical orientation (flex branch)', () => {
+  it('renders the bottom position with vertical orientation (container branch)', () => {
     const { container } = render(
       <Tabs items={renderItems} defaultValue="a" tabPosition="bottom" orientation="vertical" />
     );
-    // bottom + vertical -> tabs-container picks up the `flex` class
-    expect(container.querySelector('.tabs-container')?.className).toContain('flex');
+    // Headless: layout classes are removed; the tabs-container still renders for
+    // bottom+vertical, and the tablist reports the vertical orientation.
+    expect(container.querySelector('.tabs-container')).not.toBeNull();
+    expect(screen.getByRole('tablist')).toHaveAttribute('aria-orientation', 'vertical');
   });
 
   it('renders a vertical tab list for vertical orientation', () => {
-    const { container } = render(<Tabs items={renderItems} defaultValue="a" orientation="vertical" />);
-    expect(container.querySelector('.flex-col')).not.toBeNull();
+    render(<Tabs items={renderItems} defaultValue="a" orientation="vertical" />);
+    // Headless: the flex-col layout class is removed; assert the tablist carries
+    // the vertical orientation semantics.
+    expect(screen.getByRole('tablist')).toHaveAttribute('aria-orientation', 'vertical');
   });
 
   it('renders a vertical layout for the left/right content positions', () => {
-    // left position with vertical orientation exercises the flex-col branch
+    // left position with vertical orientation exercises the tabs-container branch
     const { unmount } = render(
       <Tabs items={renderItems} defaultValue="a" tabPosition="left" orientation="vertical" />
     );
-    expect(screen.getByRole('tablist')).toBeInTheDocument();
+    expect(screen.getByRole('tablist')).toHaveAttribute('aria-orientation', 'vertical');
     unmount();
-    // right position with vertical orientation exercises the flex-col-reverse branch
+    // right position with vertical orientation exercises the reverse container branch
     const { container } = render(
       <Tabs items={renderItems} defaultValue="a" tabPosition="right" orientation="vertical" />
     );
-    expect(container.querySelector('.flex-col-reverse')).not.toBeNull();
+    // Headless: the flex-col-reverse class is removed; the container still renders.
+    expect(container.querySelector('.tabs-container')).not.toBeNull();
+    expect(screen.getByRole('tablist')).toHaveAttribute('aria-orientation', 'vertical');
   });
 
   it('uses a custom render prop instead of the default layout', () => {

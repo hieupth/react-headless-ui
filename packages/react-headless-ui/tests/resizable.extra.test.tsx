@@ -25,9 +25,9 @@ describe('Resizable (extra)', () => {
     expect(el).toHaveClass('resizable-sm');
     expect(el).toHaveClass('resizable-primary');
     expect(el).toHaveClass('resizable-handles-visible');
-    const handle = getHandle('right');
-    expect(handle).toHaveClass('resize-handle-sm');
-    expect(handle).toHaveClass('resize-handle-primary');
+    // Headless: the handle element no longer carries resize-handle-sm/primary
+    // classes; assert the handle still renders for the configured side.
+    expect(getHandle('right')).toBeInTheDocument();
   });
 
   it('applies handleSize lg and handleColor secondary', () => {
@@ -42,8 +42,9 @@ describe('Resizable (extra)', () => {
         <span>x</span>
       </Resizable>
     );
-    expect(getHandle('right')).toHaveClass('resize-handle-lg');
-    expect(getHandle('right')).toHaveClass('resize-handle-secondary');
+    // Headless: the handle's resize-handle-lg/secondary classes are removed;
+    // the container still reflects size/color.
+    expect(getHandle('right')).toBeInTheDocument();
     expect(screen.getByTestId('resizable')).toHaveClass('resizable-lg');
     expect(screen.getByTestId('resizable')).toHaveClass('resizable-secondary');
   });
@@ -55,7 +56,9 @@ describe('Resizable (extra)', () => {
       </Resizable>
     );
     expect(screen.getByTestId('resizable')).toHaveClass('resizable-disabled');
-    expect(getHandle('right')).toHaveClass('resize-handle-disabled');
+    // Headless: the handle's resize-handle-disabled class is removed; the handle
+    // still renders.
+    expect(getHandle('right')).toBeInTheDocument();
   });
 
   it('uses a custom renderHandle', () => {
@@ -135,8 +138,9 @@ describe('Resizable (extra)', () => {
       </Resizable>
     );
     const handle = getHandle('bottom-left');
-    // corner handles render the corner dots
-    expect(handle.querySelector('.resize-handle-corner')).toBeInTheDocument();
+    // Headless: the corner-handle's resize-handle-corner dot class is removed;
+    // the corner handle still renders (a composite handle named bottom-left).
+    expect(handle).toBeInTheDocument();
     act(() => {
       fireEvent.keyDown(handle, { key: 'ArrowRight', shiftKey: true });
     });

@@ -71,8 +71,11 @@ describe('Tooltip renderer paths', () => {
       </Tooltip>
     );
     fireEvent.click(screen.getByRole('button', { name: 'Arw' }));
-    // default arrow is a div with border-gray-900 class
-    expect(document.querySelector('.border-gray-900')).toBeInTheDocument();
+    // Headless: the arrow's border-gray-900 class is removed; the default arrow
+    // still renders a div with an inline border style.
+    const tip = screen.getByText('Arrow tip');
+    const arrow = tip.parentElement!.querySelector('div[style*="border-style"], div[style*="borderStyle"]');
+    expect(arrow).not.toBeNull();
   });
 
   it('uses custom renderArrow and renderContent when provided', () => {
@@ -94,36 +97,38 @@ describe('Tooltip renderer paths', () => {
     expect(screen.getByTestId('custom-arrow')).toBeInTheDocument();
   });
 
-  it('applies the `showing` opacity-0 class while open with a pending delayShow', () => {
+  it('keeps content mounted during the delayShow window then stays open', () => {
     // Controlled open=true + hover trigger + delayShow>0: hovering calls show(),
     // which sets showing=true for the delay window. Because open is controlled the
-    // content mounts immediately, so it shows the showing (opacity-0) class.
+    // content mounts immediately. Headless: the opacity classes are removed, so
+    // assert the content stays mounted through the showing phase and beyond.
     render(
       <Tooltip content="Delayed" open trigger="hover" delayShow={500} delayHide={0}>
         <button>D</button>
       </Tooltip>
     );
     fireEvent.mouseEnter(screen.getByRole('button', { name: 'D' }));
-    expect(screen.getByText('Delayed').closest('.absolute')?.className).toContain('opacity-0');
+    expect(screen.getByText('Delayed')).toBeInTheDocument();
     act(() => {
       vi.advanceTimersByTime(500);
     });
-    // after delay elapses, showing=false, hiding=false -> opacity-100
-    expect(screen.getByText('Delayed').closest('.absolute')?.className).toContain('opacity-100');
+    // after the delay elapses the content remains mounted (open).
+    expect(screen.getByText('Delayed')).toBeInTheDocument();
   });
 
-  it('applies the `hiding` opacity-0 class during the delayHide window', () => {
+  it('keeps content mounted during the delayHide window then unmounts', () => {
     render(
       <Tooltip content="Hide me" trigger="click" delayShow={0} delayHide={500}>
         <button>H</button>
       </Tooltip>
     );
     fireEvent.click(screen.getByRole('button', { name: 'H' }));
-    expect(screen.getByText('Hide me').closest('.absolute')?.className).toContain('opacity-100');
+    expect(screen.getByText('Hide me')).toBeInTheDocument();
     // trigger hide
     fireEvent.click(screen.getByRole('button', { name: 'H' }));
-    // hiding phase: still mounted with opacity-0
-    expect(screen.getByText('Hide me').closest('.absolute')?.className).toContain('opacity-0');
+    // Headless: the opacity classes are removed; during the hiding phase the
+    // content stays mounted.
+    expect(screen.getByText('Hide me')).toBeInTheDocument();
     act(() => {
       vi.advanceTimersByTime(500);
     });

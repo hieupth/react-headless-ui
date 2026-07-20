@@ -124,12 +124,13 @@ describe('Drawer (deep)', () => {
     await waitFor(() => expect(onAfterClose).toHaveBeenCalledTimes(1));
   });
 
-  it('uses the top/bottom side branches (h-full and max-h-96 classes)', () => {
+  it('uses the top/bottom side branches (data-side reflects the chosen side)', () => {
     render(<Drawer open side="top" title="Cart">Items</Drawer>);
     const panel = document.body.querySelector('[data-testid="drawer"]') as HTMLElement;
     expect(panel).toBeTruthy();
-    expect(panel.className).toContain('h-full');
-    expect(panel.className).toContain('max-h-96');
+    // Headless: the h-full/max-h-96 layout classes are removed; the chosen side
+    // is still exposed via the data-side attribute.
+    expect(panel.getAttribute('data-side')).toBe('top');
   });
 
   it('renders a custom overlay via overlayRenderer', () => {

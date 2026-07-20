@@ -83,7 +83,8 @@ describe('RotateIn renderer (extra)', () => {
     );
     const node = container.querySelector('[data-testid="rotate-in"]') as HTMLElement;
     expect(node.className).toContain('extra');
-    expect(node.className).toContain('rotate-in');
+    // Headless: the rotate-in base class is removed; the node still carries the
+    // consumer className and renders children.
     expect(container.textContent).toContain('child');
   });
 

@@ -233,49 +233,61 @@ describe('Slider (rendering branches)', () => {
 
   it('disables animations when animated=false', () => {
     const { container } = render(<Slider defaultValue={10} animated={false} min={0} max={100} />);
-    const track = container.querySelector('.relative.h-3')!;
-    expect(track.className).not.toContain('transition-all');
+    // Headless: the track no longer carries layout classes; assert no
+    // transition-all class is emitted anywhere when animated is false.
+    expect(container.innerHTML).not.toContain('transition-all');
   });
 
   it('renders a tooltip when showTooltip=true', () => {
-    const { container } = render(
+    render(
       <Slider defaultValue={42} showTooltip min={0} max={100} />
     );
-    const tooltip = container.querySelector('.whitespace-nowrap')!;
-    expect(tooltip.textContent).toBe('42');
+    // Headless: the tooltip div no longer carries whitespace-nowrap; assert the
+    // thumb renders the current value as its tooltip text.
+    expect(screen.getByText('42')).toBeInTheDocument();
   });
 
   it('applies a custom color to the range and thumb border', () => {
     const { container } = render(
       <Slider defaultValue={10} color="red" min={0} max={100} />
     );
-    // range uses the color verbatim as a class; thumb border uses border-${color}-600.
-    const range = container.querySelector('.absolute.h-full')!;
-    expect(range.className).toContain('red');
+    // Headless: the range still carries the color verbatim as a class and is
+    // positioned via inline style (left/width); the thumb border keeps
+    // border-${color}-600. Anchor the range by its positioning style.
+    const range = Array.from(container.querySelectorAll('div')).find(
+      (d) => d.style.left !== '' && d.style.width !== ''
+    );
+    expect(range).toBeDefined();
+    expect(range!.className).toContain('red');
     expect(container.innerHTML).toContain('border-red-600');
   });
 
   it('renders value labels for a single-value (horizontal) slider', () => {
-    const { container } = render(
+    render(
       <Slider defaultValue={42} showValueLabels min={0} max={100} />
     );
-    const labels = container.querySelector('.flex.justify-between')!;
-    expect(labels.textContent).toBe('42');
+    // Headless: the labels container no longer carries flex classes; assert the
+    // value renders as label text.
+    expect(screen.getByText('42')).toBeInTheDocument();
   });
 
   it('renders two value labels for a range slider', () => {
-    const { container } = render(
+    render(
       <Slider defaultValue={[20, 80]} showValueLabels isRange min={0} max={100} />
     );
-    const labels = container.querySelector('.flex.justify-between')!;
-    expect(labels.textContent).toBe('2080');
+    // Headless: both range values render as label text.
+    expect(screen.getByText('20')).toBeInTheDocument();
+    expect(screen.getByText('80')).toBeInTheDocument();
   });
 
   it('renders value labels in a column for a vertical slider', () => {
     const { container } = render(
       <Slider defaultValue={42} showValueLabels orientation="vertical" min={0} max={100} />
     );
-    expect(container.querySelector('.flex-col')).not.toBeNull();
+    // Headless: the column layout class is removed; assert the value label still
+    // renders for the vertical orientation.
+    expect(screen.getByText('42')).toBeInTheDocument();
+    expect(container.firstChild).not.toBeNull();
   });
 
   it('renders a vertical slider with the thumb positioned by bottom', () => {
@@ -336,9 +348,10 @@ describe('Slider (rendering branches)', () => {
     expect(container.querySelector('[data-testid="custom-slider"]')!.getAttribute('data-value')).toBe('10');
   });
 
-  it('renders the dragging thumb class during a mouse drag', () => {
-    const { container } = render(
-      <Slider defaultValue={0} min={0} max={100} />
+  it('engages a drag on mousedown and updates the active thumb value', () => {
+    const onValueChange = vi.fn();
+    render(
+      <Slider defaultValue={0} min={0} max={100} onValueChange={onValueChange} />
     );
     const track = screen.getAllByRole('slider')[0];
     stubRect(track, { left: 0, width: 100, bottom: 0, height: 0 });
@@ -347,8 +360,9 @@ describe('Slider (rendering branches)', () => {
         new MouseEvent('mousedown', { bubbles: true, clientX: 40, clientY: 0 })
       );
     });
-    // The single thumb (index 0) becomes the dragging thumb.
-    expect(container.innerHTML).toContain('scale-110');
+    // Headless: the dragging thumb's scale-110 class is removed; assert the drag
+    // engaged by verifying the active thumb's value updated to the click position.
+    expect(onValueChange).toHaveBeenCalledWith(40);
   });
 });
 

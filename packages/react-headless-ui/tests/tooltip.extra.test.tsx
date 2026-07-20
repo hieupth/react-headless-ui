@@ -117,8 +117,9 @@ describe('Tooltip arrow, className and style', () => {
     );
     await user.hover(screen.getByRole('button', { name: 'Hover me' }));
     const tip = await screen.findByText('Tip');
-    // defaultArrowRender adds a div with border-gray-900 class
-    expect(tip.parentElement?.querySelector('.border-gray-900')).not.toBeNull();
+    // Headless: the arrow's border-gray-900 class is removed; the default arrow
+    // still renders a div with an inline border style..
+    expect(tip.parentElement?.querySelector('div[style*="border-style"], div[style*="borderStyle"]')).not.toBeNull();
   });
 
   it('does not render an arrow when arrow is false', async () => {
@@ -130,7 +131,7 @@ describe('Tooltip arrow, className and style', () => {
     );
     await user.hover(screen.getByRole('button', { name: 'Hover me' }));
     const tip = await screen.findByText('Tip');
-    expect(tip.parentElement?.querySelector('.border-gray-900')).toBeNull();
+    expect(tip.parentElement?.querySelector('div[style*="border-style"], div[style*="borderStyle"]')).toBeNull();
   });
 
   it('applies custom className and style to the tooltip content', async () => {
@@ -286,8 +287,10 @@ describe('RichTooltip', () => {
         <button>Hover me</button>
       </RichTooltip>
     );
-    // Still renders without error; the rich container exists
-    expect(document.querySelector('.max-w-sm')).not.toBeNull();
+    // Headless: the max-w-sm container class is removed; assert the tooltip still
+    // renders without error and no title/description/actions nodes leak in.
+    expect(screen.getByRole('button', { name: 'Hover me' })).toBeInTheDocument();
+    expect(screen.queryByText(/Title|Description|actions/i)).not.toBeInTheDocument();
   });
 
   it('is interactive and reveals on hover', async () => {

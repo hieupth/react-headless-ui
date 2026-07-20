@@ -190,20 +190,25 @@ describe('useCard', () => {
     expect(container.querySelector('#card-description')).not.toBeNull();
   });
 
-  it('applies the hover lift classes when hovered on a hoverable card', () => {
+  it('flips the hovered state when a hoverable card is mouse-entered', () => {
     const { container } = render(
       <Card hoverable interactive title="T">x</Card>
     );
     const root = container.firstChild as HTMLElement;
     fireEvent.mouseEnter(root);
-    expect((root.className)).toContain('shadow-lg');
+    // Headless: hover styling is removed; the hovered state is exposed via
+    // the data-hovered attribute on the card root.
+    expect(root.getAttribute('data-hovered')).toBe('true');
   });
 
-  it('applies focus ring classes when an interactive card is focused', () => {
-    const { container } = render(
-      <Card interactive defaultFocused title="T">x</Card>
-    );
-    const root = container.firstChild as HTMLElement;
-    expect(root.className).toContain('ring-blue-500');
+  it('reflects the focused state for an interactive card', () => {
+    let result: any;
+    const Probe = () => {
+      result = useCard({ interactive: true, defaultFocused: true });
+      return null;
+    };
+    render(<Probe />);
+    // Headless: the focus-ring styling is removed; assert the focused flag is set.
+    expect(result.focused).toBe(true);
   });
 });

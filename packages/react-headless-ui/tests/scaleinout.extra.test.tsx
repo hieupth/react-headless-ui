@@ -9,30 +9,35 @@ import { ScaleInOut } from '../src/components/ScaleInOut';
 // render so the `animate="scaleOut"` branch executes.
 
 describe('ScaleInOut renderer (extra branches)', () => {
-  it('renders the motion container with the active class when initialActive', () => {
+  it('renders the motion container when initialActive', () => {
     const { container } = render(<ScaleInOut initialActive>content</ScaleInOut>);
     const el = container.querySelector('[data-testid="scale-in-out"]') as HTMLElement;
     expect(el).not.toBeNull();
-    expect(el.className).toContain('scale-in-out-active');
+    // Headless: the scale-in-out-active class is removed; the active state still
+    // drives the framer-motion animate prop (covered by hook tests).
+    expect(container.textContent).toContain('content');
   });
 
-  it('renders the inactive class by default', () => {
+  it('renders the inactive node by default', () => {
     const { container } = render(<ScaleInOut>content</ScaleInOut>);
     const el = container.querySelector('[data-testid="scale-in-out"]') as HTMLElement;
-    expect(el.className).toContain('scale-in-out-inactive');
+    // Headless: the scale-in-out-inactive class is removed; the node still renders.
+    expect(el).not.toBeNull();
   });
 
-  it('renders the paused and complete classes when those states are set', () => {
+  it('renders without error when paused/complete states are set', () => {
     const { container, rerender } = render(
       <ScaleInOut initialActive paused>content</ScaleInOut>
     );
     let el = container.querySelector('[data-testid="scale-in-out"]') as HTMLElement;
-    expect(el.className).toContain('scale-in-out-paused');
+    // Headless: the scale-in-out-paused class is removed; the node still renders.
+    expect(el).not.toBeNull();
     rerender(
       <ScaleInOut initialActive complete>content</ScaleInOut>
     );
     el = container.querySelector('[data-testid="scale-in-out"]') as HTMLElement;
-    expect(el.className).toContain('scale-in-out-complete');
+    // Headless: the scale-in-out-complete class is removed; the node still renders.
+    expect(el).not.toBeNull();
   });
 
   it('forwards custom className onto the rendered node', () => {
