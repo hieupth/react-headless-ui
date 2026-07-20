@@ -9,7 +9,7 @@
   ],
   "scripts": {
     "build": "pnpm --filter @hieupth/reui build",
-    "dev": "pnpm --filter example dev",
+    "dev": "pnpm --filter showcase dev",
     "test": "pnpm --filter @hieupth/reui test",
     "test:e2e": "playwright test --config examples/next-demo/playwright.config.ts",
     "typecheck": "pnpm -r run typecheck",

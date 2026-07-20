@@ -91,7 +91,7 @@ jobs:
       - name: Build package
         run: pnpm build
       - name: Build example (static export)
-        run: pnpm --filter example build
+        run: pnpm --filter showcase build
 
   # E2E: Playwright smoke tests against the example app. Runs on a real CI
   # runner (the dev sandbox blocks the Next dev server's network-interface
