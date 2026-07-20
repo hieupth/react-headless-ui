@@ -11,7 +11,13 @@ export default defineConfig({
   },
   // Type debt cleared (tsc --noEmit reports 0 errors); ship .d.ts to consumers.
   dts: true,
-  splitting: false,
+  // Enable ESM code-splitting (tsup only splits ESM; CJS stays a single chunk).
+  // NOTE: with a single synchronous entry point and no dynamic imports this is
+  // currently a no-op — esbuild only splits across multiple entries / dynamic
+  // imports. Reliable consumer tree-shaking today comes from ESM + sideEffects:
+  // false. To make unused exports drop from the dist bundle itself, switch to
+  // `bundle: false` (preserve per-module output).
+  splitting: true,
   sourcemap: true,
   clean: true,
   external: ['react', 'react-dom', 'framer-motion', 'react-hook-form'],
