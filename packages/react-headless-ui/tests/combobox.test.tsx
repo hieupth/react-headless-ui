@@ -224,45 +224,45 @@ describe('useCombobox (hook handlers)', () => {
 
   it('handleOpen / handleClose / handleToggle update open state', async () => {
     const res = setup({ options });
-    await act(async () => { await res.current.handlers.handleOpen(); });
-    expect(res.current.state.open).toBe(true);
-    await act(async () => { await res.current.handlers.handleToggle(); });
-    expect(res.current.state.open).toBe(false);
-    await act(async () => { await res.current.handlers.handleOpen(); });
-    await act(async () => { await res.current.handlers.handleClose(); });
-    expect(res.current.state.open).toBe(false);
+    await act(async () => { await res.current.handleOpen(); });
+    expect(res.current.open).toBe(true);
+    await act(async () => { await res.current.handleToggle(); });
+    expect(res.current.open).toBe(false);
+    await act(async () => { await res.current.handleOpen(); });
+    await act(async () => { await res.current.handleClose(); });
+    expect(res.current.open).toBe(false);
   });
 
   it('onBeforeOpen returning false prevents open', async () => {
     const res = setup({ options, onBeforeOpen: async () => false });
-    await act(async () => { await res.current.handlers.handleOpen(); });
-    expect(res.current.state.open).toBe(false);
+    await act(async () => { await res.current.handleOpen(); });
+    expect(res.current.open).toBe(false);
   });
 
   it('onBeforeClose returning false prevents close', async () => {
     const res = setup({ options, defaultOpen: true, onBeforeClose: async () => false });
-    await act(async () => { await res.current.handlers.handleClose(); });
-    expect(res.current.state.open).toBe(true);
+    await act(async () => { await res.current.handleClose(); });
+    expect(res.current.open).toBe(true);
   });
 
   it('handleSelect respects disabled options', () => {
     const onValueChange = vi.fn();
     const res = setup({ options, onValueChange });
-    act(() => res.current.handlers.handleSelect(options[3])); // disabled Date
+    act(() => res.current.handleSelect(options[3])); // disabled Date
     expect(onValueChange).not.toHaveBeenCalled();
   });
 
   it('handleOptionFocus sets selected index', () => {
     const res = setup({ options });
-    act(() => res.current.handlers.handleOptionFocus(1));
-    expect(res.current.state.selectedIndex).toBe(1);
+    act(() => res.current.handleOptionFocus(1));
+    expect(res.current.selectedIndex).toBe(1);
   });
 
   it('handleClear resets value and fires callbacks', () => {
     const onValueChange = vi.fn();
     const onClear = vi.fn();
     const res = setup({ options, onValueChange, onClear });
-    act(() => res.current.handlers.handleClear());
+    act(() => res.current.handleClear());
     expect(onValueChange).toHaveBeenCalledWith(null);
     expect(onClear).toHaveBeenCalled();
   });
@@ -270,30 +270,30 @@ describe('useCombobox (hook handlers)', () => {
   it('disabled prevents open and key handling', async () => {
     const onOpenChange = vi.fn();
     const res = setup({ options, disabled: true, onOpenChange });
-    await act(async () => { await res.current.handlers.handleOpen(); });
-    expect(res.current.state.open).toBe(false);
-    act(() => res.current.handlers.handleInputKeyDown({ key: 'ArrowDown', preventDefault: () => {} } as any));
+    await act(async () => { await res.current.handleOpen(); });
+    expect(res.current.open).toBe(false);
+    act(() => res.current.handleInputKeyDown({ key: 'ArrowDown', preventDefault: () => {} } as any));
   });
 
   it('Backspace clears when input empty and showClearButton enabled', () => {
     const onValueChange = vi.fn();
     const res = setup({ options, showClearButton: true, onValueChange });
-    act(() => res.current.handlers.handleInputKeyDown({ key: 'Backspace', preventDefault: () => {} } as any));
+    act(() => res.current.handleInputKeyDown({ key: 'Backspace', preventDefault: () => {} } as any));
     expect(onValueChange).toHaveBeenCalledWith(null);
   });
 
   it('Tab closes an open listbox', async () => {
     const res = setup({ options, defaultOpen: true });
-    act(() => res.current.handlers.handleInputKeyDown({ key: 'Tab', preventDefault: () => {} } as any));
+    act(() => res.current.handleInputKeyDown({ key: 'Tab', preventDefault: () => {} } as any));
     // state.open reflects async close scheduling; just ensure no throw.
-    expect(res.current.handlers.handleInputKeyDown).toBeTruthy();
+    expect(res.current.handleInputKeyDown).toBeTruthy();
   });
 
   it('handleBeforeOpen / handleBeforeClose delegate to handlers', async () => {
     const res = setup({ options, onBeforeOpen: () => true, onBeforeClose: () => false });
     let v1: any, v2: any;
-    await act(async () => { v1 = await res.current.handlers.handleBeforeOpen(); });
-    await act(async () => { v2 = await res.current.handlers.handleBeforeClose(); });
+    await act(async () => { v1 = await res.current.handleBeforeOpen(); });
+    await act(async () => { v2 = await res.current.handleBeforeClose(); });
     expect(v1).toBe(true);
     expect(v2).toBe(false);
   });
@@ -301,8 +301,8 @@ describe('useCombobox (hook handlers)', () => {
   it('handleBeforeOpen / handleBeforeClose default to true when no handler is provided', async () => {
     const res = setup({ options });
     let v1: any, v2: any;
-    await act(async () => { v1 = await res.current.handlers.handleBeforeOpen(); });
-    await act(async () => { v2 = await res.current.handlers.handleBeforeClose(); });
+    await act(async () => { v1 = await res.current.handleBeforeOpen(); });
+    await act(async () => { v2 = await res.current.handleBeforeClose(); });
     expect(v1).toBe(true);
     expect(v2).toBe(true);
   });
@@ -310,23 +310,23 @@ describe('useCombobox (hook handlers)', () => {
   it('handleClose is a no-op when already closed', async () => {
     const onClose = vi.fn();
     const res = setup({ options, onClose });
-    await act(async () => { await res.current.handlers.handleClose(); });
+    await act(async () => { await res.current.handleClose(); });
     expect(onClose).not.toHaveBeenCalled();
   });
 
   it('handleToggle opens when closed', async () => {
     const res = setup({ options });
-    await act(async () => { await res.current.handlers.handleToggle(); });
-    expect(res.current.state.open).toBe(true);
+    await act(async () => { await res.current.handleToggle(); });
+    expect(res.current.open).toBe(true);
   });
 
   it('handleInputChange forwards to onInputChange when inputValue is controlled', () => {
     const onInputChange = vi.fn();
     const res = setup({ options, inputValue: 'x', onInputChange });
-    act(() => res.current.handlers.handleInputChange('y'));
+    act(() => res.current.handleInputChange('y'));
     expect(onInputChange).toHaveBeenCalledWith('y');
     // controlled value is authoritative
-    expect(res.current.state.inputValue).toBe('x');
+    expect(res.current.inputValue).toBe('x');
   });
 
   it('handleOptionFocus flattens grouped options by index', () => {
@@ -335,85 +335,85 @@ describe('useCombobox (hook handlers)', () => {
       { label: 'G2', options: [options[2]] },
     ];
     const res = setup({ groups });
-    act(() => res.current.handlers.handleOptionFocus(2));
-    expect(res.current.state.selectedIndex).toBe(2);
+    act(() => res.current.handleOptionFocus(2));
+    expect(res.current.selectedIndex).toBe(2);
   });
 
   it('ArrowDown opens the dropdown when closed; Escape closes when open', async () => {
     const res = setup({ options, closeOnEscape: true });
-    act(() => res.current.handlers.handleInputKeyDown({ key: 'ArrowDown', preventDefault: () => {} } as any));
-    expect(res.current.state.open).toBe(true);
-    act(() => res.current.handlers.handleInputKeyDown({ key: 'Escape', preventDefault: () => {} } as any));
-    expect(res.current.state.open).toBe(false);
+    act(() => res.current.handleInputKeyDown({ key: 'ArrowDown', preventDefault: () => {} } as any));
+    expect(res.current.open).toBe(true);
+    act(() => res.current.handleInputKeyDown({ key: 'Escape', preventDefault: () => {} } as any));
+    expect(res.current.open).toBe(false);
   });
 
   it('ArrowUp opens the dropdown when closed', () => {
     const res = setup({ options });
-    act(() => res.current.handlers.handleInputKeyDown({ key: 'ArrowUp', preventDefault: () => {} } as any));
-    expect(res.current.state.open).toBe(true);
+    act(() => res.current.handleInputKeyDown({ key: 'ArrowUp', preventDefault: () => {} } as any));
+    expect(res.current.open).toBe(true);
   });
 
   it('Tab closes an open dropdown', async () => {
     const res = setup({ options, defaultOpen: true });
-    act(() => res.current.handlers.handleInputKeyDown({ key: 'Tab', preventDefault: () => {} } as any));
-    expect(res.current.state.open).toBe(false);
+    act(() => res.current.handleInputKeyDown({ key: 'Tab', preventDefault: () => {} } as any));
+    expect(res.current.open).toBe(false);
   });
 
   it('ArrowDown/ArrowUp navigate the selected index within the open list', async () => {
     const res = setup({ options, defaultOpen: true });
     // sanity: defaultOpen makes the list open so the nav branches run
-    expect(res.current.state.open).toBe(true);
+    expect(res.current.open).toBe(true);
     // selectedIndex starts at -1; ArrowDown steps -1 -> 0 -> 1.
-    act(() => res.current.handlers.handleInputKeyDown({ key: 'ArrowDown', preventDefault: () => {} } as any));
-    expect(res.current.state.selectedIndex).toBe(0);
-    act(() => res.current.handlers.handleInputKeyDown({ key: 'ArrowDown', preventDefault: () => {} } as any));
-    expect(res.current.state.selectedIndex).toBe(1);
+    act(() => res.current.handleInputKeyDown({ key: 'ArrowDown', preventDefault: () => {} } as any));
+    expect(res.current.selectedIndex).toBe(0);
+    act(() => res.current.handleInputKeyDown({ key: 'ArrowDown', preventDefault: () => {} } as any));
+    expect(res.current.selectedIndex).toBe(1);
     // ArrowUp steps back: 1 -> 0.
-    act(() => res.current.handlers.handleInputKeyDown({ key: 'ArrowUp', preventDefault: () => {} } as any));
-    expect(res.current.state.selectedIndex).toBe(0);
+    act(() => res.current.handleInputKeyDown({ key: 'ArrowUp', preventDefault: () => {} } as any));
+    expect(res.current.selectedIndex).toBe(0);
   });
 
   it('ArrowDown wraps to first when at the last navigable option', () => {
     const res = setup({ options: [options[0], options[1]], defaultOpen: true });
-    act(() => res.current.handlers.handleOptionFocus(1));
-    act(() => res.current.handlers.handleInputKeyDown({ key: 'ArrowDown', preventDefault: () => {} } as any));
-    expect(res.current.state.selectedIndex).toBe(0);
+    act(() => res.current.handleOptionFocus(1));
+    act(() => res.current.handleInputKeyDown({ key: 'ArrowDown', preventDefault: () => {} } as any));
+    expect(res.current.selectedIndex).toBe(0);
   });
 
   it('ArrowUp wraps to last when at the first navigable option', () => {
     const res = setup({ options: [options[0], options[1]], defaultOpen: true });
-    act(() => res.current.handlers.handleOptionFocus(0));
-    act(() => res.current.handlers.handleInputKeyDown({ key: 'ArrowUp', preventDefault: () => {} } as any));
-    expect(res.current.state.selectedIndex).toBe(1);
+    act(() => res.current.handleOptionFocus(0));
+    act(() => res.current.handleInputKeyDown({ key: 'ArrowUp', preventDefault: () => {} } as any));
+    expect(res.current.selectedIndex).toBe(1);
   });
 
   it('Enter selects a custom value when the list is open but nothing is highlighted', () => {
     const onValueChange = vi.fn();
     const res = setup({ options, allowCustomValue: true, defaultInputValue: 'custom-y', defaultOpen: true, onValueChange });
     // selectedIndex stays -1 (nothing highlighted) -> custom value branch
-    act(() => res.current.handlers.handleInputKeyDown({ key: 'Enter', preventDefault: () => {} } as any));
+    act(() => res.current.handleInputKeyDown({ key: 'Enter', preventDefault: () => {} } as any));
     expect(onValueChange).toHaveBeenCalledWith('custom-y');
   });
 
   it('Tab closes an open listbox without selecting', () => {
     const res = setup({ options, defaultOpen: true });
-    act(() => res.current.handlers.handleInputKeyDown({ key: 'Tab', preventDefault: () => {} } as any));
-    expect(res.current.state.open).toBe(false);
+    act(() => res.current.handleInputKeyDown({ key: 'Tab', preventDefault: () => {} } as any));
+    expect(res.current.open).toBe(false);
   });
 
   it('Backspace clears when the input is empty and showClearButton is enabled', () => {
     const onClear = vi.fn();
     const res = setup({ options, defaultInputValue: '', showClearButton: true, onClear });
-    act(() => res.current.handlers.handleInputKeyDown({ key: 'Backspace', preventDefault: () => {} } as any));
+    act(() => res.current.handleInputKeyDown({ key: 'Backspace', preventDefault: () => {} } as any));
     expect(onClear).toHaveBeenCalled();
   });
 
   it('handleClose honors controlled open state (no internal mutation)', async () => {
     const onClose = vi.fn();
     const res = setup({ options, open: true, onClose });
-    await act(async () => { await res.current.handlers.handleClose(); });
+    await act(async () => { await res.current.handleClose(); });
     expect(onClose).toHaveBeenCalled();
-    expect(res.current.state.open).toBe(true);
+    expect(res.current.open).toBe(true);
   });
 
   it('rerendering with a different-content options array replaces the stable ref', () => {
@@ -466,28 +466,28 @@ describe('useCombobox (hook handlers)', () => {
       { id: 'x', label: 'X', value: 'x', disabled: true },
     ];
     const res = setup({ options: allDisabled, defaultOpen: true });
-    expect(() => act(() => res.current.handlers.handleInputKeyDown({ key: 'ArrowDown', preventDefault: () => {} } as any))).not.toThrow();
-    expect(() => act(() => res.current.handlers.handleInputKeyDown({ key: 'ArrowUp', preventDefault: () => {} } as any))).not.toThrow();
-    expect(res.current.state.selectedIndex).toBe(-1);
+    expect(() => act(() => res.current.handleInputKeyDown({ key: 'ArrowDown', preventDefault: () => {} } as any))).not.toThrow();
+    expect(() => act(() => res.current.handleInputKeyDown({ key: 'ArrowUp', preventDefault: () => {} } as any))).not.toThrow();
+    expect(res.current.selectedIndex).toBe(-1);
   });
 
   it('Enter on an open list with nothing highlighted and no custom value is a no-op', () => {
     const onValueChange = vi.fn();
     const res = setup({ options, defaultOpen: true, onValueChange });
-    act(() => res.current.handlers.handleInputKeyDown({ key: 'Enter', preventDefault: () => {} } as any));
+    act(() => res.current.handleInputKeyDown({ key: 'Enter', preventDefault: () => {} } as any));
     expect(onValueChange).not.toHaveBeenCalled();
   });
 
   it('Tab when closed leaves the dropdown closed', () => {
     const res = setup({ options });
-    act(() => res.current.handlers.handleInputKeyDown({ key: 'Tab', preventDefault: () => {} } as any));
-    expect(res.current.state.open).toBe(false);
+    act(() => res.current.handleInputKeyDown({ key: 'Tab', preventDefault: () => {} } as any));
+    expect(res.current.open).toBe(false);
   });
 
   it('Backspace with non-empty input does not clear', () => {
     const onClear = vi.fn();
     const res = setup({ options, defaultInputValue: 'text', showClearButton: true, onClear });
-    act(() => res.current.handlers.handleInputKeyDown({ key: 'Backspace', preventDefault: () => {} } as any));
+    act(() => res.current.handleInputKeyDown({ key: 'Backspace', preventDefault: () => {} } as any));
     expect(onClear).not.toHaveBeenCalled();
   });
 
@@ -498,7 +498,7 @@ describe('useCombobox (hook handlers)', () => {
       return <input ref={api!.inputAttributes.ref as any} data-testid="cb-input" />;
     }
     render(<Probe />);
-    await act(async () => { await api!.handlers.handleOpen(); });
+    await act(async () => { await api!.handleOpen(); });
     // handleOpen schedules focus + animation clear via setTimeout; let them flush.
     await act(async () => {
       await new Promise((r) => setTimeout(r, 250));
@@ -519,7 +519,7 @@ describe('useCombobox (hook handlers)', () => {
     const res = setup({ options });
     const attrs = res.current.getOptionAttributes(options[1], 1);
     act(() => attrs.onMouseEnter());
-    expect(res.current.state.selectedIndex).toBe(1);
+    expect(res.current.selectedIndex).toBe(1);
   });
 
   it('getOptionAttributes onClick selects only enabled options', () => {
@@ -534,60 +534,60 @@ describe('useCombobox (hook handlers)', () => {
 
   it('uses controlled value and resolves the selected option', () => {
     const res = setup({ options, value: options[1].value });
-    expect(res.current.state.value).toBe(options[1].value);
+    expect(res.current.value).toBe(options[1].value);
     // selecting under controlled value still fires onValueChange but does not mutate
     const onValueChange = vi.fn();
     const res2 = setup({ options, value: options[1].value, onValueChange });
-    act(() => res2.current.handlers.handleSelect(options[2]));
+    act(() => res2.current.handleSelect(options[2]));
     expect(onValueChange).toHaveBeenCalledWith(options[2].value);
-    expect(res2.current.state.value).toBe(options[1].value);
+    expect(res2.current.value).toBe(options[1].value);
   });
 
   it('selectedOption falls back to null when value matches no option', () => {
     const res = setup({ options, defaultValue: 'nonexistent' });
     // no matching option -> selectedOption null
-    expect(res.current.state.value).toBe('nonexistent');
+    expect(res.current.value).toBe('nonexistent');
   });
 
   it('uncontrolled handleSelect reflects the selection in state.value', () => {
     const onValueChange = vi.fn();
     const res = setup({ options, onValueChange });
     // uncontrolled -> starts at default (null)
-    expect(res.current.state.value).toBeNull();
-    act(() => res.current.handlers.handleSelect(options[2]));
+    expect(res.current.value).toBeNull();
+    act(() => res.current.handleSelect(options[2]));
     expect(onValueChange).toHaveBeenCalledWith(options[2].value);
     // regression: internal value state must now reflect the selection
-    expect(res.current.state.value).toBe(options[2].value);
+    expect(res.current.value).toBe(options[2].value);
     expect(res.current.selectedOption?.value).toBe(options[2].value);
     // selecting again updates to the new value
-    act(() => res.current.handlers.handleSelect(options[0]));
-    expect(res.current.state.value).toBe(options[0].value);
+    act(() => res.current.handleSelect(options[0]));
+    expect(res.current.value).toBe(options[0].value);
   });
 
   it('uncontrolled handleClear resets state.value to null', () => {
     const res = setup({ options, defaultValue: options[1].value });
-    expect(res.current.state.value).toBe(options[1].value);
-    act(() => res.current.handlers.handleClear());
-    expect(res.current.state.value).toBeNull();
+    expect(res.current.value).toBe(options[1].value);
+    act(() => res.current.handleClear());
+    expect(res.current.value).toBeNull();
     expect(res.current.selectedOption).toBeNull();
   });
 
   it('handleOpen/handleClose honor the controlled open state', async () => {
     const onOpenChange = vi.fn();
     const res = setup({ options, open: false, onOpenChange });
-    await act(async () => { await res.current.handlers.handleOpen(); });
+    await act(async () => { await res.current.handleOpen(); });
     expect(onOpenChange).toHaveBeenCalledWith(true);
     // controlled open stays false
-    expect(res.current.state.open).toBe(false);
+    expect(res.current.open).toBe(false);
   });
 
   it('onBeforeOpen/onBeforeClose returning true lets the open/close proceed', async () => {
     const onOpen = vi.fn();
     const onClose = vi.fn();
     const res = setup({ options, onBeforeOpen: async () => true, onBeforeClose: async () => true, onOpen, onClose });
-    await act(async () => { await res.current.handlers.handleOpen(); });
+    await act(async () => { await res.current.handleOpen(); });
     expect(onOpen).toHaveBeenCalled();
-    await act(async () => { await res.current.handlers.handleClose(); });
+    await act(async () => { await res.current.handleClose(); });
     expect(onClose).toHaveBeenCalled();
   });
 
@@ -595,38 +595,38 @@ describe('useCombobox (hook handlers)', () => {
     const onValueChange = vi.fn();
     const onInputChange = vi.fn();
     const res = setup({ options, value: options[0].value, inputValue: 'Apple', onValueChange, onInputChange });
-    act(() => res.current.handlers.handleClear());
+    act(() => res.current.handleClear());
     expect(onValueChange).toHaveBeenCalledWith(null);
     expect(onInputChange).toHaveBeenCalledWith('');
     // controlled value/input unchanged
-    expect(res.current.state.value).toBe(options[0].value);
-    expect(res.current.state.inputValue).toBe('Apple');
+    expect(res.current.value).toBe(options[0].value);
+    expect(res.current.inputValue).toBe('Apple');
   });
 
   it('handleOptionFocus ignores out-of-range indices', () => {
     const res = setup({ options });
-    act(() => res.current.handlers.handleOptionFocus(99));
-    expect(res.current.state.selectedIndex).toBe(-1);
+    act(() => res.current.handleOptionFocus(99));
+    expect(res.current.selectedIndex).toBe(-1);
   });
 
   it('Enter adds a custom value when allowCustomValue is set', () => {
     const onValueChange = vi.fn();
     const res = setup({ options, allowCustomValue: true, defaultInputValue: 'custom-x', onValueChange });
-    act(() => res.current.handlers.handleInputKeyDown({ key: 'Enter', preventDefault: () => {} } as any));
+    act(() => res.current.handleInputKeyDown({ key: 'Enter', preventDefault: () => {} } as any));
     expect(onValueChange).toHaveBeenCalled();
   });
 
   it('Backspace clears when input empty and showClearButton enabled', () => {
     const onClear = vi.fn();
     const res = setup({ options, defaultInputValue: '', showClearButton: true, onClear });
-    act(() => res.current.handlers.handleInputKeyDown({ key: 'Backspace', preventDefault: () => {} } as any));
+    act(() => res.current.handleInputKeyDown({ key: 'Backspace', preventDefault: () => {} } as any));
     expect(onClear).toHaveBeenCalled();
   });
 
   it('Escape does not close when closeOnEscape is disabled', () => {
     const res = setup({ options, defaultOpen: true, closeOnEscape: false });
-    act(() => res.current.handlers.handleInputKeyDown({ key: 'Escape', preventDefault: () => {} } as any));
-    expect(res.current.state.open).toBe(true);
+    act(() => res.current.handleInputKeyDown({ key: 'Escape', preventDefault: () => {} } as any));
+    expect(res.current.open).toBe(true);
   });
 
   it('uses a custom filterFunction for both flat options and groups', () => {
@@ -636,7 +636,7 @@ describe('useCombobox (hook handlers)', () => {
     // groups path
     const groups = [{ label: 'G', options: [options[0]] }];
     const res2 = setup({ groups, filterFunction, defaultInputValue: 'a' });
-    expect(res2.current.state.open).toBe(false);
+    expect(res2.current.open).toBe(false);
   });
 
   it('exposes label-based aria attributes when label is provided', () => {

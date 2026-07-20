@@ -737,8 +737,8 @@ export function useCombobox(props: UseComboboxProps = {}) {
   }), [handleOpen, handleClose, handleToggle, handleInputChange, handleInputKeyDown, handleSelect, handleOptionFocus, handleClear, handleBeforeOpen, handleBeforeClose]);
 
   return useMemo(() => ({
-    state,
-    handlers,
+    ...state,
+    ...handlers,
     attributes: semanticAttributes,
     inputAttributes,
     listAttributes,

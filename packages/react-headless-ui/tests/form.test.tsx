@@ -250,24 +250,24 @@ describe('useForm (hook actions)', () => {
 
   it('exposes default state and attributes', () => {
     const res = setup({ defaultValues: { name: '' } });
-    expect(res.current.state.disabled).toBe(false);
-    expect(res.current.state.isSubmitting).toBe(false);
-    expect(res.current.state.currentStep).toBe(0);
+    expect(res.current.disabled).toBe(false);
+    expect(res.current.isSubmitting).toBe(false);
+    expect(res.current.currentStep).toBe(0);
     expect(res.current.attributes.role).toBe('form');
   });
 
   it('submit() resolves and fires onSubmit with form data', async () => {
     const onSubmit = vi.fn().mockResolvedValue(undefined);
     const res = setup({ defaultValues: { name: 'x' }, onSubmit });
-    await act(async () => { await res.current.actions.submit(); });
+    await act(async () => { await res.current.submit(); });
     expect(onSubmit).toHaveBeenCalled();
-    expect(res.current.state.isSubmitted).toBe(true);
+    expect(res.current.isSubmitted).toBe(true);
   });
 
   it('submit() is a no-op when disabled/loading/readOnly/isSubmitting', async () => {
     const onSubmit = vi.fn().mockResolvedValue(undefined);
     const res = setup({ defaultValues: { name: 'x' }, disabled: true, onSubmit });
-    await act(async () => { await res.current.actions.submit(); });
+    await act(async () => { await res.current.submit(); });
     expect(onSubmit).not.toHaveBeenCalled();
   });
 
@@ -275,16 +275,16 @@ describe('useForm (hook actions)', () => {
     const onSubmitError = vi.fn();
     const onSubmit = vi.fn().mockRejectedValue(new Error('boom'));
     const res = setup({ defaultValues: { name: 'x' }, onSubmit, onSubmitError });
-    await act(async () => { await res.current.actions.submit(); });
+    await act(async () => { await res.current.submit(); });
     expect(onSubmitError).toHaveBeenCalledWith(expect.any(Error));
-    expect(res.current.state.submissionError).toBe('boom');
+    expect(res.current.submissionError).toBe('boom');
   });
 
   it('onFormSubmit is awaited before onSubmit', async () => {
     const onFormSubmit = vi.fn().mockResolvedValue(undefined);
     const onSubmit = vi.fn().mockResolvedValue(undefined);
     const res = setup({ defaultValues: { name: 'x' }, onFormSubmit, onSubmit });
-    await act(async () => { await res.current.actions.submit(); });
+    await act(async () => { await res.current.submit(); });
     expect(onFormSubmit).toHaveBeenCalled();
     expect(onSubmit).toHaveBeenCalled();
   });
@@ -292,32 +292,32 @@ describe('useForm (hook actions)', () => {
   it('reset() restores defaults and fires onReset', () => {
     const onReset = vi.fn();
     const res = setup({ defaultValues: { name: 'default' }, onReset });
-    act(() => res.current.actions.reset());
+    act(() => res.current.reset());
     expect(onReset).toHaveBeenCalled();
-    expect(res.current.state.isSubmitted).toBe(false);
+    expect(res.current.isSubmitted).toBe(false);
   });
 
   it('validate() returns a boolean', async () => {
     const res = setup({ defaultValues: { name: '' } });
-    const result = await act(async () => await res.current.actions.validate());
+    const result = await act(async () => await res.current.validate());
     expect(typeof result).toBe('boolean');
   });
 
   it('setFieldValue/getFieldValue/getData/setData round-trip and fire onDataChange', () => {
     const onDataChange = vi.fn();
     const res = setup({ defaultValues: { name: '' }, onDataChange });
-    act(() => res.current.actions.setFieldValue('name', 'hi'));
-    expect(res.current.actions.getFieldValue('name')).toBe('hi');
-    act(() => res.current.actions.setData({ name: 'set' }));
-    expect(res.current.actions.getData().name).toBe('set');
+    act(() => res.current.setFieldValue('name', 'hi'));
+    expect(res.current.getFieldValue('name')).toBe('hi');
+    act(() => res.current.setData({ name: 'set' }));
+    expect(res.current.getData().name).toBe('set');
     expect(onDataChange).toHaveBeenCalled();
   });
 
   it('getFieldError/clearFieldError/focusField operate on fields', () => {
     const res = setup({ defaultValues: { name: '' } });
-    expect(res.current.actions.getFieldError('name')).toBeUndefined();
-    expect(() => act(() => res.current.actions.clearFieldError('name'))).not.toThrow();
-    expect(() => act(() => res.current.actions.focusField('name'))).not.toThrow();
+    expect(res.current.getFieldError('name')).toBeUndefined();
+    expect(() => act(() => res.current.clearFieldError('name'))).not.toThrow();
+    expect(() => act(() => res.current.focusField('name'))).not.toThrow();
   });
 
   it('getFieldAttributes exposes aria and data state', () => {
@@ -333,14 +333,14 @@ describe('useForm (hook actions)', () => {
       defaultValues: { name: '' },
       multiStep: { enabled: true, totalSteps: 3, onStepChange },
     });
-    await act(async () => { await res.current.actions.nextStep(); });
-    expect(res.current.state.currentStep).toBe(1);
-    act(() => res.current.actions.previousStep());
-    expect(res.current.state.currentStep).toBe(0);
+    await act(async () => { await res.current.nextStep(); });
+    expect(res.current.currentStep).toBe(1);
+    act(() => res.current.previousStep());
+    expect(res.current.currentStep).toBe(0);
     // at step 0, previousStep returns false (no move)
-    act(() => expect(res.current.actions.previousStep()).toBe(false));
+    act(() => expect(res.current.previousStep()).toBe(false));
     // goToStep to a valid step
-    await act(async () => { await res.current.actions.goToStep(2); });
+    await act(async () => { await res.current.goToStep(2); });
   });
 
   it('multi-step nextStep returns false at the last step', async () => {
@@ -348,19 +348,19 @@ describe('useForm (hook actions)', () => {
       defaultValues: { name: '' },
       multiStep: { enabled: true, totalSteps: 2 },
     });
-    await act(async () => { await res.current.actions.nextStep(); });
+    await act(async () => { await res.current.nextStep(); });
     // now at last step (1) -> nextStep returns false
     let moved = true;
-    await act(async () => { moved = await res.current.actions.nextStep(); });
+    await act(async () => { moved = await res.current.nextStep(); });
     expect(moved).toBe(false);
   });
 
   it('step actions are no-ops when multiStep is disabled', async () => {
     const res = setup({ defaultValues: { name: '' } });
-    await expect(res.current.actions.nextStep()).resolves.toBe(false);
-    expect(res.current.actions.previousStep()).toBe(false);
-    await expect(res.current.actions.goToStep(1)).resolves.toBe(false);
-    const v = await act(async () => await res.current.actions.validateStep());
+    await expect(res.current.nextStep()).resolves.toBe(false);
+    expect(res.current.previousStep()).toBe(false);
+    await expect(res.current.goToStep(1)).resolves.toBe(false);
+    const v = await act(async () => await res.current.validateStep());
     expect(typeof v).toBe('boolean');
   });
 
@@ -370,7 +370,7 @@ describe('useForm (hook actions)', () => {
       defaultValues: { name: '' },
       multiStep: { enabled: true, totalSteps: 2, stepValidation },
     });
-    const v = await act(async () => await res.current.actions.validateStep(1));
+    const v = await act(async () => await res.current.validateStep(1));
     expect(stepValidation).toHaveBeenCalledWith(1, expect.any(Object));
     expect(v).toBe(false);
   });
@@ -380,8 +380,8 @@ describe('useForm (hook actions)', () => {
       defaultValues: { name: '' },
       multiStep: { enabled: true, totalSteps: 2 },
     });
-    await expect(res.current.actions.goToStep(99)).resolves.toBe(false);
-    await expect(res.current.actions.goToStep(-1)).resolves.toBe(false);
+    await expect(res.current.goToStep(99)).resolves.toBe(false);
+    await expect(res.current.goToStep(-1)).resolves.toBe(false);
   });
 
   it('nextStep/goToStep do not advance when the step is invalid', async () => {
@@ -391,13 +391,13 @@ describe('useForm (hook actions)', () => {
     });
     // validation awaited -> nextStep resolves false and the step does not advance
     let nextOk = true;
-    await act(async () => { nextOk = await res.current.actions.nextStep(); });
+    await act(async () => { nextOk = await res.current.nextStep(); });
     expect(nextOk).toBe(false);
-    expect(res.current.state.currentStep).toBe(0);
+    expect(res.current.currentStep).toBe(0);
     let jumpOk = true;
-    await act(async () => { jumpOk = await res.current.actions.goToStep(2); });
+    await act(async () => { jumpOk = await res.current.goToStep(2); });
     expect(jumpOk).toBe(false);
-    expect(res.current.state.currentStep).toBe(0);
+    expect(res.current.currentStep).toBe(0);
   });
 
   // Regression: nextStep() used to return true synchronously while validation
@@ -412,9 +412,9 @@ describe('useForm (hook actions)', () => {
       })
     );
     let ok: boolean | undefined;
-    await act(async () => { ok = await result.current.actions.nextStep(); });
+    await act(async () => { ok = await result.current.nextStep(); });
     expect(ok).toBe(true);
-    expect(result.current.state.currentStep).toBe(1);
+    expect(result.current.currentStep).toBe(1);
   });
 
   it('nextStep resolves false and does not advance when validation fails', async () => {
@@ -426,23 +426,23 @@ describe('useForm (hook actions)', () => {
       })
     );
     let ok: boolean | undefined;
-    await act(async () => { ok = await result.current.actions.nextStep(); });
+    await act(async () => { ok = await result.current.nextStep(); });
     expect(ok).toBe(false);
-    expect(result.current.state.currentStep).toBe(0);
+    expect(result.current.currentStep).toBe(0);
   });
 
   it('submit() handles a non-Error thrown value', async () => {
     const onSubmitError = vi.fn();
     const onSubmit = vi.fn().mockRejectedValue('string error');
     const res = setup({ defaultValues: { name: 'x' }, onSubmit, onSubmitError });
-    await act(async () => { await res.current.actions.submit(); });
-    expect(res.current.state.submissionError).toBe('Submission failed');
+    await act(async () => { await res.current.submit(); });
+    expect(res.current.submissionError).toBe('Submission failed');
   });
 
   it('getFieldError returns undefined for non-string error messages', () => {
     // default form has no errors -> message undefined -> returns undefined
     const res = setup({ defaultValues: { name: '' } });
-    expect(res.current.actions.getFieldError('name')).toBeUndefined();
+    expect(res.current.getFieldError('name')).toBeUndefined();
   });
 
   it('exposes aria-busy when loading', () => {
@@ -463,7 +463,7 @@ describe('useForm (hook actions)', () => {
     // Register the field with a required rule and trigger validation (empty value -> error)
     res.current.rhf.register('name', { required: 'name is required' });
     await act(async () => { await res.current.rhf.trigger('name'); });
-    expect(typeof res.current.actions.getFieldError('name')).toBe('string');
+    expect(typeof res.current.getFieldError('name')).toBe('string');
     const attrs = res.current.getFieldAttributes('name');
     expect(attrs['aria-invalid']).toBe(true);
     expect(attrs['aria-describedby']).toBe('name-error');
@@ -506,10 +506,10 @@ describe('useForm validationRules wiring', () => {
       onSubmit
     });
     // Field is empty -> validation should fail and submit must not call onSubmit.
-    await act(async () => { await res.current.actions.submit(); });
+    await act(async () => { await res.current.submit(); });
     expect(onSubmit).not.toHaveBeenCalled();
-    expect(typeof res.current.actions.getFieldError('name')).toBe('string');
-    expect(res.current.actions.getFieldError('name')).toBe('name is required');
+    expect(typeof res.current.getFieldError('name')).toBe('string');
+    expect(res.current.getFieldError('name')).toBe('name is required');
   });
 
   it('allows submit once the rule passes after the field is filled', async () => {
@@ -526,10 +526,10 @@ describe('useForm validationRules wiring', () => {
       ],
       onSubmit
     });
-    act(() => res.current.actions.setFieldValue('name', 'Alice'));
-    await act(async () => { await res.current.actions.submit(); });
+    act(() => res.current.setFieldValue('name', 'Alice'));
+    await act(async () => { await res.current.submit(); });
     expect(onSubmit).toHaveBeenCalledTimes(1);
-    expect(res.current.actions.getFieldError('name')).toBeUndefined();
+    expect(res.current.getFieldError('name')).toBeUndefined();
   });
 
   it('honors a string return from validate as the error message', async () => {
@@ -546,9 +546,9 @@ describe('useForm validationRules wiring', () => {
       ],
       onSubmit
     });
-    await act(async () => { await res.current.actions.submit(); });
+    await act(async () => { await res.current.submit(); });
     expect(onSubmit).not.toHaveBeenCalled();
-    expect(res.current.actions.getFieldError('name')).toBe('too short');
+    expect(res.current.getFieldError('name')).toBe('too short');
   });
 
   it('passes a consumer-supplied resolver through to React Hook Form', async () => {
@@ -561,7 +561,7 @@ describe('useForm validationRules wiring', () => {
       resolver: resolver as any,
       onSubmit
     });
-    await act(async () => { await res.current.actions.submit(); });
+    await act(async () => { await res.current.submit(); });
     expect(resolver).toHaveBeenCalled();
     expect(onSubmit).not.toHaveBeenCalled();
   });
@@ -569,7 +569,7 @@ describe('useForm validationRules wiring', () => {
   it('does not validate when no validationRules and no resolver are provided', async () => {
     const onSubmit = vi.fn().mockResolvedValue(undefined);
     const res = setup({ defaultValues: { name: '' }, onSubmit });
-    await act(async () => { await res.current.actions.submit(); });
+    await act(async () => { await res.current.submit(); });
     expect(onSubmit).toHaveBeenCalledTimes(1);
   });
 });

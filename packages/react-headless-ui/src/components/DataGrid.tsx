@@ -135,12 +135,6 @@ export const DataGrid = forwardRef<HTMLTableElement, DataGridProps>(
     | 'virtualizeThreshold'
   >, ref) => {
     const {
-      state,
-      handlers,
-      attributes
-    } = useDataGrid(props);
-
-    const {
       data,
       columns,
       loading,
@@ -148,8 +142,14 @@ export const DataGrid = forwardRef<HTMLTableElement, DataGridProps>(
       selectedRows,
       sort,
       filter,
-      pagination
-    } = state;
+      pagination,
+      handleFilter,
+      handleHeaderClick,
+      handlePagination,
+      handleRowClick,
+      handleSelectAll,
+      attributes
+    } = useDataGrid(props);
 
     // Scroll container for the table body; becomes the virtualizer viewport
     // when row virtualization engages.
@@ -257,7 +257,7 @@ export const DataGrid = forwardRef<HTMLTableElement, DataGridProps>(
         'data-sorted': isSorted,
         'data-sort-direction': isSorted ? sortDirection : undefined,
         className: `data-grid-header-cell ${column.className || ''} ${column.sortable ? ' ' : ''}`,
-        ...(column.sortable ? { onClick: (e: React.MouseEvent) => handlers.handleHeaderClick(column, e) } : {}),
+        ...(column.sortable ? { onClick: (e: React.MouseEvent) => handleHeaderClick(column, e) } : {}),
         ...(getHeaderCellProps?.(column) || {})
       };
 
@@ -303,7 +303,7 @@ export const DataGrid = forwardRef<HTMLTableElement, DataGridProps>(
           <input
             type="text"
             value={filterValue}
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) => handlers.handleFilter(column.id, e.target.value)}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleFilter(column.id, e.target.value)}
             placeholder={`Filter ${column.title}...`}
             className="         "
             data-testid={`data-grid-filter-${column.id}`}
@@ -328,7 +328,7 @@ export const DataGrid = forwardRef<HTMLTableElement, DataGridProps>(
           <input
             type="checkbox"
             checked={isSelected}
-            onChange={() => handlers.handleRowClick(row, {} as React.MouseEvent)}
+            onChange={() => handleRowClick(row, {} as React.MouseEvent)}
             className="     "
             aria-label={`Select row ${rowIndex + 1}`}
           />
@@ -443,7 +443,7 @@ export const DataGrid = forwardRef<HTMLTableElement, DataGridProps>(
           </div>
           <div className=" ">
             <button
-              onClick={() => handlers.handlePagination(pagination.page - 1)}
+              onClick={() => handlePagination(pagination.page - 1)}
               disabled={pagination.page === 1}
               className="            "
               data-testid="data-grid-prev-page"
@@ -454,7 +454,7 @@ export const DataGrid = forwardRef<HTMLTableElement, DataGridProps>(
               Page {pagination.page} of {pagination.totalPages}
             </span>
             <button
-              onClick={() => handlers.handlePagination(pagination.page + 1)}
+              onClick={() => handlePagination(pagination.page + 1)}
               disabled={pagination.page === pagination.totalPages}
               className="            "
               data-testid="data-grid-next-page"
@@ -505,7 +505,7 @@ export const DataGrid = forwardRef<HTMLTableElement, DataGridProps>(
                   <input
                     type="checkbox"
                     checked={selectedRows.length === data.length && data.length > 0}
-                    onChange={() => handlers.handleSelectAll()}
+                    onChange={() => handleSelectAll()}
                     className="     "
                     data-testid="data-grid-select-all"
                   />

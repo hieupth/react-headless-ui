@@ -711,8 +711,8 @@ export function useDataGrid(props: UseDataGridProps = {}) {
   }), [handleSort, handleFilter, handlePagination, handleSelection, handleRowClick, handleCellClick, handleHeaderClick, handleKeyDown, handleSelectAll, handleClearSelection]);
 
   return useMemo(() => ({
-    state,
-    handlers,
+    ...state,
+    ...handlers,
     attributes: semanticAttributes
   }), [state, handlers, semanticAttributes]);
 }

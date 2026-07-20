@@ -36,42 +36,42 @@ describe('useChart hook', () => {
   describe('state + defaults', () => {
     it('exposes defaults for an empty chart', () => {
       const { current } = setup();
-      expect(current.state.type).toBe('line');
-      expect(current.state.datasets).toEqual([]);
-      expect(current.state.dataPoints).toEqual([]);
-      expect(current.state.disabled).toBe(false);
-      expect(current.state.loading).toBe(false);
+      expect(current.type).toBe('line');
+      expect(current.datasets).toEqual([]);
+      expect(current.dataPoints).toEqual([]);
+      expect(current.disabled).toBe(false);
+      expect(current.loading).toBe(false);
       expect(current.colors.length).toBeGreaterThan(0);
     });
 
     it('honours the chart type override', () => {
       const { current } = setup({ type: 'bar' });
-      expect(current.state.type).toBe('bar');
+      expect(current.type).toBe('bar');
     });
 
     it('flattens datasets into dataPoints with assigned colors', () => {
       const { current } = setup({ datasets, colors: ['#aaa', '#bbb'] });
-      expect(current.state.dataPoints.length).toBe(5);
-      expect(current.state.dataPoints[0].color).toBe('#aaa');
-      expect(current.state.dataPoints[3].color).toBe('#bbb');
-      expect(current.state.dataPoints[0].datasetIndex).toBe(0);
-      expect(current.state.dataPoints[3].datasetIndex).toBe(1);
+      expect(current.dataPoints.length).toBe(5);
+      expect(current.dataPoints[0].color).toBe('#aaa');
+      expect(current.dataPoints[3].color).toBe('#bbb');
+      expect(current.dataPoints[0].datasetIndex).toBe(0);
+      expect(current.dataPoints[3].datasetIndex).toBe(1);
     });
   });
 
   describe('range computation', () => {
     it('returns a default 0..100 range for empty data', () => {
       const { current } = setup();
-      expect(current.state.ranges).toEqual({ x: { min: 0, max: 100 }, y: { min: 0, max: 100 } });
+      expect(current.ranges).toEqual({ x: { min: 0, max: 100 }, y: { min: 0, max: 100 } });
     });
 
     it('derives ranges from data with padding', () => {
       const { current } = setup({ datasets });
       // y spans 5..30, x spans 0..2 with 10% padding applied via floor/ceil.
-      expect(current.state.ranges.y.min).toBeLessThanOrEqual(5);
-      expect(current.state.ranges.y.max).toBeGreaterThanOrEqual(30);
-      expect(current.state.ranges.x.min).toBeLessThanOrEqual(0);
-      expect(current.state.ranges.x.max).toBeGreaterThanOrEqual(2);
+      expect(current.ranges.y.min).toBeLessThanOrEqual(5);
+      expect(current.ranges.y.max).toBeGreaterThanOrEqual(30);
+      expect(current.ranges.x.min).toBeLessThanOrEqual(0);
+      expect(current.ranges.x.max).toBeGreaterThanOrEqual(2);
     });
 
     it('axis min/max override the derived range', () => {
@@ -80,8 +80,8 @@ describe('useChart hook', () => {
         xAxis: { min: -10, max: 10 },
         yAxis: { min: -5, max: 50 },
       });
-      expect(current.state.ranges.x).toEqual({ min: -10, max: 10 });
-      expect(current.state.ranges.y).toEqual({ min: -5, max: 50 });
+      expect(current.ranges.x).toEqual({ min: -10, max: 10 });
+      expect(current.ranges.y).toEqual({ min: -5, max: 50 });
     });
 
     it('scales and dimensions derive from ranges + geometry', () => {
@@ -97,7 +97,7 @@ describe('useChart hook', () => {
       expect(current.dimensions.height).toBe(360);
       expect(current.dimensions.totalWidth).toBe(500);
       expect(current.dimensions.totalHeight).toBe(400);
-      const span = current.state.ranges.x.max - current.state.ranges.x.min;
+      const span = current.ranges.x.max - current.ranges.x.min;
       expect(current.scales.x.scale).toBeCloseTo(460 / span, 5);
       // y scale is negative (svg y-axis inversion).
       expect(current.scales.y.scale).toBeLessThan(0);
@@ -114,7 +114,7 @@ describe('useChart hook', () => {
       // fallback, and a non-numeric x exercises the typeof guard.
       const ds: ChartDataset[] = [{ label: 'L', data: [{ x: 'a' as any, y: 'b' as any }] }];
       const { current } = setup({ datasets: ds, colors: [] });
-      expect(current.state.dataPoints[0].color).toBe('#000000');
+      expect(current.dataPoints[0].color).toBe('#000000');
     });
   });
 
@@ -124,26 +124,26 @@ describe('useChart hook', () => {
       const api = setup({ datasets, onDataPointClick });
       const ds = datasets[0];
       const pt = ds.data[1];
-      act(() => api.current.handlers.handleDataPointClick(ds, pt, {} as any));
-      expect(api.current.state.selectedPoint).toEqual({ dataset: ds, point: pt });
+      act(() => api.current.handleDataPointClick(ds, pt, {} as any));
+      expect(api.current.selectedPoint).toEqual({ dataset: ds, point: pt });
       expect(onDataPointClick).toHaveBeenCalledWith(ds, pt);
     });
 
     it('disabled chart ignores data point click', () => {
       const onDataPointClick = vi.fn();
       const { current } = setup({ datasets, disabled: true, onDataPointClick });
-      act(() => current.handlers.handleDataPointClick(datasets[0], datasets[0].data[0], {} as any));
-      expect(current.state.selectedPoint).toBeUndefined();
+      act(() => current.handleDataPointClick(datasets[0], datasets[0].data[0], {} as any));
+      expect(current.selectedPoint).toBeUndefined();
       expect(onDataPointClick).not.toHaveBeenCalled();
     });
 
     it('handleDatasetClick forwards the dataset and is blocked when disabled', () => {
       const onDatasetClick = vi.fn();
       const { current } = setup({ datasets, onDatasetClick });
-      act(() => current.handlers.handleDatasetClick(datasets[1], {} as any));
+      act(() => current.handleDatasetClick(datasets[1], {} as any));
       expect(onDatasetClick).toHaveBeenCalledWith(datasets[1]);
       const disabled = setup({ datasets, disabled: true, onDatasetClick });
-      act(() => disabled.current.handlers.handleDatasetClick(datasets[1], {} as any));
+      act(() => disabled.current.handleDatasetClick(datasets[1], {} as any));
       expect(onDatasetClick).toHaveBeenCalledTimes(1); // no extra call
     });
 
@@ -152,10 +152,10 @@ describe('useChart hook', () => {
       const api = setup({ datasets, onChartClick });
       const ds = datasets[0];
       const pt = ds.data[0];
-      act(() => api.current.handlers.handleDataPointClick(ds, pt, {} as any));
-      expect(api.current.state.selectedPoint).toBeDefined();
-      act(() => api.current.handlers.handleChartClick({} as any));
-      expect(api.current.state.selectedPoint).toBeUndefined();
+      act(() => api.current.handleDataPointClick(ds, pt, {} as any));
+      expect(api.current.selectedPoint).toBeDefined();
+      act(() => api.current.handleChartClick({} as any));
+      expect(api.current.selectedPoint).toBeUndefined();
       expect(onChartClick).toHaveBeenCalledTimes(1);
     });
 
@@ -163,9 +163,9 @@ describe('useChart hook', () => {
       const onChartClick = vi.fn();
       const onMouseMove = vi.fn();
       const { current } = setup({ datasets, disabled: true, onChartClick, onMouseMove });
-      act(() => current.handlers.handleChartClick({} as any));
+      act(() => current.handleChartClick({} as any));
       expect(onChartClick).not.toHaveBeenCalled();
-      act(() => current.handlers.handleMouseMove({ clientX: 1, clientY: 1 } as any));
+      act(() => current.handleMouseMove({ clientX: 1, clientY: 1 } as any));
       expect(onMouseMove).not.toHaveBeenCalled();
     });
 
@@ -174,7 +174,7 @@ describe('useChart hook', () => {
       const { current } = setup({ datasets, onMouseMove });
       // ref has no mounted SVG, so getBoundingClientRect returns undefined.
       expect(() => act(() => {
-        current.handlers.handleMouseMove({ clientX: 5, clientY: 7 } as any);
+        current.handleMouseMove({ clientX: 5, clientY: 7 } as any);
       })).not.toThrow();
       expect(onMouseMove).toHaveBeenCalled();
     });
@@ -193,15 +193,15 @@ describe('useChart hook', () => {
       render(<Harness />);
       const svg = document.querySelector('svg') as SVGSVGElement;
       svg.getBoundingClientRect = () => ({ left: 0, top: 0, width: 100, height: 100, right: 100, bottom: 100, x: 0, y: 0, toJSON: () => ({}) } as DOMRect);
-      act(() => api.current.handlers.handleMouseMove({ clientX: 30, clientY: 40 } as any));
+      act(() => api.current.handleMouseMove({ clientX: 30, clientY: 40 } as any));
       expect(onMouseMove).toHaveBeenCalled();
     });
 
     it('handleMouseLeave clears hover and forwards callback', () => {
       const onMouseLeave = vi.fn();
       const { current } = setup({ datasets, onMouseLeave });
-      act(() => current.handlers.handleMouseLeave());
-      expect(current.state.hoveredPoint).toBeUndefined();
+      act(() => current.handleMouseLeave());
+      expect(current.hoveredPoint).toBeUndefined();
       expect(onMouseLeave).toHaveBeenCalledTimes(1);
     });
 
@@ -209,15 +209,15 @@ describe('useChart hook', () => {
       const api = setup({ datasets });
       const ds = datasets[0];
       const pt = ds.data[1];
-      act(() => api.current.handlers.handleDataPointHover(ds, pt));
-      expect(api.current.state.hoveredPoint).toEqual({ dataset: ds, point: pt });
+      act(() => api.current.handleDataPointHover(ds, pt));
+      expect(api.current.hoveredPoint).toEqual({ dataset: ds, point: pt });
       // leaving clears it
-      act(() => api.current.handlers.handleDataPointLeave());
-      expect(api.current.state.hoveredPoint).toBeUndefined();
+      act(() => api.current.handleDataPointLeave());
+      expect(api.current.hoveredPoint).toBeUndefined();
       // disabled guard: hover is a no-op
       const disabled = setup({ datasets, disabled: true });
-      act(() => disabled.current.handlers.handleDataPointHover(datasets[0], datasets[0].data[0]));
-      expect(disabled.current.state.hoveredPoint).toBeUndefined();
+      act(() => disabled.current.handleDataPointHover(datasets[0], datasets[0].data[0]));
+      expect(disabled.current.hoveredPoint).toBeUndefined();
     });
   });
 
@@ -227,56 +227,56 @@ describe('useChart hook', () => {
     it('ArrowRight advances the selected point and wraps at the end', () => {
       const api = setup({ datasets });
       // Select the first point, then move forward.
-      act(() => api.current.handlers.handleDataPointClick(datasets[0], datasets[0].data[0], {} as any));
-      act(() => api.current.handlers.handleKeyDown({ key: 'ArrowRight', preventDefault } as any));
-      expect((api.current.state.selectedPoint as any).point).toEqual(datasets[0].data[1]);
+      act(() => api.current.handleDataPointClick(datasets[0], datasets[0].data[0], {} as any));
+      act(() => api.current.handleKeyDown({ key: 'ArrowRight', preventDefault } as any));
+      expect((api.current.selectedPoint as any).point).toEqual(datasets[0].data[1]);
       // Jump to last then wrap back to 0.
-      const last = api.current.state.dataPoints[api.current.state.dataPoints.length - 1];
-      act(() => api.current.handlers.handleDataPointClick(
-        api.current.state.datasets[(last as any).datasetIndex], last, {} as any));
-      act(() => api.current.handlers.handleKeyDown({ key: 'ArrowRight', preventDefault } as any));
+      const last = api.current.dataPoints[api.current.dataPoints.length - 1];
+      act(() => api.current.handleDataPointClick(
+        api.current.datasets[(last as any).datasetIndex], last, {} as any));
+      act(() => api.current.handleKeyDown({ key: 'ArrowRight', preventDefault } as any));
       // Wraps to index 0 (dataset 0, first point).
-      expect((api.current.state.selectedPoint as any).point).toEqual(datasets[0].data[0]);
+      expect((api.current.selectedPoint as any).point).toEqual(datasets[0].data[0]);
     });
 
     it('ArrowLeft moves backward and wraps at the start', () => {
       const api = setup({ datasets });
-      act(() => api.current.handlers.handleDataPointClick(datasets[0], datasets[0].data[0], {} as any));
-      act(() => api.current.handlers.handleKeyDown({ key: 'ArrowLeft', preventDefault } as any));
+      act(() => api.current.handleDataPointClick(datasets[0], datasets[0].data[0], {} as any));
+      act(() => api.current.handleKeyDown({ key: 'ArrowLeft', preventDefault } as any));
       // Wraps to the last point (dataset 1, last point).
-      expect((api.current.state.selectedPoint as any).point).toEqual(datasets[1].data[datasets[1].data.length - 1]);
+      expect((api.current.selectedPoint as any).point).toEqual(datasets[1].data[datasets[1].data.length - 1]);
     });
 
     it('ArrowDown/ArrowUp behave like Right/Left', () => {
       const api = setup({ datasets });
-      act(() => api.current.handlers.handleDataPointClick(datasets[0], datasets[0].data[0], {} as any));
-      act(() => api.current.handlers.handleKeyDown({ key: 'ArrowDown', preventDefault } as any));
-      expect((api.current.state.selectedPoint as any).point).toEqual(datasets[0].data[1]);
-      act(() => api.current.handlers.handleKeyDown({ key: 'ArrowUp', preventDefault } as any));
-      expect((api.current.state.selectedPoint as any).point).toEqual(datasets[0].data[0]);
+      act(() => api.current.handleDataPointClick(datasets[0], datasets[0].data[0], {} as any));
+      act(() => api.current.handleKeyDown({ key: 'ArrowDown', preventDefault } as any));
+      expect((api.current.selectedPoint as any).point).toEqual(datasets[0].data[1]);
+      act(() => api.current.handleKeyDown({ key: 'ArrowUp', preventDefault } as any));
+      expect((api.current.selectedPoint as any).point).toEqual(datasets[0].data[0]);
     });
 
     it('Enter/Space activate the selected point, Escape clears it', () => {
       const onDataPointClick = vi.fn();
       const api = setup({ datasets, onDataPointClick });
-      act(() => api.current.handlers.handleDataPointClick(datasets[0], datasets[0].data[1], {} as any));
+      act(() => api.current.handleDataPointClick(datasets[0], datasets[0].data[1], {} as any));
       onDataPointClick.mockClear();
-      act(() => api.current.handlers.handleKeyDown({ key: 'Enter', preventDefault } as any));
+      act(() => api.current.handleKeyDown({ key: 'Enter', preventDefault } as any));
       expect(onDataPointClick).toHaveBeenCalledWith(datasets[0], datasets[0].data[1]);
-      act(() => api.current.handlers.handleKeyDown({ key: 'Escape', preventDefault } as any));
-      expect(api.current.state.selectedPoint).toBeUndefined();
+      act(() => api.current.handleKeyDown({ key: 'Escape', preventDefault } as any));
+      expect(api.current.selectedPoint).toBeUndefined();
     });
 
     it('Enter without a selection does not activate; arrows without data are inert', () => {
       const onDataPointClick = vi.fn();
       const api = setup({ datasets, onDataPointClick });
       // No prior selection → Enter is a no-op.
-      act(() => api.current.handlers.handleKeyDown({ key: 'Enter', preventDefault } as any));
+      act(() => api.current.handleKeyDown({ key: 'Enter', preventDefault } as any));
       expect(onDataPointClick).not.toHaveBeenCalled();
       // Empty datasets → arrow keys do nothing (allDataPoints.length === 0 arm).
       const empty = setup({ datasets: [] });
       expect(() => act(() => {
-        empty.current.handlers.handleKeyDown({ key: 'ArrowRight', preventDefault } as any);
+        empty.current.handleKeyDown({ key: 'ArrowRight', preventDefault } as any);
       })).not.toThrow();
     });
 
@@ -284,20 +284,20 @@ describe('useChart hook', () => {
       const api = setup({ datasets });
       // No selection: selectedDatasetIndex/currentIndex fall back to -1, then
       // ArrowRight advances to index 0.
-      act(() => api.current.handlers.handleKeyDown({ key: 'ArrowRight', preventDefault } as any));
-      expect(api.current.state.selectedPoint).toBeDefined();
+      act(() => api.current.handleKeyDown({ key: 'ArrowRight', preventDefault } as any));
+      expect(api.current.selectedPoint).toBeDefined();
     });
 
     it('disabled chart ignores keyboard nav', () => {
       const { current } = setup({ datasets, disabled: true });
-      const before = current.state.selectedPoint;
-      act(() => current.handlers.handleKeyDown({ key: 'ArrowRight', preventDefault } as any));
-      expect(current.state.selectedPoint).toBe(before);
+      const before = current.selectedPoint;
+      act(() => current.handleKeyDown({ key: 'ArrowRight', preventDefault } as any));
+      expect(current.selectedPoint).toBe(before);
     });
 
     it('falls through to the focusable mixin for unknown keys', () => {
       const { current } = setup({ datasets });
-      expect(() => act(() => current.handlers.handleKeyDown({ key: 'Home', preventDefault } as any))).not.toThrow();
+      expect(() => act(() => current.handleKeyDown({ key: 'Home', preventDefault } as any))).not.toThrow();
     });
   });
 
@@ -305,18 +305,18 @@ describe('useChart hook', () => {
     it('runs the animation effect on mount', () => {
       const api = setup({ datasets, animated: true, animationDuration: 1000 });
       // Animation starts immediately with progress 0.
-      expect(api.current.state.animating).toBe(true);
+      expect(api.current.animating).toBe(true);
       // After advancing enough raf-driven time, animation completes.
       // jsdom requestAnimationFrame fires on setTimeout(0); flush a few.
       act(() => { vi.advanceTimersByTime(1500); });
-      expect(api.current.state.animationProgress).toBe(1);
-      expect(api.current.state.animating).toBe(false);
+      expect(api.current.animationProgress).toBe(1);
+      expect(api.current.animating).toBe(false);
     });
 
     it('animated=false skips the animation effect', () => {
       const { current } = setup({ datasets, animated: false });
-      expect(current.state.animating).toBe(false);
-      expect(current.state.animationProgress).toBe(0);
+      expect(current.animating).toBe(false);
+      expect(current.animationProgress).toBe(0);
     });
 
     it('semanticAttributes expose role/labels and keydown when focusable', () => {
