@@ -1,4 +1,5 @@
 import { describe, it, expect, vi } from 'vitest';
+import { createRef } from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
 import { renderHook, act } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
@@ -135,5 +136,32 @@ describe('useButton hook', () => {
     expect(a.result.current.className).toContain('button-focused');
     const b = renderHook(() => useButton({ fullWidth: true }));
     expect(b.result.current.className).toContain('button-full-width');
+  });
+
+  // Regression F1: disabled/loading buttons must NOT fire onPress.
+  // Before the fix, the raw pressable.handleClick (no loading guard) was wired
+  // to the DOM, bypassing the disabled/loading check.
+  it('disabled button does not fire onPress on click', async () => {
+    const user = userEvent.setup();
+    const onPress = vi.fn();
+    render(<Button onPress={onPress} disabled>Disabled</Button>);
+    await user.click(screen.getByRole('button', { name: 'Disabled' }));
+    expect(onPress).not.toHaveBeenCalled();
+  });
+
+  it('loading button does not fire onPress on click', async () => {
+    const user = userEvent.setup();
+    const onPress = vi.fn();
+    render(<Button onPress={onPress} loading>Loading</Button>);
+    await user.click(screen.getByRole('button', { name: 'Loading' }));
+    expect(onPress).not.toHaveBeenCalled();
+  });
+
+  // Regression F2: the forwarded ref must attach to the <button> DOM element.
+  it('forwards ref to the button DOM element', () => {
+    const ref = createRef<HTMLButtonElement>();
+    render(<Button ref={ref}>Ref</Button>);
+    expect(ref.current).toBeInstanceOf(HTMLButtonElement);
+    expect(ref.current?.tagName).toBe('BUTTON');
   });
 });

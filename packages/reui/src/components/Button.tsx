@@ -3,7 +3,7 @@
  * Provides styled button with all variants and states.
  */
 
-import React, { forwardRef } from 'react';
+import React, { forwardRef, useEffect } from 'react';
 import { useButton } from '../hooks';
 import type { UseButtonProps } from '../hooks';
 
@@ -62,6 +62,15 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(({
   const button = useButton({
     ...buttonProps
   });
+
+  // Forward the consumer's ref to the DOM button. The hook's internal focusRef
+  // (button.ref) attaches to the <button> for focus/blur actions; this effect
+  // mirrors that node to the forwarded ref so consumers can access it.
+  useEffect(() => {
+    const node = button.ref.current as HTMLButtonElement | null;
+    if (typeof ref === 'function') ref(node);
+    else if (ref) (ref as React.MutableRefObject<HTMLButtonElement | null>).current = node;
+  }, [ref, button.ref]);
 
   // Filter out known button props to get remaining HTML attributes
   const {

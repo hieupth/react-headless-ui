@@ -174,9 +174,11 @@ export const useButton = (props: UseButtonProps = {}): UseButtonReturns => {
     'data-pressed': state.pressed,
     'data-focused': state.focused,
     'data-disabled': state.disabled,
-    onClick: pressable.handleClick,
-    onKeyDown: pressable.handleKeyDown
-  }), [semantic, type, value, name, loading, variant, size, state.pressed, state.focused, state.disabled, fullWidth, pressable.handleClick, pressable.handleKeyDown]);
+    // Route the GUARDED handlers (which check loading/disabled) to the DOM —
+    // using pressable.handleClick directly would bypass the loading guard.
+    onClick: handleClick,
+    onKeyDown: handleKeyDown
+  }), [semantic, type, value, name, loading, variant, size, state.pressed, state.focused, state.disabled, fullWidth, handleClick, handleKeyDown]);
 
   // Generate class names
   const className = useMemo(() => {
