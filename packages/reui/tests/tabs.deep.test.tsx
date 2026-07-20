@@ -9,7 +9,7 @@ import type { TabItem } from '../src/hooks';
 // Controlled wrapper: drives selectedKey and re-renders so selection state reflects.
 function Controlled({ items, initial = 'a', ...rest }: { items: TabItem[]; initial?: string; [k: string]: any }) {
   const [key, setKey] = useState(initial);
-  return <Tabs items={items} selectedKey={key} onSelectionChange={setKey} {...rest} />;
+  return <Tabs items={items} value={key} onValueChange={setKey} {...rest} />;
 }
 
 const items: TabItem[] = [
@@ -26,7 +26,7 @@ const withDisabled: TabItem[] = [
 
 describe('useTabs', () => {
   it('renders a tablist and the default-selected tab as selected', () => {
-    render(<Tabs items={items} defaultSelectedKey="a" />);
+    render(<Tabs items={items} defaultValue="a" />);
     expect(screen.getByRole('tablist')).toBeInTheDocument();
     expect(screen.getByRole('tab', { name: 'Alpha' })).toHaveAttribute('aria-selected', 'true');
   });
@@ -37,7 +37,7 @@ describe('useTabs', () => {
   });
 
   it('skips a disabled default key and selects the first enabled', () => {
-    render(<Tabs items={withDisabled} defaultSelectedKey="b" />);
+    render(<Tabs items={withDisabled} defaultValue="b" />);
     expect(screen.getByRole('tab', { name: 'Alpha' })).toHaveAttribute('aria-selected', 'true');
   });
 
@@ -52,7 +52,7 @@ describe('useTabs', () => {
   it('disabled tab does not fire selection and is marked aria-disabled', async () => {
     const user = userEvent.setup();
     const onSelectionChange = vi.fn();
-    render(<Tabs items={withDisabled} defaultSelectedKey="a" onSelectionChange={onSelectionChange} />);
+    render(<Tabs items={withDisabled} defaultValue="a" onValueChange={onSelectionChange} />);
     const bravo = screen.getByRole('tab', { name: 'Bravo' });
     expect(bravo).toHaveAttribute('aria-disabled', 'true');
     await user.click(bravo);
@@ -94,7 +94,7 @@ describe('useTabs', () => {
 
   it('manual activation: arrows move highlight but Enter selects', () => {
     const onSelectionChange = vi.fn();
-    render(<Controlled items={items} initial="a" activationMode="manual" onSelectionChange={onSelectionChange} />);
+    render(<Controlled items={items} initial="a" activationMode="manual" onValueChange={onSelectionChange} />);
     const tablist = screen.getByRole('tablist');
     fireEvent.keyDown(tablist, { key: 'ArrowRight' });
     // Manual: highlight moved but selection not changed
@@ -104,14 +104,14 @@ describe('useTabs', () => {
   });
 
   it('shows the selected panel content and hides others', () => {
-    render(<Tabs items={items} defaultSelectedKey="b" showContent />);
+    render(<Tabs items={items} defaultValue="b" showContent />);
     expect(screen.getByText('Bravo content')).toBeInTheDocument();
   });
 
   it('SimpleTabs and VerticalTabs wrappers render', () => {
-    const { rerender } = render(<SimpleTabs items={items} defaultSelectedKey="a" />);
+    const { rerender } = render(<SimpleTabs items={items} defaultValue="a" />);
     expect(screen.getByRole('tablist')).toBeInTheDocument();
-    rerender(<VerticalTabs items={items} defaultSelectedKey="a" />);
+    rerender(<VerticalTabs items={items} defaultValue="a" />);
     expect(screen.getByRole('tablist')).toHaveAttribute('aria-orientation', 'vertical');
   });
 
@@ -119,7 +119,7 @@ describe('useTabs', () => {
     render(
       <Tabs
         items={items}
-        defaultSelectedKey="a"
+        defaultValue="a"
         renderTab={(tab) => <button key={tab.key} data-testid={`t-${tab.key}`}>{tab.label}</button>}
       />
     );
@@ -129,7 +129,7 @@ describe('useTabs', () => {
   // ---- Hook-level ----
   it('hook getTabIndex/getTabAt/getSelectedTab query helpers', () => {
     function Probe() {
-      const tabs = useTabs({ items, defaultSelectedKey: 'b' });
+      const tabs = useTabs({ items, defaultValue: 'b' });
       return (
         <span data-testid="probe">
           {tabs.getTabIndex('c')},{tabs.getTabAt(0)?.key},{tabs.getSelectedTab()?.key}
@@ -142,7 +142,7 @@ describe('useTabs', () => {
 
   it('hook selectTab ignores disabled and unknown keys', () => {
     function Probe() {
-      const tabs = useTabs({ items: withDisabled, defaultSelectedKey: 'a' });
+      const tabs = useTabs({ items: withDisabled, defaultValue: 'a' });
       return (
         <>
           <button onClick={() => tabs.selectTab('b')} data-testid="sel-b">selB</button>
@@ -164,7 +164,7 @@ describe('useTabs', () => {
 
   it('highlightTab only highlights enabled tabs', () => {
     function Probe() {
-      const tabs = useTabs({ items: withDisabled, defaultSelectedKey: 'a' });
+      const tabs = useTabs({ items: withDisabled, defaultValue: 'a' });
       return (
         <>
           <button onClick={() => tabs.highlightTab(1)} data-testid="hl-b">hlB</button>

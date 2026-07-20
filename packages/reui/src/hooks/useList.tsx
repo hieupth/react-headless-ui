@@ -149,9 +149,17 @@ export interface UseListProps {
   items?: ListItem[];
   /** Whether multiple selection is allowed */
   multiSelect?: boolean;
-  /** Initial selected items */
+  /** Initial selected keys (standard selection API) */
+  defaultSelectedKeys?: (string | number)[];
+  /** Controlled selected keys */
+  selectedKeys?: (string | number)[];
+  /**
+   * @deprecated Use `defaultSelectedKeys`. Alias retained for backward compatibility.
+   */
   defaultSelectedItems?: (string | number)[];
-  /** Controlled selected items */
+  /**
+   * @deprecated Use `selectedKeys`. Alias retained for backward compatibility.
+   */
   selectedItems?: (string | number)[];
   /** Whether list is disabled */
   disabled?: boolean;
@@ -251,8 +259,11 @@ export function useList(props: UseListProps): UseListReturns {
     defaultItems = [],
     items: controlledItems,
     multiSelect = false,
-    defaultSelectedItems = [],
-    selectedItems: controlledSelectedItems,
+    defaultSelectedKeys,
+    selectedKeys: controlledSelectedKeys,
+    // Deprecated aliases.
+    defaultSelectedItems: legacyDefaultSelectedItems,
+    selectedItems: legacySelectedItems,
     disabled = false,
     loading = false,
     searchable = false,
@@ -283,10 +294,14 @@ export function useList(props: UseListProps): UseListReturns {
     defaultPage = 1
   } = pagination;
 
+  // Resolve standard vs deprecated aliases (standard names take precedence).
+  const defaultSelectedKeysValue = defaultSelectedKeys ?? legacyDefaultSelectedItems ?? [];
+  const controlledSelectedItems = controlledSelectedKeys ?? legacySelectedItems;
+
   // State management
   const [internalItems, setInternalItems] = useState<ListItem[]>(defaultItems);
   const [internalSelectedItems, setInternalSelectedItems] = useState<Set<string | number>>(
-    new Set(defaultSelectedItems)
+    new Set(defaultSelectedKeysValue)
   );
   const [activeItem, setActiveItemState] = useState<string | number | null>(null);
   const [searchQuery, setSearchQueryState] = useState<string>('');

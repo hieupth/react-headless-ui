@@ -13,7 +13,7 @@ const items = [
 
 describe('Tabs', () => {
   it('renders a tablist with tab items', () => {
-    render(<Tabs items={items} defaultSelectedKey="a" />);
+    render(<Tabs items={items} defaultValue="a" />);
     expect(screen.getByRole('tablist')).toBeInTheDocument();
     expect(screen.getByRole('tab', { name: 'Alpha' })).toBeInTheDocument();
   });
@@ -21,7 +21,7 @@ describe('Tabs', () => {
   it('fires onSelectionChange when a tab is clicked', async () => {
     const user = userEvent.setup();
     const onSelectionChange = vi.fn();
-    render(<Tabs items={items} defaultSelectedKey="a" onSelectionChange={onSelectionChange} />);
+    render(<Tabs items={items} defaultValue="a" onValueChange={onSelectionChange} />);
     await user.click(screen.getByRole('tab', { name: 'Bravo' }));
     expect(onSelectionChange).toHaveBeenLastCalledWith('b');
   });
@@ -50,24 +50,24 @@ describe('useTabs', () => {
   }
 
   it('defaults the selected key to the defaultSelectedKey when enabled', () => {
-    const res = setup({ items, defaultSelectedKey: 'b' });
+    const res = setup({ items, defaultValue: 'b' });
     expect(res.current.selectedKey).toBe('b');
   });
 
   it('falls back to the first enabled tab when defaultSelectedKey is disabled/missing', () => {
-    const res = setup({ items: mixedItems, defaultSelectedKey: 'b' });
+    const res = setup({ items: mixedItems, defaultValue: 'b' });
     // 'b' is disabled -> falls back to first enabled 'a'
     expect(res.current.selectedKey).toBe('a');
   });
 
   it('honours a controlled selectedKey', () => {
-    const res = setup({ items, selectedKey: 'c' });
+    const res = setup({ items, value: 'c' });
     expect(res.current.selectedKey).toBe('c');
   });
 
   it('selectTab/activateTab fire onSelectionChange and ignore disabled tabs', () => {
     const onSelectionChange = vi.fn();
-    const res = setup({ items: mixedItems, onSelectionChange });
+    const res = setup({ items: mixedItems, onValueChange: onSelectionChange });
     act(() => res.current.selectTab('c'));
     expect(onSelectionChange).toHaveBeenLastCalledWith('c');
     // disabled tab is ignored
@@ -77,11 +77,11 @@ describe('useTabs', () => {
 
   it('activateTab selects only in manual activation mode', () => {
     const onSelectionChange = vi.fn();
-    const res = setup({ items, activationMode: 'manual', onSelectionChange });
+    const res = setup({ items, activationMode: 'manual', onValueChange: onSelectionChange });
     act(() => res.current.activateTab('b'));
     expect(onSelectionChange).toHaveBeenLastCalledWith('b');
     // automatic mode: activateTab is a no-op
-    const res2 = setup({ items, activationMode: 'automatic', onSelectionChange });
+    const res2 = setup({ items, activationMode: 'automatic', onValueChange: onSelectionChange });
     const before = onSelectionChange.mock.calls.length;
     act(() => res2.current.activateTab('c'));
     expect(onSelectionChange.mock.calls.length).toBe(before);
@@ -98,11 +98,11 @@ describe('useTabs', () => {
 
   it('handleTabClick selects in automatic mode and highlights in manual mode', () => {
     const onSelectionChange = vi.fn();
-    const res = setup({ items, activationMode: 'automatic', onSelectionChange });
+    const res = setup({ items, activationMode: 'automatic', onValueChange: onSelectionChange });
     act(() => res.current.handleTabClick('c', 2));
     expect(onSelectionChange).toHaveBeenLastCalledWith('c');
 
-    const res2 = setup({ items, activationMode: 'manual', onSelectionChange });
+    const res2 = setup({ items, activationMode: 'manual', onValueChange: onSelectionChange });
     const before = onSelectionChange.mock.calls.length;
     act(() => res2.current.handleTabClick('b', 1));
     // manual mode: no selection on click, just highlight
@@ -111,7 +111,7 @@ describe('useTabs', () => {
 
   it('handleTabClick ignores disabled tabs', () => {
     const onSelectionChange = vi.fn();
-    const res = setup({ items: mixedItems, onSelectionChange });
+    const res = setup({ items: mixedItems, onValueChange: onSelectionChange });
     const before = onSelectionChange.mock.calls.length;
     act(() => res.current.handleTabClick('b', 1));
     expect(onSelectionChange.mock.calls.length).toBe(before);
@@ -119,7 +119,7 @@ describe('useTabs', () => {
 
   it('keyboard navigation moves through tabs in horizontal orientation', () => {
     const onSelectionChange = vi.fn();
-    const res = setup({ items, defaultSelectedKey: 'a', onSelectionChange });
+    const res = setup({ items, defaultValue: 'a', onValueChange: onSelectionChange });
     act(() => res.current.handleKeyDown({ key: 'ArrowRight', preventDefault: () => {} } as any));
     expect(onSelectionChange).toHaveBeenLastCalledWith('b');
     act(() => res.current.handleKeyDown({ key: 'ArrowLeft', preventDefault: () => {} } as any));
@@ -132,7 +132,7 @@ describe('useTabs', () => {
 
   it('keyboard navigation uses vertical keys in vertical orientation', () => {
     const onSelectionChange = vi.fn();
-    const res = setup({ items, defaultSelectedKey: 'a', orientation: 'vertical', onSelectionChange });
+    const res = setup({ items, defaultValue: 'a', orientation: 'vertical', onValueChange: onSelectionChange });
     act(() => res.current.handleKeyDown({ key: 'ArrowDown', preventDefault: () => {} } as any));
     expect(onSelectionChange).toHaveBeenLastCalledWith('b');
     act(() => res.current.handleKeyDown({ key: 'ArrowUp', preventDefault: () => {} } as any));
@@ -143,7 +143,7 @@ describe('useTabs', () => {
 
   it('Enter/Space selects the highlighted tab in manual mode', () => {
     const onSelectionChange = vi.fn();
-    const res = setup({ items, defaultSelectedKey: 'a', activationMode: 'manual', onSelectionChange });
+    const res = setup({ items, defaultValue: 'a', activationMode: 'manual', onValueChange: onSelectionChange });
     // highlight 'b' then activate via Enter
     act(() => res.current.highlightTab(1));
     act(() => res.current.handleKeyDown({ key: 'Enter', preventDefault: () => {} } as any));
@@ -153,21 +153,21 @@ describe('useTabs', () => {
 
   it('Tab key passes through (no selection change)', () => {
     const onSelectionChange = vi.fn();
-    const res = setup({ items, onSelectionChange });
+    const res = setup({ items, onValueChange: onSelectionChange });
     const before = onSelectionChange.mock.calls.length;
     act(() => res.current.handleKeyDown({ key: 'Tab', preventDefault: () => {} } as any));
     expect(onSelectionChange.mock.calls.length).toBe(before);
   });
 
   it('getTabAt / getTabIndex / getSelectedTab return the right items', () => {
-    const res = setup({ items, defaultSelectedKey: 'b' });
+    const res = setup({ items, defaultValue: 'b' });
     expect(res.current.getTabAt(1)).toEqual(items[1]);
     expect(res.current.getTabIndex('c')).toBe(2);
     expect(res.current.getSelectedTab()).toEqual(items[1]);
   });
 
   it('getTabAttributes / getTabPanelAttributes expose aria and data state', () => {
-    const res = setup({ items, defaultSelectedKey: 'a' });
+    const res = setup({ items, defaultValue: 'a' });
     const attrs = res.current.getTabAttributes(items[0], 0);
     expect(attrs['aria-selected']).toBe(true);
     expect(attrs.tabIndex).toBe(0);
@@ -183,7 +183,7 @@ describe('useTabs', () => {
 
   it('selectTab in controlled mode skips the internal update branch', () => {
     const onSelectionChange = vi.fn();
-    const res = setup({ items, selectedKey: 'a', onSelectionChange });
+    const res = setup({ items, value: 'a', onValueChange: onSelectionChange });
     act(() => res.current.selectTab('c'));
     expect(onSelectionChange).toHaveBeenLastCalledWith('c');
   });
@@ -191,7 +191,7 @@ describe('useTabs', () => {
   it('keyboard navigation wraps around and skips disabled tabs', () => {
     const onSelectionChange = vi.fn();
     // items: a (sel), b (disabled), c
-    const res = setup({ items: mixedItems, defaultSelectedKey: 'a', onSelectionChange });
+    const res = setup({ items: mixedItems, defaultValue: 'a', onValueChange: onSelectionChange });
     // from 'a' (index 0), ArrowRight wraps past disabled 'b' to 'c'
     act(() => res.current.handleKeyDown({ key: 'ArrowRight', preventDefault: () => {} } as any));
     expect(onSelectionChange).toHaveBeenLastCalledWith('c');
@@ -206,14 +206,14 @@ describe('useTabs', () => {
   it('ArrowLeft skips a disabled tab in the backward path', () => {
     const onSelectionChange = vi.fn();
     // from 'c' (index 2), ArrowLeft -> 'b' (disabled) -> skip -> 'a'
-    const res = setup({ items: mixedItems, defaultSelectedKey: 'c', onSelectionChange });
+    const res = setup({ items: mixedItems, defaultValue: 'c', onValueChange: onSelectionChange });
     act(() => res.current.handleKeyDown({ key: 'ArrowLeft', preventDefault: () => {} } as any));
     expect(onSelectionChange).toHaveBeenLastCalledWith('a');
   });
 
   it('keyboard navigation in manual mode only highlights (no auto-select)', () => {
     const onSelectionChange = vi.fn();
-    const res = setup({ items, defaultSelectedKey: 'a', activationMode: 'manual', onSelectionChange });
+    const res = setup({ items, defaultValue: 'a', activationMode: 'manual', onValueChange: onSelectionChange });
     const before = onSelectionChange.mock.calls.length;
     act(() => res.current.handleKeyDown({ key: 'ArrowRight', preventDefault: () => {} } as any));
     act(() => res.current.handleKeyDown({ key: 'ArrowLeft', preventDefault: () => {} } as any));
@@ -224,7 +224,7 @@ describe('useTabs', () => {
 
   it('keyboard nav when nothing is highlighted falls back to the selected index', () => {
     const onSelectionChange = vi.fn();
-    const res = setup({ items, defaultSelectedKey: 'b', onSelectionChange });
+    const res = setup({ items, defaultValue: 'b', onValueChange: onSelectionChange });
     // highlightedIndex starts -1 -> nav uses selectedIndex
     act(() => res.current.handleKeyDown({ key: 'ArrowRight', preventDefault: () => {} } as any));
     expect(onSelectionChange).toHaveBeenCalled();
@@ -232,7 +232,7 @@ describe('useTabs', () => {
 
   it('Enter/Space in manual mode selects the highlighted tab', () => {
     const onSelectionChange = vi.fn();
-    const res = setup({ items, defaultSelectedKey: 'a', activationMode: 'manual', onSelectionChange });
+    const res = setup({ items, defaultValue: 'a', activationMode: 'manual', onValueChange: onSelectionChange });
     act(() => res.current.handleKeyDown({ key: 'Enter', preventDefault: () => {} } as any));
     expect(onSelectionChange).toHaveBeenLastCalledWith('a');
     act(() => res.current.handleKeyDown({ key: ' ', preventDefault: () => {} } as any));
@@ -240,7 +240,7 @@ describe('useTabs', () => {
 
   it('vertical keyboard nav finds first/last enabled tabs', () => {
     const onSelectionChange = vi.fn();
-    const res = setup({ items: mixedItems, defaultSelectedKey: 'a', orientation: 'vertical', onSelectionChange });
+    const res = setup({ items: mixedItems, defaultValue: 'a', orientation: 'vertical', onValueChange: onSelectionChange });
     act(() => res.current.handleKeyDown({ key: 'PageDown', preventDefault: () => {} } as any));
     expect(onSelectionChange).toHaveBeenLastCalledWith('c');
     act(() => res.current.handleKeyDown({ key: 'PageUp', preventDefault: () => {} } as any));
@@ -249,7 +249,7 @@ describe('useTabs', () => {
 
   it('Enter/Space in automatic mode is a no-op (selection happens on nav)', () => {
     const onSelectionChange = vi.fn();
-    const res = setup({ items, defaultSelectedKey: 'a', activationMode: 'automatic', onSelectionChange });
+    const res = setup({ items, defaultValue: 'a', activationMode: 'automatic', onValueChange: onSelectionChange });
     const before = onSelectionChange.mock.calls.length;
     act(() => res.current.handleKeyDown({ key: 'Enter', preventDefault: () => {} } as any));
     expect(onSelectionChange.mock.calls.length).toBe(before);
@@ -261,7 +261,7 @@ describe('useTabs', () => {
       { key: 'a', label: 'A', disabled: true },
       { key: 'b', label: 'B', disabled: true },
     ];
-    const res = setup({ items: allDisabled, onSelectionChange });
+    const res = setup({ items: allDisabled, onValueChange: onSelectionChange });
     expect(() => act(() => res.current.handleKeyDown({ key: 'Home', preventDefault: () => {} } as any))).not.toThrow();
     expect(() => act(() => res.current.handleKeyDown({ key: 'End', preventDefault: () => {} } as any))).not.toThrow();
     expect(onSelectionChange).not.toHaveBeenCalled();
@@ -288,24 +288,24 @@ const richItems: TabItem[] = [
 
 describe('Tabs renderer', () => {
   it('renders the selected tab panel content', () => {
-    render(<Tabs items={renderItems} defaultSelectedKey="b" />);
+    render(<Tabs items={renderItems} defaultValue="b" />);
     expect(screen.getByText('Bravo content')).toBeInTheDocument();
   });
 
   it('hides content entirely when showContent is false', () => {
-    render(<Tabs items={renderItems} defaultSelectedKey="a" showContent={false} />);
+    render(<Tabs items={renderItems} defaultValue="a" showContent={false} />);
     expect(screen.queryByText('Alpha content')).not.toBeInTheDocument();
   });
 
   it('renders a panel as null when the tab has no content', () => {
     const noContent = [{ key: 'a', label: 'Alpha' }];
-    render(<Tabs items={noContent} defaultSelectedKey="a" />);
+    render(<Tabs items={noContent} defaultValue="a" />);
     expect(screen.getByRole('tab', { name: 'Alpha' })).toBeInTheDocument();
   });
 
   it('renders every variant (default, underline, pills, enclosed)', () => {
     for (const variant of ['default', 'underline', 'pills', 'enclosed'] as const) {
-      const { unmount } = render(<Tabs items={renderItems} defaultSelectedKey="a" variant={variant} />);
+      const { unmount } = render(<Tabs items={renderItems} defaultValue="a" variant={variant} />);
       expect(screen.getByRole('tablist')).toBeInTheDocument();
       unmount();
     }
@@ -314,12 +314,12 @@ describe('Tabs renderer', () => {
   it('falls back to no variant-specific classes for an unknown variant', () => {
     // The variant chain initialises variantSpecificClasses='' and only the four
     // known variants set it; an unknown value leaves it empty (defensive).
-    render(<Tabs items={renderItems} defaultSelectedKey="a" variant={'unknown' as any} />);
+    render(<Tabs items={renderItems} defaultValue="a" variant={'unknown' as any} />);
     expect(screen.getByRole('tablist')).toBeInTheDocument();
   });
 
   it('disables the animation classes when animated is false', () => {
-    render(<Tabs items={renderItems} defaultSelectedKey="a" animated={false} />);
+    render(<Tabs items={renderItems} defaultValue="a" animated={false} />);
     // animated=false -> the panel omits the transition classes
     const panel = screen.getByText('Alpha content').closest('[role="tabpanel"]');
     expect(panel?.className).not.toContain('transition-all');
@@ -328,7 +328,7 @@ describe('Tabs renderer', () => {
   it('renders a disabled tab with icon and badge and skips selection on click', async () => {
     const user = userEvent.setup();
     const onSelectionChange = vi.fn();
-    render(<Tabs items={richItems} defaultSelectedKey="a" onSelectionChange={onSelectionChange} />);
+    render(<Tabs items={richItems} defaultValue="a" onValueChange={onSelectionChange} />);
     expect(screen.getByTestId('icon-a')).toBeInTheDocument();
     expect(screen.getByText('3')).toBeInTheDocument();
     const bravo = screen.getByRole('tab', { name: /Bravo/ });
@@ -339,7 +339,7 @@ describe('Tabs renderer', () => {
 
   it('renders bottom, left, and right content positions', () => {
     for (const pos of ['bottom', 'left', 'right'] as const) {
-      const { unmount } = render(<Tabs items={renderItems} defaultSelectedKey="a" tabPosition={pos} />);
+      const { unmount } = render(<Tabs items={renderItems} defaultValue="a" tabPosition={pos} />);
       expect(screen.getByRole('tablist')).toBeInTheDocument();
       unmount();
     }
@@ -347,27 +347,27 @@ describe('Tabs renderer', () => {
 
   it('renders the bottom position with vertical orientation (flex branch)', () => {
     const { container } = render(
-      <Tabs items={renderItems} defaultSelectedKey="a" tabPosition="bottom" orientation="vertical" />
+      <Tabs items={renderItems} defaultValue="a" tabPosition="bottom" orientation="vertical" />
     );
     // bottom + vertical -> tabs-container picks up the `flex` class
     expect(container.querySelector('.tabs-container')?.className).toContain('flex');
   });
 
   it('renders a vertical tab list for vertical orientation', () => {
-    const { container } = render(<Tabs items={renderItems} defaultSelectedKey="a" orientation="vertical" />);
+    const { container } = render(<Tabs items={renderItems} defaultValue="a" orientation="vertical" />);
     expect(container.querySelector('.flex-col')).not.toBeNull();
   });
 
   it('renders a vertical layout for the left/right content positions', () => {
     // left position with vertical orientation exercises the flex-col branch
     const { unmount } = render(
-      <Tabs items={renderItems} defaultSelectedKey="a" tabPosition="left" orientation="vertical" />
+      <Tabs items={renderItems} defaultValue="a" tabPosition="left" orientation="vertical" />
     );
     expect(screen.getByRole('tablist')).toBeInTheDocument();
     unmount();
     // right position with vertical orientation exercises the flex-col-reverse branch
     const { container } = render(
-      <Tabs items={renderItems} defaultSelectedKey="a" tabPosition="right" orientation="vertical" />
+      <Tabs items={renderItems} defaultValue="a" tabPosition="right" orientation="vertical" />
     );
     expect(container.querySelector('.flex-col-reverse')).not.toBeNull();
   });
@@ -376,7 +376,7 @@ describe('Tabs renderer', () => {
     render(
       <Tabs
         items={renderItems}
-        defaultSelectedKey="a"
+        defaultValue="a"
         render={(props) => (
           <div data-testid="custom-root">
             <span data-testid="sel-key">{props.selectedKey}</span>
@@ -394,7 +394,7 @@ describe('Tabs renderer', () => {
     render(
       <Tabs
         items={renderItems}
-        defaultSelectedKey="a"
+        defaultValue="a"
         renderTab={(tab, p) => (
           <button key={tab.key} data-testid={`rt-${tab.key}`} onClick={p.onClick}>
             {tab.label}{p.selected ? '*' : ''}
@@ -417,7 +417,7 @@ describe('Tabs renderer', () => {
     render(
       <Tabs
         items={renderItems}
-        defaultSelectedKey="a"
+        defaultValue="a"
         renderTab={(tab, p) => (
           <button key={tab.key} data-testid={`rt-${tab.key}`} onClick={p.onClick}>
             {tab.label}{p.selected ? '*' : ''}
@@ -431,7 +431,7 @@ describe('Tabs renderer', () => {
 
   it('forwards className and style to the tabs-list wrapper', () => {
     const { container } = render(
-      <Tabs items={renderItems} defaultSelectedKey="a" className="extra" style={{ color: 'blue' }} />
+      <Tabs items={renderItems} defaultValue="a" className="extra" style={{ color: 'blue' }} />
     );
     const list = container.querySelector('.tabs-list') as HTMLElement;
     expect(list.className).toContain('extra');
@@ -442,7 +442,7 @@ describe('Tabs renderer', () => {
 describe('Tabs compound children API', () => {
   it('derives items and content from Tabs.List/Trigger/Content', () => {
     render(
-      <Tabs defaultSelectedKey="a">
+      <Tabs defaultValue="a">
         <Tabs.List>
           <Tabs.Trigger value="a">Alpha</Tabs.Trigger>
           <Tabs.Trigger value="b">Bravo</Tabs.Trigger>
@@ -458,7 +458,7 @@ describe('Tabs compound children API', () => {
 
   it('ignores non-Tabs children inside Tabs.List', () => {
     render(
-      <Tabs defaultSelectedKey="a">
+      <Tabs defaultValue="a">
         <Tabs.List>
           <span>not a trigger</span>
           <Tabs.Trigger value="a">Alpha</Tabs.Trigger>
@@ -471,7 +471,7 @@ describe('Tabs compound children API', () => {
 
   it('ignores non-element children of Tabs (strings/numbers)', () => {
     render(
-      <Tabs defaultSelectedKey="a">
+      <Tabs defaultValue="a">
         text-and-numbers
         <Tabs.List>
           <Tabs.Trigger value="a">Alpha</Tabs.Trigger>
@@ -483,7 +483,7 @@ describe('Tabs compound children API', () => {
 
   it('ignores direct element children that are neither Tabs.List nor Tabs.Content', () => {
     render(
-      <Tabs defaultSelectedKey="a">
+      <Tabs defaultValue="a">
         <div>stray</div>
         <Tabs.List>
           <Tabs.Trigger value="a">Alpha</Tabs.Trigger>
@@ -530,13 +530,13 @@ describe('Tab / TabPanel / SimpleTabs / VerticalTabs wrappers', () => {
   it('SimpleTabs selects a tab on click', async () => {
     const user = userEvent.setup();
     const onSelectionChange = vi.fn();
-    render(<SimpleTabs items={renderItems} defaultSelectedKey="a" onSelectionChange={onSelectionChange} />);
+    render(<SimpleTabs items={renderItems} defaultValue="a" onValueChange={onSelectionChange} />);
     await user.click(screen.getByRole('tab', { name: 'Charlie' }));
     expect(onSelectionChange).toHaveBeenLastCalledWith('c');
   });
 
   it('VerticalTabs renders a vertical tablist', () => {
-    render(<VerticalTabs items={renderItems} defaultSelectedKey="a" />);
+    render(<VerticalTabs items={renderItems} defaultValue="a" />);
     expect(screen.getByRole('tablist')).toHaveAttribute('aria-orientation', 'vertical');
   });
 });

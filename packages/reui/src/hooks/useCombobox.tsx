@@ -112,8 +112,6 @@ export interface UseComboboxProps extends
   onOpen?: () => void;
   /** Close handler */
   onClose?: () => void;
-  /** Select handler */
-  onSelect?: (option: ComboboxOption) => void;
   /** Clear handler */
   onClear?: () => void;
   /** Before open handler (can prevent open) */
@@ -217,7 +215,6 @@ export function useCombobox(props: UseComboboxProps = {}) {
     keyBindings = EMPTY_KEY_BINDINGS,
     onOpen,
     onClose,
-    onSelect,
     onClear,
     onBeforeOpen,
     onBeforeClose,
@@ -482,14 +479,11 @@ export function useCombobox(props: UseComboboxProps = {}) {
     }
     onInputChange?.(option.label);
 
-    // Call select handler
-    onSelect?.(option);
-
     // Close on select if enabled
     if (closeOnSelect) {
       handleClose();
     }
-  }, [isValueControlled, isInputValueControlled, onValueChange, onInputChange, onSelect, closeOnSelect, handleClose]);
+  }, [isValueControlled, isInputValueControlled, onValueChange, onInputChange, closeOnSelect, handleClose]);
 
   const handleOptionFocus = useCallback((index: number) => {
     const options = stablePropGroups.length > 0 ?

@@ -31,12 +31,24 @@ export interface UseTabsProps extends
   SemanticMixinProps {
   /** Tab items */
   items: TabItem[];
-  /** Selected tab key */
+  /** Selected tab value (standard selection API) */
+  value?: string;
+  /** Default selected tab value */
+  defaultValue?: string;
+  /** Value change handler (standard selection API) */
+  onValueChange?: (value: string) => void;
+  /**
+   * @deprecated Use `value`. Alias retained for backward compatibility.
+   */
   selectedKey?: string;
-  /** Default selected tab key */
+  /**
+   * @deprecated Use `defaultValue`. Alias retained for backward compatibility.
+   */
   defaultSelectedKey?: string;
-  /** Selection change handler */
-  onSelectionChange?: (key: string) => void;
+  /**
+   * @deprecated Use `onValueChange`. Alias retained for backward compatibility.
+   */
+  onSelectionChange?: (value: string) => void;
   /** Tab orientation */
   orientation?: 'horizontal' | 'vertical';
   /** Whether tabs are manually activated */
@@ -103,9 +115,13 @@ export interface UseTabsReturns extends UseTabsState, UseTabsActions {
 export const useTabs = (props: UseTabsProps): UseTabsReturns => {
   const {
     items,
-    selectedKey: controlledSelectedKey,
-    defaultSelectedKey,
-    onSelectionChange,
+    value: controlledValue,
+    defaultValue,
+    onValueChange,
+    // Deprecated aliases (preferred → fallback).
+    selectedKey: legacySelectedKey,
+    defaultSelectedKey: legacyDefaultSelectedKey,
+    onSelectionChange: legacyOnSelectionChange,
     orientation = 'horizontal',
     manual = false,
     showIndicator = true,
@@ -140,6 +156,14 @@ export const useTabs = (props: UseTabsProps): UseTabsReturns => {
     pressable
   });
 
+  // Resolve standard vs deprecated aliases. Standard names take precedence.
+  const controlledSelectedKey = controlledValue ?? legacySelectedKey;
+  const defaultSelectedKeyValue = defaultValue ?? legacyDefaultSelectedKey;
+  const handleChange = useCallback((key: string) => {
+    onValueChange?.(key);
+    legacyOnSelectionChange?.(key);
+  }, [onValueChange, legacyOnSelectionChange]);
+
   // Determine if selection is controlled
   const isControlledSelected = controlledSelectedKey !== undefined;
 
@@ -149,16 +173,13 @@ export const useTabs = (props: UseTabsProps): UseTabsReturns => {
       return controlledSelectedKey;
     }
 
-    // reason: reaching here means isControlledSelected is false, so controlledSelectedKey
-    // is always undefined; the prior `if (controlledSelectedKey === undefined)` guard and
-    // trailing `return ''` were unreachable dead code.
-    if (defaultSelectedKey && items.find(item => item.key === defaultSelectedKey && !item.disabled)) {
-      return defaultSelectedKey;
+    if (defaultSelectedKeyValue && items.find(item => item.key === defaultSelectedKeyValue && !item.disabled)) {
+      return defaultSelectedKeyValue;
     }
     // Fall back to first enabled tab
     const firstEnabledTab = items.find(item => !item.disabled);
     return firstEnabledTab?.key || items[0]?.key || '';
-  }, [isControlledSelected, controlledSelectedKey, defaultSelectedKey, items]);
+  }, [isControlledSelected, controlledSelectedKey, defaultSelectedKeyValue, items]);
 
   // Get selected index
   const selectedIndex = useMemo(() => {
@@ -195,8 +216,8 @@ export const useTabs = (props: UseTabsProps): UseTabsReturns => {
       // Note: In uncontrolled mode, the parent component should handle state
       // This is a simplified approach - in production, you'd want proper state management
     }
-    onSelectionChange?.(key);
-  }, [items, isControlledSelected, onSelectionChange]);
+    handleChange(key);
+  }, [items, isControlledSelected, handleChange]);
 
   // Highlight tab
   const highlightTab = useCallback((index: number) => {

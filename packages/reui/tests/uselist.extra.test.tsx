@@ -107,7 +107,7 @@ describe('useList hook - selection', () => {
   });
 
   it('deselectItem removes from multi selection; no-op for single/disabled', () => {
-    const api = setup({ defaultItems: items(3), multiSelect: true, defaultSelectedItems: ['i0', 'i1'] });
+    const api = setup({ defaultItems: items(3), multiSelect: true, defaultSelectedKeys: ['i0', 'i1'] });
     act(() => api.actions.deselectItem('i0'));
     expect(Array.from(api.state.selectedItems)).toEqual(['i1']);
     // single-select: deselect is a no-op
@@ -115,7 +115,7 @@ describe('useList hook - selection', () => {
     act(() => api2.actions.deselectItem('i0'));
     expect(api2.state.selectedItems.size).toBe(0);
     // disabled list: no-op
-    const api3 = setup({ defaultItems: items(2), multiSelect: true, defaultSelectedItems: ['i0'], disabled: true });
+    const api3 = setup({ defaultItems: items(2), multiSelect: true, defaultSelectedKeys: ['i0'], disabled: true });
     act(() => api3.actions.deselectItem('i0'));
     expect(api3.state.selectedItems.size).toBe(1);
   });
@@ -151,7 +151,7 @@ describe('useList hook - selection', () => {
 
   it('deselectAll/clearSelection empty the selection (controlled-safe)', () => {
     const onSelectionChange = vi.fn();
-    const api = setup({ defaultItems: items(2), multiSelect: true, defaultSelectedItems: ['i0'], onSelectionChange });
+    const api = setup({ defaultItems: items(2), multiSelect: true, defaultSelectedKeys: ['i0'], onSelectionChange });
     act(() => api.actions.deselectAll());
     expect(api.state.selectedItems.size).toBe(0);
     expect(onSelectionChange).toHaveBeenCalledWith([]);
@@ -159,13 +159,13 @@ describe('useList hook - selection', () => {
     act(() => api.actions.clearSelection());
     expect(api.state.selectedItems.size).toBe(0);
     // disabled
-    const api2 = setup({ defaultItems: items(2), multiSelect: true, defaultSelectedItems: ['i0'], disabled: true });
+    const api2 = setup({ defaultItems: items(2), multiSelect: true, defaultSelectedKeys: ['i0'], disabled: true });
     act(() => api2.actions.deselectAll());
     expect(api2.state.selectedItems.size).toBe(1);
   });
 
   it('controlled selectedItems does not mutate internal selection', () => {
-    const api = setup({ defaultItems: items(2), selectedItems: ['i0'] });
+    const api = setup({ defaultItems: items(2), selectedKeys: ['i0'] });
     act(() => api.actions.selectItem('i1'));
     expect(Array.from(api.state.selectedItems)).toEqual(['i0']);
   });
@@ -192,7 +192,7 @@ describe('useList hook - item mutations', () => {
   });
 
   it('removeItem drops the item and cleans selection', () => {
-    const api = setup({ defaultItems: items(3), multiSelect: true, defaultSelectedItems: ['i0', 'i1'] });
+    const api = setup({ defaultItems: items(3), multiSelect: true, defaultSelectedKeys: ['i0', 'i1'] });
     act(() => api.actions.removeItem('i0'));
     expect(api.state.items.map(i => i.id)).toEqual(['i1', 'i2']);
     expect(Array.from(api.state.selectedItems)).toEqual(['i1']);
@@ -521,7 +521,7 @@ describe('useList hook - misc', () => {
     const api = setup({
       defaultItems: items(3),
       multiSelect: true,
-      selectedItems: ['i0', 'i1'],
+      selectedKeys: ['i0', 'i1'],
       onSelectionChange,
     });
     act(() => api.actions.deselectItem('i0'));
@@ -540,7 +540,7 @@ describe('useList hook - misc', () => {
   it('removeItem on controlled selection skips the internal-selection-cleanup branch', () => {
     const api = setup({
       defaultItems: items(2),
-      selectedItems: ['i0'], // controlled selection -> cleanup branch skipped
+      selectedKeys: ['i0'], // controlled selection -> cleanup branch skipped
     });
     expect(() => act(() => api.actions.removeItem('i0'))).not.toThrow();
     expect(api.state.items).toHaveLength(1);

@@ -35,7 +35,12 @@ export interface UseSelectProps extends
   value?: any;
   /** Default selected value */
   defaultValue?: any;
-  /** Selection change handler */
+  /** Value change handler (standard selection API) */
+  onValueChange?: (value: any) => void;
+  /**
+   * @deprecated Use `onValueChange`. Alias retained for backward compatibility;
+   * routed to `onValueChange`.
+   */
   onSelectionChange?: (value: any) => void;
   /** Whether select is open */
   open?: boolean;
@@ -154,6 +159,7 @@ export const useSelect = (props: UseSelectProps): UseSelectReturns => {
     options,
     value: controlledValue,
     defaultValue,
+    onValueChange,
     onSelectionChange,
     open: controlledOpen,
     defaultOpen = false,
@@ -212,6 +218,13 @@ export const useSelect = (props: UseSelectProps): UseSelectReturns => {
   // Determine if selection is controlled
   const isControlledSelected = controlledValue !== undefined;
   const selectedValue = isControlledSelected ? controlledValue : internalSelectedValue;
+
+  // Standard selection callback. `onValueChange` is the unified API; the legacy
+  // `onSelectionChange` is kept as a deprecated alias that routes here.
+  const handleChange = useCallback((value: any) => {
+    onValueChange?.(value);
+    onSelectionChange?.(value);
+  }, [onValueChange, onSelectionChange]);
 
   // Get filtered options
   const getFilteredOptions = useCallback(() => {
@@ -304,7 +317,7 @@ export const useSelect = (props: UseSelectProps): UseSelectReturns => {
     if (!isControlledSelected) {
       setInternalSelectedValue(value);
     }
-    onSelectionChange?.(value);
+    handleChange(value);
 
     // Clear input
     setInputValue('');
@@ -313,16 +326,16 @@ export const useSelect = (props: UseSelectProps): UseSelectReturns => {
     if (closeOnSelection) {
       closeSelect();
     }
-  }, [options, isControlledSelected, onSelectionChange, closeOnSelection, closeSelect]);
+  }, [options, isControlledSelected, handleChange, closeOnSelection, closeSelect]);
 
   // Clear selection
   const clearSelection = useCallback(() => {
     if (!isControlledSelected) {
       setInternalSelectedValue(undefined);
     }
-    onSelectionChange?.(undefined);
+    handleChange(undefined);
     setInputValue('');
-  }, [isControlledSelected, onSelectionChange]);
+  }, [isControlledSelected, handleChange]);
 
   // Handle input change for search
   const handleInputChange = useCallback((value: string) => {

@@ -501,12 +501,12 @@ TabPanel.displayName = 'TabPanel';
 export interface SimpleTabsProps {
   /** Tab items */
   items: TabItem[];
-  /** Selected tab key */
-  selectedKey?: string;
-  /** Default selected tab key */
-  defaultSelectedKey?: string;
-  /** Selection change handler */
-  onSelectionChange?: (key: string) => void;
+  /** Selected tab value */
+  value?: string;
+  /** Default selected tab value */
+  defaultValue?: string;
+  /** Value change handler (standard selection API) */
+  onValueChange?: (value: string) => void;
   /** Additional CSS class names */
   className?: string;
   /** Custom style object */
@@ -515,17 +515,17 @@ export interface SimpleTabsProps {
 
 export const SimpleTabs = forwardRef<HTMLDivElement, SimpleTabsProps>(({
   items,
-  selectedKey,
-  defaultSelectedKey,
-  onSelectionChange,
+  value,
+  defaultValue,
+  onValueChange,
   className,
   style
 }, ref) => (
   <Tabs
     items={items}
-    selectedKey={selectedKey}
-    defaultSelectedKey={defaultSelectedKey}
-    onSelectionChange={onSelectionChange}
+    value={value}
+    defaultValue={defaultValue}
+    onValueChange={onValueChange}
     className={className}
     style={style}
     ref={ref}

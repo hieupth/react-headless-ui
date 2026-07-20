@@ -24,25 +24,25 @@ const richItems: TabItem[] = [
 
 describe('Tabs extras', () => {
   it('renders tab content for the selected tab', () => {
-    render(<Tabs items={items} defaultSelectedKey="b" />);
+    render(<Tabs items={items} defaultValue="b" />);
     expect(screen.getByText('Bravo content')).toBeInTheDocument();
   });
 
   it('hides content when showContent is false', () => {
-    render(<Tabs items={items} defaultSelectedKey="a" showContent={false} />);
+    render(<Tabs items={items} defaultValue="a" showContent={false} />);
     expect(screen.queryByText('Alpha content')).not.toBeInTheDocument();
   });
 
   it('does not render panel content when a tab has no content', () => {
     const noContent = [{ key: 'a', label: 'Alpha' }];
-    render(<Tabs items={noContent} defaultSelectedKey="a" />);
+    render(<Tabs items={noContent} defaultValue="a" />);
     expect(screen.getByRole('tab', { name: 'Alpha' })).toBeInTheDocument();
   });
 
   it('renders all four variants', () => {
     const variants = ['default', 'underline', 'pills', 'enclosed'] as const;
     for (const variant of variants) {
-      const { unmount } = render(<Tabs items={items} defaultSelectedKey="a" variant={variant} />);
+      const { unmount } = render(<Tabs items={items} defaultValue="a" variant={variant} />);
       expect(screen.getByRole('tablist')).toBeInTheDocument();
       unmount();
     }
@@ -50,7 +50,7 @@ describe('Tabs extras', () => {
 
   it('navigates with ArrowRight and ArrowLeft (automatic activation)', () => {
     const onSelectionChange = vi.fn();
-    render(<Tabs items={items} defaultSelectedKey="a" onSelectionChange={onSelectionChange} />);
+    render(<Tabs items={items} defaultValue="a" onValueChange={onSelectionChange} />);
     const tablist = screen.getByRole('tablist');
     fireEvent.keyDown(tablist, { key: 'ArrowRight' });
     expect(onSelectionChange).toHaveBeenLastCalledWith('b');
@@ -60,7 +60,7 @@ describe('Tabs extras', () => {
 
   it('navigates with ArrowDown/ArrowUp when vertical', () => {
     const onSelectionChange = vi.fn();
-    render(<Tabs items={items} defaultSelectedKey="a" orientation="vertical" onSelectionChange={onSelectionChange} />);
+    render(<Tabs items={items} defaultValue="a" orientation="vertical" onValueChange={onSelectionChange} />);
     const tablist = screen.getByRole('tablist');
     fireEvent.keyDown(tablist, { key: 'ArrowDown' });
     expect(onSelectionChange).toHaveBeenLastCalledWith('b');
@@ -70,7 +70,7 @@ describe('Tabs extras', () => {
 
   it('Home selects the first enabled tab and End the last', () => {
     const onSelectionChange = vi.fn();
-    render(<Tabs items={richItems} defaultSelectedKey="c" onSelectionChange={onSelectionChange} />);
+    render(<Tabs items={richItems} defaultValue="c" onValueChange={onSelectionChange} />);
     const tablist = screen.getByRole('tablist');
     fireEvent.keyDown(tablist, { key: 'End' });
     expect(onSelectionChange).toHaveBeenLastCalledWith('c');
@@ -80,7 +80,7 @@ describe('Tabs extras', () => {
 
   it('skips disabled tabs during arrow navigation', () => {
     const onSelectionChange = vi.fn();
-    render(<Tabs items={richItems} defaultSelectedKey="a" onSelectionChange={onSelectionChange} />);
+    render(<Tabs items={richItems} defaultValue="a" onValueChange={onSelectionChange} />);
     const tablist = screen.getByRole('tablist');
     // from a, ArrowRight should skip disabled b and land on c
     fireEvent.keyDown(tablist, { key: 'ArrowRight' });
@@ -90,7 +90,7 @@ describe('Tabs extras', () => {
   it('manual activation mode highlights on arrow and selects on Enter/Space', () => {
     const onSelectionChange = vi.fn();
     render(
-      <Tabs items={items} defaultSelectedKey="a" activationMode="manual" onSelectionChange={onSelectionChange} />
+      <Tabs items={items} defaultValue="a" activationMode="manual" onValueChange={onSelectionChange} />
     );
     const tablist = screen.getByRole('tablist');
     // arrow only highlights in manual mode (no selection)
@@ -103,14 +103,14 @@ describe('Tabs extras', () => {
 
   it('ArrowLeft wraps around to the last tab', () => {
     const onSelectionChange = vi.fn();
-    render(<Tabs items={items} defaultSelectedKey="a" onSelectionChange={onSelectionChange} />);
+    render(<Tabs items={items} defaultValue="a" onValueChange={onSelectionChange} />);
     fireEvent.keyDown(screen.getByRole('tablist'), { key: 'ArrowLeft' });
     expect(onSelectionChange).toHaveBeenLastCalledWith('c');
   });
 
   it('Tab key does nothing special (no selection change)', () => {
     const onSelectionChange = vi.fn();
-    render(<Tabs items={items} defaultSelectedKey="a" onSelectionChange={onSelectionChange} />);
+    render(<Tabs items={items} defaultValue="a" onValueChange={onSelectionChange} />);
     fireEvent.keyDown(screen.getByRole('tablist'), { key: 'Tab' });
     expect(onSelectionChange).not.toHaveBeenCalled();
   });
@@ -118,7 +118,7 @@ describe('Tabs extras', () => {
   it('renders a disabled tab with icon and badge, and does not select on click', async () => {
     const user = userEvent.setup();
     const onSelectionChange = vi.fn();
-    render(<Tabs items={richItems} defaultSelectedKey="a" onSelectionChange={onSelectionChange} />);
+    render(<Tabs items={richItems} defaultValue="a" onValueChange={onSelectionChange} />);
     expect(screen.getByTestId('icon-a')).toBeInTheDocument();
     expect(screen.getByText('3')).toBeInTheDocument();
     const bravo = screen.getByRole('tab', { name: /Bravo/ });
@@ -129,7 +129,7 @@ describe('Tabs extras', () => {
 
   it('renders bottom/left/right tab positions', () => {
     for (const pos of ['bottom', 'left', 'right'] as const) {
-      const { unmount } = render(<Tabs items={items} defaultSelectedKey="a" tabPosition={pos} />);
+      const { unmount } = render(<Tabs items={items} defaultValue="a" tabPosition={pos} />);
       expect(screen.getByRole('tablist')).toBeInTheDocument();
       unmount();
     }
@@ -139,7 +139,7 @@ describe('Tabs extras', () => {
     render(
       <Tabs
         items={items}
-        defaultSelectedKey="a"
+        defaultValue="a"
         render={(props) => (
           <div data-testid="custom-root">
             <div data-testid="sel-key">{props.selectedKey}</div>
@@ -157,7 +157,7 @@ describe('Tabs extras', () => {
     render(
       <Tabs
         items={items}
-        defaultSelectedKey="a"
+        defaultValue="a"
         renderTab={(tab, p) => (
           <button key={tab.key} data-testid={`rt-${tab.key}`} onClick={p.onClick}>
             {tab.label}{p.selected ? '*' : ''}
@@ -196,19 +196,19 @@ describe('Tabs extras', () => {
   it('SimpleTabs selects a tab', async () => {
     const user = userEvent.setup();
     const onSelectionChange = vi.fn();
-    render(<SimpleTabs items={items} defaultSelectedKey="a" onSelectionChange={onSelectionChange} />);
+    render(<SimpleTabs items={items} defaultValue="a" onValueChange={onSelectionChange} />);
     await user.click(screen.getByRole('tab', { name: 'Charlie' }));
     expect(onSelectionChange).toHaveBeenLastCalledWith('c');
   });
 
   it('VerticalTabs renders a vertical tablist', () => {
-    render(<VerticalTabs items={items} defaultSelectedKey="a" />);
+    render(<VerticalTabs items={items} defaultValue="a" />);
     expect(screen.getByRole('tablist')).toHaveAttribute('aria-orientation', 'vertical');
   });
 
   it('forwards className and style to the tabs-list', () => {
     const { container } = render(
-      <Tabs items={items} defaultSelectedKey="a" className="extra" style={{ color: 'blue' }} />
+      <Tabs items={items} defaultValue="a" className="extra" style={{ color: 'blue' }} />
     );
     const list = container.querySelector('.tabs-list') as HTMLElement;
     expect(list.className).toContain('extra');

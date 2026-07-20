@@ -38,8 +38,8 @@ export type SelectionMode = 'single' | 'multiple' | 'none';
  * Tree view state interface
  */
 export interface TreeViewState {
-  /** Currently selected node IDs */
-  selectedIds: Set<string>;
+  /** Currently selected node keys (standard selection API; array form) */
+  selectedKeys: string[];
   /** Currently expanded node IDs */
   expandedIds: Set<string>;
   /** Whether tree view is disabled */
@@ -100,14 +100,18 @@ export interface UseTreeViewProps {
   selectionMode?: SelectionMode;
   /** Whether tree view is disabled */
   disabled?: boolean;
-  /** Initially selected node IDs */
-  defaultSelectedIds?: string[];
+  /** Initially selected node keys (standard selection API) */
+  defaultSelectedKeys?: string[];
   /** Initially expanded node IDs */
   defaultExpandedIds?: string[];
   /** Whether to expand all nodes initially */
   expandAll?: boolean;
-  /** Callback when selection changes */
-  onSelectionChange?: (selectedIds: Set<string>) => void;
+  /** Callback when selection changes (standard selection API; array form) */
+  onSelectionChange?: (selectedKeys: string[]) => void;
+  /**
+   * @deprecated Use `defaultSelectedKeys`. Alias retained for backward compatibility.
+   */
+  defaultSelectedIds?: string[];
   /** Callback when expansion changes */
   onExpansionChange?: (expandedIds: Set<string>) => void;
   /** Callback when node is activated (double-click or Enter) */
@@ -149,18 +153,24 @@ export function useTreeView(props: UseTreeViewProps): UseTreeViewReturns {
     nodes,
     selectionMode = 'single',
     disabled = false,
-    defaultSelectedIds = [],
+    defaultSelectedKeys,
     defaultExpandedIds = [],
     expandAll = false,
     onSelectionChange,
     onExpansionChange,
     onNodeActivate,
+    // Deprecated alias.
+    defaultSelectedIds: legacyDefaultSelectedIds,
     treeRef
   } = props;
 
-  // State management
+  // Resolve standard vs deprecated alias (standard name takes precedence).
+  const initialSelectedKeys = defaultSelectedKeys ?? legacyDefaultSelectedIds ?? [];
+
+  // State management. Internally a Set for O(1) membership checks; the public
+  // API exposes `selectedKeys` as an array and emits arrays from onSelectionChange.
   const [selectedIds, setSelectedIds] = useState<Set<string>>(() =>
-    new Set(defaultSelectedIds)
+    new Set(initialSelectedKeys)
   );
   const [expandedIds, setExpandedIds] = useState<Set<string>>(() => {
     if (expandAll) {
@@ -221,6 +231,11 @@ export function useTreeView(props: UseTreeViewProps): UseTreeViewReturns {
     return selected;
   }, [selectedIds, nodes]);
 
+  // Emit the current selection as the standardized array form.
+  const emitSelection = useCallback((next: Set<string>) => {
+    onSelectionChange?.(Array.from(next));
+  }, [onSelectionChange]);
+
   // Selection actions
   const selectNode = useCallback((nodeId: string) => {
     if (disabled) return;
@@ -242,8 +257,8 @@ export function useTreeView(props: UseTreeViewProps): UseTreeViewReturns {
     }
 
     setSelectedIds(newSelectedIds);
-    onSelectionChange?.(newSelectedIds);
-  }, [disabled, nodes, selectionMode, selectedIds, onSelectionChange]);
+    emitSelection(newSelectedIds);
+  }, [disabled, nodes, selectionMode, selectedIds, emitSelection]);
 
   const deselectNode = useCallback((nodeId: string) => {
     if (disabled || selectionMode !== 'multiple') return;
@@ -251,8 +266,8 @@ export function useTreeView(props: UseTreeViewProps): UseTreeViewReturns {
     const newSelectedIds = new Set(selectedIds);
     newSelectedIds.delete(nodeId);
     setSelectedIds(newSelectedIds);
-    onSelectionChange?.(newSelectedIds);
-  }, [disabled, selectionMode, selectedIds, onSelectionChange]);
+    emitSelection(newSelectedIds);
+  }, [disabled, selectionMode, selectedIds, emitSelection]);
 
   const toggleNodeSelection = useCallback((nodeId: string) => {
     if (disabled || selectionMode === 'none') return;
@@ -267,9 +282,10 @@ export function useTreeView(props: UseTreeViewProps): UseTreeViewReturns {
   const clearSelection = useCallback(() => {
     if (disabled) return;
 
-    setSelectedIds(new Set());
-    onSelectionChange?.(new Set());
-  }, [disabled, onSelectionChange]);
+    const empty = new Set<string>();
+    setSelectedIds(empty);
+    emitSelection(empty);
+  }, [disabled, emitSelection]);
 
   // Expansion actions
   const expandNode = useCallback((nodeId: string) => {
@@ -350,9 +366,10 @@ export function useTreeView(props: UseTreeViewProps): UseTreeViewReturns {
     }
   }, [nodes, disabled, onNodeActivate]);
 
-  // Build state
+  // Build state. `selectedKeys` is the standardized array form of the internal
+  // selection Set.
   const state: TreeViewState = {
-    selectedIds,
+    selectedKeys: Array.from(selectedIds),
     expandedIds,
     disabled,
     selectionMode,

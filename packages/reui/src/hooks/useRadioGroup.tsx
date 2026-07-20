@@ -62,10 +62,8 @@ export interface UseRadioGroupProps {
   orientation?: RadioGroupOrientation;
   /** Array of option values */
   options: string[];
-  /** Value change handler */
+  /** Value change handler (standard selection API) */
   onValueChange?: (value: string) => void;
-  /** Callback when option is selected */
-  onOptionSelect?: (value: string) => void;
   /** Whether to wrap navigation (circular) */
   wrapNavigation?: boolean;
   /** Ref to the radio group element */
@@ -105,7 +103,6 @@ export function useRadioGroup(props: UseRadioGroupProps): UseRadioGroupReturns {
     orientation = 'vertical',
     options,
     onValueChange,
-    onOptionSelect,
     wrapNavigation = true,
     radioGroupRef
   } = props;
@@ -137,8 +134,7 @@ export function useRadioGroup(props: UseRadioGroupProps): UseRadioGroupReturns {
       setInternalValue(value);
     }
     onValueChange?.(value);
-    onOptionSelect?.(value);
-  }, [disabled, options, isControlled, onValueChange, onOptionSelect]);
+  }, [disabled, options, isControlled, onValueChange]);
 
   // Focus option handler
   const focusOption = useCallback((value: string) => {

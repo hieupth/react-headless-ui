@@ -49,12 +49,10 @@ describe('useRadioGroup hook', () => {
 
   it('selectOption updates value and fires callbacks', () => {
     const onValue = vi.fn();
-    const onSelect = vi.fn();
-    const { api } = setup({ onValueChange: onValue, onOptionSelect: onSelect });
+    const { api } = setup({ onValueChange: onValue });
     act(() => api.actions.selectOption('cherry'));
     expect(api.state.value).toBe('cherry');
     expect(onValue).toHaveBeenLastCalledWith('cherry');
-    expect(onSelect).toHaveBeenLastCalledWith('cherry');
   });
 
   it('selectOption ignores invalid option and disabled', () => {

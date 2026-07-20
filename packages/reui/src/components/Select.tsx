@@ -388,8 +388,8 @@ export interface SimpleSelectProps {
   value?: any;
   /** Default selected value */
   defaultValue?: any;
-  /** Selection change handler */
-  onSelectionChange?: (value: any) => void;
+  /** Value change handler (standard selection API) */
+  onValueChange?: (value: any) => void;
   /** Placeholder text */
   placeholder?: string;
   /** Whether select is disabled */
@@ -406,7 +406,7 @@ export const SimpleSelect = forwardRef<HTMLElement, SimpleSelectProps>(({
   options,
   value,
   defaultValue,
-  onSelectionChange,
+  onValueChange,
   placeholder = 'Select an option',
   disabled = false,
   required = false,
@@ -417,7 +417,7 @@ export const SimpleSelect = forwardRef<HTMLElement, SimpleSelectProps>(({
     options={options}
     value={value}
     defaultValue={defaultValue}
-    onSelectionChange={onSelectionChange}
+    onValueChange={onValueChange}
     placeholder={placeholder}
     disabled={disabled}
     required={required}
