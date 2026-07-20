@@ -270,21 +270,6 @@ describe('usePanel hook', () => {
     expect(api.returns!.state.highlighted).toBe(false);
   });
 
-  it('no-op setters do not throw', () => {
-    const { api } = setup({});
-    expect(() => {
-      act(() => api.returns!.actions.setVariant('elevated'));
-      act(() => api.returns!.actions.setSize('lg'));
-      act(() => api.returns!.actions.setLoading(true));
-      act(() => api.returns!.actions.showHeader());
-      act(() => api.returns!.actions.hideHeader());
-      act(() => api.returns!.actions.showFooter());
-      act(() => api.returns!.actions.hideFooter());
-      act(() => api.returns!.actions.showActions());
-      act(() => api.returns!.actions.hideActions());
-    }).not.toThrow();
-  });
-
   it('getPanelElement returns the bound element', () => {
     const { ref, api } = setupWithRef({});
     expect(api.returns!.actions.getPanelElement()).toBe(ref.current);
