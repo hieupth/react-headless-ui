@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { Drawer, DrawerTrigger, DrawerContent, DrawerHeader, DrawerFooter } from '@hieupth/react-headless-ui';
+import { Drawer, DrawerContent, DrawerHeader, DrawerFooter } from '@hieupth/react-headless-ui';
 import { Demo } from '@/components/demo';
 import { PropsTable } from '@/components/props-table';
 

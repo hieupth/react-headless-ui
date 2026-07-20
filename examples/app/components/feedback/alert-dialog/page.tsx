@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { AlertDialog, AlertDialogTrigger } from '@hieupth/react-headless-ui';
+import { AlertDialog } from '@hieupth/react-headless-ui';
 import { Demo } from '@/components/demo';
 import { PropsTable } from '@/components/props-table';
 

@@ -1,7 +1,6 @@
 'use client';
 
 import { useState } from 'react';
-import { Tooltip, SimpleTooltip } from '@hieupth/react-headless-ui';
 import { Demo } from '@/components/demo';
 import { PropsTable } from '@/components/props-table';
 

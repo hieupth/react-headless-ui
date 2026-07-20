@@ -1,6 +1,5 @@
 'use client';
 
-import { useState } from 'react';
 import { Breadcrumb } from '@hieupth/react-headless-ui';
 import { Demo } from '@/components/demo';
 import { PropsTable } from '@/components/props-table';
@@ -15,7 +14,7 @@ const basicItems = [
 ];
 
 export default function BreadcrumbPage() {
-  const [path, setPath] = useState('Home / Projects / react-headless-ui');
+  const path = 'Home / Projects / react-headless-ui';
 
   const clickableItems = [
     { id: 'home', label: 'Home' },
