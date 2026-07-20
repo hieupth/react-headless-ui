@@ -1,0 +1,140 @@
+# Theming
+
+`@hieupth/reui` components are headless — they do not render styles themselves.
+A few renderer / animation components, however, read design tokens from a
+`ThemeProvider` so they stay consistent with your design system. This page
+covers how to provide a theme and override individual tokens.
+
+## Wrap your app
+
+Place `ThemeProvider` near the root of your tree. Without any props it serves a
+sensible default theme:
+
+```tsx
+import { ThemeProvider } from '@hieupth/reui';
+
+export default function RootLayout({ children }: { children: React.ReactNode }) {
+  return <ThemeProvider>{children}</ThemeProvider>;
+}
+```
+
+## Read tokens with `useTheme()`
+
+Components (and your own code) read the resolved theme via the `useTheme()`
+hook. It always returns a complete `Theme` object — never `null` — so you can
+destructure tokens safely:
+
+```tsx
+import { useTheme } from '@hieupth/reui';
+
+function ThemedCard() {
+  const { colors, borderRadius, spacing } = useTheme();
+  return (
+    <div
+      style={{
+        background: colors.background,
+        color: colors.foreground,
+        border: `1px solid ${colors.border}`,
+        borderRadius: borderRadius.md,
+        padding: spacing.md,
+      }}
+    >
+      Styled from theme tokens
+    </div>
+  );
+}
+```
+
+## Deep-merged overrides
+
+Pass a partial `theme` prop to override only the tokens you care about. The
+provider **deep-merges** your overrides onto the default theme, section by
+section — so overriding a single color does not blank out the rest of the
+`colors` object:
+
+```tsx
+import { ThemeProvider, type Theme } from '@hieupth/reui';
+
+const brandTheme: Partial<Theme> = {
+  colors: {
+    primary: '#7c3aed',        // override
+    primary500: '#7c3aed',
+    primary700: '#5b21b6',
+    destructive: '#dc2626',    // override
+    // background, foreground, border, muted, etc. keep their defaults
+  },
+  borderRadius: {
+    lg: '0.75rem',             // override only `lg`
+  },
+};
+
+export default function RootLayout({ children }: { children: React.ReactNode }) {
+  return <ThemeProvider theme={brandTheme}>{children}</ThemeProvider>;
+}
+```
+
+Without deep-merge, a shallow `{ ...default, ...override }` would replace the
+entire `colors` section and leave `background` / `foreground` undefined.
+
+## Token categories
+
+The `Theme` contract groups tokens into categories:
+
+### `colors`
+
+Foreground, background, primary/secondary scales, muted, border, destructive,
+and gray aliases (e.g. `gray50`, `gray600`, `primary100`, `primary700`).
+
+### `borderRadius`
+
+Named scale: `sm`, `md`, `lg`.
+
+### `spacing`
+
+Named scale: `xs`, `sm`, `md`, `lg`, `xl`.
+
+### Typography
+
+`fontSizes` (`xs`–`xl`), `fontWeights` (`normal`, `medium`, `semibold`,
+`bold`), and an optional `fonts.mono` stack.
+
+### Optional tokens
+
+- `shadows` — `sm`, `md`, `lg` elevation shadows.
+- `extensions` — opt-in component-scoped tokens (`color.primary.background`,
+  `spacing.component.gap`, `typography.label.fontSize`, etc.) consumed by a few
+  renderer components.
+
+## Full custom theme example
+
+```tsx
+import { ThemeProvider, type Theme } from '@hieupth/reui';
+
+const theme: Partial<Theme> = {
+  colors: {
+    primary: '#0ea5e9',
+    primary100: '#e0f2fe',
+    primary500: '#0ea5e9',
+    primary700: '#0369a1',
+    destructive: '#e11d48',
+  },
+  borderRadius: { sm: '0.25rem', md: '0.5rem', lg: '1rem' },
+  spacing: { xs: '0.25rem', sm: '0.5rem', md: '1rem', lg: '1.5rem', xl: '3rem' },
+  shadows: {
+    md: '0 4px 12px -2px rgba(14, 165, 233, 0.25)',
+  },
+};
+
+export function App({ children }: { children: React.ReactNode }) {
+  return <ThemeProvider theme={theme}>{children}</ThemeProvider>;
+}
+```
+
+## Notes
+
+- `ThemeProvider` is **client-side only** — it uses React context, so wrap it
+  inside your client boundary (or mark the layout `'use client'` if needed).
+- The deep-merge recurses one level into each token section, which matches the
+  flat `token → value` shape of every category.
+- Headless components ignore the theme entirely; only renderer components and
+  your own styled wrappers consume it.
