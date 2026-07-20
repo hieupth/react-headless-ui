@@ -22,15 +22,19 @@ bun add @hieupth/reui
 
 ## Peer dependencies
 
-Most components are pure React and need no extra packages. Two opt-in features
-pull in peer dependencies:
+Most components are pure React and need no extra packages. `react-hook-form`
+(the engine behind `Form` / `useForm`) ships bundled as a regular dependency,
+so it is already in your tree — no separate install required. One opt-in
+feature pulls in an optional peer dependency:
 
-| Feature            | Peer dependency       | Install                                  |
-| ------------------ | --------------------- | ---------------------------------------- |
-| Motion components  | `framer-motion`       | `npm install framer-motion`              |
-| `Form` validation  | `react-hook-form`     | `npm install react-hook-form`            |
+| Feature           | Peer dependency  | Optional? | Install                       |
+| ----------------- | ---------------- | --------- | ----------------------------- |
+| Motion components | `framer-motion`  | yes       | `npm install framer-motion`   |
+| `Form` validation | `react-hook-form` | no — bundled | _(already installed)_      |
 
-Install only what you use. Tree-shaking keeps the rest out of your bundle.
+If you use any Motion component (`FadeInOut`, `SlideIn`, `RevealOnScroll`, …),
+install `framer-motion` yourself; it is marked optional so non-motion bundles
+stay lean. Tree-shaking keeps everything you don't use out of your bundle.
 
 ## Requirements
 

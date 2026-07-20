@@ -33,7 +33,7 @@ const features = [
   {
     title: 'Tree-shakeable',
     description:
-      'Pure ESM with per-component exports and opt-in peer deps (framer-motion, react-hook-form).',
+      'Pure ESM with per-component exports and an optional framer-motion peer dep.',
   },
 ];
 
