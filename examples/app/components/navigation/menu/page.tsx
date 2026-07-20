@@ -82,14 +82,14 @@ export default function MenuPage() {
       <section className="space-y-4">
         <h2 className="text-xl font-semibold">Selection &amp; submenus</h2>
         <p className="text-sm text-gray-600 dark:text-gray-400">
-          Enable <code>selectionMode="single" | "multiple"</code> to render check
-          marks; nest items under <code>submenu</code> for cascading menus.
+          Enable <code>multiSelect</code> to render check marks for more than
+          one item; nest items under <code>submenu</code> for cascading menus.
           Hover-triggered menus open with <code>trigger="hover"</code>.
         </p>
         <Demo
           code={`<Menu
   trigger="hover"
-  selectionMode="multiple"
+  multiSelect
   items={[
     { key: 'bold', label: 'Bold', selected: true },
     { key: 'italic', label: 'Italic' },
@@ -138,10 +138,10 @@ export default function MenuPage() {
               description: 'Interaction that opens the menu.',
             },
             {
-              name: 'selectionMode',
-              type: "'none' | 'single' | 'multiple'",
-              default: "'none'",
-              description: 'Whether items are checkable and how many can be selected.',
+              name: 'multiSelect',
+              type: 'boolean',
+              default: 'false',
+              description: 'Allow more than one item to be selected at a time.',
             },
             {
               name: 'closeOnSelection / closeOnOutsideClick',

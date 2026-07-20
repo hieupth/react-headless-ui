@@ -140,9 +140,9 @@ export default function MegaMenuPage() {
               description: 'Panel open/close transition duration in ms (framer-motion).',
             },
             {
-              name: 'showArrows',
+              name: 'showPanelArrows',
               type: 'boolean',
-              default: '—',
+              default: 'true',
               description: 'Show expand arrows on triggers that have a panel/children.',
             },
             {

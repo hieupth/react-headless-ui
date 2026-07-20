@@ -25,7 +25,8 @@ export default function ParallaxScrollPage() {
           <code> IntersectionObserver</code> + <code>requestAnimationFrame</code>,
           optionally reacts to device orientation, and respects{' '}
           <code>prefers-reduced-motion</code>. <strong>Scroll this page</strong>{' '}
-          to see the demo below drift relative to its neighbors.
+          to see the demo below drift relative to its neighbors. Note:
+          framer-motion is a peer dependency for the Motion category.
         </p>
       </header>
 
