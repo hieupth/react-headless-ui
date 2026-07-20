@@ -264,6 +264,7 @@ export function useCombobox(props: UseComboboxProps = {}) {
 
   // State management
   const [open, setOpen] = useState(defaultOpen);
+  const [internalValue, setInternalValue] = useState(defaultValue);
   const [inputValue, setInputValue] = useState(defaultInputValue);
   const [opening, setOpening] = useState(false);
   const [closing, setClosing] = useState(false);
@@ -276,7 +277,7 @@ export function useCombobox(props: UseComboboxProps = {}) {
   const isValueControlled = controlledValue !== undefined;
   const isInputValueControlled = controlledInputValue !== undefined;
   const isOpen = isControlled ? controlledOpen : open;
-  const currentValue = isValueControlled ? controlledValue : defaultValue;
+  const currentValue = isValueControlled ? controlledValue : internalValue;
   const currentInputValue = isInputValueControlled ? controlledInputValue : inputValue;
 
   // Compose mixins for combobox behavior
@@ -471,7 +472,7 @@ export function useCombobox(props: UseComboboxProps = {}) {
 
     // Update value
     if (!isValueControlled) {
-      // Update selected value (would be handled by parent)
+      setInternalValue(option.value);
     }
     onValueChange?.(option.value);
 
@@ -503,7 +504,7 @@ export function useCombobox(props: UseComboboxProps = {}) {
   const handleClear = useCallback(() => {
     // Clear value
     if (!isValueControlled) {
-      // Clear selected value (would be handled by parent)
+      setInternalValue(null);
     }
     onValueChange?.(null);
 

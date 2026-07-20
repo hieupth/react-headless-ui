@@ -549,6 +549,29 @@ describe('useCombobox (hook handlers)', () => {
     expect(res.current.state.value).toBe('nonexistent');
   });
 
+  it('uncontrolled handleSelect reflects the selection in state.value', () => {
+    const onValueChange = vi.fn();
+    const res = setup({ options, onValueChange });
+    // uncontrolled -> starts at default (null)
+    expect(res.current.state.value).toBeNull();
+    act(() => res.current.handlers.handleSelect(options[2]));
+    expect(onValueChange).toHaveBeenCalledWith(options[2].value);
+    // regression: internal value state must now reflect the selection
+    expect(res.current.state.value).toBe(options[2].value);
+    expect(res.current.selectedOption?.value).toBe(options[2].value);
+    // selecting again updates to the new value
+    act(() => res.current.handlers.handleSelect(options[0]));
+    expect(res.current.state.value).toBe(options[0].value);
+  });
+
+  it('uncontrolled handleClear resets state.value to null', () => {
+    const res = setup({ options, defaultValue: options[1].value });
+    expect(res.current.state.value).toBe(options[1].value);
+    act(() => res.current.handlers.handleClear());
+    expect(res.current.state.value).toBeNull();
+    expect(res.current.selectedOption).toBeNull();
+  });
+
   it('handleOpen/handleClose honor the controlled open state', async () => {
     const onOpenChange = vi.fn();
     const res = setup({ options, open: false, onOpenChange });
