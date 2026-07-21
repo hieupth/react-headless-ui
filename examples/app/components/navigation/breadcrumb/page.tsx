@@ -5,7 +5,11 @@ import { Demo } from '@/components/demo';
 import { PropsTable } from '@/components/props-table';
 
 // Breadcrumb applies inline theme styles, so it renders visibly. The showcase
-// ThemeProvider supplies colors; navigate via the items' onClick / href.
+// ThemeProvider supplies colors; navigate via the items' onClick / href. The
+// `className` prop themes the trail container.
+const breadcrumbCls =
+  'flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400';
+
 const basicItems = [
   { id: 'home', label: 'Home', href: '/' },
   { id: 'projects', label: 'Projects', href: '/projects' },
@@ -45,6 +49,7 @@ export default function BreadcrumbPage() {
         </p>
         <Demo
           code={`<Breadcrumb
+  className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400"
   items={[
     { id: 'home', label: 'Home', href: '/' },
     { id: 'projects', label: 'Projects', href: '/projects' },
@@ -52,7 +57,7 @@ export default function BreadcrumbPage() {
   ]}
 />`}
         >
-          <Breadcrumb items={basicItems} />
+          <Breadcrumb className={breadcrumbCls} items={basicItems} />
         </Demo>
       </section>
 
@@ -65,12 +70,14 @@ export default function BreadcrumbPage() {
         </p>
         <Demo
           code={`<Breadcrumb
+  className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400"
   items={clickableItems}
   separator={<span aria-hidden>›</span>}
 />`}
         >
           <div className="flex flex-col items-center gap-3">
             <Breadcrumb
+              className={breadcrumbCls}
               items={clickableItems}
               separator={<span aria-hidden>›</span>}
             />

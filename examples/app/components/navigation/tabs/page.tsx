@@ -6,8 +6,7 @@ import { PropsTable } from '@/components/props-table';
 
 // Tabs is headless: it emits semantic class hooks (tabs-container, tabs-list,
 // tabs-content) and ARIA, but ships no styles. The showcase themes it with
-// Tailwind by targeting those hooks + the data-* attributes the trigger
-// buttons emit.
+// Tailwind via the `className` prop, which spreads onto the tabs container.
 const tabsBase =
   'flex border-b border-gray-200 dark:border-gray-700 gap-1';
 const panelBase = 'pt-4 text-sm text-gray-700 dark:text-gray-300';
@@ -60,6 +59,7 @@ export default function TabsPage() {
         </p>
         <Demo
           code={`<Tabs
+  className="flex border-b border-gray-200 dark:border-gray-700 gap-1"
   defaultValue="account"
   items={[
     { key: 'account', label: 'Account', content: <p>Manage your account.</p> },
@@ -96,7 +96,7 @@ export default function TabsPage() {
         </p>
         <Demo
           code={`<Tabs defaultValue="overview" variant="pills">
-  <Tabs.List>
+  <Tabs.List className="flex border-b border-gray-200 dark:border-gray-700 gap-1">
     <Tabs.Trigger value="overview">Overview</Tabs.Trigger>
     <Tabs.Trigger value="activity">Activity</Tabs.Trigger>
   </Tabs.List>
@@ -106,8 +106,9 @@ export default function TabsPage() {
         >
           <p className="text-sm text-gray-500">
             The compound children are collected by the parent{' '}
-            <code>&lt;Tabs&gt;</code> and matched by <code>value</code> — see the
-            snippet for the API shape.
+            <code>&lt;Tabs&gt;</code> and matched by <code>value</code> — theme{' '}
+            the list via <code>&lt;Tabs.List className&gt;</code>. See the snippet
+            for the API shape.
           </p>
         </Demo>
       </section>

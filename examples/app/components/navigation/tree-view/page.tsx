@@ -6,7 +6,12 @@ import { Demo } from '@/components/demo';
 import { PropsTable } from '@/components/props-table';
 
 // TreeView renders a hierarchical node tree, backed by useTreeView. It emits
-// class hooks + ARIA tree roles but no CSS — theme it.
+// class hooks + ARIA tree roles but no CSS — theme the tree via the
+// `className` prop.
+const treeCls =
+  'w-full rounded-lg border border-gray-200 bg-white p-2 text-sm ' +
+  'dark:border-gray-700 dark:bg-gray-900 dark:text-gray-200';
+
 const nodes = [
   {
     id: 'src',
@@ -53,9 +58,8 @@ export default function TreeViewPage() {
           via <code>onSelectionChange</code> (array of keys).
         </p>
         <Demo
-          code={`const [selected, setSelected] = useState([]);
-
-<TreeView
+          code={`<TreeView
+  className="w-full rounded-lg border border-gray-200 bg-white p-2 text-sm dark:border-gray-700 dark:bg-gray-900 dark:text-gray-200"
   nodes={nodes}
   selectionMode="single"
   onSelectionChange={setSelected}
@@ -63,12 +67,13 @@ export default function TreeViewPage() {
         >
           <div className="w-full max-w-xs mx-auto">
             <TreeView
+              className={treeCls}
               nodes={nodes}
               selectionMode="single"
               onSelectionChange={setSelected}
             />
             <p className="mt-3 text-xs text-gray-500">
-              {selected.length ? `Selected: ${selected.join(', ')}` : 'Tree structure + a11y render — theme the hooks.'}
+              {selected.length ? `Selected: ${selected.join(', ')}` : 'Tree structure + a11y render — the className themes the tree.'}
             </p>
           </div>
         </Demo>
@@ -83,6 +88,7 @@ export default function TreeViewPage() {
         </p>
         <Demo
           code={`<TreeView
+  className="w-full rounded-lg border border-gray-200 bg-white p-2 text-sm dark:border-gray-700 dark:bg-gray-900 dark:text-gray-200"
   nodes={nodes}
   selectionMode="multiple"
   expandAll

@@ -6,7 +6,12 @@ import { Demo } from '@/components/demo';
 import { PropsTable } from '@/components/props-table';
 
 // Menubar renders a horizontal/vertical bar of top-level menus with submenus,
-// backed by useMenubar. It emits semantic class hooks but no CSS — theme it.
+// backed by useMenubar. It emits semantic class hooks but no CSS — theme the
+// bar via the `className` prop.
+const menubarCls =
+  'flex items-center gap-1 rounded-lg border border-gray-200 bg-white px-2 py-1 text-sm ' +
+  'dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100';
+
 const items = [
   {
     id: 'file',
@@ -54,9 +59,8 @@ export default function MenubarPage() {
           <code>orientation</code> switches the bar axis and arrow-key model.
         </p>
         <Demo
-          code={`const [active, setActive] = useState(null);
-
-<Menubar
+          code={`<Menubar
+  className="flex items-center gap-1 rounded-lg border border-gray-200 bg-white px-2 py-1 text-sm dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100"
   items={items}
   orientation="horizontal"
   onItemActivate={(item) => setActive(item.id)}
@@ -64,6 +68,7 @@ export default function MenubarPage() {
         >
           <div className="flex flex-col items-center gap-3 w-full">
             <Menubar
+              className={menubarCls}
               items={items}
               orientation="horizontal"
               onItemActivate={(item) => setActive(item.id)}
@@ -85,6 +90,7 @@ export default function MenubarPage() {
         </p>
         <Demo
           code={`<Menubar
+  className="flex items-center gap-1 rounded-lg border border-gray-200 bg-white px-2 py-1 text-sm dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100"
   items={items}
   showSeparators
   showIcons

@@ -8,11 +8,16 @@ import { PropsTable } from '@/components/props-table';
 // Menu portals its list to document.body via createPortal and positions it
 // absolutely. A live preview inside the Demo frame would be misleading, so the
 // snippets below show the headless API; theme the emitted `menu` / `menuitem`
-// roles and class hooks in your app.
+// roles and class hooks in your app. The `className` themes the floating list;
+// the trigger is the styled child button.
 const triggerBtn =
-  'inline-flex items-center gap-2 rounded-md border border-gray-300 dark:border-gray-600 ' +
-  'px-4 py-2 text-sm font-medium text-gray-700 dark:text-gray-200 hover:bg-gray-100 ' +
-  'dark:hover:bg-gray-800';
+  'inline-flex items-center gap-2 rounded-md border border-gray-300 bg-white px-4 py-2 ' +
+  'text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-100 ' +
+  'dark:border-gray-700 dark:bg-gray-900 dark:text-gray-200 dark:hover:bg-gray-800';
+
+const menuListCls =
+  'min-w-[10rem] rounded-md border border-gray-200 bg-white p-1 text-sm shadow-lg ' +
+  'dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100';
 
 export default function MenuPage() {
   const [open, setOpen] = useState(false);
@@ -40,9 +45,8 @@ export default function MenuPage() {
           the menu; <code>closeOnSelection</code> dismisses after a click.
         </p>
         <Demo
-          code={`const [open, setOpen] = useState(false);
-
-<Menu
+          code={`<Menu
+  className="min-w-[10rem] rounded-md border border-gray-200 bg-white p-1 text-sm shadow-lg dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100"
   open={open}
   onOpenChange={setOpen}
   trigger="click"
@@ -53,11 +57,14 @@ export default function MenuPage() {
     { key: 'exit', label: 'Exit', disabled: true }
   ]}
 >
-  <button>File</button>
+  <button className="inline-flex items-center gap-2 rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-200 dark:hover:bg-gray-800">
+    File
+  </button>
 </Menu>`}
         >
           <div className="flex flex-col items-center gap-3">
             <Menu
+              className={menuListCls}
               open={open}
               onOpenChange={setOpen}
               trigger="click"
@@ -72,8 +79,8 @@ export default function MenuPage() {
               </button>
             </Menu>
             <span className="text-xs text-gray-500">
-              The menu list portals to body and positions absolutely — apply CSS
-              to the roles/class hooks.
+              The menu list portals to body and positions absolutely — the{' '}
+              <code>className</code> themes the list; theme the trigger button.
             </span>
           </div>
         </Demo>
@@ -88,6 +95,7 @@ export default function MenuPage() {
         </p>
         <Demo
           code={`<Menu
+  className="min-w-[10rem] rounded-md border border-gray-200 bg-white p-1 text-sm shadow-lg dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100"
   trigger="hover"
   multiSelect
   items={[
@@ -99,7 +107,9 @@ export default function MenuPage() {
     ]}
   ]}
 >
-  <button>Format</button>
+  <button className="inline-flex items-center gap-2 rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-200 dark:hover:bg-gray-800">
+    Format
+  </button>
 </Menu>`}
         >
           <p className="text-sm text-gray-500">

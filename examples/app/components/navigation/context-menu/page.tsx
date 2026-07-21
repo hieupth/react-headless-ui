@@ -32,9 +32,8 @@ export default function ContextMenuPage() {
           <code>open</code> / <code>onOpenChange</code>.
         </p>
         <Demo
-          code={`const [open, setOpen] = useState(false);
-
-<ContextMenu
+          code={`<ContextMenu
+  className="min-w-[10rem] rounded-md border border-gray-200 bg-white p-1 text-sm shadow-lg dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100"
   items={items}
   open={open}
   onOpenChange={setOpen}
@@ -58,6 +57,7 @@ export default function ContextMenuPage() {
         </p>
         <Demo
           code={`<ContextMenu
+  className="min-w-[10rem] rounded-md border border-gray-200 bg-white p-1 text-sm shadow-lg dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100"
   items={[
     { id: 'wrap', label: 'Word wrap', type: 'checkbox', checked: true },
     { id: 'mini', label: 'Minimap', type: 'checkbox' },

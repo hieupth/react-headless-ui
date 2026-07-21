@@ -6,7 +6,11 @@ import { Demo } from '@/components/demo';
 import { PropsTable } from '@/components/props-table';
 
 // AccordionMenu renders expandable nested sections, backed by useAccordionMenu.
-// It emits class hooks but no CSS — theme it.
+// It emits class hooks but no CSS — theme it via the `className` prop.
+const menuCls =
+  'w-full rounded-lg border border-gray-200 bg-white p-2 text-sm ' +
+  'dark:border-gray-700 dark:bg-gray-900';
+
 const items = [
   {
     id: 'getting-started',
@@ -56,19 +60,18 @@ export default function AccordionMenuPage() {
           <code>openItems</code> / <code>onOpenChange</code>.
         </p>
         <Demo
-          code={`const [open, setOpen] = useState(['getting-started']);
-
-<AccordionMenu
+          code={`<AccordionMenu
+  className="w-full rounded-lg border border-gray-200 bg-white p-2 text-sm dark:border-gray-700 dark:bg-gray-900"
   items={items}
   openItems={open}
   onOpenChange={setOpen}
 />`}
         >
           <div className="w-full max-w-xs mx-auto">
-            <AccordionMenu items={items} openItems={open} onOpenChange={setOpen} />
+            <AccordionMenu className={menuCls} items={items} openItems={open} onOpenChange={setOpen} />
             <p className="mt-3 text-xs text-gray-500">
-              Section expand/collapse + nested items render structurally — theme
-              the hooks for visuals.
+              Section expand/collapse + nested items render — the{' '}
+              <code>className</code> themes the hooks.
             </p>
           </div>
         </Demo>
@@ -83,15 +86,22 @@ export default function AccordionMenuPage() {
         </p>
         <Demo
           code={`<AccordionMenu
+  className="w-full rounded-lg border border-gray-200 bg-white p-2 text-sm dark:border-gray-700 dark:bg-gray-900"
   items={items}
   exclusive
   allowNested
   animationDuration={200}
 />`}
         >
-          <p className="text-sm text-gray-500">
-            Exclusive + nested toggles — see the snippet.
-          </p>
+          <div className="w-full max-w-xs mx-auto">
+            <AccordionMenu
+              className={menuCls}
+              items={items}
+              exclusive
+              allowNested
+              animationDuration={200}
+            />
+          </div>
         </Demo>
       </section>
 

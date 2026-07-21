@@ -5,7 +5,12 @@ import { Demo } from '@/components/demo';
 import { PropsTable } from '@/components/props-table';
 
 // Sidebar renders an app navigation rail, backed by useSidebar. It emits class
-// hooks + transform-based variant classes but no real CSS — theme it.
+// hooks + transform-based variant classes but no real CSS — theme the rail via
+// the `className` prop.
+const sidebarCls =
+  'w-64 rounded-lg border border-gray-200 bg-white p-3 text-sm shadow-sm ' +
+  'dark:border-gray-700 dark:bg-gray-900 dark:text-gray-200';
+
 export default function SidebarPage() {
   return (
     <div className="mx-auto max-w-3xl px-6 py-12 space-y-8">
@@ -34,6 +39,7 @@ export default function SidebarPage() {
         </p>
         <Demo
           code={`<Sidebar
+  className="w-64 rounded-lg border border-gray-200 bg-white p-3 text-sm shadow-sm dark:border-gray-700 dark:bg-gray-900 dark:text-gray-200"
   variant="persistent"
   position="left"
   defaultOpen
@@ -53,6 +59,7 @@ export default function SidebarPage() {
         >
           <div className="w-full">
             <Sidebar
+              className={sidebarCls}
               variant="persistent"
               position="left"
               defaultOpen
@@ -70,8 +77,8 @@ export default function SidebarPage() {
               </SidebarGroup>
             </Sidebar>
             <p className="mt-3 text-xs text-gray-500">
-              Structure + a11y render; theme the <code>sidebar-*</code> hooks for
-              visuals.
+              Structure + a11y render; the <code>className</code> themes the{' '}
+              <code>sidebar-*</code> hooks.
             </p>
           </div>
         </Demo>
@@ -87,6 +94,7 @@ export default function SidebarPage() {
         </p>
         <Demo
           code={`<Sidebar
+  className="w-64 rounded-lg border border-gray-200 bg-white p-3 text-sm shadow-sm dark:border-gray-700 dark:bg-gray-900 dark:text-gray-200"
   variant="temporary"
   responsive
   breakpoint={768}
