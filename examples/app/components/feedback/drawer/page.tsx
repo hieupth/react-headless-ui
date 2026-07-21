@@ -39,19 +39,41 @@ export default function DrawerPage() {
         <Demo
           code={`const [open, setOpen] = useState(false);
 
+<button
+  type="button"
+  onClick={() => setOpen(true)}
+  className="inline-flex items-center justify-center gap-2 rounded-md bg-gray-900 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-gray-800 dark:bg-white dark:text-gray-900"
+>
+  Open drawer
+</button>
+
+{/* Drawer portals a backdrop to document.body. Theme the emitted class hooks:
+      .drawer-overlay  { @apply fixed inset-0 z-50 bg-black/50; }
+      .drawer-content  { @apply fixed inset-y-0 right-0 z-50 flex w-full max-w-sm flex-col bg-white shadow-xl dark:bg-gray-900 dark:text-gray-100; }
+      .drawer-header   { @apply border-b border-gray-200 px-4 py-3 text-lg font-semibold dark:border-gray-700; }
+      .drawer-footer   { @apply border-t border-gray-200 p-4 dark:border-gray-700; } */}
 <Drawer open={open} onOpenChange={setOpen} side="right" size="md" modal title="Filters">
-  <DrawerTrigger>Open filters</DrawerTrigger>
   <DrawerContent>
     <DrawerHeader>Filters</DrawerHeader>
-    {/* …filter controls… */}
-    <DrawerFooter>{/* Apply / Reset */}</DrawerFooter>
+    <div className="flex-1 overflow-y-auto p-4 text-sm text-gray-500 dark:text-gray-400">
+      {/* …filter controls… */}
+    </div>
+    <DrawerFooter>
+      <button
+        type="button"
+        onClick={() => setOpen(false)}
+        className="inline-flex items-center justify-center gap-2 rounded-md bg-blue-600 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-blue-700"
+      >
+        Apply
+      </button>
+    </DrawerFooter>
   </DrawerContent>
 </Drawer>`}
         >
           <button
             type="button"
             onClick={() => setOpen(true)}
-            className="rounded-md bg-gray-900 px-4 py-2 text-sm font-medium text-white hover:bg-gray-700 dark:bg-white dark:text-gray-900"
+            className="inline-flex items-center justify-center gap-2 rounded-md bg-gray-900 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-gray-800 dark:bg-white dark:text-gray-900"
           >
             Open drawer
           </button>
@@ -72,7 +94,7 @@ export default function DrawerPage() {
                 <button
                   type="button"
                   onClick={() => setOpen(false)}
-                  className="rounded-md bg-blue-600 px-4 py-2 text-sm font-medium text-white"
+                  className="inline-flex items-center justify-center gap-2 rounded-md bg-blue-600 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-blue-700"
                 >
                   Apply
                 </button>

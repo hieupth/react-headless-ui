@@ -40,11 +40,24 @@ export default function HoverCardPage() {
   placement="bottom-start"
   hoverDelay={300}
   leaveDelay={200}
-  trigger={<a href="/u/ada">@ada</a>}
+  offset={6}
+  trigger={
+    <a href="/u/ada" className="font-medium text-blue-600 underline-offset-4 hover:underline dark:text-blue-400">
+      @ada
+    </a>
+  }
 >
-  <div className="card">
-    <strong>Ada Lovelace</strong>
-    <p>Computer scientist · 1843</p>
+  <div className="w-56 rounded-lg border border-gray-200 bg-white p-4 text-sm shadow-lg dark:border-gray-700 dark:bg-gray-900 dark:text-gray-200">
+    <div className="flex items-center gap-3">
+      <div className="h-10 w-10 rounded-full bg-gradient-to-br from-blue-500 to-purple-500" />
+      <div>
+        <p className="font-semibold">Ada Lovelace</p>
+        <p className="text-gray-500">@ada</p>
+      </div>
+    </div>
+    <p className="mt-3 text-gray-600 dark:text-gray-400">
+      Mathematician and the first computer programmer.
+    </p>
   </div>
 </HoverCard>`}
         >

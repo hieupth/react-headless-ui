@@ -41,9 +41,11 @@ export default function ProgressPage() {
           <code>showPercentage</code> the bar surfaces a numeric label.
         </p>
         <Demo
-          code={`<Progress value={40} />
-<Progress value={70} size="lg" />
-<Progress value={100} color="success" showPercentage />`}
+          code={`const track = 'w-full overflow-hidden rounded-full bg-gray-200 dark:bg-gray-800';
+
+<Progress value={40} className={\`\${track} h-2.5\`} />
+<Progress value={70} size="lg" className={\`\${track} h-3.5\`} />
+<Progress value={100} color="success" showPercentage className={\`\${track} h-3.5\`} />`}
         >
           <div className="flex flex-col items-stretch gap-4 w-full max-w-md">
             <Progress value={40} className={`${trackBase} ${trackSize.md}`} />
@@ -70,8 +72,8 @@ export default function ProgressPage() {
           opposite end. Animate with <code>animated</code>.
         </p>
         <Demo
-          code={`<Progress mode="indeterminate" />
-<Progress value={60} reversed animated />`}
+          code={`<Progress mode="indeterminate" className="w-full overflow-hidden rounded-full bg-gray-200 h-2.5 dark:bg-gray-800" />
+<Progress value={60} reversed animated className="w-full overflow-hidden rounded-full bg-gray-200 h-2.5 dark:bg-gray-800" />`}
         >
           <div className="flex flex-col items-stretch gap-4 w-full max-w-md">
             <Progress

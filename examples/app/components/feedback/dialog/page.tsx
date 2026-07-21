@@ -40,6 +40,18 @@ export default function DialogPage() {
         <Demo
           code={`const [open, setOpen] = useState(false);
 
+<button
+  type="button"
+  onClick={() => setOpen(true)}
+  className="inline-flex items-center justify-center gap-2 rounded-md bg-gray-900 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-gray-800 dark:bg-white dark:text-gray-900"
+>
+  Open dialog
+</button>
+
+{/* Dialog portals to document.body. Theme the emitted
+    dialog-overlay / dialog-content class hooks:
+      .dialog-overlay  { @apply fixed inset-0 z-50 bg-black/50; }
+      .dialog-content  { @apply w-full max-w-md rounded-lg bg-white p-6 shadow-xl dark:bg-gray-900 dark:text-gray-100; } */}
 <Dialog
   open={open}
   onOpenChange={setOpen}
@@ -54,7 +66,7 @@ export default function DialogPage() {
           <button
             type="button"
             onClick={() => setOpen(true)}
-            className="rounded-md bg-gray-900 px-4 py-2 text-sm font-medium text-white hover:bg-gray-700 dark:bg-white dark:text-gray-900"
+            className="inline-flex items-center justify-center gap-2 rounded-md bg-gray-900 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-gray-800 dark:bg-white dark:text-gray-900"
           >
             Open dialog
           </button>
