@@ -55,10 +55,18 @@ export default function ButtonPage() {
           <code>link</code>.
         </p>
         <Demo
-          code={`<Button variant="default">Default</Button>
-<Button variant="secondary">Secondary</Button>
-<Button variant="outline">Outline</Button>
-<Button variant="destructive">Delete</Button>`}
+          code={`<Button variant="default" className="inline-flex items-center justify-center gap-2 rounded-md px-4 py-2 text-sm font-medium transition-colors disabled:opacity-50 disabled:pointer-events-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 bg-gray-900 text-white hover:bg-gray-700 dark:bg-white dark:text-gray-900 dark:hover:bg-gray-200">
+  Default
+</Button>
+<Button variant="secondary" className="inline-flex items-center justify-center gap-2 rounded-md px-4 py-2 text-sm font-medium transition-colors disabled:opacity-50 disabled:pointer-events-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 bg-gray-100 text-gray-900 hover:bg-gray-200 dark:bg-gray-800 dark:text-gray-100 dark:hover:bg-gray-700">
+  Secondary
+</Button>
+<Button variant="outline" className="inline-flex items-center justify-center gap-2 rounded-md px-4 py-2 text-sm font-medium transition-colors disabled:opacity-50 disabled:pointer-events-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 border border-gray-300 text-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:text-gray-200 dark:hover:bg-gray-800">
+  Outline
+</Button>
+<Button variant="destructive" className="inline-flex items-center justify-center gap-2 rounded-md px-4 py-2 text-sm font-medium transition-colors disabled:opacity-50 disabled:pointer-events-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 bg-red-600 text-white hover:bg-red-700">
+  Delete
+</Button>`}
         >
           <div className="flex flex-wrap items-center justify-center gap-3">
             <Button variant="default" className={`${variantClasses} ${variantStyles.default}`}>
@@ -86,10 +94,18 @@ export default function ButtonPage() {
           <code>loadingIndicator</code>).
         </p>
         <Demo
-          code={`<Button size="sm">Small</Button>
-<Button size="lg">Large</Button>
-<Button disabled>Disabled</Button>
-<Button loading> Saving… </Button>`}
+          code={`<Button size="sm" className="inline-flex items-center justify-center gap-2 rounded-md text-xs px-3 py-1.5 font-medium transition-colors disabled:opacity-50 disabled:pointer-events-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 bg-gray-900 text-white hover:bg-gray-700 dark:bg-white dark:text-gray-900 dark:hover:bg-gray-200">
+  Small
+</Button>
+<Button size="lg" className="inline-flex items-center justify-center gap-2 rounded-md text-base px-5 py-2.5 font-medium transition-colors disabled:opacity-50 disabled:pointer-events-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 bg-gray-900 text-white hover:bg-gray-700 dark:bg-white dark:text-gray-900 dark:hover:bg-gray-200">
+  Large
+</Button>
+<Button disabled className="inline-flex items-center justify-center gap-2 rounded-md px-4 py-2 text-sm font-medium transition-colors disabled:opacity-50 disabled:pointer-events-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 bg-gray-900 text-white hover:bg-gray-700 dark:bg-white dark:text-gray-900 dark:hover:bg-gray-200">
+  Disabled
+</Button>
+<Button loading className="inline-flex items-center justify-center gap-2 rounded-md px-4 py-2 text-sm font-medium transition-colors disabled:opacity-50 disabled:pointer-events-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 bg-gray-900 text-white hover:bg-gray-700 dark:bg-white dark:text-gray-900 dark:hover:bg-gray-200">
+  Saving…
+</Button>`}
         >
           <div className="flex flex-wrap items-center justify-center gap-3">
             <Button size="sm" className={`${variantClasses} ${sizeStyles.sm} ${variantStyles.default}`}>
@@ -115,8 +131,12 @@ export default function ButtonPage() {
           <code>trailingIcon</code>.
         </p>
         <Demo
-          code={`<Button leadingIcon={<PlusIcon />}>New item</Button>
-<Button variant="outline" trailingIcon={<ArrowIcon />}>Next</Button>`}
+          code={`<Button leadingIcon={<PlusIcon />} className="inline-flex items-center justify-center gap-2 rounded-md px-4 py-2 text-sm font-medium transition-colors disabled:opacity-50 disabled:pointer-events-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 bg-gray-900 text-white hover:bg-gray-700 dark:bg-white dark:text-gray-900 dark:hover:bg-gray-200">
+  New item
+</Button>
+<Button variant="outline" trailingIcon={<ArrowIcon />} className="inline-flex items-center justify-center gap-2 rounded-md px-4 py-2 text-sm font-medium transition-colors disabled:opacity-50 disabled:pointer-events-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 border border-gray-300 text-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:text-gray-200 dark:hover:bg-gray-800">
+  Next
+</Button>`}
         >
           <div className="flex flex-wrap items-center justify-center gap-3">
             <Button
