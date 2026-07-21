@@ -1,0 +1,7 @@
+1:"$Sreact.fragment"
+2:I[52740,["1937","static/chunks/1937-2a597a7c2659f03d.js","7177","static/chunks/app/layout-785cd02f4ee648ac.js"],"Sidebar"]
+3:I[41406,["1937","static/chunks/1937-2a597a7c2659f03d.js","7177","static/chunks/app/layout-785cd02f4ee648ac.js"],"ThemeSwitcher"]
+4:I[24304,[],""]
+5:I[3702,[],""]
+:HL["/react-headless-ui/_next/static/css/647da7e49a92717e.css","style"]
+0:{"rsc":["$","$1","c",{"children":[[["$","link","0",{"rel":"stylesheet","href":"/react-headless-ui/_next/static/css/647da7e49a92717e.css","precedence":"next"}]],["$","html",null,{"lang":"en","suppressHydrationWarning":true,"children":["$","body",null,{"className":"bg-white text-gray-900 dark:bg-gray-950 dark:text-gray-100","children":["$","div",null,{"className":"flex min-h-screen","children":[["$","$L2",null,{}],["$","div",null,{"className":"flex flex-1 min-w-0 flex-col","children":[["$","header",null,{"className":"sticky top-0 z-20 flex items-center justify-between border-b border-gray-200 dark:border-gray-800 bg-white/80 dark:bg-gray-950/80 backdrop-blur px-4 py-3","children":[["$","span",null,{"className":"text-sm font-semibold text-gray-700 dark:text-gray-200","children":"@hieupth/reui"}],["$","$L3",null,{}]]}],["$","main",null,{"className":"flex-1","children":["$","$L4",null,{"parallelRouterKey":"children","template":["$","$L5",null,{}]}]}]]}]]}]}]}]]}],"isPartial":false,"staleTime":300,"varyParams":null,"buildId":"hKzHZbh2-9dzL0vLKSG3O"}

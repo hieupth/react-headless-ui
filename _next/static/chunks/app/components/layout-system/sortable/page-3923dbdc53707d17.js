@@ -1,0 +1,34 @@
+(self.webpackChunk_N_E=self.webpackChunk_N_E||[]).push([[1833],{19792:(e,a,r)=>{Promise.resolve().then(r.bind(r,50858))},50858:(e,a,r)=>{"use strict";r.r(a),r.d(a,{default:()=>c});var d=r(25454),s=r(89918),t=r(21887),l=r(55782),i=r(828);let o=[{id:1,value:"task-1",label:"Design the landing page",index:0},{id:2,value:"task-2",label:"Write the API spec",index:1},{id:3,value:"task-3",label:"Set up CI",index:2},{id:4,value:"task-4",label:"Ship v1",index:3,disabled:!0}],n=[{id:"a",value:"todo",label:"To Do",index:0},{id:"b",value:"doing",label:"In Progress",index:1},{id:"c",value:"done",label:"Done",index:2}];function c(){let[e,a]=(0,s.useState)("1 → 2 → 3 → 4");return(0,d.jsxs)("div",{className:"mx-auto max-w-3xl px-6 py-12 space-y-8",children:[(0,d.jsxs)("header",{className:"space-y-3",children:[(0,d.jsx)("h1",{className:"text-3xl font-bold",children:"Sortable"}),(0,d.jsxs)("p",{className:"text-gray-600 dark:text-gray-400",children:["A drag-and-drop reorderable list backed by the headless"," ",(0,d.jsx)("code",{className:"font-mono text-sm",children:"useSortable"})," hook. It wraps the native HTML drag-and-drop API — tracking the dragging item, the drop target, and animating transitions — while exposing"," ",(0,d.jsx)("code",{children:"onReorder"})," with the old and new indices. Items are plain data; the default renderer wires up ",(0,d.jsx)("code",{children:"draggable"}),", drag handlers, an optional drag handle, and a drop indicator. Override any of it with ",(0,d.jsx)("code",{children:"renderItem"}),"."]})]}),(0,d.jsxs)("section",{className:"space-y-4",children:[(0,d.jsx)("h2",{className:"text-xl font-semibold",children:"Vertical list"}),(0,d.jsxs)("p",{className:"text-sm text-gray-600 dark:text-gray-400",children:["Drag an item up or down to reorder. The disabled item stays put. Current order: ",(0,d.jsx)("code",{className:"font-mono",children:e}),"."]}),(0,d.jsx)(l.Demo,{code:`<Sortable
+  defaultItems={[
+    { id: 1, value: 'task-1', label: 'Design the landing page', index: 0 },
+    { id: 2, value: 'task-2', label: 'Write the API spec', index: 1 },
+    { id: 3, value: 'task-3', label: 'Set up CI', index: 2 },
+  ]}
+  direction="vertical"
+  showHandles
+  className="w-full max-w-sm space-y-2 rounded-lg border border-gray-200 bg-white p-4 shadow-sm dark:border-gray-700 dark:bg-gray-900"
+  onReorder={(items) => console.log(items)}
+/>`,children:(0,d.jsx)("div",{className:"w-full max-w-sm",children:(0,d.jsx)(t.L1H,{defaultItems:o,direction:"vertical",showHandles:!0,className:"w-full max-w-sm space-y-2 rounded-lg border border-gray-200 bg-white p-4 shadow-sm dark:border-gray-700 dark:bg-gray-900",onReorder:e=>a(e.map(e=>e.id).join(" → "))})})})]}),(0,d.jsxs)("section",{className:"space-y-4",children:[(0,d.jsx)("h2",{className:"text-xl font-semibold",children:"Horizontal"}),(0,d.jsxs)("p",{className:"text-sm text-gray-600 dark:text-gray-400",children:[(0,d.jsx)("code",{children:'direction="horizontal"'})," lays items out in a row and drops a vertical separator between targets."]}),(0,d.jsx)(l.Demo,{code:`<Sortable
+  defaultItems={horizontalItems}
+  direction="horizontal"
+  className="flex w-full gap-2 rounded-lg border border-gray-200 bg-white p-4 shadow-sm dark:border-gray-700 dark:bg-gray-900"
+/>`,children:(0,d.jsx)("div",{className:"w-full",children:(0,d.jsx)(t.L1H,{defaultItems:n,direction:"horizontal",className:"flex w-full gap-2 rounded-lg border border-gray-200 bg-white p-4 shadow-sm dark:border-gray-700 dark:bg-gray-900"})})})]}),(0,d.jsxs)("section",{className:"space-y-4",children:[(0,d.jsx)("h2",{className:"text-xl font-semibold",children:"Custom item renderer"}),(0,d.jsxs)("p",{className:"text-sm text-gray-600 dark:text-gray-400",children:[(0,d.jsx)("code",{children:"renderItem"})," receives the item, its index, and ready-made"," ",(0,d.jsx)("code",{children:"dragProps"})," — spread them onto any element to make it draggable without touching the hook yourself."]}),(0,d.jsx)(l.Demo,{code:`<Sortable
+  defaultItems={items}
+  direction="vertical"
+  className="w-full max-w-sm space-y-2 rounded-lg border border-gray-200 bg-white p-4 shadow-sm dark:border-gray-700 dark:bg-gray-900"
+  renderItem={({ item, isDragging, dragProps }) => (
+    <div
+      {...dragProps}
+      className={
+        'flex items-center gap-2 rounded-md border px-3 py-2 text-sm ' +
+        (isDragging
+          ? 'border-blue-400 bg-blue-50 dark:bg-blue-950'
+          : 'border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900')
+      }
+    >
+      <span className="cursor-grab text-gray-400" aria-hidden>⠿</span>
+      <span className="flex-1">{item.label}</span>
+      {item.disabled && <span className="text-xs text-gray-400">locked</span>}
+    </div>
+  )}
+/>`,children:(0,d.jsx)("div",{className:"w-full max-w-sm",children:(0,d.jsx)(t.L1H,{defaultItems:o,direction:"vertical",className:"w-full max-w-sm space-y-2 rounded-lg border border-gray-200 bg-white p-4 shadow-sm dark:border-gray-700 dark:bg-gray-900",renderItem:({item:e,isDragging:a,dragProps:r})=>(0,d.jsxs)("div",{...r,className:"flex items-center gap-2 rounded-md border px-3 py-2 text-sm "+(a?"border-blue-400 bg-blue-50 dark:bg-blue-950":"border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900"),children:[(0,d.jsx)("span",{className:"cursor-grab text-gray-400","aria-hidden":!0,children:"⠿"}),(0,d.jsx)("span",{className:"flex-1",children:e.label}),e.disabled&&(0,d.jsx)("span",{className:"text-xs text-gray-400",children:"locked"})]})})})})]}),(0,d.jsxs)("section",{className:"space-y-4",children:[(0,d.jsx)("h2",{className:"text-xl font-semibold",children:"Props"}),(0,d.jsx)(i.X,{props:[{name:"defaultItems",type:"SortableItem[]",default:"[]",description:"Uncontrolled initial items (id, value, label, index)."},{name:"items",type:"SortableItem[]",default:"—",description:"Controlled item list."},{name:"direction",type:"'vertical' | 'horizontal'",default:"'vertical'",description:"List axis; also drives the drop indicator orientation."},{name:"showHandles",type:"boolean",default:"false",description:"Show a drag handle grip instead of making the whole item draggable."},{name:"disabled",type:"boolean",default:"false",description:"Disable dragging for the entire list."},{name:"locked",type:"boolean",default:"false",description:"Temporarily lock reordering while keeping items visible."},{name:"animated",type:"boolean",default:"true",description:"Animate item transitions and the dragging transform."},{name:"dragThreshold",type:"number",default:"—",description:"Pixels of movement before a drag starts."},{name:"onReorder",type:"(items, oldIndex, newIndex) => void",default:"—",description:"Fires after a successful drop with the new ordering."},{name:"renderItem",type:"(props) => ReactNode",default:"—",description:"Custom renderer receiving item, index, flags, and dragProps."}]})]})]})}}},e=>{e.O(0,[7521,8575,1289,6741,3948,7358],()=>e(e.s=19792)),_N_E=e.O()}]);
