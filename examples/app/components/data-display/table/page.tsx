@@ -50,13 +50,15 @@ export default function TablePage() {
     { key: 'age', title: 'Age', sortable: true, dataType: 'number' }
   ]}
   data={data}
+  variant="bordered"
+  className="w-full rounded-lg border border-gray-200 text-sm dark:border-gray-700 [&_td]:border-gray-200 [&_td]:px-3 [&_td]:py-2 [&_th]:px-3 [&_th]:py-2 [&_th]:text-left [&_th]:font-semibold dark:[&_td]:border-gray-700"
 />`}
         >
           <Table
             columns={columns}
             data={data}
             variant="bordered"
-            className="w-full text-sm border border-gray-200 dark:border-gray-700 [&_th]:px-3 [&_th]:py-2 [&_th]:text-left [&_th]:font-semibold [&_td]:px-3 [&_td]:py-2"
+            className="w-full rounded-lg border border-gray-200 text-sm dark:border-gray-700 [&_td]:border-gray-200 [&_td]:px-3 [&_td]:py-2 [&_th]:px-3 [&_th]:py-2 [&_th]:text-left [&_th]:font-semibold dark:[&_td]:border-gray-700"
           />
         </Demo>
       </section>
@@ -68,14 +70,20 @@ export default function TablePage() {
           hooks (style them through your theme).
         </p>
         <Demo
-          code={`<Table columns={columns} data={data} variant="striped" compact />`}
+          code={`<Table
+  columns={columns}
+  data={data}
+  variant="striped"
+  compact
+  className="w-full rounded-lg border border-gray-200 text-sm dark:border-gray-700 [&_td]:px-2 [&_td]:py-1 [&_th]:px-2 [&_th]:py-1 [&_th]:text-left [&_th]:font-semibold [&_tbody_tr:nth-child(even)]:bg-gray-50 dark:[&_tbody_tr:nth-child(even)]:bg-gray-900/40"
+/>`}
         >
           <Table
             columns={columns}
             data={data}
             variant="striped"
             compact
-            className="w-full text-sm border border-gray-200 dark:border-gray-700 [&_th]:px-2 [&_th]:py-1 [&_th]:text-left [&_th]:font-semibold [&_td]:px-2 [&_td]:py-1 [&_tbody_tr:nth-child(even)]:bg-gray-50 dark:[&_tbody_tr:nth-child(even)]:bg-gray-900/40"
+            className="w-full rounded-lg border border-gray-200 text-sm dark:border-gray-700 [&_td]:px-2 [&_td]:py-1 [&_th]:px-2 [&_th]:py-1 [&_th]:text-left [&_th]:font-semibold [&_tbody_tr:nth-child(even)]:bg-gray-50 dark:[&_tbody_tr:nth-child(even)]:bg-gray-900/40"
           />
         </Demo>
       </section>
@@ -92,13 +100,14 @@ export default function TablePage() {
   data={data}
   enableSelection
   onSelectionChange={(s) => console.log(s)}
+  className="w-full rounded-lg border border-gray-200 text-sm dark:border-gray-700 [&_td]:px-3 [&_td]:py-2 [&_th]:px-3 [&_th]:py-2 [&_th]:text-left [&_th]:font-semibold"
 />`}
         >
           <Table
             columns={columns}
             data={data}
             enableSelection
-            className="w-full text-sm border border-gray-200 dark:border-gray-700 [&_th]:px-3 [&_th]:py-2 [&_th]:text-left [&_th]:font-semibold [&_td]:px-3 [&_td]:py-2"
+            className="w-full rounded-lg border border-gray-200 text-sm dark:border-gray-700 [&_td]:px-3 [&_td]:py-2 [&_th]:px-3 [&_th]:py-2 [&_th]:text-left [&_th]:font-semibold"
           />
         </Demo>
       </section>

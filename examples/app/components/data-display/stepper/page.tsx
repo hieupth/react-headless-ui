@@ -43,12 +43,12 @@ export default function StepperPage() {
   { key: 'confirm', title: 'Confirm' },
 ];
 
-<Stepper steps={steps} showNavigation />`}
+<Stepper steps={steps} showNavigation className="flex items-center text-sm text-gray-800 dark:text-gray-200" />`}
         >
           <Stepper
             steps={steps}
             showNavigation
-            className="text-sm text-gray-800 dark:text-gray-200"
+            className="flex items-center text-sm text-gray-800 dark:text-gray-200"
           />
         </Demo>
       </section>
@@ -65,6 +65,7 @@ export default function StepperPage() {
   orientation="vertical"
   variant="dots"
   initialStep={1}
+  className="flex flex-col items-start text-sm text-gray-800 dark:text-gray-200"
 />`}
         >
           <Stepper
@@ -72,7 +73,7 @@ export default function StepperPage() {
             orientation="vertical"
             variant="dots"
             initialStep={1}
-            className="text-sm text-gray-800 dark:text-gray-200"
+            className="flex flex-col items-start text-sm text-gray-800 dark:text-gray-200"
           />
         </Demo>
       </section>

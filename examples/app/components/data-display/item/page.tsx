@@ -35,7 +35,12 @@ export default function ItemPage() {
           <code>showDescription</code> to render it).
         </p>
         <Demo
-          code={`<Item icon={<span>📁</span>} defaultDescription="3 files" showDescription>
+          code={`<Item
+  icon={<span>📁</span>}
+  defaultDescription="3 files"
+  showDescription
+  className="flex w-64 items-center gap-2 rounded-md border border-gray-200 px-3 py-2 text-sm dark:border-gray-700"
+>
   Documents
 </Item>`}
         >
@@ -43,7 +48,7 @@ export default function ItemPage() {
             icon={<span>📁</span>}
             defaultDescription="3 files"
             showDescription
-            className="flex items-center gap-2 px-3 py-2 w-64 border border-gray-200 dark:border-gray-700 rounded"
+            className="flex w-64 items-center gap-2 rounded-md border border-gray-200 px-3 py-2 text-sm dark:border-gray-700"
           >
             Documents
           </Item>
@@ -57,12 +62,12 @@ export default function ItemPage() {
           selection); <code>ItemRadio</code> represents single choice.
         </p>
         <Demo
-          code={`<ItemCheckbox selected>Receive newsletter</ItemCheckbox>
-<ItemRadio selected>Dark theme</ItemRadio>`}
+          code={`<ItemCheckbox selected className="flex items-center gap-2 rounded-md border border-gray-200 px-3 py-2 text-sm dark:border-gray-700">Receive newsletter</ItemCheckbox>
+<ItemRadio selected className="flex items-center gap-2 rounded-md border border-gray-200 px-3 py-2 text-sm dark:border-gray-700">Dark theme</ItemRadio>`}
         >
           <div className="flex flex-col gap-2 w-64">
-            <ItemCheckbox selected className="flex items-center gap-2 px-3 py-2 border border-gray-200 dark:border-gray-700 rounded">Receive newsletter</ItemCheckbox>
-            <ItemRadio selected className="flex items-center gap-2 px-3 py-2 border border-gray-200 dark:border-gray-700 rounded">Dark theme</ItemRadio>
+            <ItemCheckbox selected className="flex items-center gap-2 rounded-md border border-gray-200 px-3 py-2 text-sm dark:border-gray-700">Receive newsletter</ItemCheckbox>
+            <ItemRadio selected className="flex items-center gap-2 rounded-md border border-gray-200 px-3 py-2 text-sm dark:border-gray-700">Dark theme</ItemRadio>
           </div>
         </Demo>
       </section>
@@ -74,12 +79,12 @@ export default function ItemPage() {
           trailing marker; <code>shortcut</code> shows a keyboard hint.
         </p>
         <Demo
-          code={`<Item shortcut="⌘S" badge="New">Save</Item>
-<Item disabled>Deleted (disabled)</Item>`}
+          code={`<Item shortcut="⌘S" badge="New" className="flex items-center justify-between gap-2 rounded-md border border-gray-200 px-3 py-2 text-sm dark:border-gray-700">Save</Item>
+<Item disabled className="flex items-center gap-2 rounded-md border border-gray-200 px-3 py-2 text-sm opacity-50 dark:border-gray-700">Deleted (disabled)</Item>`}
         >
           <div className="flex flex-col gap-2 w-64">
-            <Item shortcut="⌘S" badge="New" className="flex items-center justify-between gap-2 px-3 py-2 border border-gray-200 dark:border-gray-700 rounded">Save</Item>
-            <Item disabled className="flex items-center gap-2 px-3 py-2 border border-gray-200 dark:border-gray-700 rounded opacity-50">Deleted (disabled)</Item>
+            <Item shortcut="⌘S" badge="New" className="flex items-center justify-between gap-2 rounded-md border border-gray-200 px-3 py-2 text-sm dark:border-gray-700">Save</Item>
+            <Item disabled className="flex items-center gap-2 rounded-md border border-gray-200 px-3 py-2 text-sm opacity-50 dark:border-gray-700">Deleted (disabled)</Item>
           </div>
         </Demo>
       </section>

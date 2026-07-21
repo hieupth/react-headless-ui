@@ -30,14 +30,14 @@ export default function KbdPage() {
           Pass the key name as <code>value</code> or children.
         </p>
         <Demo
-          code={`<Kbd>Enter</Kbd>
-<Kbd value="Escape" />
-<Kbd value="ArrowUp" />`}
+          code={`<Kbd className="rounded border border-gray-300 bg-gray-50 px-2 py-0.5 font-mono text-xs shadow-sm dark:border-gray-600 dark:bg-gray-800">Enter</Kbd>
+<Kbd value="Escape" className="rounded border border-gray-300 bg-gray-50 px-2 py-0.5 font-mono text-xs shadow-sm dark:border-gray-600 dark:bg-gray-800" />
+<Kbd value="ArrowUp" className="rounded border border-gray-300 bg-gray-50 px-2 py-0.5 font-mono text-xs shadow-sm dark:border-gray-600 dark:bg-gray-800" />`}
         >
           <div className="flex items-center gap-2">
-            <Kbd className="px-2 py-1 text-xs font-mono rounded border border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-800 shadow-sm">Enter</Kbd>
-            <Kbd value="Escape" className="px-2 py-1 text-xs font-mono rounded border border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-800 shadow-sm" />
-            <Kbd value="ArrowUp" className="px-2 py-1 text-xs font-mono rounded border border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-800 shadow-sm" />
+            <Kbd className="rounded border border-gray-300 bg-gray-50 px-2 py-0.5 font-mono text-xs shadow-sm dark:border-gray-600 dark:bg-gray-800">Enter</Kbd>
+            <Kbd value="Escape" className="rounded border border-gray-300 bg-gray-50 px-2 py-0.5 font-mono text-xs shadow-sm dark:border-gray-600 dark:bg-gray-800" />
+            <Kbd value="ArrowUp" className="rounded border border-gray-300 bg-gray-50 px-2 py-0.5 font-mono text-xs shadow-sm dark:border-gray-600 dark:bg-gray-800" />
           </div>
         </Demo>
       </section>
@@ -49,12 +49,12 @@ export default function KbdPage() {
           individual modifier + key badges.
         </p>
         <Demo
-          code={`<KbdShortcut shortcut="Ctrl+K" />
-<KbdShortcut shortcut="Shift+Alt+/" useModifierSymbols />`}
+          code={`<KbdShortcut shortcut="Ctrl+K" className="rounded border border-gray-300 bg-gray-50 px-2 py-0.5 font-mono text-xs shadow-sm dark:border-gray-600 dark:bg-gray-800" />
+<KbdShortcut shortcut="Shift+Alt+/" useModifierSymbols className="rounded border border-gray-300 bg-gray-50 px-2 py-0.5 font-mono text-xs shadow-sm dark:border-gray-600 dark:bg-gray-800" />`}
         >
           <div className="flex items-center gap-3">
-            <KbdShortcut shortcut="Ctrl+K" className="px-2 py-1 text-xs font-mono rounded border border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-800 shadow-sm" />
-            <KbdShortcut shortcut="Shift+Alt+/" useModifierSymbols className="px-2 py-1 text-xs font-mono rounded border border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-800 shadow-sm" />
+            <KbdShortcut shortcut="Ctrl+K" className="rounded border border-gray-300 bg-gray-50 px-2 py-0.5 font-mono text-xs shadow-sm dark:border-gray-600 dark:bg-gray-800" />
+            <KbdShortcut shortcut="Shift+Alt+/" useModifierSymbols className="rounded border border-gray-300 bg-gray-50 px-2 py-0.5 font-mono text-xs shadow-sm dark:border-gray-600 dark:bg-gray-800" />
           </div>
         </Demo>
       </section>
@@ -66,9 +66,9 @@ export default function KbdPage() {
           <code>onPress</code> on press with an <code>aria-pressed</code> state).
         </p>
         <Demo
-          code={`<Kbd value="F" interactive onPress={() => alert('pressed')} />`}
+          code={`<Kbd value="F" interactive onPress={() => alert('pressed')} className="cursor-pointer rounded border border-gray-300 bg-gray-50 px-2 py-0.5 font-mono text-xs shadow-sm dark:border-gray-600 dark:bg-gray-800" />`}
         >
-          <Kbd value="F" interactive onPress={() => alert('pressed')} className="px-2 py-1 text-xs font-mono rounded border border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-800 shadow-sm cursor-pointer" />
+          <Kbd value="F" interactive onPress={() => alert('pressed')} className="cursor-pointer rounded border border-gray-300 bg-gray-50 px-2 py-0.5 font-mono text-xs shadow-sm dark:border-gray-600 dark:bg-gray-800" />
         </Demo>
       </section>
 

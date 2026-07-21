@@ -37,10 +37,10 @@ export default function CarouselPage() {
           default.
         </p>
         <Demo
-          code={`<Carousel>
-  <div className="slide">First</div>
-  <div className="slide">Second</div>
-  <div className="slide">Third</div>
+          code={`<Carousel className="w-72 overflow-hidden rounded-lg border border-gray-200 dark:border-gray-700 [&_.slide]:flex [&_.slide]:h-32 [&_.slide]:items-center [&_.slide]:justify-center [&_.slide]:font-semibold [&_.slide]:text-white">
+  <div className="slide bg-indigo-500">First</div>
+  <div className="slide bg-emerald-500">Second</div>
+  <div className="slide bg-amber-500">Third</div>
 </Carousel>`}
         >
           <Carousel className="w-72 border border-gray-200 dark:border-gray-700 rounded-lg overflow-hidden [&_.slide]:h-32 [&_.slide]:flex [&_.slide]:items-center [&_.slide]:justify-center [&_.slide]:text-white [&_.slide]:font-semibold">
@@ -60,7 +60,7 @@ export default function CarouselPage() {
           <code>autoPlay</code> (ms) advances automatically.
         </p>
         <Demo
-          code={`<Carousel loop autoPlay={2500} pauseOnHover showDots>
+          code={`<Carousel loop autoPlay={2500} pauseOnHover showDots className="w-72 overflow-hidden rounded-lg border border-gray-200 dark:border-gray-700 [&_.slide]:flex [&_.slide]:h-32 [&_.slide]:items-center [&_.slide]:justify-center [&_.slide]:font-semibold [&_.slide]:text-white">
   {/* slides */}
 </Carousel>`}
         >
@@ -81,7 +81,7 @@ export default function CarouselPage() {
           <code>spacing</code> adds gutters between them.
         </p>
         <Demo
-          code={`<Carousel itemsPerView={2} spacing={8} showArrows>
+          code={`<Carousel itemsPerView={2} spacing={8} showArrows className="w-72 overflow-hidden rounded-lg border border-gray-200 dark:border-gray-700 [&_.slide]:flex [&_.slide]:h-32 [&_.slide]:items-center [&_.slide]:justify-center [&_.slide]:font-semibold [&_.slide]:text-white">
   {/* slides */}
 </Carousel>`}
         >

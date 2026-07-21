@@ -30,12 +30,12 @@ export default function SeparatorPage() {
         </p>
         <Demo
           code={`<p>Above</p>
-<Separator />
+<Separator className="my-2 h-px w-full bg-gray-200 dark:bg-gray-700" />
 <p>Below</p>`}
         >
           <div className="w-64 text-sm">
             <p>Above</p>
-            <Separator className="my-2 border-t border-gray-300 dark:border-gray-600" />
+            <Separator className="my-2 h-px w-full bg-gray-200 dark:bg-gray-700" />
             <p>Below</p>
           </div>
         </Demo>
@@ -48,10 +48,10 @@ export default function SeparatorPage() {
           <code>div</code>).
         </p>
         <Demo
-          code={`<Separator>OR</Separator>`}
+          code={`<Separator className="flex items-center gap-2 text-xs text-gray-500 before:h-px before:flex-1 before:bg-gray-200 dark:before:bg-gray-700 after:h-px after:flex-1 after:bg-gray-200 dark:after:bg-gray-700">OR</Separator>`}
         >
           <div className="w-64">
-            <Separator className="flex items-center text-xs text-gray-500 before:flex-1 before:border-t before:border-gray-300 dark:before:border-gray-600 after:flex-1 after:border-t after:border-gray-300 dark:after:border-gray-600 [&:not(:empty)]:gap-2">
+            <Separator className="flex items-center gap-2 text-xs text-gray-500 before:h-px before:flex-1 before:bg-gray-200 dark:before:bg-gray-700 after:h-px after:flex-1 after:bg-gray-200 dark:after:bg-gray-700">
               OR
             </Separator>
           </div>
@@ -67,13 +67,13 @@ export default function SeparatorPage() {
         <Demo
           code={`<div className="flex items-center gap-3">
   <span>Left</span>
-  <Separator orientation="vertical" decorative />
+  <Separator orientation="vertical" decorative className="h-full w-px self-stretch bg-gray-200 dark:bg-gray-700" />
   <span>Right</span>
 </div>`}
         >
           <div className="flex items-center gap-3 text-sm">
             <span>Left</span>
-            <Separator orientation="vertical" decorative className="self-stretch border-l border-gray-300 dark:border-gray-600" />
+            <Separator orientation="vertical" decorative className="h-full w-px self-stretch bg-gray-200 dark:bg-gray-700" />
             <span>Right</span>
           </div>
         </Demo>

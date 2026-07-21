@@ -59,21 +59,25 @@ export default function ChartPage() {
           points are <code>{'{ x, y }'}</code>.
         </p>
         <Demo
-          code={`<Chart
-  type="line"
-  width={400}
-  height={200}
-  datasets={[{
-    label: 'Revenue',
-    color: '#6366f1',
-    data: [
-      { x: 'Jan', y: 12 }, { x: 'Feb', y: 18 },
-      { x: 'Mar', y: 14 }, { x: 'Apr', y: 22 }, { x: 'May', y: 28 }
-    ]
-  }]}
-/>`}
+          code={`<div className="rounded-lg border border-gray-200 p-4 dark:border-gray-700">
+  <Chart
+    type="line"
+    width={400}
+    height={200}
+    datasets={[{
+      label: 'Revenue',
+      color: '#6366f1',
+      data: [
+        { x: 'Jan', y: 12 }, { x: 'Feb', y: 18 },
+        { x: 'Mar', y: 14 }, { x: 'Apr', y: 22 }, { x: 'May', y: 28 }
+      ]
+    }]}
+  />
+</div>`}
         >
-          <Chart type="line" width={400} height={200} datasets={lineDatasets} />
+          <div className="rounded-lg border border-gray-200 bg-white p-4 dark:border-gray-700 dark:bg-gray-900">
+            <Chart type="line" width={400} height={200} datasets={lineDatasets} />
+          </div>
         </Demo>
       </section>
 
@@ -83,21 +87,25 @@ export default function ChartPage() {
           Switch <code>type</code> to <code>bar</code> for categorical values.
         </p>
         <Demo
-          code={`<Chart
-  type="bar"
-  width={400}
-  height={200}
-  datasets={[{
-    label: 'Signups',
-    color: '#10b981',
-    data: [
-      { x: 'Mon', y: 30 }, { x: 'Tue', y: 45 }, { x: 'Wed', y: 25 },
-      { x: 'Thu', y: 60 }, { x: 'Fri', y: 38 }
-    ]
-  }]}
-/>`}
+          code={`<div className="rounded-lg border border-gray-200 p-4 dark:border-gray-700">
+  <Chart
+    type="bar"
+    width={400}
+    height={200}
+    datasets={[{
+      label: 'Signups',
+      color: '#10b981',
+      data: [
+        { x: 'Mon', y: 30 }, { x: 'Tue', y: 45 }, { x: 'Wed', y: 25 },
+        { x: 'Thu', y: 60 }, { x: 'Fri', y: 38 }
+      ]
+    }]}
+  />
+</div>`}
         >
-          <Chart type="bar" width={400} height={200} datasets={barDatasets} />
+          <div className="rounded-lg border border-gray-200 bg-white p-4 dark:border-gray-700 dark:bg-gray-900">
+            <Chart type="bar" width={400} height={200} datasets={barDatasets} />
+          </div>
         </Demo>
       </section>
 

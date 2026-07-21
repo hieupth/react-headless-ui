@@ -29,16 +29,16 @@ export default function BadgePage() {
           the density. Pass children for free-form content.
         </p>
         <Demo
-          code={`<Badge variant="default">Default</Badge>
-<Badge variant="secondary">Secondary</Badge>
-<Badge variant="destructive">Error</Badge>
-<Badge variant="outline" size="lg">Outline</Badge>`}
+          code={`<Badge variant="default" className="inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium bg-gray-900 text-white dark:bg-white dark:text-gray-900">Default</Badge>
+<Badge variant="secondary" className="inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium bg-gray-100 text-gray-900 dark:bg-gray-800 dark:text-gray-100">Secondary</Badge>
+<Badge variant="destructive" className="inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium bg-red-600 text-white">Error</Badge>
+<Badge variant="outline" size="lg" className="inline-flex items-center rounded-full px-3 py-1 text-sm font-medium border border-gray-300 text-gray-900 dark:border-gray-700 dark:text-gray-100">Outline</Badge>`}
         >
           <div className="flex flex-wrap items-center gap-2">
-            <Badge variant="default">Default</Badge>
-            <Badge variant="secondary">Secondary</Badge>
-            <Badge variant="destructive">Error</Badge>
-            <Badge variant="outline" size="lg">Outline</Badge>
+            <Badge variant="default" className="inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium bg-gray-900 text-white dark:bg-white dark:text-gray-900">Default</Badge>
+            <Badge variant="secondary" className="inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium bg-gray-100 text-gray-900 dark:bg-gray-800 dark:text-gray-100">Secondary</Badge>
+            <Badge variant="destructive" className="inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium bg-red-600 text-white">Error</Badge>
+            <Badge variant="outline" size="lg" className="inline-flex items-center rounded-full px-3 py-1 text-sm font-medium border border-gray-300 text-gray-900 dark:border-gray-700 dark:text-gray-100">Outline</Badge>
           </div>
         </Demo>
       </section>
@@ -50,14 +50,14 @@ export default function BadgePage() {
           99). Set <code>dot</code> for a content-less indicator.
         </p>
         <Demo
-          code={`<Badge count={5} />
-<Badge count={120} />
-<Badge dot />`}
+          code={`<Badge count={5} className="inline-flex items-center justify-center min-w-[1.25rem] h-5 rounded-full px-1.5 text-xs font-medium bg-indigo-600 text-white" />
+<Badge count={120} className="inline-flex items-center justify-center min-w-[1.25rem] h-5 rounded-full px-1.5 text-xs font-medium bg-indigo-600 text-white" />
+<Badge dot className="inline-block h-2.5 w-2.5 rounded-full bg-red-500" />`}
         >
           <div className="flex items-center gap-3">
-            <Badge count={5} />
-            <Badge count={120} />
-            <Badge dot />
+            <Badge count={5} className="inline-flex items-center justify-center min-w-[1.25rem] h-5 rounded-full px-1.5 text-xs font-medium bg-indigo-600 text-white" />
+            <Badge count={120} className="inline-flex items-center justify-center min-w-[1.25rem] h-5 rounded-full px-1.5 text-xs font-medium bg-indigo-600 text-white" />
+            <Badge dot className="inline-block h-2.5 w-2.5 rounded-full bg-red-500" />
           </div>
         </Demo>
       </section>
@@ -70,14 +70,14 @@ export default function BadgePage() {
         </p>
         <Demo
           code={`<BadgeWrapper
-  badge={<Badge count={9} />}
+  badge={<Badge count={9} className="inline-flex items-center justify-center min-w-[1.25rem] h-5 rounded-full px-1.5 text-xs font-medium bg-red-600 text-white" />}
   position="top-right"
 >
-  <span>Inbox</span>
+  <span className="rounded-md border border-gray-300 px-3 py-1 text-sm dark:border-gray-600">Inbox</span>
 </BadgeWrapper>`}
         >
-          <BadgeWrapper badge={<Badge count={9} />} position="top-right">
-            <span className="px-3 py-1 border border-gray-300 dark:border-gray-600 rounded">Inbox</span>
+          <BadgeWrapper badge={<Badge count={9} className="inline-flex items-center justify-center min-w-[1.25rem] h-5 rounded-full px-1.5 text-xs font-medium bg-red-600 text-white" />} position="top-right">
+            <span className="rounded-md border border-gray-300 px-3 py-1 text-sm dark:border-gray-600">Inbox</span>
           </BadgeWrapper>
         </Demo>
       </section>
