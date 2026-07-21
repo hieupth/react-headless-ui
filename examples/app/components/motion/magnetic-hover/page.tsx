@@ -37,8 +37,8 @@ export default function MagneticHoverPage() {
           the mouse around inside the demo to see it track.
         </p>
         <Demo
-          code={`<MagneticHover>
-  <button>Magnetic</button>
+          code={`<MagneticHover className="inline-flex items-center justify-center rounded-full bg-gray-900 px-8 py-4 text-sm font-medium text-white dark:bg-white dark:text-gray-900">
+  <span>Magnetic</span>
 </MagneticHover>`}
         >
           <MagneticHover className={pillClasses}>
@@ -54,8 +54,12 @@ export default function MagneticHoverPage() {
           disables the grow so only the follow remains.
         </p>
         <Demo
-          code={`<MagneticHover strength={40} scale={false}>
-  <button>Strong pull</button>
+          code={`<MagneticHover
+  strength={40}
+  scale={false}
+  className="inline-flex items-center justify-center rounded-full bg-gray-900 px-8 py-4 text-sm font-medium text-white dark:bg-white dark:text-gray-900"
+>
+  <span>Strong pull</span>
 </MagneticHover>`}
         >
           <MagneticHover strength={40} scale={false} className={pillClasses}>

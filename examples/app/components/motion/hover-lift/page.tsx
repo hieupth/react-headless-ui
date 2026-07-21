@@ -37,8 +37,8 @@ export default function HoverLiftPage() {
           card to lift it via focus.
         </p>
         <Demo
-          code={`<HoverLift>
-  <div>Hover me</div>
+          code={`<HoverLift className="inline-flex flex-col items-center justify-center rounded-lg bg-gray-900 px-8 py-10 text-sm font-medium text-white shadow-sm dark:bg-white dark:text-gray-900">
+  <span>Hover me</span>
 </HoverLift>`}
         >
           <HoverLift className={cardClasses}>
@@ -54,8 +54,14 @@ export default function HoverLiftPage() {
           <code>shadowIntensity</code> produce a more dramatic float.
         </p>
         <Demo
-          code={`<HoverLift liftDistance={16} scale={1.05} shadowIntensity={0.5} duration={250}>
-  <div>Big lift</div>
+          code={`<HoverLift
+  liftDistance={16}
+  scale={1.05}
+  shadowIntensity={0.5}
+  duration={250}
+  className="inline-flex flex-col items-center justify-center rounded-lg bg-gray-900 px-8 py-10 text-sm font-medium text-white shadow-sm dark:bg-white dark:text-gray-900"
+>
+  <span>Big lift</span>
 </HoverLift>`}
         >
           <div className="flex flex-wrap items-center justify-center gap-4">

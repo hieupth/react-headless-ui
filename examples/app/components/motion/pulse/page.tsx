@@ -36,7 +36,12 @@ export default function PulsePage() {
           <code>repeat={0}</code> (default) loops indefinitely.
         </p>
         <Demo
-          code={`<Pulse initialActive intensity={0.2} duration={1000}>
+          code={`<Pulse
+  initialActive
+  intensity={0.2}
+  duration={1000}
+  className="inline-flex items-center justify-center rounded-md bg-gray-900 px-4 py-3 text-sm font-medium text-white dark:bg-white dark:text-gray-900"
+>
   <span>Live</span>
 </Pulse>`}
         >
@@ -58,7 +63,12 @@ export default function PulsePage() {
           shorter <code>duration</code> speeds it up.
         </p>
         <Demo
-          code={`<Pulse initialActive intensity={0.45} duration={600}>
+          code={`<Pulse
+  initialActive
+  intensity={0.45}
+  duration={600}
+  className="inline-flex items-center justify-center rounded-md bg-gray-900 px-4 py-3 text-sm font-medium text-white dark:bg-white dark:text-gray-900"
+>
   <span>Urgent</span>
 </Pulse>`}
         >

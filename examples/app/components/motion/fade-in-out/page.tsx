@@ -39,7 +39,12 @@ export default function FadeInOutPage() {
           the component mounts.
         </p>
         <Demo
-          code={`<FadeInOut trigger="on-mount" initialVisible duration={600}>
+          code={`<FadeInOut
+  trigger="on-mount"
+  initialVisible
+  duration={600}
+  className="inline-flex items-center justify-center rounded-md bg-gray-900 px-4 py-3 text-sm font-medium text-white dark:bg-white dark:text-gray-900"
+>
   <span>Faded in</span>
 </FadeInOut>`}
         >
@@ -61,7 +66,14 @@ export default function FadeInOutPage() {
           transition; <code>easing</code> maps to a named framer-motion easing.
         </p>
         <Demo
-          code={`<FadeInOut trigger="on-mount" initialVisible duration={1200} delay={200} easing="ease-out">
+          code={`<FadeInOut
+  trigger="on-mount"
+  initialVisible
+  duration={1200}
+  delay={200}
+  easing="ease-out"
+  className="inline-flex items-center justify-center rounded-md bg-gray-900 px-4 py-3 text-sm font-medium text-white dark:bg-white dark:text-gray-900"
+>
   <span>Slow + delayed</span>
 </FadeInOut>`}
         >

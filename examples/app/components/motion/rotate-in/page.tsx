@@ -37,7 +37,12 @@ export default function RotateInPage() {
           <code>repeat={0}</code> (default) loops indefinitely.
         </p>
         <Demo
-          code={`<RotateIn initialActive finalAngle={360} duration={1200}>
+          code={`<RotateIn
+  initialActive
+  finalAngle={360}
+  duration={1200}
+  className="inline-flex items-center justify-center rounded-md bg-gray-900 px-4 py-3 text-sm font-medium text-white dark:bg-white dark:text-gray-900"
+>
   <span>Spinning</span>
 </RotateIn>`}
         >
@@ -59,7 +64,14 @@ export default function RotateInPage() {
           and stops.
         </p>
         <Demo
-          code={`<RotateIn initialActive initialAngle={0} finalAngle={90} repeat={1} direction="counter-clockwise">
+          code={`<RotateIn
+  initialActive
+  initialAngle={0}
+  finalAngle={90}
+  repeat={1}
+  direction="counter-clockwise"
+  className="inline-flex items-center justify-center rounded-md bg-gray-900 px-4 py-3 text-sm font-medium text-white dark:bg-white dark:text-gray-900"
+>
   <span>Quarter turn</span>
 </RotateIn>`}
         >

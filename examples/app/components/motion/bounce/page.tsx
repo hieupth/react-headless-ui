@@ -37,7 +37,12 @@ export default function BouncePage() {
           <code>repeat={0}</code> (default) loops indefinitely.
         </p>
         <Demo
-          code={`<Bounce initialActive direction="up" duration={800}>
+          code={`<Bounce
+  initialActive
+  direction="up"
+  duration={800}
+  className="inline-flex items-center justify-center rounded-md bg-gray-900 px-4 py-3 text-sm font-medium text-white dark:bg-white dark:text-gray-900"
+>
   <span>Bouncing</span>
 </Bounce>`}
         >
@@ -59,7 +64,13 @@ export default function BouncePage() {
           <code>intensity</code> multiplies the travel distance.
         </p>
         <Demo
-          code={`<Bounce initialActive direction="right" intensity={1.5} duration={700}>
+          code={`<Bounce
+  initialActive
+  direction="right"
+  intensity={1.5}
+  duration={700}
+  className="inline-flex items-center justify-center rounded-md bg-gray-900 px-4 py-3 text-sm font-medium text-white dark:bg-white dark:text-gray-900"
+>
   <span>Sideways</span>
 </Bounce>`}
         >
