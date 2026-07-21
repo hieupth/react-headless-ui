@@ -62,7 +62,16 @@ export default function ButtonGroupPage() {
     { label: 'Month' },
   ]}
 >
-  {(_, props, i) => <button {...props} className={btn(i)} />}
+  {(_, props, index) => {
+    const isLast = index === 2;
+    const radius = index === 0 ? 'rounded-l-md' : isLast ? 'rounded-r-md' : '';
+    return (
+      <button
+        {...props}
+        className={\`\${btnBase} \${variantStyle.primary.rest} \${radius}\`}
+      />
+    );
+  }}
 </ButtonGroup>`}
         >
           <ButtonGroup
@@ -109,7 +118,17 @@ export default function ButtonGroupPage() {
     { label: 'Grid' },
     { label: 'Gallery' },
   ]}
-/>`}
+>
+  {(_, props, index, isSelected) => {
+    const radius = index === 0
+      ? 'rounded-l-md border-r-0'
+      : index === 2
+        ? 'rounded-r-md'
+        : 'border-r-0';
+    const state = isSelected ? variantStyle.outline.selected : variantStyle.outline.rest;
+    return <button {...props} className={\`\${btnBase} \${radius} \${state}\`} />;
+  }}
+</ButtonGroup>`}
         >
           <ButtonGroup
             variant="outline"
@@ -151,7 +170,17 @@ export default function ButtonGroupPage() {
     { label: 'Settings' },
     { label: 'Sign out' },
   ]}
-/>`}
+>
+  {(_, props, index) => {
+    const radius = index === 0 ? 'rounded-t-md' : index === 2 ? 'rounded-b-md' : '';
+    return (
+      <button
+        {...props}
+        className={\`\${btnBase} w-full text-left \${variantStyle.ghost.rest} \${radius}\`}
+      />
+    );
+  }}
+</ButtonGroup>`}
         >
           <ButtonGroup
             variant="ghost"
