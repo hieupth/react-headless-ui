@@ -39,7 +39,9 @@ export default function ParallaxScrollPage() {
         </p>
         <Demo
           code={`<ParallaxScroll speed={0.4} direction="up">
-  <div>Drifting up</div>
+  <div className="inline-flex items-center justify-center rounded-md bg-gray-900 px-6 py-12 text-base font-medium text-white dark:bg-white dark:text-gray-900">
+    Drifting up
+  </div>
 </ParallaxScroll>`}
         >
           <div className="w-full space-y-3">
@@ -61,7 +63,9 @@ export default function ParallaxScrollPage() {
         </p>
         <Demo
           code={`<ParallaxScroll speed={0.7} direction="up" startOffset={0} endOffset={1}>
-  <div>Faster drift</div>
+  <div className="inline-flex items-center justify-center rounded-md bg-gray-900 px-6 py-12 text-base font-medium text-white dark:bg-white dark:text-gray-900">
+    Faster drift
+  </div>
 </ParallaxScroll>`}
         >
           <div className="w-full space-y-3">

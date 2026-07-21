@@ -39,7 +39,13 @@ export default function ShakePage() {
           <code>repeat={0}</code> (default) loops indefinitely.
         </p>
         <Demo
-          code={`<Shake initialActive direction="horizontal" intensity={1.2} cycles={4}>
+          code={`<Shake
+  initialActive
+  direction="horizontal"
+  intensity={1.2}
+  cycles={4}
+  className="inline-flex items-center justify-center rounded-md bg-gray-900 px-4 py-3 text-sm font-medium text-white dark:bg-white dark:text-gray-900"
+>
   <span>Shaking</span>
 </Shake>`}
         >
@@ -62,7 +68,13 @@ export default function ShakePage() {
           <code>cycles</code> sets the number of oscillations per cycle.
         </p>
         <Demo
-          code={`<Shake initialActive direction="both" cycles={6} duration={600}>
+          code={`<Shake
+  initialActive
+  direction="both"
+  cycles={6}
+  duration={600}
+  className="inline-flex items-center justify-center rounded-md bg-gray-900 px-4 py-3 text-sm font-medium text-white dark:bg-white dark:text-gray-900"
+>
   <span>Wobble</span>
 </Shake>`}
         >

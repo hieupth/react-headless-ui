@@ -38,7 +38,12 @@ export default function FlipPage() {
           <code>repeat={0}</code> (default) loops indefinitely.
         </p>
         <Demo
-          code={`<Flip initialActive axis="y" duration={900}>
+          code={`<Flip
+  initialActive
+  axis="y"
+  duration={900}
+  className="inline-flex items-center justify-center rounded-md bg-gray-900 px-4 py-3 text-sm font-medium text-white dark:bg-white dark:text-gray-900"
+>
   <span>Flipping</span>
 </Flip>`}
         >
@@ -60,7 +65,13 @@ export default function FlipPage() {
           <code>axis="x"</code> flips over the horizontal axis.
         </p>
         <Demo
-          code={`<Flip initialActive axis="x" direction="alternate" duration={800}>
+          code={`<Flip
+  initialActive
+  axis="x"
+  direction="alternate"
+  duration={800}
+  className="inline-flex items-center justify-center rounded-md bg-gray-900 px-4 py-3 text-sm font-medium text-white dark:bg-white dark:text-gray-900"
+>
   <span>Alternate</span>
 </Flip>`}
         >

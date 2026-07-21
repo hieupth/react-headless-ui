@@ -37,7 +37,13 @@ export default function BlurInOutPage() {
           from <code>finalBlur</code> down to <code>initialBlur</code> (0 = sharp).
         </p>
         <Demo
-          code={`<BlurInOut initialActive initialBlur={0} finalBlur={8} duration={600}>
+          code={`<BlurInOut
+  initialActive
+  initialBlur={0}
+  finalBlur={8}
+  duration={600}
+  className="inline-flex items-center justify-center rounded-md bg-gray-900 px-4 py-3 text-sm font-medium text-white dark:bg-white dark:text-gray-900"
+>
   <span>Coming into focus</span>
 </BlurInOut>`}
         >
@@ -60,7 +66,12 @@ export default function BlurInOutPage() {
           <code>repeat={0}</code> (default) keeps it looping.
         </p>
         <Demo
-          code={`<BlurInOut initialActive finalBlur={14} duration={800}>
+          code={`<BlurInOut
+  initialActive
+  finalBlur={14}
+  duration={800}
+  className="inline-flex items-center justify-center rounded-md bg-gray-900 px-4 py-3 text-sm font-medium text-white dark:bg-white dark:text-gray-900"
+>
   <span>Deep blur</span>
 </BlurInOut>`}
         >

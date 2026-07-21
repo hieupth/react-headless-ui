@@ -36,7 +36,13 @@ export default function ScaleInOutPage() {
           <code>initialScale</code> to <code>finalScale</code>.
         </p>
         <Demo
-          code={`<ScaleInOut initialActive initialScale={0.6} finalScale={1} duration={500}>
+          code={`<ScaleInOut
+  initialActive
+  initialScale={0.6}
+  finalScale={1}
+  duration={500}
+  className="inline-flex items-center justify-center rounded-md bg-gray-900 px-4 py-3 text-sm font-medium text-white dark:bg-white dark:text-gray-900"
+>
   <span>Pop in</span>
 </ScaleInOut>`}
         >
@@ -59,7 +65,12 @@ export default function ScaleInOutPage() {
           edge.
         </p>
         <Demo
-          code={`<ScaleInOut initialActive origin="bottom-right" duration={600}>
+          code={`<ScaleInOut
+  initialActive
+  origin="bottom-right"
+  duration={600}
+  className="inline-flex items-center justify-center rounded-md bg-gray-900 px-4 py-3 text-sm font-medium text-white dark:bg-white dark:text-gray-900"
+>
   <span>Bottom-right origin</span>
 </ScaleInOut>`}
         >

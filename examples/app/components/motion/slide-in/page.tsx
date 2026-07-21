@@ -35,7 +35,13 @@ export default function SlideInPage() {
           <code>distance</code> sets the pixel offset.
         </p>
         <Demo
-          code={`<SlideIn direction="up" distance={24} duration={600} initialVisible>
+          code={`<SlideIn
+  direction="up"
+  distance={24}
+  duration={600}
+  initialVisible
+  className="inline-flex items-center justify-center rounded-md bg-gray-900 px-4 py-3 text-sm font-medium text-white dark:bg-white dark:text-gray-900"
+>
   <span>Slide up</span>
 </SlideIn>`}
         >
@@ -58,7 +64,14 @@ export default function SlideInPage() {
           <code>delay</code>.
         </p>
         <Demo
-          code={`<SlideIn direction="left" distance={40} duration={800} delay={150} initialVisible>
+          code={`<SlideIn
+  direction="left"
+  distance={40}
+  duration={800}
+  delay={150}
+  initialVisible
+  className="inline-flex items-center justify-center rounded-md bg-gray-900 px-4 py-3 text-sm font-medium text-white dark:bg-white dark:text-gray-900"
+>
   <span>Slide from left</span>
 </SlideIn>`}
         >

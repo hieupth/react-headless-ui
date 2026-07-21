@@ -40,7 +40,9 @@ export default function RevealOnScrollPage() {
         </p>
         <Demo
           code={`<RevealOnScroll direction="up" once duration={600}>
-  <div>Revealed</div>
+  <div className="inline-flex items-center justify-center rounded-md bg-gray-900 px-6 py-12 text-base font-medium text-white dark:bg-white dark:text-gray-900">
+    Revealed
+  </div>
 </RevealOnScroll>`}
         >
           <div className="w-full">
@@ -62,7 +64,9 @@ export default function RevealOnScrollPage() {
         </p>
         <Demo
           code={`<RevealOnScroll direction="scale" once duration={700}>
-  <div>Scaled in</div>
+  <div className="inline-flex items-center justify-center rounded-md bg-gray-900 px-6 py-12 text-base font-medium text-white dark:bg-white dark:text-gray-900">
+    Scaled in
+  </div>
 </RevealOnScroll>`}
         >
           <div className="w-full">

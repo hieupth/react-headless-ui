@@ -37,11 +37,16 @@ export default function StaggerChildrenPage() {
           rises <code>staggerDelay</code> ms after the previous.
         </p>
         <Demo
-          code={`<StaggerChildren initialActive staggerDelay={120} duration={400}>
-  <div>One</div>
-  <div>Two</div>
-  <div>Three</div>
-  <div>Four</div>
+          code={`<StaggerChildren
+  initialActive
+  staggerDelay={120}
+  duration={400}
+  className="flex flex-wrap items-center justify-center gap-3"
+>
+  <div className="inline-flex items-center justify-center rounded-md bg-gray-900 px-4 py-3 text-sm font-medium text-white dark:bg-white dark:text-gray-900">One</div>
+  <div className="inline-flex items-center justify-center rounded-md bg-gray-900 px-4 py-3 text-sm font-medium text-white dark:bg-white dark:text-gray-900">Two</div>
+  <div className="inline-flex items-center justify-center rounded-md bg-gray-900 px-4 py-3 text-sm font-medium text-white dark:bg-white dark:text-gray-900">Three</div>
+  <div className="inline-flex items-center justify-center rounded-md bg-gray-900 px-4 py-3 text-sm font-medium text-white dark:bg-white dark:text-gray-900">Four</div>
 </StaggerChildren>`}
         >
           <StaggerChildren
@@ -65,12 +70,17 @@ export default function StaggerChildrenPage() {
           expanding outward.
         </p>
         <Demo
-          code={`<StaggerChildren initialActive direction="center-out" staggerDelay={150}>
-  <div>A</div>
-  <div>B</div>
-  <div>C</div>
-  <div>D</div>
-  <div>E</div>
+          code={`<StaggerChildren
+  initialActive
+  direction="center-out"
+  staggerDelay={150}
+  className="flex flex-wrap items-center justify-center gap-3"
+>
+  <div className="inline-flex items-center justify-center rounded-md bg-gray-900 px-4 py-3 text-sm font-medium text-white dark:bg-white dark:text-gray-900">A</div>
+  <div className="inline-flex items-center justify-center rounded-md bg-gray-900 px-4 py-3 text-sm font-medium text-white dark:bg-white dark:text-gray-900">B</div>
+  <div className="inline-flex items-center justify-center rounded-md bg-gray-900 px-4 py-3 text-sm font-medium text-white dark:bg-white dark:text-gray-900">C</div>
+  <div className="inline-flex items-center justify-center rounded-md bg-gray-900 px-4 py-3 text-sm font-medium text-white dark:bg-white dark:text-gray-900">D</div>
+  <div className="inline-flex items-center justify-center rounded-md bg-gray-900 px-4 py-3 text-sm font-medium text-white dark:bg-white dark:text-gray-900">E</div>
 </StaggerChildren>`}
         >
           <StaggerChildren
