@@ -6,8 +6,13 @@ import { Demo } from '@/components/demo';
 import { PropsTable } from '@/components/props-table';
 
 // Accordion emits semantic class hooks (accordion-item, accordion-trigger,
-// accordion-content) + ARIA, but no CSS. Theme it. Items carry explicit
+// accordion-content) + ARIA, but no CSS. Theme it via the `className` prop,
+// which the root spreads onto the accordion container. Items carry explicit
 // `trigger` and `content` nodes.
+const accordionCls =
+  'w-full divide-y divide-gray-200 rounded-lg border border-gray-200 ' +
+  'bg-white dark:divide-gray-700 dark:border-gray-700 dark:bg-gray-900';
+
 const items = [
   {
     id: 'item-1',
@@ -47,9 +52,8 @@ export default function AccordionPage() {
           <code>openItems</code> / <code>onOpenChange</code>.
         </p>
         <Demo
-          code={`const [open, setOpen] = useState(['item-1']);
-
-<Accordion
+          code={`<Accordion
+  className="w-full divide-y divide-gray-200 rounded-lg border border-gray-200 bg-white dark:divide-gray-700 dark:border-gray-700 dark:bg-gray-900"
   items={[
     { id: 'item-1', trigger: 'What is reui?',
       content: <p>Headless React UI primitives.</p> },
@@ -61,10 +65,10 @@ export default function AccordionPage() {
 />`}
         >
           <div className="w-full">
-            <Accordion items={items} openItems={open} onOpenChange={setOpen} />
+            <Accordion className={accordionCls} items={items} openItems={open} onOpenChange={setOpen} />
             <p className="mt-3 text-xs text-gray-500">
-              Structure + a11y render; theme the <code>accordion-*</code> hooks
-              for visuals.
+              Structure + a11y render; the <code>className</code> themes the{' '}
+              <code>accordion-*</code> hooks.
             </p>
           </div>
         </Demo>
@@ -80,6 +84,7 @@ export default function AccordionPage() {
         </p>
         <Demo
           code={`<Accordion
+  className="w-full divide-y divide-gray-200 rounded-lg border border-gray-200 bg-white dark:divide-gray-700 dark:border-gray-700 dark:bg-gray-900"
   collapsible
   defaultOpenItems={['a']}
   items={[
@@ -89,9 +94,15 @@ export default function AccordionPage() {
   ]}
 />`}
         >
-          <p className="text-sm text-gray-500">
-            Exclusive + disabled-item behavior is hook-driven — see the snippet.
-          </p>
+          <Accordion
+            className={accordionCls}
+            collapsible
+            defaultOpenItems={['a']}
+            items={[
+              { id: 'a', trigger: 'Section A', content: <p className="text-sm text-gray-600 dark:text-gray-400">Only one open at a time.</p> },
+              { id: 'b', trigger: 'Section B (locked)', disabled: true, content: <p className="text-sm text-gray-600 dark:text-gray-400">Cannot open.</p> },
+            ]}
+          />
         </Demo>
       </section>
 

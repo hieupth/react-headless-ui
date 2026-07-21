@@ -6,20 +6,25 @@ import { Demo } from '@/components/demo';
 import { PropsTable } from '@/components/props-table';
 
 // MegaMenu renders large multi-column dropdown panels, backed by useMegaMenu.
-// It emits class hooks + some inline theme styles; theme the rest with CSS.
+// It emits class hooks + some inline theme styles; the `className` themes the
+// trigger row. Panels are themed via their own Tailwind classes.
+const megaCls =
+  'flex items-center gap-1 rounded-lg border border-gray-200 bg-white px-2 py-1 text-sm ' +
+  'dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100';
+
 const items = [
   {
     id: 'products',
     label: 'Products',
     panel: (
-      <div className="grid grid-cols-2 gap-4 p-4 text-sm">
+      <div className="grid grid-cols-2 gap-4 rounded-lg border border-gray-200 bg-white p-4 text-sm shadow-lg dark:border-gray-700 dark:bg-gray-900">
         <div>
-          <p className="font-semibold">reui</p>
-          <p className="text-gray-500">Headless React primitives.</p>
+          <p className="font-semibold text-gray-900 dark:text-gray-100">reui</p>
+          <p className="text-gray-500 dark:text-gray-400">Headless React primitives.</p>
         </div>
         <div>
-          <p className="font-semibold">Forge</p>
-          <p className="text-gray-500">Design token studio.</p>
+          <p className="font-semibold text-gray-900 dark:text-gray-100">Forge</p>
+          <p className="text-gray-500 dark:text-gray-400">Design token studio.</p>
         </div>
       </div>
     ),
@@ -66,9 +71,8 @@ export default function MegaMenuPage() {
           <code>onActiveChange</code>.
         </p>
         <Demo
-          code={`const [active, setActive] = useState(null);
-
-<MegaMenu
+          code={`<MegaMenu
+  className="flex items-center gap-1 rounded-lg border border-gray-200 bg-white px-2 py-1 text-sm dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100"
   items={items}
   orientation="horizontal"
   onActiveChange={setActive}
@@ -76,6 +80,7 @@ export default function MegaMenuPage() {
         >
           <div className="flex flex-col items-center gap-3 w-full">
             <MegaMenu
+              className={megaCls}
               items={items}
               orientation="horizontal"
               onActiveChange={setActive}
@@ -97,6 +102,7 @@ export default function MegaMenuPage() {
         </p>
         <Demo
           code={`<MegaMenu
+  className="flex items-center gap-1 rounded-lg border border-gray-200 bg-white px-2 py-1 text-sm dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100"
   items={items}
   orientation="vertical"
   animationDuration={200}

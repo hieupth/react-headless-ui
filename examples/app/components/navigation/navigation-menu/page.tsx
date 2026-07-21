@@ -6,7 +6,12 @@ import { Demo } from '@/components/demo';
 import { PropsTable } from '@/components/props-table';
 
 // NavigationMenu renders a site nav with dropdown panels, backed by
-// useNavigationMenu. It emits class hooks but no CSS — theme it.
+// useNavigationMenu. It emits class hooks but no CSS — theme the bar via the
+// `className` prop.
+const navMenuCls =
+  'flex items-center gap-1 rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm ' +
+  'dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100';
+
 const items = [
   {
     id: 'products',
@@ -53,9 +58,8 @@ export default function NavigationMenuPage() {
           a mobile menu below a width.
         </p>
         <Demo
-          code={`const [active, setActive] = useState(null);
-
-<NavigationMenu
+          code={`<NavigationMenu
+  className="flex items-center gap-1 rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100"
   items={items}
   mobileBreakpoint={768}
   onItemActivate={(item) => setActive(item.id)}
@@ -63,6 +67,7 @@ export default function NavigationMenuPage() {
         >
           <div className="flex flex-col items-center gap-3 w-full">
             <NavigationMenu
+              className={navMenuCls}
               items={items}
               mobileBreakpoint={768}
               onItemActivate={(item) => setActive(item.id)}
@@ -84,6 +89,7 @@ export default function NavigationMenuPage() {
         </p>
         <Demo
           code={`<NavigationMenu
+  className="flex items-center gap-1 rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100"
   items={items}
   enableSearch
   autoCloseDropdowns

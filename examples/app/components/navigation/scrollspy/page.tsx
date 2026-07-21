@@ -6,8 +6,13 @@ import { Demo } from '@/components/demo';
 import { PropsTable } from '@/components/props-table';
 
 // Scrollspy tracks the active section while the page scrolls, backed by
-// useScrollspy (IntersectionObserver). It emits class hooks but no CSS — the
-// live preview needs a real scroll container, so it is shown as a snippet.
+// useScrollspy (IntersectionObserver). It emits class hooks but no CSS — theme
+// the nav list via the `className` prop. The live preview needs a real scroll
+// container, so it renders the styled list statically.
+const scrollspyCls =
+  'flex flex-col gap-1 rounded-lg border border-gray-200 bg-white p-2 text-sm ' +
+  'dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300';
+
 const sections = [
   { id: 'intro', label: 'Introduction' },
   { id: 'install', label: 'Installation' },
@@ -45,9 +50,8 @@ export default function ScrollspyPage() {
           <code>onActiveSectionChange</code>.
         </p>
         <Demo
-          code={`const [active, setActive] = useState('intro');
-
-<Scrollspy
+          code={`<Scrollspy
+  className="flex flex-col gap-1 rounded-lg border border-gray-200 bg-white p-2 text-sm dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300"
   sections={[
     { id: 'intro', label: 'Introduction' },
     { id: 'install', label: 'Installation' },
@@ -59,6 +63,7 @@ export default function ScrollspyPage() {
         >
           <div className="flex flex-col items-center gap-3 w-full">
             <Scrollspy
+              className={scrollspyCls}
               sections={sections}
               offset={80}
               onActiveSectionChange={setActive}
@@ -81,6 +86,7 @@ export default function ScrollspyPage() {
         </p>
         <Demo
           code={`<Scrollspy
+  className="flex flex-col gap-1 rounded-lg border border-gray-200 bg-white p-2 text-sm dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300"
   sections={sections}
   orientation="horizontal"
   position="top"

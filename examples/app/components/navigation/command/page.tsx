@@ -6,8 +6,12 @@ import { Demo } from '@/components/demo';
 import { PropsTable } from '@/components/props-table';
 
 // Command is a keyboard-driven command palette backed by useCommand. It
-// filters items, virtualizes past ~100 rows, and renders an input + list that
-// need CSS — show the data API as a snippet.
+// filters items, virtualizes past ~100 rows, and renders an input + list.
+// The `className` themes the palette container.
+const commandCls =
+  'w-full overflow-hidden rounded-lg border border-gray-200 bg-white text-sm ' +
+  'shadow-sm dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100';
+
 const items = [
   { id: 'new', label: 'New file', shortcut: ['⌘', 'N'] },
   { id: 'open', label: 'Open file', shortcut: ['⌘', 'O'] },
@@ -46,9 +50,8 @@ export default function CommandPage() {
           with <code>value</code> / <code>onValueChange</code>.
         </p>
         <Demo
-          code={`const [query, setQuery] = useState('');
-
-<Command
+          code={`<Command
+  className="w-full overflow-hidden rounded-lg border border-gray-200 bg-white text-sm shadow-sm dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100"
   items={[
     { id: 'new', label: 'New file', shortcut: ['⌘', 'N'] },
     { id: 'open', label: 'Open file', shortcut: ['⌘', 'O'] },
@@ -61,14 +64,15 @@ export default function CommandPage() {
         >
           <div className="w-full max-w-sm mx-auto">
             <Command
+              className={commandCls}
               items={items}
               value={query}
               onValueChange={setQuery}
               placeholder="Type a command…"
             />
             <p className="mt-3 text-xs text-gray-500">
-              The input + filtered list render structurally — theme the{' '}
-              <code>command-*</code> hooks for visuals.
+              The input + filtered list render — the <code>className</code>{' '}
+              themes the <code>command-*</code> hooks.
             </p>
           </div>
         </Demo>
@@ -85,6 +89,7 @@ export default function CommandPage() {
         </p>
         <Demo
           code={`<Command
+  className="w-full overflow-hidden rounded-lg border border-gray-200 bg-white text-sm shadow-sm dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100"
   groups={[
     { id: 'file', label: 'File', items: fileItems },
     { id: 'edit', label: 'Edit', items: editItems }

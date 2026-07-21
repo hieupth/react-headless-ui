@@ -6,8 +6,13 @@ import { Demo } from '@/components/demo';
 import { PropsTable } from '@/components/props-table';
 
 // Combobox is a searchable select backed by useCombobox. It filters options,
-// virtualizes past ~100, and renders an input + dropdown that need CSS — show
-// the data API as a snippet.
+// virtualizes past ~100, and renders an input + dropdown. The `className`
+// themes the root wrapper (input + dropdown are portal-rendered).
+const comboboxCls =
+  'w-full rounded-md border border-gray-300 bg-white text-sm ' +
+  'focus-within:ring-2 focus-within:ring-blue-500 focus-within:border-transparent ' +
+  'dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100';
+
 const options = [
   { id: 'react', label: 'React', value: 'react', description: 'UI library' },
   { id: 'vue', label: 'Vue', value: 'vue', description: 'Progressive framework' },
@@ -48,10 +53,8 @@ export default function ComboboxPage() {
           with <code>inputValue</code> / <code>onInputChange</code>.
         </p>
         <Demo
-          code={`const [value, setValue] = useState(null);
-const [input, setInput] = useState('');
-
-<Combobox
+          code={`<Combobox
+  className="w-full rounded-md border border-gray-300 bg-white text-sm focus-within:ring-2 focus-within:ring-blue-500 focus-within:border-transparent dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100"
   options={[
     { id: 'react', label: 'React', value: 'react' },
     { id: 'vue', label: 'Vue', value: 'vue' },
@@ -66,6 +69,7 @@ const [input, setInput] = useState('');
         >
           <div className="w-full max-w-sm mx-auto">
             <Combobox
+              className={comboboxCls}
               options={options}
               value={value}
               onValueChange={setValue}
@@ -74,7 +78,7 @@ const [input, setInput] = useState('');
               placeholder="Pick a framework…"
             />
             <p className="mt-3 text-xs text-gray-500">
-              {value ? `Selected: ${value}` : 'Input + filtered dropdown render structurally — theme the hooks.'}
+              {value ? `Selected: ${value}` : 'Input + filtered dropdown render — the className themes the root.'}
             </p>
           </div>
         </Demo>
@@ -90,6 +94,7 @@ const [input, setInput] = useState('');
         </p>
         <Demo
           code={`<Combobox
+  className="w-full rounded-md border border-gray-300 bg-white text-sm focus-within:ring-2 focus-within:ring-blue-500 focus-within:border-transparent dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100"
   groups={[
     { id: 'frontend', label: 'Frontend', options: frontendOpts },
     { id: 'backend', label: 'Backend', options: backendOpts }

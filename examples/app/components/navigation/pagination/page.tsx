@@ -6,7 +6,12 @@ import { Demo } from '@/components/demo';
 import { PropsTable } from '@/components/props-table';
 
 // Pagination renders real <button>s with ARIA labels and aria-current="page".
-// It is headless on styling — theme via Tailwind through the className hook.
+// It is headless on styling — theme the nav container via the `className` prop.
+const paginationCls =
+  'flex items-center gap-1 text-sm';
+const compactCls =
+  'flex items-center gap-2 text-sm';
+
 export default function PaginationPage() {
   const [page, setPage] = useState(3);
 
@@ -33,9 +38,8 @@ export default function PaginationPage() {
           page before ellipsis appears.
         </p>
         <Demo
-          code={`const [page, setPage] = useState(3);
-
-<Pagination
+          code={`<Pagination
+  className="flex items-center gap-1 text-sm"
   page={page}
   totalPages={10}
   siblingCount={1}
@@ -43,7 +47,7 @@ export default function PaginationPage() {
 />`}
         >
           <div className="flex flex-col items-center gap-3">
-            <Pagination page={page} totalPages={10} siblingCount={1} onPageChange={setPage} />
+            <Pagination className={paginationCls} page={page} totalPages={10} siblingCount={1} onPageChange={setPage} />
             <span className="text-xs text-gray-500">Current page: {page}</span>
           </div>
         </Demo>
@@ -58,11 +62,12 @@ export default function PaginationPage() {
         </p>
         <Demo
           code={`<CompactPagination
+  className="flex items-center gap-2 text-sm"
   defaultPage={1}
   totalPages={5}
 />`}
         >
-          <CompactPagination defaultPage={1} totalPages={5} />
+          <CompactPagination className={compactCls} defaultPage={1} totalPages={5} />
         </Demo>
       </section>
 

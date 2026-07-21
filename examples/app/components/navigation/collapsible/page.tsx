@@ -6,7 +6,12 @@ import { Demo } from '@/components/demo';
 import { PropsTable } from '@/components/props-table';
 
 // Collapsible emits class hooks (collapsible-trigger-icon) + an inline SVG
-// chevron and ARIA, but needs CSS for layout. Theme it via the hooks.
+// chevron and ARIA, but needs CSS for layout. Theme it via the `className`
+// prop, applied to the collapsible wrapper.
+const collapsibleCls =
+  'w-full rounded-lg border border-gray-200 bg-white px-4 py-3 text-sm ' +
+  'dark:border-gray-700 dark:bg-gray-900 dark:text-gray-200';
+
 export default function CollapsiblePage() {
   const [open, setOpen] = useState(false);
 
@@ -33,9 +38,8 @@ export default function CollapsiblePage() {
           height transition.
         </p>
         <Demo
-          code={`const [open, setOpen] = useState(false);
-
-<Collapsible
+          code={`<Collapsible
+  className="w-full rounded-lg border border-gray-200 bg-white px-4 py-3 text-sm dark:border-gray-700 dark:bg-gray-900 dark:text-gray-200"
   open={open}
   onOpenChange={setOpen}
   trigger="Show details"
@@ -46,6 +50,7 @@ export default function CollapsiblePage() {
         >
           <div className="w-full max-w-sm mx-auto">
             <Collapsible
+              className={collapsibleCls}
               open={open}
               onOpenChange={setOpen}
               trigger="Show details"
@@ -56,8 +61,8 @@ export default function CollapsiblePage() {
               </p>
             </Collapsible>
             <p className="mt-3 text-xs text-gray-500">
-              The trigger + content render structurally — theme the{' '}
-              <code>collapsible-*</code> hooks for visuals.
+              The trigger + content render — the <code>className</code> themes
+              the <code>collapsible-*</code> hooks.
             </p>
           </div>
         </Demo>
@@ -71,14 +76,21 @@ export default function CollapsiblePage() {
           non-interactive.
         </p>
         <Demo
-          code={`<Collapsible defaultOpen trigger="Expand me">
+          code={`<Collapsible
+  className="w-full rounded-lg border border-gray-200 bg-white px-4 py-3 text-sm dark:border-gray-700 dark:bg-gray-900 dark:text-gray-200"
+  defaultOpen
+  trigger="Expand me"
+>
   <p>Uncontrolled content.</p>
 </Collapsible>`}
         >
-          <p className="text-sm text-gray-500">
-            Uncontrolled mode uses internal state seeded by{' '}
-            <code>defaultOpen</code> — see the snippet.
-          </p>
+          <div className="w-full max-w-sm mx-auto">
+            <Collapsible className={collapsibleCls} defaultOpen trigger="Expand me">
+              <p className="text-sm text-gray-600 dark:text-gray-400">
+                Uncontrolled content.
+              </p>
+            </Collapsible>
+          </div>
         </Demo>
       </section>
 

@@ -7,8 +7,12 @@ import { PropsTable } from '@/components/props-table';
 
 // DropdownMenu (the dedicated renderer) anchors a positioned panel under a
 // trigger via the headless useDropdownMenu hook. It renders its own trigger
-// button and positions the floating list absolutely — so the live preview is
-// shown as a snippet; theme the rendered trigger + items in your app.
+// button and positions the floating list absolutely. The `className` themes
+// the floating panel; the auto-rendered trigger is styled via Tailwind.
+const dropdownCls =
+  'min-w-[12rem] rounded-md border border-gray-200 bg-white p-1 text-sm shadow-lg ' +
+  'dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100';
+
 const items = [
   { id: 'profile', label: 'Profile' },
   { id: 'settings', label: 'Settings', shortcut: '⌘,' },
@@ -44,9 +48,8 @@ export default function DropdownMenuPage() {
           <code>aria-haspopup="menu"</code>.
         </p>
         <Demo
-          code={`const [open, setOpen] = useState(false);
-
-<DropdownMenu
+          code={`<DropdownMenu
+  className="min-w-[12rem] rounded-md border border-gray-200 bg-white p-1 text-sm shadow-lg dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100"
   items={[
     { id: 'profile', label: 'Profile' },
     { id: 'settings', label: 'Settings', shortcut: '⌘,' },
@@ -59,14 +62,15 @@ export default function DropdownMenuPage() {
         >
           <div className="flex flex-col items-center gap-3">
             <DropdownMenu
+              className={dropdownCls}
               items={items}
               open={open}
               onOpenChange={setOpen}
               placement="bottom-start"
             />
             <span className="text-xs text-gray-500">
-              The trigger + floating panel render with minimal styling — apply
-              CSS to theme them.
+              The trigger + floating panel render — the <code>className</code>{' '}
+              themes the panel; theme the trigger button in your app.
             </span>
           </div>
         </Demo>
@@ -83,6 +87,7 @@ export default function DropdownMenuPage() {
         </p>
         <Demo
           code={`<DropdownMenu
+  className="min-w-[12rem] rounded-md border border-gray-200 bg-white p-1 text-sm shadow-lg dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100"
   items={[
     { id: 'asc', label: 'Ascending', checked: true },
     { id: 'desc', label: 'Descending' },
