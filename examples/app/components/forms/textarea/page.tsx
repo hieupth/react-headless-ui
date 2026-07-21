@@ -8,8 +8,8 @@ import { PropsTable } from '@/components/props-table';
 // char counting, and ARIA wiring, but ships no CSS. Theme the emitted
 // .textarea-* classes with Tailwind.
 const fieldBase =
-  'w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm text-gray-900 ' +
-  'shadow-sm placeholder:text-gray-400 transition-colors ' +
+  'w-full rounded-md border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-900 px-3 py-2 text-sm text-gray-900 dark:text-gray-100 ' +
+  'shadow-sm dark:shadow-none placeholder:text-gray-400 transition-colors ' +
   'focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 ' +
   'disabled:opacity-50 disabled:cursor-not-allowed';
 
@@ -36,6 +36,7 @@ export default function TextareaPage() {
   label="Bio"
   helperText="Tell us a little about yourself"
   placeholder="I'm a designer who…"
+  className="w-full rounded-md border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-900 px-3 py-2 text-sm text-gray-900 dark:text-gray-100 shadow-sm dark:shadow-none placeholder:text-gray-400 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 disabled:opacity-50 disabled:cursor-not-allowed"
 />`}
         >
           <div className="w-full max-w-sm">
@@ -61,6 +62,7 @@ export default function TextareaPage() {
   showCharCount
   maxLength={140}
   placeholder="Max 140 characters…"
+  className="w-full rounded-md border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-900 px-3 py-2 text-sm text-gray-900 dark:text-gray-100 shadow-sm dark:shadow-none placeholder:text-gray-400 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 disabled:opacity-50 disabled:cursor-not-allowed"
 />`}
         >
           <div className="w-full max-w-sm">
@@ -83,7 +85,7 @@ export default function TextareaPage() {
           <code>role="alert"</code> message.
         </p>
         <Demo
-          code={`<Textarea autoResize label="Notes" error="Notes cannot be empty" />`}
+          code={`<Textarea autoResize label="Notes" error="Notes cannot be empty" className="w-full rounded-md border border-red-500 bg-white dark:bg-gray-900 px-3 py-2 text-sm text-gray-900 dark:text-gray-100 shadow-sm dark:shadow-none placeholder:text-gray-400 transition-colors focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500 disabled:opacity-50 disabled:cursor-not-allowed" />`}
         >
           <div className="w-full max-w-sm">
             <Textarea

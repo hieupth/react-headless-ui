@@ -56,7 +56,7 @@ function TailwindSwitch({
         );
         if (!label) return track;
         return (
-          <label className={`inline-flex items-center gap-2 text-sm text-gray-700 ${labelPosition === 'left' ? 'flex-row-reverse' : ''}`}>
+          <label className={`inline-flex items-center gap-2 text-sm text-gray-700 dark:text-gray-200 ${labelPosition === 'left' ? 'flex-row-reverse' : ''}`}>
             {track}
             <span>{label}</span>
           </label>
@@ -90,9 +90,21 @@ export default function SwitchPage() {
           and disabled.
         </p>
         <Demo
-          code={`<Switch size="sm" defaultChecked />
-<Switch size="md" defaultChecked />
-<Switch size="lg" disabled />`}
+          code={`<Switch size="sm" defaultChecked render={(p) => (
+  <button ref={p.switchRef} type="button" className={\`relative inline-flex h-5 w-9 items-center rounded-full transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 \${p.checked ? 'bg-blue-600' : 'bg-gray-300'}\`} {...p.ariaProps}>
+    <span className={\`inline-block h-4 w-4 transform rounded-full bg-white shadow transition-transform \${p.checked ? 'translate-x-4' : 'translate-x-0.5'}\`} />
+  </button>
+)} />
+<Switch size="md" defaultChecked render={(p) => (
+  <button ref={p.switchRef} type="button" className={\`relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 \${p.checked ? 'bg-blue-600' : 'bg-gray-300'}\`} {...p.ariaProps}>
+    <span className={\`inline-block h-5 w-5 transform rounded-full bg-white shadow transition-transform \${p.checked ? 'translate-x-5' : 'translate-x-0.5'}\`} />
+  </button>
+)} />
+<Switch size="lg" disabled render={(p) => (
+  <button ref={p.switchRef} type="button" className={\`relative inline-flex h-7 w-14 items-center rounded-full transition-colors opacity-50 cursor-not-allowed focus:outline-none \${p.checked ? 'bg-blue-600' : 'bg-gray-300'}\`} {...p.ariaProps}>
+    <span className={\`inline-block h-6 w-6 transform rounded-full bg-white shadow transition-transform \${p.checked ? 'translate-x-7' : 'translate-x-1'}\`} />
+  </button>
+)} />`}
         >
           <div className="flex flex-wrap items-center justify-center gap-4">
             <TailwindSwitch size="sm" />
@@ -110,7 +122,14 @@ export default function SwitchPage() {
           <code> labelPosition</code> places it left or right.
         </p>
         <Demo
-          code={`<Switch label="Airplane mode" showLabel labelPosition="left" />`}
+          code={`<Switch label="Airplane mode" showLabel labelPosition="left" render={(p) => (
+  <label className="inline-flex flex-row-reverse items-center gap-2 text-sm text-gray-700 dark:text-gray-200">
+    <button ref={p.switchRef} type="button" className={\`relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 \${p.checked ? 'bg-blue-600' : 'bg-gray-300'}\`} {...p.ariaProps}>
+      <span className={\`inline-block h-5 w-5 transform rounded-full bg-white shadow transition-transform \${p.checked ? 'translate-x-5' : 'translate-x-0.5'}\`} />
+    </button>
+    <span>Airplane mode</span>
+  </label>
+)} />`}
         >
           <TailwindSwitch label="Airplane mode" labelPosition="left" />
         </Demo>
@@ -124,7 +143,11 @@ export default function SwitchPage() {
         </p>
         <Demo
           code={`const [on, setOn] = useState(false);
-<Switch checked={on} onCheckedChange={setOn} />`}
+<Switch checked={on} onCheckedChange={setOn} render={(p) => (
+  <button ref={p.switchRef} type="button" className={\`relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 \${p.checked ? 'bg-blue-600' : 'bg-gray-300'}\`} onClick={p.onClick} {...p.switchAttributes} {...p.ariaProps}>
+    <span className={\`inline-block h-5 w-5 transform rounded-full bg-white shadow transition-transform \${p.checked ? 'translate-x-5' : 'translate-x-0.5'}\`} />
+  </button>
+)} />`}
         >
           <div className="flex flex-col items-center gap-2">
             <Switch

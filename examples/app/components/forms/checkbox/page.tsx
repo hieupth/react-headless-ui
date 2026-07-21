@@ -12,12 +12,14 @@ import { PropsTable } from '@/components/props-table';
 const visualBase =
   '[&_.checkbox-visual]:h-5 [&_.checkbox-visual]:w-5 [&_.checkbox-visual]:rounded ' +
   '[&_.checkbox-visual]:border-2 [&_.checkbox-visual]:border-gray-300 ' +
-  '[&_.checkbox-visual]:bg-white [&_.checkbox-visual]:flex ' +
+  '[&_.checkbox-visual]:bg-white dark:[&_.checkbox-visual]:bg-gray-900 ' +
+  '[&_.checkbox-visual]:dark:border-gray-600 [&_.checkbox-visual]:flex ' +
   '[&_.checkbox-visual]:items-center [&_.checkbox-visual]:justify-center ' +
   '[&_.checkbox-visual]:text-white [&_.checkbox-visual]:transition-colors ' +
   '[&_.checkbox-checked]:border-blue-600 [&_.checkbox-checked]:bg-blue-600 ' +
   '[&_.checkbox-indeterminate]:border-blue-600 [&_.checkbox-indeterminate]:bg-blue-600 ' +
   '[&_.checkbox-label]:ml-2 [&_.checkbox-label]:text-sm [&_.checkbox-label]:text-gray-700 ' +
+  'dark:[&_.checkbox-label]:text-gray-200 ' +
   '[&_.checkbox-icon]:h-4 [&_.checkbox-icon]:w-4 ' +
   'inline-flex items-center cursor-pointer select-none';
 
@@ -43,7 +45,7 @@ export default function CheckboxPage() {
         <p className="text-sm text-gray-600 dark:text-gray-400">
           A labeled checkbox. Space toggles it; the label is also clickable.
         </p>
-        <Demo code={`<Checkbox defaultChecked>Accept terms</Checkbox>`}>
+        <Demo code={`<Checkbox defaultChecked className="[&_.checkbox-visual]:h-5 [&_.checkbox-visual]:w-5 [&_.checkbox-visual]:rounded [&_.checkbox-visual]:border-2 [&_.checkbox-visual]:border-gray-300 [&_.checkbox-visual]:bg-white dark:[&_.checkbox-visual]:bg-gray-900 [&_.checkbox-visual]:dark:border-gray-600 [&_.checkbox-visual]:flex [&_.checkbox-visual]:items-center [&_.checkbox-visual]:justify-center [&_.checkbox-visual]:text-white [&_.checkbox-visual]:transition-colors [&_.checkbox-checked]:border-blue-600 [&_.checkbox-checked]:bg-blue-600 [&_.checkbox-indeterminate]:border-blue-600 [&_.checkbox-indeterminate]:bg-blue-600 [&_.checkbox-label]:ml-2 [&_.checkbox-label]:text-sm [&_.checkbox-label]:text-gray-700 dark:[&_.checkbox-label]:text-gray-200 [&_.checkbox-icon]:h-4 [&_.checkbox-icon]:w-4 inline-flex items-center cursor-pointer select-none">Accept terms</Checkbox>`}>
           <Checkbox className={visualBase} defaultChecked>Accept terms</Checkbox>
         </Demo>
       </section>
@@ -56,9 +58,9 @@ export default function CheckboxPage() {
           <code>indeterminateIcon</code>.
         </p>
         <Demo
-          code={`<Checkbox>Unchecked</Checkbox>
-<Checkbox indeterminate>Indeterminate</Checkbox>
-<Checkbox checked disabled>Disabled</Checkbox>`}
+          code={`<Checkbox className="[&_.checkbox-visual]:h-5 [&_.checkbox-visual]:w-5 [&_.checkbox-visual]:rounded [&_.checkbox-visual]:border-2 [&_.checkbox-visual]:border-gray-300 [&_.checkbox-visual]:bg-white dark:[&_.checkbox-visual]:bg-gray-900 [&_.checkbox-visual]:dark:border-gray-600 [&_.checkbox-visual]:flex [&_.checkbox-visual]:items-center [&_.checkbox-visual]:justify-center [&_.checkbox-visual]:text-white [&_.checkbox-visual]:transition-colors [&_.checkbox-checked]:border-blue-600 [&_.checkbox-checked]:bg-blue-600 [&_.checkbox-indeterminate]:border-blue-600 [&_.checkbox-indeterminate]:bg-blue-600 [&_.checkbox-label]:ml-2 [&_.checkbox-label]:text-sm [&_.checkbox-label]:text-gray-700 dark:[&_.checkbox-label]:text-gray-200 [&_.checkbox-icon]:h-4 [&_.checkbox-icon]:w-4 inline-flex items-center cursor-pointer select-none">Unchecked</Checkbox>
+<Checkbox indeterminate className="[&_.checkbox-visual]:h-5 [&_.checkbox-visual]:w-5 [&_.checkbox-visual]:rounded [&_.checkbox-visual]:border-2 [&_.checkbox-visual]:border-gray-300 [&_.checkbox-visual]:bg-white dark:[&_.checkbox-visual]:bg-gray-900 [&_.checkbox-visual]:dark:border-gray-600 [&_.checkbox-visual]:flex [&_.checkbox-visual]:items-center [&_.checkbox-visual]:justify-center [&_.checkbox-visual]:text-white [&_.checkbox-visual]:transition-colors [&_.checkbox-checked]:border-blue-600 [&_.checkbox-checked]:bg-blue-600 [&_.checkbox-indeterminate]:border-blue-600 [&_.checkbox-indeterminate]:bg-blue-600 [&_.checkbox-label]:ml-2 [&_.checkbox-label]:text-sm [&_.checkbox-label]:text-gray-700 dark:[&_.checkbox-label]:text-gray-200 [&_.checkbox-icon]:h-4 [&_.checkbox-icon]:w-4 inline-flex items-center cursor-pointer select-none">Indeterminate</Checkbox>
+<Checkbox checked disabled className="[&_.checkbox-visual]:h-5 [&_.checkbox-visual]:w-5 [&_.checkbox-visual]:rounded [&_.checkbox-visual]:border-2 [&_.checkbox-visual]:border-gray-300 [&_.checkbox-visual]:bg-white dark:[&_.checkbox-visual]:bg-gray-900 [&_.checkbox-visual]:dark:border-gray-600 [&_.checkbox-visual]:flex [&_.checkbox-visual]:items-center [&_.checkbox-visual]:justify-center [&_.checkbox-visual]:text-white [&_.checkbox-visual]:transition-colors [&_.checkbox-checked]:border-blue-600 [&_.checkbox-checked]:bg-blue-600 [&_.checkbox-indeterminate]:border-blue-600 [&_.checkbox-indeterminate]:bg-blue-600 [&_.checkbox-label]:ml-2 [&_.checkbox-label]:text-sm [&_.checkbox-label]:text-gray-700 dark:[&_.checkbox-label]:text-gray-200 [&_.checkbox-icon]:h-4 [&_.checkbox-icon]:w-4 inline-flex items-center cursor-pointer select-none">Disabled</Checkbox>`}
         >
           <div className="flex flex-col items-start gap-3">
             <Checkbox className={visualBase}>Unchecked</Checkbox>
@@ -76,7 +78,7 @@ export default function CheckboxPage() {
         </p>
         <Demo
           code={`const [on, setOn] = useState(false);
-<Checkbox checked={on} onCheckedChange={setOn}>Email updates</Checkbox>`}
+<Checkbox checked={on} onCheckedChange={setOn} className="[&_.checkbox-visual]:h-5 [&_.checkbox-visual]:w-5 [&_.checkbox-visual]:rounded [&_.checkbox-visual]:border-2 [&_.checkbox-visual]:border-gray-300 [&_.checkbox-visual]:bg-white dark:[&_.checkbox-visual]:bg-gray-900 [&_.checkbox-visual]:dark:border-gray-600 [&_.checkbox-visual]:flex [&_.checkbox-visual]:items-center [&_.checkbox-visual]:justify-center [&_.checkbox-visual]:text-white [&_.checkbox-visual]:transition-colors [&_.checkbox-checked]:border-blue-600 [&_.checkbox-checked]:bg-blue-600 [&_.checkbox-indeterminate]:border-blue-600 [&_.checkbox-indeterminate]:bg-blue-600 [&_.checkbox-label]:ml-2 [&_.checkbox-label]:text-sm [&_.checkbox-label]:text-gray-700 dark:[&_.checkbox-label]:text-gray-200 [&_.checkbox-icon]:h-4 [&_.checkbox-icon]:w-4 inline-flex items-center cursor-pointer select-none">Email updates</Checkbox>`}
         >
           <Checkbox
             className={visualBase}

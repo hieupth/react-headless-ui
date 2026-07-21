@@ -10,14 +10,14 @@ import { PropsTable } from '@/components/props-table';
 // Theme the .strength-bar track and the embedded <input> with Tailwind via
 // descendant selectors.
 const meterBase =
-  '[&_.strength-bar]:h-2 [&_.strength-bar]:w-full [&_.strength-bar]:rounded-full [&_.strength-bar]:bg-gray-200 ' +
+  '[&_.strength-bar]:h-2 [&_.strength-bar]:w-full [&_.strength-bar]:rounded-full [&_.strength-bar]:bg-gray-200 dark:[&_.strength-bar]:bg-gray-700 ' +
   '[&_.strength-bar-fill]:rounded-full [&_.strength-bar-fill]:transition-all ' +
-  '[&_.strength-score]:text-xs [&_.strength-score]:font-medium ' +
-  '[&_.strength-text]:text-xs [&_.strength-text]:font-medium ' +
-  '[&_input]:mt-1 [&_input]:w-full [&_input]:rounded-md [&_input]:border [&_input]:border-gray-300 ' +
-  '[&_input]:bg-white [&_input]:px-3 [&_input]:py-2 [&_input]:text-sm [&_input]:text-gray-900 ' +
-  '[&_input]:shadow-sm [&_input]:focus:outline-none [&_input]:focus:ring-2 [&_input]:focus:ring-blue-500 ' +
-  '[&_li]:text-xs [&_li]:text-gray-600 [&_.criteria-met]:text-green-600';
+  '[&_.strength-score]:text-xs [&_.strength-score]:font-medium dark:[&_.strength-score]:text-gray-200 ' +
+  '[&_.strength-text]:text-xs [&_.strength-text]:font-medium dark:[&_.strength-text]:text-gray-200 ' +
+  '[&_input]:mt-1 [&_input]:w-full [&_input]:rounded-md [&_input]:border [&_input]:border-gray-300 dark:[&_input]:border-gray-600 ' +
+  '[&_input]:bg-white dark:[&_input]:bg-gray-900 [&_input]:px-3 [&_input]:py-2 [&_input]:text-sm [&_input]:text-gray-900 dark:[&_input]:text-gray-100 ' +
+  '[&_input]:shadow-sm dark:[&_input]:shadow-none [&_input]:focus:outline-none [&_input]:focus:ring-2 [&_input]:focus:ring-blue-500 [&_input]:focus:border-blue-500 ' +
+  '[&_li]:text-xs [&_li]:text-gray-600 dark:[&_li]:text-gray-400 [&_.criteria-met]:text-green-600';
 
 export default function PasswordMeterPage() {
   return (
@@ -40,7 +40,7 @@ export default function PasswordMeterPage() {
           The default meter: an input plus a colored strength bar, score, label,
           and criteria list. Type to analyze.
         </p>
-        <Demo code={`<PasswordMeter variant="bar" showScore showCriteria />`}>
+        <Demo code={`<PasswordMeter variant="bar" showScore showCriteria className="[&_.strength-bar]:h-2 [&_.strength-bar]:w-full [&_.strength-bar]:rounded-full [&_.strength-bar]:bg-gray-200 dark:[&_.strength-bar]:bg-gray-700 [&_.strength-bar-fill]:rounded-full [&_.strength-bar-fill]:transition-all [&_.strength-score]:text-xs [&_.strength-score]:font-medium dark:[&_.strength-score]:text-gray-200 [&_.strength-text]:text-xs [&_.strength-text]:font-medium dark:[&_.strength-text]:text-gray-200 [&_input]:mt-1 [&_input]:w-full [&_input]:rounded-md [&_input]:border [&_input]:border-gray-300 dark:[&_input]:border-gray-600 [&_input]:bg-white dark:[&_input]:bg-gray-900 [&_input]:px-3 [&_input]:py-2 [&_input]:text-sm [&_input]:text-gray-900 dark:[&_input]:text-gray-100 [&_input]:shadow-sm dark:[&_input]:shadow-none [&_input]:focus:outline-none [&_input]:focus:ring-2 [&_input]:focus:ring-blue-500 [&_input]:focus:border-blue-500 [&_li]:text-xs [&_li]:text-gray-600 dark:[&_li]:text-gray-400 [&_.criteria-met]:text-green-600" />`}>
           <div className="w-full max-w-sm">
             <PasswordMeter className={meterBase} variant="bar" showScore showCriteria />
           </div>
@@ -53,7 +53,7 @@ export default function PasswordMeterPage() {
           A circular SVG progress gauge. The center text shows the score
           percentage.
         </p>
-        <Demo code={`<PasswordMeter variant="circle" showScore />`}>
+        <Demo code={`<PasswordMeter variant="circle" showScore className="[&_.strength-bar]:h-2 [&_.strength-bar]:w-full [&_.strength-bar]:rounded-full [&_.strength-bar]:bg-gray-200 dark:[&_.strength-bar]:bg-gray-700 [&_.strength-bar-fill]:rounded-full [&_.strength-bar-fill]:transition-all [&_.strength-score]:text-xs [&_.strength-score]:font-medium dark:[&_.strength-score]:text-gray-200 [&_.strength-text]:text-xs [&_.strength-text]:font-medium dark:[&_.strength-text]:text-gray-200 [&_input]:mt-1 [&_input]:w-full [&_input]:rounded-md [&_input]:border [&_input]:border-gray-300 dark:[&_input]:border-gray-600 [&_input]:bg-white dark:[&_input]:bg-gray-900 [&_input]:px-3 [&_input]:py-2 [&_input]:text-sm [&_input]:text-gray-900 dark:[&_input]:text-gray-100 [&_input]:shadow-sm dark:[&_input]:shadow-none [&_input]:focus:outline-none [&_input]:focus:ring-2 [&_input]:focus:ring-blue-500 [&_input]:focus:border-blue-500 [&_li]:text-xs [&_li]:text-gray-600 dark:[&_li]:text-gray-400 [&_.criteria-met]:text-green-600" />`}>
           <div className="w-full max-w-sm">
             <PasswordMeter className={meterBase} variant="circle" showScore />
           </div>
@@ -73,6 +73,7 @@ export default function PasswordMeterPage() {
   showVisibilityToggle
   showSuggestions
   showWarnings
+  className="[&_.strength-bar]:h-2 [&_.strength-bar]:w-full [&_.strength-bar]:rounded-full [&_.strength-bar]:bg-gray-200 dark:[&_.strength-bar]:bg-gray-700 [&_.strength-bar-fill]:rounded-full [&_.strength-bar-fill]:transition-all [&_.strength-score]:text-xs [&_.strength-score]:font-medium dark:[&_.strength-score]:text-gray-200 [&_.strength-text]:text-xs [&_.strength-text]:font-medium dark:[&_.strength-text]:text-gray-200 [&_input]:mt-1 [&_input]:w-full [&_input]:rounded-md [&_input]:border [&_input]:border-gray-300 dark:[&_input]:border-gray-600 [&_input]:bg-white dark:[&_input]:bg-gray-900 [&_input]:px-3 [&_input]:py-2 [&_input]:text-sm [&_input]:text-gray-900 dark:[&_input]:text-gray-100 [&_input]:shadow-sm dark:[&_input]:shadow-none [&_input]:focus:outline-none [&_input]:focus:ring-2 [&_input]:focus:ring-blue-500 [&_input]:focus:border-blue-500 [&_li]:text-xs [&_li]:text-gray-600 dark:[&_li]:text-gray-400 [&_.criteria-met]:text-green-600"
 />`}
         >
           <div className="w-full max-w-sm">

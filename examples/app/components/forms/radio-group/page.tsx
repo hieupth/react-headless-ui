@@ -11,9 +11,9 @@ import { PropsTable } from '@/components/props-table';
 const groupBase =
   'flex gap-4 ' +
   '[&_.radio-option]:flex [&_.radio-option]:items-center [&_.radio-option]:gap-2 ' +
-  '[&_.radio-option]:cursor-pointer [&_.radio-option]:text-sm [&_.radio-option]:text-gray-700 ' +
+  '[&_.radio-option]:cursor-pointer [&_.radio-option]:text-sm [&_.radio-option]:text-gray-700 dark:[&_.radio-option]:text-gray-200 ' +
   '[&_.radio-button]:h-5 [&_.radio-button]:w-5 [&_.radio-button]:rounded-full ' +
-  '[&_.radio-button]:border-2 [&_.radio-button]:border-gray-300 [&_.radio-button]:bg-white ' +
+  '[&_.radio-button]:border-2 [&_.radio-button]:border-gray-300 dark:[&_.radio-button]:border-gray-600 [&_.radio-button]:bg-white dark:[&_.radio-button]:bg-gray-900 ' +
   '[&_.radio-button]:flex [&_.radio-button]:items-center [&_.radio-button]:justify-center ' +
   '[&_.radio-button]:transition-colors ' +
   '[&_.radio-button]:[&>div]:h-2.5 [&_.radio-button]:[&>div]:w-2.5 [&_.radio-button]:[&>div]:rounded-full ' +
@@ -50,6 +50,7 @@ export default function RadioGroupPage() {
           code={`<RadioGroup
   defaultValue="pro"
   orientation="horizontal"
+  className="flex gap-4 [&_.radio-option]:flex [&_.radio-option]:items-center [&_.radio-option]:gap-2 [&_.radio-option]:cursor-pointer [&_.radio-option]:text-sm [&_.radio-option]:text-gray-700 dark:[&_.radio-option]:text-gray-200 [&_.radio-button]:h-5 [&_.radio-button]:w-5 [&_.radio-button]:rounded-full [&_.radio-button]:border-2 [&_.radio-button]:border-gray-300 dark:[&_.radio-button]:border-gray-600 [&_.radio-button]:bg-white dark:[&_.radio-button]:bg-gray-900 [&_.radio-button]:flex [&_.radio-button]:items-center [&_.radio-button]:justify-center [&_.radio-button]:transition-colors [&_.radio-button]:[&>div]:h-2.5 [&_.radio-button]:[&>div]:w-2.5 [&_.radio-button]:[&>div]:rounded-full [&_.radio-button]:[&>div]:bg-blue-600"
   options={['free', 'pro', 'team']}
   optionLabels={{ free: 'Free', pro: 'Pro', team: 'Team' }}
 />`}
@@ -73,6 +74,7 @@ export default function RadioGroupPage() {
         <Demo
           code={`<RadioGroup
   orientation="vertical"
+  className="flex flex-col gap-3 [&_.radio-option]:flex [&_.radio-option]:items-center [&_.radio-option]:gap-2 [&_.radio-option]:cursor-pointer [&_.radio-option]:text-sm [&_.radio-option]:text-gray-700 dark:[&_.radio-option]:text-gray-200 [&_.radio-button]:h-5 [&_.radio-button]:w-5 [&_.radio-button]:rounded-full [&_.radio-button]:border-2 [&_.radio-button]:border-gray-300 dark:[&_.radio-button]:border-gray-600 [&_.radio-button]:bg-white dark:[&_.radio-button]:bg-gray-900 [&_.radio-button]:flex [&_.radio-button]:items-center [&_.radio-button]:justify-center [&_.radio-button]:transition-colors [&_.radio-button]:[&>div]:h-2.5 [&_.radio-button]:[&>div]:w-2.5 [&_.radio-button]:[&>div]:rounded-full [&_.radio-button]:[&>div]:bg-blue-600"
   options={['standard', 'express', 'overnight']}
   optionLabels={{ standard: 'Standard', express: 'Express', overnight: 'Overnight' }}
   optionDescriptions={{ standard: '3–5 days', express: '1–2 days', overnight: 'Next morning' }}
@@ -98,6 +100,7 @@ export default function RadioGroupPage() {
 <RadioGroup
   value={plan}
   onValueChange={setPlan}
+  className="flex gap-4 [&_.radio-option]:flex [&_.radio-option]:items-center [&_.radio-option]:gap-2 [&_.radio-option]:cursor-pointer [&_.radio-option]:text-sm [&_.radio-option]:text-gray-700 dark:[&_.radio-option]:text-gray-200 [&_.radio-button]:h-5 [&_.radio-button]:w-5 [&_.radio-button]:rounded-full [&_.radio-button]:border-2 [&_.radio-button]:border-gray-300 dark:[&_.radio-button]:border-gray-600 [&_.radio-button]:bg-white dark:[&_.radio-button]:bg-gray-900 [&_.radio-button]:flex [&_.radio-button]:items-center [&_.radio-button]:justify-center [&_.radio-button]:transition-colors [&_.radio-button]:[&>div]:h-2.5 [&_.radio-button]:[&>div]:w-2.5 [&_.radio-button]:[&>div]:rounded-full [&_.radio-button]:[&>div]:bg-blue-600"
   options={['free', 'pro']}
   optionLabels={{ free: 'Free', pro: 'Pro' }}
 />`}

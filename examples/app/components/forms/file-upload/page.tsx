@@ -12,13 +12,13 @@ const uploadBase =
   'w-full ' +
   '[&>div:first-of-type]:flex [&>div:first-of-type]:flex-col [&>div:first-of-type]:items-center ' +
   '[&>div:first-of-type]:justify-center [&>div:first-of-type]:gap-2 [&>div:first-of-type]:rounded-lg ' +
-  '[&>div:first-of-type]:border-2 [&>div:first-of-type]:border-dashed [&>div:first-of-type]:border-gray-300 ' +
-  '[&>div:first-of-type]:bg-gray-50 [&>div:first-of-type]:p-8 [&>div:first-of-type]:text-center ' +
+  '[&>div:first-of-type]:border-2 [&>div:first-of-type]:border-dashed [&>div:first-of-type]:border-gray-300 dark:[&>div:first-of-type]:border-gray-600 ' +
+  '[&>div:first-of-type]:bg-gray-50 dark:[&>div:first-of-type]:bg-gray-900 [&>div:first-of-type]:p-8 [&>div:first-of-type]:text-center ' +
   '[&>div:first-of-type]:transition-colors [&>div:first-of-type]:cursor-pointer ' +
-  '[&>div:first-of-type:hover]:border-blue-400 [&>div:first-of-type:hover]:bg-blue-50 ' +
-  '[&_svg]:h-8 [&_svg]:w-8 [&_svg]:text-gray-400 ' +
-  '[&_p]:text-sm [&_p]:text-gray-600 ' +
-  '[&_p:first-of-type]:font-medium [&_p:first-of-type]:text-gray-900';
+  '[&>div:first-of-type:hover]:border-blue-400 [&>div:first-of-type:hover]:bg-blue-50 dark:[&>div:first-of-type:hover]:bg-blue-950 ' +
+  '[&_svg]:h-8 [&_svg]:w-8 [&_svg]:text-gray-400 dark:[&_svg]:text-gray-500 ' +
+  '[&_p]:text-sm [&_p]:text-gray-600 dark:[&_p]:text-gray-400 ' +
+  '[&_p:first-of-type]:font-medium [&_p:first-of-type]:text-gray-900 dark:[&_p:first-of-type]:text-gray-100';
 
 export default function FileUploadPage() {
   return (
@@ -41,7 +41,7 @@ export default function FileUploadPage() {
           A single-file dropzone. Click or drag a file onto it.
         </p>
         <Demo
-          code={`<FileUpload uploadText="Upload a file" dragText="Drag and drop, or click to browse" />`}
+          code={`<FileUpload uploadText="Upload a file" dragText="Drag and drop, or click to browse" className="w-full [&>div:first-of-type]:flex [&>div:first-of-type]:flex-col [&>div:first-of-type]:items-center [&>div:first-of-type]:justify-center [&>div:first-of-type]:gap-2 [&>div:first-of-type]:rounded-lg [&>div:first-of-type]:border-2 [&>div:first-of-type]:border-dashed [&>div:first-of-type]:border-gray-300 dark:[&>div:first-of-type]:border-gray-600 [&>div:first-of-type]:bg-gray-50 dark:[&>div:first-of-type]:bg-gray-900 [&>div:first-of-type]:p-8 [&>div:first-of-type]:text-center [&>div:first-of-type]:transition-colors [&>div:first-of-type]:cursor-pointer [&>div:first-of-type:hover]:border-blue-400 [&>div:first-of-type:hover]:bg-blue-50 dark:[&>div:first-of-type:hover]:bg-blue-950 [&_svg]:h-8 [&_svg]:w-8 [&_svg]:text-gray-400 dark:[&_svg]:text-gray-500 [&_p]:text-sm [&_p]:text-gray-600 dark:[&_p]:text-gray-400 [&_p:first-of-type]:font-medium [&_p:first-of-type]:text-gray-900 dark:[&_p:first-of-type]:text-gray-100" />`}
         >
           <div className="w-full max-w-md">
             <FileUpload
@@ -67,6 +67,7 @@ export default function FileUploadPage() {
   accept="image/*"
   uploadText="Upload images"
   dragText="Up to 5 images, max 5MB each"
+  className="w-full [&>div:first-of-type]:flex [&>div:first-of-type]:flex-col [&>div:first-of-type]:items-center [&>div:first-of-type]:justify-center [&>div:first-of-type]:gap-2 [&>div:first-of-type]:rounded-lg [&>div:first-of-type]:border-2 [&>div:first-of-type]:border-dashed [&>div:first-of-type]:border-gray-300 dark:[&>div:first-of-type]:border-gray-600 [&>div:first-of-type]:bg-gray-50 dark:[&>div:first-of-type]:bg-gray-900 [&>div:first-of-type]:p-8 [&>div:first-of-type]:text-center [&>div:first-of-type]:transition-colors [&>div:first-of-type]:cursor-pointer [&>div:first-of-type:hover]:border-blue-400 [&>div:first-of-type:hover]:bg-blue-50 dark:[&>div:first-of-type:hover]:bg-blue-950 [&_svg]:h-8 [&_svg]:w-8 [&_svg]:text-gray-400 dark:[&_svg]:text-gray-500 [&_p]:text-sm [&_p]:text-gray-600 dark:[&_p]:text-gray-400 [&_p:first-of-type]:font-medium [&_p:first-of-type]:text-gray-900 dark:[&_p:first-of-type]:text-gray-100"
 />`}
         >
           <div className="w-full max-w-md">
@@ -90,8 +91,8 @@ export default function FileUploadPage() {
           <code>disabled</code> blocks interaction.
         </p>
         <Demo
-          code={`<FileUpload disabled uploadText="Uploads closed" />
-<FileUpload value={files} onChange={setFiles} />`}
+          code={`<FileUpload disabled uploadText="Uploads closed" className="w-full [&>div:first-of-type]:flex [&>div:first-of-type]:flex-col [&>div:first-of-type]:items-center [&>div:first-of-type]:justify-center [&>div:first-of-type]:gap-2 [&>div:first-of-type]:rounded-lg [&>div:first-of-type]:border-2 [&>div:first-of-type]:border-dashed [&>div:first-of-type]:border-gray-300 dark:[&>div:first-of-type]:border-gray-600 [&>div:first-of-type]:bg-gray-50 dark:[&>div:first-of-type]:bg-gray-900 [&>div:first-of-type]:p-8 [&>div:first-of-type]:text-center [&>div:first-of-type]:transition-colors [&>div:first-of-type]:cursor-pointer [&>div:first-of-type:hover]:border-blue-400 [&>div:first-of-type:hover]:bg-blue-50 dark:[&>div:first-of-type:hover]:bg-blue-950 [&_svg]:h-8 [&_svg]:w-8 [&_svg]:text-gray-400 dark:[&_svg]:text-gray-500 [&_p]:text-sm [&_p]:text-gray-600 dark:[&_p]:text-gray-400 [&_p:first-of-type]:font-medium [&_p:first-of-type]:text-gray-900 dark:[&_p:first-of-type]:text-gray-100" />
+<FileUpload value={files} onChange={setFiles} className="w-full [&>div:first-of-type]:flex [&>div:first-of-type]:flex-col [&>div:first-of-type]:items-center [&>div:first-of-type]:justify-center [&>div:first-of-type]:gap-2 [&>div:first-of-type]:rounded-lg [&>div:first-of-type]:border-2 [&>div:first-of-type]:border-dashed [&>div:first-of-type]:border-gray-300 dark:[&>div:first-of-type]:border-gray-600 [&>div:first-of-type]:bg-gray-50 dark:[&>div:first-of-type]:bg-gray-900 [&>div:first-of-type]:p-8 [&>div:first-of-type]:text-center [&>div:first-of-type]:transition-colors [&>div:first-of-type]:cursor-pointer [&>div:first-of-type:hover]:border-blue-400 [&>div:first-of-type:hover]:bg-blue-50 dark:[&>div:first-of-type:hover]:bg-blue-950 [&_svg]:h-8 [&_svg]:w-8 [&_svg]:text-gray-400 dark:[&_svg]:text-gray-500 [&_p]:text-sm [&_p]:text-gray-600 dark:[&_p]:text-gray-400 [&_p:first-of-type]:font-medium [&_p:first-of-type]:text-gray-900 dark:[&_p:first-of-type]:text-gray-100" />`}
         >
           <div className="w-full max-w-md">
             <FileUpload

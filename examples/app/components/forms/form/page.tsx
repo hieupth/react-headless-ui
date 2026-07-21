@@ -11,8 +11,9 @@ import { PropsTable } from '@/components/props-table';
 // own fields with Tailwind.
 const inputCls =
   'mt-1 w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm text-gray-900 shadow-sm ' +
-  'focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500';
-const labelCls = 'block text-sm font-medium text-gray-700';
+  'focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 ' +
+  'dark:border-gray-600 dark:bg-gray-900 dark:text-gray-100';
+const labelCls = 'block text-sm font-medium text-gray-700 dark:text-gray-200';
 const errCls = 'mt-1 text-xs text-red-600';
 
 function SignInForm() {
@@ -49,7 +50,7 @@ function SignInForm() {
             </div>
             <button
               type="submit"
-              className="w-full rounded-md bg-gray-900 px-4 py-2 text-sm font-medium text-white hover:bg-gray-700"
+              className="w-full rounded-md bg-gray-900 px-4 py-2 text-sm font-medium text-white hover:bg-gray-700 dark:bg-white dark:text-gray-900 dark:hover:bg-gray-200"
             >
               Sign in
             </button>
@@ -91,11 +92,35 @@ export default function FormPage() {
   {(rhf) => {
     const { register, formState: { errors } } = rhf;
     return (
-      <>
-        <input {...register('email', { required: true })} />
-        <input type="password" {...register('password', { minLength: 6 })} />
-        <button type="submit">Sign in</button>
-      </>
+      <div className="w-full max-w-sm space-y-3">
+        <div>
+          <label className="block text-sm font-medium text-gray-700 dark:text-gray-200" htmlFor="email">Email</label>
+          <input
+            id="email"
+            className="mt-1 w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm text-gray-900 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:border-gray-600 dark:bg-gray-900 dark:text-gray-100"
+            placeholder="you@example.com"
+            {...register('email', { required: 'Email is required' })}
+          />
+          {errors.email && <p className="mt-1 text-xs text-red-600">{errors.email.message}</p>}
+        </div>
+        <div>
+          <label className="block text-sm font-medium text-gray-700 dark:text-gray-200" htmlFor="password">Password</label>
+          <input
+            id="password"
+            type="password"
+            className="mt-1 w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm text-gray-900 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:border-gray-600 dark:bg-gray-900 dark:text-gray-100"
+            placeholder="••••••••"
+            {...register('password', { required: 'Password is required', minLength: { value: 6, message: 'Min 6 characters' } })}
+          />
+          {errors.password && <p className="mt-1 text-xs text-red-600">{errors.password.message}</p>}
+        </div>
+        <button
+          type="submit"
+          className="w-full rounded-md bg-gray-900 px-4 py-2 text-sm font-medium text-white hover:bg-gray-700 dark:bg-white dark:text-gray-900 dark:hover:bg-gray-200"
+        >
+          Sign in
+        </button>
+      </div>
     );
   }}
 </Form>`}
@@ -114,12 +139,18 @@ export default function FormPage() {
         <Demo
           code={`<Form onSubmit={async (data) => { await api.signIn(data); }}>
   {(_, state, actions) => (
-    <>
-      <input {...rhf.register('username')} />
-      <button disabled={state.isSubmitting}>
+    <div className="w-full max-w-sm space-y-3">
+      <input
+        className="w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:border-gray-600 dark:bg-gray-900 dark:text-gray-100"
+        {...rhf.register('username')}
+      />
+      <button
+        disabled={state.isSubmitting}
+        className="w-full rounded-md bg-gray-900 px-4 py-2 text-sm font-medium text-white hover:bg-gray-700 disabled:opacity-50 dark:bg-white dark:text-gray-900 dark:hover:bg-gray-200"
+      >
         {state.isSubmitting ? '…' : 'Submit'}
       </button>
-    </>
+    </div>
   )}
 </Form>`}
         >

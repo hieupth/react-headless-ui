@@ -25,14 +25,14 @@ function TailwindSelect({ options: opts = options, ...rest }: { options?: Select
         <button
           ref={p.triggerRef}
           type="button"
-          className={`inline-flex w-full items-center justify-between rounded-md border border-gray-300 bg-white px-3 py-2 text-sm shadow-sm ` +
+          className={`inline-flex w-full items-center justify-between rounded-md border border-gray-300 bg-white px-3 py-2 text-sm shadow-sm dark:border-gray-600 dark:bg-gray-900 dark:text-gray-100 dark:shadow-none ` +
             `focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 ` +
             `${p.className} ${p.className.includes('disabled') ? 'opacity-50' : ''}`}
           onClick={p.handleTriggerClick}
           onKeyDown={p.handleKeyDown}
           {...p.triggerAttributes}
         >
-          <span className={p.selectedOption ? 'text-gray-900' : 'text-gray-400'}>
+          <span className={p.selectedOption ? 'text-gray-900 dark:text-gray-100' : 'text-gray-400'}>
             {p.selectedOption ? p.selectedOption.label : 'Select an option'}
           </span>
           <svg
@@ -47,7 +47,7 @@ function TailwindSelect({ options: opts = options, ...rest }: { options?: Select
         if (!p.open) return null;
         return (
           <div
-            className="z-50 mt-1 w-full overflow-auto rounded-md border border-gray-200 bg-white py-1 shadow-lg"
+            className="z-50 mt-1 w-full overflow-auto rounded-md border border-gray-200 bg-white py-1 shadow-lg dark:border-gray-700 dark:bg-gray-900"
             style={{ minWidth: p.triggerRef.current?.offsetWidth || 200, maxHeight: 240 }}
           >
             <ul ref={p.listboxRef} {...p.listboxAttributes} onKeyDown={p.handleKeyDown}>
@@ -61,7 +61,7 @@ function TailwindSelect({ options: opts = options, ...rest }: { options?: Select
                     <li
                       key={option.key}
                       className={`flex cursor-pointer items-center justify-between px-3 py-2 text-sm ` +
-                        `${isHighlighted ? 'bg-blue-50 text-blue-700' : 'text-gray-700'} `}
+                        `${isHighlighted ? 'bg-blue-50 text-blue-700 dark:bg-blue-900/40 dark:text-blue-300' : 'text-gray-700 dark:text-gray-200'} `}
                       onClick={() => p.selectOption(option.value)}
                       onMouseEnter={() => p.highlightOption(index)}
                       {...p.getOptionAttributes(option, index)}
@@ -112,7 +112,25 @@ export default function SelectPage() {
           A controlled select. Click the trigger, then arrow-key or click an
           option.
         </p>
-        <Demo code={`<Select options={options} defaultValue="apple" />`}>
+        <Demo code={`<Select
+  options={options}
+  defaultValue="apple"
+  className="w-full max-w-xs"
+  renderTrigger={(p) => (
+    <button
+      ref={p.triggerRef}
+      type="button"
+      className="inline-flex w-full items-center justify-between rounded-md border border-gray-300 bg-white px-3 py-2 text-sm shadow-sm dark:border-gray-600 dark:bg-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
+      onClick={p.handleTriggerClick}
+      {...p.triggerAttributes}
+    >
+      {p.selectedOption ? p.selectedOption.label : 'Select an option'}
+      <svg className="h-4 w-4 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
+        <path fillRule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.17l3.71-3.94a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clipRule="evenodd" />
+      </svg>
+    </button>
+  )}
+/>`}>
           <TailwindSelect defaultValue="apple" />
         </Demo>
       </section>
@@ -123,7 +141,26 @@ export default function SelectPage() {
           Drive selection with <code>value</code> / <code>onValueChange</code>.
         </p>
         <Demo
-          code={`<Select value={fruit} onValueChange={setFruit} options={options} />`}
+          code={`<Select
+  value={fruit}
+  onValueChange={setFruit}
+  options={options}
+  className="w-full max-w-xs"
+  renderTrigger={(p) => (
+    <button
+      ref={p.triggerRef}
+      type="button"
+      className="inline-flex w-full items-center justify-between rounded-md border border-gray-300 bg-white px-3 py-2 text-sm shadow-sm dark:border-gray-600 dark:bg-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
+      onClick={p.handleTriggerClick}
+      {...p.triggerAttributes}
+    >
+      {p.selectedOption ? p.selectedOption.label : 'Select an option'}
+      <svg className="h-4 w-4 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
+        <path fillRule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.17l3.71-3.94a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clipRule="evenodd" />
+      </svg>
+    </button>
+  )}
+/>`}
         >
           <div className="flex flex-col items-center gap-2">
             <TailwindSelect value={fruit} onValueChange={(v: string) => setFruit(v)} />
@@ -138,7 +175,26 @@ export default function SelectPage() {
           <code>searchable</code> adds a filter input;{' '}
           <code>allowClear</code> adds a clear affordance.
         </p>
-        <Demo code={`<Select searchable allowClear options={options} />`}>
+        <Demo code={`<Select
+  searchable
+  allowClear
+  options={options}
+  className="w-full max-w-xs"
+  renderTrigger={(p) => (
+    <button
+      ref={p.triggerRef}
+      type="button"
+      className="inline-flex w-full items-center justify-between rounded-md border border-gray-300 bg-white px-3 py-2 text-sm shadow-sm dark:border-gray-600 dark:bg-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
+      onClick={p.handleTriggerClick}
+      {...p.triggerAttributes}
+    >
+      {p.selectedOption ? p.selectedOption.label : 'Select an option'}
+      <svg className="h-4 w-4 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
+        <path fillRule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.17l3.71-3.94a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clipRule="evenodd" />
+      </svg>
+    </button>
+  )}
+/>`}>
           <TailwindSelect searchable allowClear />
         </Demo>
       </section>

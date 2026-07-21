@@ -12,9 +12,9 @@ import { PropsTable } from '@/components/props-table';
 const otpBase =
   'flex items-center gap-2 ' +
   '[&_.otp-slot]:h-12 [&_.otp-slot]:w-10 [&_.otp-slot]:rounded-md ' +
-  '[&_.otp-slot]:border [&_.otp-slot]:border-gray-300 [&_.otp-slot]:bg-white ' +
+  '[&_.otp-slot]:border [&_.otp-slot]:border-gray-300 dark:[&_.otp-slot]:border-gray-600 [&_.otp-slot]:bg-white dark:[&_.otp-slot]:bg-gray-900 ' +
   '[&_.otp-slot]:text-center [&_.otp-slot]:text-xl [&_.otp-slot]:font-semibold ' +
-  '[&_.otp-slot]:text-gray-900 [&_.otp-slot]:transition-colors ' +
+  '[&_.otp-slot]:text-gray-900 dark:[&_.otp-slot]:text-gray-100 [&_.otp-slot]:transition-colors ' +
   '[&_.otp-slot]:focus:outline-none [&_.otp-slot]:focus:ring-2 [&_.otp-slot]:focus:ring-blue-500 [&_.otp-slot]:focus:border-blue-500 ' +
   '[&_.otp-slot]:disabled:opacity-50';
 
@@ -43,7 +43,7 @@ export default function InputOTPPage() {
           A 6-digit OTP. Typing auto-advances; Backspace on an empty slot jumps
           back.
         </p>
-        <Demo code={`<InputOTP length={6} />`}>
+        <Demo code={`<InputOTP length={6} className="flex items-center gap-2 [&_.otp-slot]:h-12 [&_.otp-slot]:w-10 [&_.otp-slot]:rounded-md [&_.otp-slot]:border [&_.otp-slot]:border-gray-300 dark:[&_.otp-slot]:border-gray-600 [&_.otp-slot]:bg-white dark:[&_.otp-slot]:bg-gray-900 [&_.otp-slot]:text-center [&_.otp-slot]:text-xl [&_.otp-slot]:font-semibold [&_.otp-slot]:text-gray-900 dark:[&_.otp-slot]:text-gray-100 [&_.otp-slot]:transition-colors [&_.otp-slot]:focus:outline-none [&_.otp-slot]:focus:ring-2 [&_.otp-slot]:focus:ring-blue-500 [&_.otp-slot]:focus:border-blue-500 [&_.otp-slot]:disabled:opacity-50" />`}>
           <InputOTP className={otpBase} length={6} />
         </Demo>
       </section>
@@ -61,6 +61,7 @@ export default function InputOTPPage() {
   length={4}
   inputType="password"
   onValueChange={(v) => setCode(v)}
+  className="flex items-center gap-2 [&_.otp-slot]:h-12 [&_.otp-slot]:w-10 [&_.otp-slot]:rounded-md [&_.otp-slot]:border [&_.otp-slot]:border-gray-300 dark:[&_.otp-slot]:border-gray-600 [&_.otp-slot]:bg-white dark:[&_.otp-slot]:bg-gray-900 [&_.otp-slot]:text-center [&_.otp-slot]:text-xl [&_.otp-slot]:font-semibold [&_.otp-slot]:text-gray-900 dark:[&_.otp-slot]:text-gray-100 [&_.otp-slot]:transition-colors [&_.otp-slot]:focus:outline-none [&_.otp-slot]:focus:ring-2 [&_.otp-slot]:focus:ring-blue-500 [&_.otp-slot]:focus:border-blue-500 [&_.otp-slot]:disabled:opacity-50"
 />`}
         >
           <div className="flex flex-col items-center gap-2">
@@ -85,7 +86,17 @@ export default function InputOTPPage() {
           code={`<InputOTP
   length={4}
   renderSlot={(slot, i) => (
-    <input ... aria-label={\`Digit \${i + 1}\`} />
+    <input
+      key={i}
+      type="text"
+      value={slot.value}
+      maxLength={1}
+      inputMode="numeric"
+      aria-label={\`Digit \${i + 1}\`}
+      className={\`h-12 w-10 rounded-md border text-center text-xl font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-900 dark:text-gray-100 \` +
+        \`\${slot.focused ? 'border-blue-500 ring-2 ring-blue-500' : 'border-gray-300 dark:border-gray-600'} \` +
+        \`\${slot.hasError ? 'border-red-500' : ''}\`}
+    />
   )}
 />`}
         >
@@ -99,8 +110,8 @@ export default function InputOTPPage() {
                 maxLength={1}
                 inputMode="numeric"
                 aria-label={`Digit ${i + 1}`}
-                className={`h-12 w-10 rounded-md border text-center text-xl font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 ` +
-                  `${slot.focused ? 'border-blue-500 ring-2 ring-blue-500' : 'border-gray-300'} ` +
+                className={`h-12 w-10 rounded-md border text-center text-xl font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-900 dark:text-gray-100 ` +
+                  `${slot.focused ? 'border-blue-500 ring-2 ring-blue-500' : 'border-gray-300 dark:border-gray-600'} ` +
                   `${slot.hasError ? 'border-red-500' : ''}`}
               />
             )}
