@@ -35,6 +35,8 @@ export default function EmptyStatePage() {
   icon={<span>📭</span>}
   title="No documents"
   description="Upload a file to get started."
+  variant="no-data"
+  className="flex w-80 flex-col items-center justify-center gap-2 rounded-lg border border-dashed border-gray-300 p-8 text-center dark:border-gray-600"
 />`}
         >
           <EmptyState
@@ -42,7 +44,7 @@ export default function EmptyStatePage() {
             title="No documents"
             description="Upload a file to get started."
             variant="no-data"
-            className="w-80 py-8 flex flex-col items-center gap-2 text-center border border-dashed border-gray-300 dark:border-gray-600 rounded-lg"
+            className="flex w-80 flex-col items-center justify-center gap-2 rounded-lg border border-dashed border-gray-300 p-8 text-center dark:border-gray-600"
           />
         </Demo>
       </section>
@@ -61,6 +63,7 @@ export default function EmptyStatePage() {
   variant="no-results"
   primaryActionText="Clear filters"
   onPrimaryAction={() => alert('cleared')}
+  className="flex w-80 flex-col items-center justify-center gap-3 rounded-lg border border-dashed border-gray-300 p-8 text-center dark:border-gray-600"
 />`}
         >
           <EmptyState
@@ -70,7 +73,7 @@ export default function EmptyStatePage() {
             variant="no-results"
             primaryActionText="Clear filters"
             onPrimaryAction={() => alert('cleared')}
-            className="w-80 py-8 flex flex-col items-center gap-3 text-center border border-dashed border-gray-300 dark:border-gray-600 rounded-lg"
+            className="flex w-80 flex-col items-center justify-center gap-3 rounded-lg border border-dashed border-gray-300 p-8 text-center dark:border-gray-600"
           />
         </Demo>
       </section>
@@ -88,6 +91,7 @@ export default function EmptyStatePage() {
   description="We couldn't load your data."
   dismissible
   onDismiss={() => alert('dismissed')}
+  className="flex w-80 flex-col items-center justify-center gap-2 rounded-lg border border-red-300 p-8 text-center dark:border-red-800"
 />`}
         >
           <EmptyState
@@ -96,7 +100,7 @@ export default function EmptyStatePage() {
             description="We couldn't load your data."
             dismissible
             onDismiss={() => alert('dismissed')}
-            className="w-80 py-8 flex flex-col items-center gap-2 text-center border border-red-300 dark:border-red-800 rounded-lg"
+            className="flex w-80 flex-col items-center justify-center gap-2 rounded-lg border border-red-300 p-8 text-center dark:border-red-800"
           />
         </Demo>
       </section>

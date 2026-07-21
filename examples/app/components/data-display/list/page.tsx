@@ -48,6 +48,7 @@ export default function ListPage() {
   multiSelect
   selectedKeys={selected}
   onSelectionChange={setSelected}
+  className="w-72 cursor-pointer divide-y divide-gray-100 rounded-lg border border-gray-200 dark:divide-gray-800 dark:border-gray-700 [&_[role=option]]:px-3 [&_[role=option]]:py-2"
 />`}
         >
           <List
@@ -55,7 +56,7 @@ export default function ListPage() {
             multiSelect
             selectedKeys={selected}
             onSelectionChange={setSelected}
-            className="w-72 border border-gray-200 dark:border-gray-700 rounded divide-y divide-gray-100 dark:divide-gray-800 [&_[role=option]]:px-3 [&_[role=option]]:py-2 cursor-pointer"
+            className="w-72 cursor-pointer divide-y divide-gray-100 rounded-lg border border-gray-200 dark:divide-gray-800 dark:border-gray-700 [&_[role=option]]:px-3 [&_[role=option]]:py-2"
           />
         </Demo>
       </section>
@@ -67,13 +68,13 @@ export default function ListPage() {
           <code>searchFields</code> to constrain which fields are matched.
         </p>
         <Demo
-          code={`<List items={people} searchable searchFields={['label']} />`}
+          code={`<List items={people} searchable searchFields={['label']} className="w-72 divide-y divide-gray-100 rounded-lg border border-gray-200 dark:divide-gray-800 dark:border-gray-700 [&_[role=option]]:px-3 [&_[role=option]]:py-2" />`}
         >
           <List
             items={people}
             searchable
             searchFields={['label']}
-            className="w-72 border border-gray-200 dark:border-gray-700 rounded divide-y divide-gray-100 dark:divide-gray-800 [&_[role=option]]:px-3 [&_[role=option]]:py-2"
+            className="w-72 divide-y divide-gray-100 rounded-lg border border-gray-200 dark:divide-gray-800 dark:border-gray-700 [&_[role=option]]:px-3 [&_[role=option]]:py-2"
           />
         </Demo>
       </section>

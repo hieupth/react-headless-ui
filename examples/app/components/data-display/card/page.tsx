@@ -35,6 +35,7 @@ export default function CardPage() {
   subtitle="Q2 2026"
   description="Revenue is up 12% versus last quarter."
   footer="Updated 2 hours ago"
+  className="w-72 rounded-lg border border-gray-200 bg-white p-4 shadow-sm dark:border-gray-700 dark:bg-gray-900"
 />`}
         >
           <Card
@@ -42,7 +43,7 @@ export default function CardPage() {
             subtitle="Q2 2026"
             description="Revenue is up 12% versus last quarter."
             footer="Updated 2 hours ago"
-            className="w-72 p-4 border border-gray-200 dark:border-gray-700 rounded-lg shadow-sm"
+            className="w-72 rounded-lg border border-gray-200 bg-white p-4 shadow-sm dark:border-gray-700 dark:bg-gray-900"
           />
         </Demo>
       </section>
@@ -56,12 +57,12 @@ export default function CardPage() {
           the component ships no CSS.
         </p>
         <Demo
-          code={`<Card variant="outlined" title="Outlined" description="Border-only." />
-<Card variant="filled" title="Filled" description="Solid surface." />`}
+          code={`<Card variant="outlined" title="Outlined" description="Border-only." className="w-44 rounded-lg border border-gray-300 bg-white p-4 dark:border-gray-600 dark:bg-gray-900" />
+<Card variant="filled" title="Filled" description="Solid surface." className="w-44 rounded-lg bg-gray-100 p-4 dark:bg-gray-800" />`}
         >
           <div className="flex gap-4">
-            <Card variant="outlined" title="Outlined" description="Border-only." className="w-44 p-4 border border-gray-300 dark:border-gray-600 rounded-lg" />
-            <Card variant="filled" title="Filled" description="Solid surface." className="w-44 p-4 bg-gray-100 dark:bg-gray-800 rounded-lg" />
+            <Card variant="outlined" title="Outlined" description="Border-only." className="w-44 rounded-lg border border-gray-300 bg-white p-4 dark:border-gray-600 dark:bg-gray-900" />
+            <Card variant="filled" title="Filled" description="Solid surface." className="w-44 rounded-lg bg-gray-100 p-4 dark:bg-gray-800" />
           </div>
         </Demo>
       </section>
@@ -79,15 +80,16 @@ export default function CardPage() {
   description="Entire card is a button."
   actions={<button>Star</button>}
   onClick={() => alert('Card clicked')}
+  className="w-72 cursor-pointer rounded-lg border border-gray-200 bg-white p-4 shadow-sm transition-colors hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-900 dark:hover:bg-gray-800"
 />`}
         >
           <Card
             interactive
             title="Click me"
             description="Entire card is a button."
-            actions={<span className="text-xs px-2 py-1 border border-gray-300 dark:border-gray-600 rounded">Star</span>}
+            actions={<span className="rounded border border-gray-300 px-2 py-1 text-xs dark:border-gray-600">Star</span>}
             onClick={() => alert('Card clicked')}
-            className="w-72 p-4 border border-gray-200 dark:border-gray-700 rounded-lg cursor-pointer"
+            className="w-72 cursor-pointer rounded-lg border border-gray-200 bg-white p-4 shadow-sm transition-colors hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-900 dark:hover:bg-gray-800"
           />
         </Demo>
       </section>

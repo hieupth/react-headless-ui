@@ -32,14 +32,14 @@ export default function ChipPage() {
           sets the semantic hue.
         </p>
         <Demo
-          code={`<Chip variant="solid" color="primary">Primary</Chip>
-<Chip variant="outline" color="success">Success</Chip>
-<Chip variant="soft" color="error">Error</Chip>`}
+          code={`<Chip variant="solid" color="primary" className="inline-flex items-center rounded-full bg-indigo-600 px-2 py-1 text-xs font-medium text-white">Primary</Chip>
+<Chip variant="outline" color="success" className="inline-flex items-center rounded-full border border-emerald-500 px-2 py-1 text-xs font-medium text-emerald-600 dark:text-emerald-400">Success</Chip>
+<Chip variant="soft" color="error" className="inline-flex items-center rounded-full bg-red-100 px-2 py-1 text-xs font-medium text-red-700 dark:bg-red-900/40 dark:text-red-300">Error</Chip>`}
         >
           <div className="flex flex-wrap items-center gap-2">
-            <Chip variant="solid" color="primary" className="px-2 py-1 text-xs rounded-full bg-indigo-600 text-white">Primary</Chip>
-            <Chip variant="outline" color="success" className="px-2 py-1 text-xs rounded-full border border-emerald-500 text-emerald-600 dark:text-emerald-400">Success</Chip>
-            <Chip variant="soft" color="error" className="px-2 py-1 text-xs rounded-full bg-red-100 text-red-700 dark:bg-red-900/40 dark:text-red-300">Error</Chip>
+            <Chip variant="solid" color="primary" className="inline-flex items-center rounded-full bg-indigo-600 px-2 py-1 text-xs font-medium text-white">Primary</Chip>
+            <Chip variant="outline" color="success" className="inline-flex items-center rounded-full border border-emerald-500 px-2 py-1 text-xs font-medium text-emerald-600 dark:text-emerald-400">Success</Chip>
+            <Chip variant="soft" color="error" className="inline-flex items-center rounded-full bg-red-100 px-2 py-1 text-xs font-medium text-red-700 dark:bg-red-900/40 dark:text-red-300">Error</Chip>
           </div>
         </Demo>
       </section>
@@ -57,6 +57,7 @@ export default function ChipPage() {
   selectable
   selected={selected}
   onSelectionChange={setSelected}
+  className={\`inline-flex items-center rounded-full border px-3 py-1 text-sm font-medium cursor-pointer \${selected ? 'border-indigo-600 bg-indigo-600 text-white' : 'border-gray-300 dark:border-gray-600'}\`}
 >
   {selected ? 'Selected' : 'Click to select'}
 </Chip>`}
@@ -66,7 +67,7 @@ export default function ChipPage() {
               selectable
               selected={selected}
               onSelectionChange={setSelected}
-              className={`px-3 py-1 text-sm rounded-full border cursor-pointer ${selected ? 'bg-indigo-600 text-white border-indigo-600' : 'border-gray-300 dark:border-gray-600'}`}
+              className={`inline-flex items-center rounded-full border px-3 py-1 text-sm font-medium cursor-pointer ${selected ? 'border-indigo-600 bg-indigo-600 text-white' : 'border-gray-300 dark:border-gray-600'}`}
             >
               {selected ? 'Selected' : 'Click to select'}
             </Chip>
@@ -82,11 +83,11 @@ export default function ChipPage() {
           <code>onDelete</code> to remove them.
         </p>
         <Demo
-          code={`<Chip deletable onDelete={() => alert('deleted')}>
+          code={`<Chip deletable onDelete={() => alert('deleted')} className="inline-flex items-center gap-1 rounded-full bg-gray-100 px-2 py-1 text-xs font-medium dark:bg-gray-800">
   React
 </Chip>`}
         >
-          <Chip deletable onDelete={() => alert('deleted')} className="px-2 py-1 text-xs rounded-full bg-gray-100 dark:bg-gray-800 flex items-center gap-1">
+          <Chip deletable onDelete={() => alert('deleted')} className="inline-flex items-center gap-1 rounded-full bg-gray-100 px-2 py-1 text-xs font-medium dark:bg-gray-800">
             React
           </Chip>
         </Demo>

@@ -34,14 +34,18 @@ export default function PanelPage() {
           sections; children fill the body.
         </p>
         <Demo
-          code={`<Panel title="Storage" footer="12 GB of 64 GB used">
+          code={`<Panel
+  title="Storage"
+  footer="12 GB of 64 GB used"
+  className="w-80 rounded-lg border border-gray-200 p-4 dark:border-gray-700"
+>
   <p>Your documents and media.</p>
 </Panel>`}
         >
           <Panel
             title="Storage"
             footer="12 GB of 64 GB used"
-            className="w-80 border border-gray-200 dark:border-gray-700 rounded-lg [&_>div]:p-4"
+            className="w-80 rounded-lg border border-gray-200 p-4 dark:border-gray-700"
           >
             <p className="text-sm">Your documents and media.</p>
           </Panel>
@@ -62,6 +66,7 @@ export default function PanelPage() {
   collapsible
   expanded={expanded}
   onToggle={setExpanded}
+  className="w-80 cursor-pointer rounded-lg border border-gray-200 p-4 dark:border-gray-700"
 >
   <p>Expandable content.</p>
 </Panel>`}
@@ -71,7 +76,7 @@ export default function PanelPage() {
             collapsible
             expanded={expanded}
             onToggle={setExpanded}
-            className="w-80 border border-gray-200 dark:border-gray-700 rounded-lg [&_>div]:p-4 cursor-pointer"
+            className="w-80 cursor-pointer rounded-lg border border-gray-200 p-4 dark:border-gray-700"
           >
             <p className="text-sm">Expandable content.</p>
           </Panel>
@@ -87,14 +92,15 @@ export default function PanelPage() {
           code={`<Panel
   title="Notifications"
   actions={<button>Settings</button>}
+  className="w-80 rounded-lg border border-gray-200 p-4 dark:border-gray-700"
 >
   <p>You have 3 unread.</p>
 </Panel>`}
         >
           <Panel
             title="Notifications"
-            actions={<span className="text-xs px-2 py-1 border border-gray-300 dark:border-gray-600 rounded">Settings</span>}
-            className="w-80 border border-gray-200 dark:border-gray-700 rounded-lg [&_>div]:p-4"
+            actions={<span className="rounded border border-gray-300 px-2 py-1 text-xs dark:border-gray-600">Settings</span>}
+            className="w-80 rounded-lg border border-gray-200 p-4 dark:border-gray-700"
           >
             <p className="text-sm">You have 3 unread.</p>
           </Panel>

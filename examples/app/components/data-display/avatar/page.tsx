@@ -29,8 +29,16 @@ export default function AvatarPage() {
           <code>fallback</code> are shown instead.
         </p>
         <Demo
-          code={`<Avatar src="/avatars/ada.png" fallback="Ada Lovelace" />
-<Avatar src="/broken.png" fallback="Grace Hopper" />`}
+          code={`<Avatar
+  src="/avatars/ada.png"
+  fallback="Ada Lovelace"
+  className="h-12 w-12 rounded-full bg-gray-200 overflow-hidden dark:bg-gray-700 flex items-center justify-center text-sm font-semibold"
+/>
+<Avatar
+  src="/broken.png"
+  fallback="Grace Hopper"
+  className="h-12 w-12 rounded-full bg-gray-200 overflow-hidden dark:bg-gray-700 flex items-center justify-center text-sm font-semibold"
+/>`}
         >
           <div className="flex items-center gap-3">
             <Avatar src="https://i.pravatar.cc/96?img=12" fallback="Ada Lovelace" className="w-12 h-12 rounded-full overflow-hidden bg-gray-200 dark:bg-gray-700 flex items-center justify-center text-sm font-semibold" />
@@ -46,16 +54,16 @@ export default function AvatarPage() {
           here Tailwind supplies the actual dimensions.
         </p>
         <Demo
-          code={`<Avatar size="sm" fallback="SM" />
-<Avatar size="md" fallback="MD" />
-<Avatar size="lg" fallback="LG" />
-<Avatar size="xl" fallback="XL" />`}
+          code={`<Avatar size="sm" fallback="SM" className="h-8 w-8 rounded-full bg-gray-200 dark:bg-gray-700 flex items-center justify-center text-xs font-semibold" />
+<Avatar size="md" fallback="MD" className="h-10 w-10 rounded-full bg-gray-200 dark:bg-gray-700 flex items-center justify-center text-sm font-semibold" />
+<Avatar size="lg" fallback="LG" className="h-12 w-12 rounded-full bg-gray-200 dark:bg-gray-700 flex items-center justify-center text-base font-semibold" />
+<Avatar size="xl" fallback="XL" className="h-16 w-16 rounded-full bg-gray-200 dark:bg-gray-700 flex items-center justify-center text-lg font-semibold" />`}
         >
           <div className="flex items-end gap-3">
-            <Avatar size="sm" fallback="SM" className="w-8 h-8 rounded-full bg-indigo-500 text-white flex items-center justify-center text-xs" />
-            <Avatar size="md" fallback="MD" className="w-10 h-10 rounded-full bg-indigo-500 text-white flex items-center justify-center text-sm" />
-            <Avatar size="lg" fallback="LG" className="w-12 h-12 rounded-full bg-indigo-500 text-white flex items-center justify-center text-base" />
-            <Avatar size="xl" fallback="XL" className="w-16 h-16 rounded-full bg-indigo-500 text-white flex items-center justify-center text-lg" />
+            <Avatar size="sm" fallback="SM" className="h-8 w-8 rounded-full bg-gray-200 dark:bg-gray-700 flex items-center justify-center text-xs font-semibold" />
+            <Avatar size="md" fallback="MD" className="h-10 w-10 rounded-full bg-gray-200 dark:bg-gray-700 flex items-center justify-center text-sm font-semibold" />
+            <Avatar size="lg" fallback="LG" className="h-12 w-12 rounded-full bg-gray-200 dark:bg-gray-700 flex items-center justify-center text-base font-semibold" />
+            <Avatar size="xl" fallback="XL" className="h-16 w-16 rounded-full bg-gray-200 dark:bg-gray-700 flex items-center justify-center text-lg font-semibold" />
           </div>
         </Demo>
       </section>
@@ -70,12 +78,13 @@ export default function AvatarPage() {
           code={`<Avatar
   fallback="Click me"
   onClick={() => alert('Avatar clicked')}
+  className="h-14 w-14 rounded-full bg-gray-200 dark:bg-gray-700 flex items-center justify-center text-sm font-semibold cursor-pointer"
 />`}
         >
           <Avatar
             fallback="Click me"
             onClick={() => alert('Avatar clicked')}
-            className="w-14 h-14 rounded-full bg-emerald-500 text-white flex items-center justify-center text-sm cursor-pointer"
+            className="h-14 w-14 rounded-full bg-gray-200 dark:bg-gray-700 flex items-center justify-center text-sm font-semibold cursor-pointer"
           />
         </Demo>
       </section>

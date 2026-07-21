@@ -40,6 +40,7 @@ export default function CalendarPage() {
   mode="single"
   value={value}
   onSelect={setValue}
+  className="rounded-lg border border-gray-200 p-4 text-sm dark:border-gray-700 [&_.calendar-day]:h-8 [&_.calendar-day]:w-8 [&_.calendar-day]:flex [&_.calendar-day]:items-center [&_.calendar-day]:justify-center [&_.calendar-day]:rounded [&_.calendar-grid]:grid [&_.calendar-grid]:grid-cols-7 [&_.calendar-grid]:gap-1 [&_.calendar-weekday]:text-xs [&_.calendar-weekday]:text-gray-500"
 />`}
         >
           <div className="flex flex-col items-center gap-2">
@@ -47,7 +48,7 @@ export default function CalendarPage() {
               mode="single"
               value={value}
               onSelect={(v) => setValue(v as Date)}
-              className="text-sm [&_.calendar-day]:w-8 [&_.calendar-day]:h-8 [&_.calendar-day]:flex [&_.calendar-day]:items-center [&_.calendar-day]:justify-center [&_.calendar-day]:rounded [&_.calendar-grid]:grid [&_.calendar-grid]:grid-cols-7 [&_.calendar-grid]:gap-1 [&_.calendar-weekday]:text-xs [&_.calendar-weekday]:text-gray-500"
+              className="rounded-lg border border-gray-200 p-4 text-sm dark:border-gray-700 [&_.calendar-day]:h-8 [&_.calendar-day]:w-8 [&_.calendar-day]:flex [&_.calendar-day]:items-center [&_.calendar-day]:justify-center [&_.calendar-day]:rounded [&_.calendar-grid]:grid [&_.calendar-grid]:grid-cols-7 [&_.calendar-grid]:gap-1 [&_.calendar-weekday]:text-xs [&_.calendar-weekday]:text-gray-500"
             />
             <span className="text-xs text-gray-500">{value?.toDateString()}</span>
           </div>
@@ -64,12 +65,13 @@ export default function CalendarPage() {
           code={`<Calendar
   mode="range"
   defaultValue={{ from: new Date(2026, 6, 5), to: new Date(2026, 6, 12) }}
+  className="rounded-lg border border-gray-200 p-4 text-sm dark:border-gray-700 [&_.calendar-day]:h-8 [&_.calendar-day]:w-8 [&_.calendar-day]:flex [&_.calendar-day]:items-center [&_.calendar-day]:justify-center [&_.calendar-day]:rounded [&_.calendar-grid]:grid [&_.calendar-grid]:grid-cols-7 [&_.calendar-grid]:gap-1 [&_.calendar-weekday]:text-xs [&_.calendar-weekday]:text-gray-500"
 />`}
         >
           <Calendar
             mode="range"
             defaultValue={{ from: new Date(2026, 6, 5), to: new Date(2026, 6, 12) }}
-            className="text-sm [&_.calendar-day]:w-8 [&_.calendar-day]:h-8 [&_.calendar-day]:flex [&_.calendar-day]:items-center [&_.calendar-day]:justify-center [&_.calendar-day]:rounded [&_.calendar-grid]:grid [&_.calendar-grid]:grid-cols-7 [&_.calendar-grid]:gap-1 [&_.calendar-weekday]:text-xs [&_.calendar-weekday]:text-gray-500"
+            className="rounded-lg border border-gray-200 p-4 text-sm dark:border-gray-700 [&_.calendar-day]:h-8 [&_.calendar-day]:w-8 [&_.calendar-day]:flex [&_.calendar-day]:items-center [&_.calendar-day]:justify-center [&_.calendar-day]:rounded [&_.calendar-grid]:grid [&_.calendar-grid]:grid-cols-7 [&_.calendar-grid]:gap-1 [&_.calendar-weekday]:text-xs [&_.calendar-weekday]:text-gray-500"
           />
         </Demo>
       </section>
@@ -86,6 +88,7 @@ export default function CalendarPage() {
   weekStartsOn={1}
   fromDate={new Date(2026, 6, 1)}
   toDate={new Date(2026, 6, 20)}
+  className="rounded-lg border border-gray-200 p-4 text-sm dark:border-gray-700 [&_.calendar-day]:h-8 [&_.calendar-day]:w-8 [&_.calendar-day]:flex [&_.calendar-day]:items-center [&_.calendar-day]:justify-center [&_.calendar-day]:rounded [&_.calendar-grid]:grid [&_.calendar-grid]:grid-cols-7 [&_.calendar-grid]:gap-1 [&_.calendar-weekday]:text-xs [&_.calendar-weekday]:text-gray-500"
 />`}
         >
           <Calendar
@@ -93,7 +96,7 @@ export default function CalendarPage() {
             weekStartsOn={1}
             fromDate={new Date(2026, 6, 1)}
             toDate={new Date(2026, 6, 20)}
-            className="text-sm [&_.calendar-day]:w-8 [&_.calendar-day]:h-8 [&_.calendar-day]:flex [&_.calendar-day]:items-center [&_.calendar-day]:justify-center [&_.calendar-day]:rounded [&_.calendar-grid]:grid [&_.calendar-grid]:grid-cols-7 [&_.calendar-grid]:gap-1 [&_.calendar-weekday]:text-xs [&_.calendar-weekday]:text-gray-500"
+            className="rounded-lg border border-gray-200 p-4 text-sm dark:border-gray-700 [&_.calendar-day]:h-8 [&_.calendar-day]:w-8 [&_.calendar-day]:flex [&_.calendar-day]:items-center [&_.calendar-day]:justify-center [&_.calendar-day]:rounded [&_.calendar-grid]:grid [&_.calendar-grid]:grid-cols-7 [&_.calendar-grid]:gap-1 [&_.calendar-weekday]:text-xs [&_.calendar-weekday]:text-gray-500"
           />
         </Demo>
       </section>

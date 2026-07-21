@@ -52,12 +52,13 @@ export default function DataGridPage() {
     { id: 'age', header: 'Age', sortable: true, type: 'number' }
   ]}
   data={data}
+  className="w-full rounded-lg border border-gray-200 text-sm dark:border-gray-700 [&_td]:px-3 [&_td]:py-2 [&_th]:px-3 [&_th]:py-2 [&_th]:text-left [&_th]:font-semibold"
 />`}
         >
           <DataGrid
             columns={columns}
             data={data}
-            className="w-full text-sm border border-gray-200 dark:border-gray-700 [&_th]:px-3 [&_th]:py-2 [&_th]:text-left [&_th]:font-semibold [&_td]:px-3 [&_td]:py-2"
+            className="w-full rounded-lg border border-gray-200 text-sm dark:border-gray-700 [&_td]:px-3 [&_td]:py-2 [&_th]:px-3 [&_th]:py-2 [&_th]:text-left [&_th]:font-semibold"
           />
         </Demo>
       </section>
@@ -77,6 +78,7 @@ export default function DataGridPage() {
   showPagination
   pageSizeOptions={[5, 10, 25]}
   onSelectionChange={(s) => console.log(s)}
+  className="w-full rounded-lg border border-gray-200 text-sm dark:border-gray-700 [&_td]:px-3 [&_td]:py-2 [&_th]:px-3 [&_th]:py-2 [&_th]:text-left [&_th]:font-semibold"
 />`}
         >
           <DataGrid
@@ -85,7 +87,7 @@ export default function DataGridPage() {
             showSelection
             showPagination
             pageSizeOptions={[5, 10, 25]}
-            className="w-full text-sm border border-gray-200 dark:border-gray-700 [&_th]:px-3 [&_th]:py-2 [&_th]:text-left [&_th]:font-semibold [&_td]:px-3 [&_td]:py-2"
+            className="w-full rounded-lg border border-gray-200 text-sm dark:border-gray-700 [&_td]:px-3 [&_td]:py-2 [&_th]:px-3 [&_th]:py-2 [&_th]:text-left [&_th]:font-semibold"
           />
         </Demo>
       </section>
@@ -103,6 +105,7 @@ export default function DataGridPage() {
   data={largeData}
   height={300}
   virtualScrolling={{ enabled: true, itemHeight: 40, overscan: 5 }}
+  className="w-full rounded-lg border border-gray-200 text-sm dark:border-gray-700 [&_td]:px-3 [&_td]:py-2 [&_th]:px-3 [&_th]:py-2 [&_th]:text-left [&_th]:font-semibold"
 />`}
         >
           <div className="text-xs text-gray-500 text-center py-2 border border-dashed border-gray-300 dark:border-gray-600 rounded w-full">

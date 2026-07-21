@@ -29,13 +29,13 @@ export default function AspectRatioPage() {
           shift; AspectRatio reserves the space up front.
         </p>
         <Demo
-          code={`<AspectRatio>
-  <img src="/photo.jpg" alt="A landscape" />
+          code={`<AspectRatio ratio={16 / 9} className="relative w-full overflow-hidden rounded-lg bg-gray-100 dark:bg-gray-800">
+  <img src="/photo.jpg" alt="A landscape" className="h-full w-full object-cover" />
 </AspectRatio>`}
         >
           <div className="w-80">
-            <AspectRatio ratio={16 / 9}>
-              <div className="w-full h-full bg-indigo-500 rounded flex items-center justify-center text-white font-semibold">
+            <AspectRatio ratio={16 / 9} className="relative w-full overflow-hidden rounded-lg bg-gray-100 dark:bg-gray-800">
+              <div className="w-full h-full bg-indigo-500 flex items-center justify-center text-white font-semibold">
                 16 : 9
               </div>
             </AspectRatio>
@@ -50,18 +50,22 @@ export default function AspectRatioPage() {
           for classic video, 21/9 for cinematic.
         </p>
         <Demo
-          code={`<AspectRatio ratio={1}>Square</AspectRatio>
-<AspectRatio ratio={4 / 3}>Video</AspectRatio>`}
+          code={`<AspectRatio ratio={1} className="relative w-full overflow-hidden rounded-lg bg-gray-100 dark:bg-gray-800">
+  <div className="w-full h-full bg-emerald-500 flex items-center justify-center text-white text-sm font-semibold">1 : 1</div>
+</AspectRatio>
+<AspectRatio ratio={4 / 3} className="relative w-full overflow-hidden rounded-lg bg-gray-100 dark:bg-gray-800">
+  <div className="w-full h-full bg-amber-500 flex items-center justify-center text-white text-sm font-semibold">4 : 3</div>
+</AspectRatio>`}
         >
           <div className="flex gap-3 w-full">
             <div className="flex-1">
-              <AspectRatio ratio={1}>
-                <div className="w-full h-full bg-emerald-500 rounded flex items-center justify-center text-white text-sm font-semibold">1 : 1</div>
+              <AspectRatio ratio={1} className="relative w-full overflow-hidden rounded-lg bg-gray-100 dark:bg-gray-800">
+                <div className="w-full h-full bg-emerald-500 flex items-center justify-center text-white text-sm font-semibold">1 : 1</div>
               </AspectRatio>
             </div>
             <div className="flex-1">
-              <AspectRatio ratio={4 / 3}>
-                <div className="w-full h-full bg-amber-500 rounded flex items-center justify-center text-white text-sm font-semibold">4 : 3</div>
+              <AspectRatio ratio={4 / 3} className="relative w-full overflow-hidden rounded-lg bg-gray-100 dark:bg-gray-800">
+                <div className="w-full h-full bg-amber-500 flex items-center justify-center text-white text-sm font-semibold">4 : 3</div>
               </AspectRatio>
             </div>
           </div>
@@ -75,13 +79,13 @@ export default function AspectRatioPage() {
           keeping their shape.
         </p>
         <Demo
-          code={`<AspectRatio ratio={16 / 9}>
-  <iframe src="https://example.com/video" title="Demo" />
+          code={`<AspectRatio ratio={16 / 9} className="relative w-full overflow-hidden rounded-lg bg-gray-800 dark:bg-gray-700">
+  <iframe src="https://example.com/video" title="Demo" className="h-full w-full" />
 </AspectRatio>`}
         >
           <div className="w-72">
-            <AspectRatio ratio={16 / 9}>
-              <div className="w-full h-full bg-gray-800 rounded flex items-center justify-center text-gray-200 text-sm">
+            <AspectRatio ratio={16 / 9} className="relative w-full overflow-hidden rounded-lg bg-gray-800 dark:bg-gray-700">
+              <div className="w-full h-full flex items-center justify-center text-gray-200 text-sm">
                 iframe / video goes here
               </div>
             </AspectRatio>

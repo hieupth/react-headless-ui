@@ -32,12 +32,12 @@ export default function VisuallyHiddenPage() {
           off-screen.
         </p>
         <Demo
-          code={`<button>
+          code={`<button className="inline-flex items-center justify-center rounded-md border border-gray-300 px-3 py-2 text-sm font-medium hover:bg-gray-50 dark:border-gray-600 dark:hover:bg-gray-800">
   <span aria-hidden>🗑️</span>
   <VisuallyHidden>Delete item</VisuallyHidden>
 </button>`}
         >
-          <button className="px-3 py-2 border border-gray-300 dark:border-gray-600 rounded">
+          <button className="inline-flex items-center justify-center rounded-md border border-gray-300 px-3 py-2 text-sm font-medium hover:bg-gray-50 dark:border-gray-600 dark:hover:bg-gray-800">
             <span aria-hidden>🗑️</span>
             <VisuallyHidden>Delete item</VisuallyHidden>
           </button>
@@ -52,12 +52,12 @@ export default function VisuallyHiddenPage() {
           Tab into the demo to reveal it.
         </p>
         <Demo
-          code={`<VisuallyHidden as="a" focusable>
+          code={`<VisuallyHidden as="a" focusable className="focus:absolute focus:left-2 focus:top-2 focus:rounded focus:bg-white focus:px-3 focus:py-1 focus:shadow focus:not-sr-only">
   Skip to content
 </VisuallyHidden>`}
         >
           <div className="text-sm">
-            <VisuallyHidden as="a" focusable className="focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:bg-white focus:text-black focus:px-3 focus:py-1 focus:rounded focus:shadow">
+            <VisuallyHidden as="a" focusable className="focus:absolute focus:left-2 focus:top-2 focus:rounded focus:bg-white focus:px-3 focus:py-1 focus:shadow focus:not-sr-only">
               Skip to content
             </VisuallyHidden>
             <span className="text-gray-500">Tab into this preview to focus the link.</span>

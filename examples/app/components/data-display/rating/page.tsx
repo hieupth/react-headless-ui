@@ -41,10 +41,11 @@ export default function RatingPage() {
   value={value}
   onChange={setValue}
   showValue
+  className="flex gap-1 text-2xl text-amber-500"
 />`}
         >
-          <div className="flex flex-col items-center gap-2 text-2xl text-amber-500">
-            <Rating value={value} onChange={setValue} showValue className="text-amber-500" />
+          <div className="flex flex-col items-center gap-2">
+            <Rating value={value} onChange={setValue} showValue className="flex gap-1 text-2xl text-amber-500" />
             <span className="text-xs text-gray-500">Value: {value}</span>
           </div>
         </Demo>
@@ -57,9 +58,9 @@ export default function RatingPage() {
           <code>readonly</code> makes the rating display-only.
         </p>
         <Demo
-          code={`<Rating defaultValue={3.5} allowHalf readonly />`}
+          code={`<Rating defaultValue={3.5} allowHalf readonly className="flex gap-1 text-2xl text-amber-500" />`}
         >
-          <Rating defaultValue={3.5} allowHalf readonly className="text-2xl text-amber-500" />
+          <Rating defaultValue={3.5} allowHalf readonly className="flex gap-1 text-2xl text-amber-500" />
         </Demo>
       </section>
 
@@ -69,9 +70,9 @@ export default function RatingPage() {
           Swap the glyph family with <code>variant</code>.
         </p>
         <Demo
-          code={`<Rating defaultValue={4} variant="heart" />`}
+          code={`<Rating defaultValue={4} variant="heart" className="flex gap-1 text-2xl text-rose-500" />`}
         >
-          <Rating defaultValue={4} variant="heart" className="text-2xl text-rose-500" />
+          <Rating defaultValue={4} variant="heart" className="flex gap-1 text-2xl text-rose-500" />
         </Demo>
       </section>
 
