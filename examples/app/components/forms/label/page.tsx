@@ -27,13 +27,13 @@ export default function LabelPage() {
         <p className="text-sm text-gray-600 dark:text-gray-400">
           A simple label associated with a field by <code>htmlFor</code>.
         </p>
-        <Demo code={`<Label htmlFor="email">Email</Label>`}>
+        <Demo code={`<Label htmlFor="email" className="text-sm font-medium text-gray-700 dark:text-gray-200">Email</Label>`}>
           <div className="flex flex-col items-start gap-1">
-            <Label htmlFor="email-demo">Email</Label>
+            <Label htmlFor="email-demo" className="text-sm font-medium text-gray-700 dark:text-gray-200">Email</Label>
             <input
               id="email-demo"
               type="email"
-              className="rounded-md border border-gray-300 px-3 py-2 text-sm shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="rounded-md border border-gray-300 px-3 py-2 text-sm shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-900 dark:text-gray-100 dark:shadow-none"
               placeholder="you@example.com"
             />
           </div>
@@ -49,12 +49,12 @@ export default function LabelPage() {
           <code>renderRequiredIndicator</code>.
         </p>
         <Demo
-          code={`<Label required requiredPosition="start">First name</Label>
-<Label required requiredPosition="end">Last name</Label>`}
+          code={`<Label required requiredPosition="start" className="text-sm font-medium text-gray-700 dark:text-gray-200">First name</Label>
+<Label required requiredPosition="end" className="text-sm font-medium text-gray-700 dark:text-gray-200">Last name</Label>`}
         >
           <div className="flex flex-col items-start gap-2">
-            <Label required requiredPosition="start">First name</Label>
-            <Label required requiredPosition="end">Last name</Label>
+            <Label required requiredPosition="start" className="text-sm font-medium text-gray-700 dark:text-gray-200">First name</Label>
+            <Label required requiredPosition="end" className="text-sm font-medium text-gray-700 dark:text-gray-200">Last name</Label>
           </div>
         </Demo>
       </section>
@@ -66,12 +66,12 @@ export default function LabelPage() {
           <code>disabled</code> mutes it and switches the cursor.
         </p>
         <Demo
-          code={`<Label error>Username is taken</Label>
-<Label disabled>Locked field</Label>`}
+          code={`<Label error className="text-sm font-medium">Username is taken</Label>
+<Label disabled className="text-sm font-medium text-gray-700 dark:text-gray-200">Locked field</Label>`}
         >
           <div className="flex flex-col items-start gap-2">
-            <Label error>Username is taken</Label>
-            <Label disabled>Locked field</Label>
+            <Label error className="text-sm font-medium">Username is taken</Label>
+            <Label disabled className="text-sm font-medium text-gray-700 dark:text-gray-200">Locked field</Label>
           </div>
         </Demo>
       </section>

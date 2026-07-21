@@ -34,7 +34,7 @@ function TailwindSlider({ isRange, ...props }: { isRange?: boolean } & Record<st
               {...p.sliderAttributes}
             >
               {/* track */}
-              <div className={`h-1.5 w-full rounded-full bg-gray-200 ${p.disabled ? 'opacity-50' : ''}`} />
+              <div className={`h-1.5 w-full rounded-full bg-gray-200 dark:bg-gray-700 ${p.disabled ? 'opacity-50' : ''}`} />
               {/* filled range */}
               <div
                 className="absolute h-1.5 rounded-full bg-blue-600"
@@ -47,7 +47,7 @@ function TailwindSlider({ isRange, ...props }: { isRange?: boolean } & Record<st
                   ref={(el) => {
                     if (p.thumbRefs[i]) (p.thumbRefs[i] as React.MutableRefObject<HTMLDivElement | null>).current = el;
                   }}
-                  className={`absolute h-4 w-4 -translate-x-1/2 rounded-full border-2 border-blue-600 bg-white shadow ` +
+                  className={`absolute h-4 w-4 -translate-x-1/2 rounded-full border-2 border-blue-600 bg-white shadow dark:bg-gray-100 ` +
                     `transition-transform ${p.activeThumb === i ? 'scale-110' : ''} ` +
                     `focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500`}
                   style={{ left: `${p.percentages[i]}%` }}
@@ -55,7 +55,7 @@ function TailwindSlider({ isRange, ...props }: { isRange?: boolean } & Record<st
                 />
               ))}
             </div>
-            <div className="mt-1 flex justify-between text-xs text-gray-500">
+            <div className="mt-1 flex justify-between text-xs text-gray-500 dark:text-gray-400">
               <span>{p.values[0]}</span>
               {isRange && <span>{p.values[1]}</span>}
             </div>
@@ -91,7 +91,30 @@ export default function SliderPage() {
           <code>step</code>.
         </p>
         <Demo
-          code={`<Slider min={0} max={100} step={1} defaultValue={40} />`}
+          code={`<Slider
+  min={0}
+  max={100}
+  step={1}
+  defaultValue={40}
+  className="w-full max-w-xs"
+  render={(p) => (
+    <div className="w-full">
+      <div ref={p.sliderRef} className="relative flex h-6 w-full items-center" {...p.sliderAttributes}>
+        <div className="h-1.5 w-full rounded-full bg-gray-200 dark:bg-gray-700" />
+        <div
+          className="absolute h-1.5 rounded-full bg-blue-600"
+          style={{ left: '0%', width: \`\${p.percentages[0]}%\` }}
+        />
+        <div
+          ref={(el) => { p.thumbRefs[0].current = el; }}
+          className="absolute h-4 w-4 -translate-x-1/2 rounded-full border-2 border-blue-600 bg-white shadow focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
+          style={{ left: \`\${p.percentages[0]}%\` }}
+          {...p.getThumbAttributes(0)}
+        />
+      </div>
+    </div>
+  )}
+/>`}
         >
           <TailwindSlider min={0} max={100} step={1} defaultValue={40} />
         </Demo>
@@ -104,7 +127,37 @@ export default function SliderPage() {
           <code>[number, number]</code> tuple.
         </p>
         <Demo
-          code={`<Slider isRange min={0} max={100} defaultValue={[20, 70]} onValueChange={console.log} />`}
+          code={`<Slider
+  isRange
+  min={0}
+  max={100}
+  defaultValue={[20, 70]}
+  className="w-full max-w-xs"
+  render={(p) => {
+    const min = Math.min(p.percentages[0], p.percentages[1]);
+    const max = Math.max(p.percentages[0], p.percentages[1]);
+    return (
+      <div className="w-full">
+        <div ref={p.sliderRef} className="relative flex h-6 w-full items-center" {...p.sliderAttributes}>
+          <div className="h-1.5 w-full rounded-full bg-gray-200 dark:bg-gray-700" />
+          <div
+            className="absolute h-1.5 rounded-full bg-blue-600"
+            style={{ left: \`\${min}%\`, width: \`\${Math.max(0, max - min)}%\` }}
+          />
+          {[0, 1].map((i) => (
+            <div
+              key={i}
+              ref={(el) => { p.thumbRefs[i].current = el; }}
+              className="absolute h-4 w-4 -translate-x-1/2 rounded-full border-2 border-blue-600 bg-white shadow focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
+              style={{ left: \`\${p.percentages[i]}%\` }}
+              {...p.getThumbAttributes(i)}
+            />
+          ))}
+        </div>
+      </div>
+    );
+  }}
+/>`}
         >
           <TailwindSlider isRange min={0} max={100} defaultValue={[20, 70]} />
         </Demo>
@@ -118,8 +171,24 @@ export default function SliderPage() {
         </p>
         <Demo
           code={`const [v, setV] = useState(40);
-<Slider value={v} onValueChange={setV} min={0} max={100} />
-<Slider disabled defaultValue={60} />`}
+<Slider value={v} onValueChange={setV} min={0} max={100} className="w-full max-w-xs" render={(p) => (
+  <div className="w-full">
+    <div ref={p.sliderRef} className="relative flex h-6 w-full items-center" {...p.sliderAttributes}>
+      <div className="h-1.5 w-full rounded-full bg-gray-200 dark:bg-gray-700" />
+      <div className="absolute h-1.5 rounded-full bg-blue-600" style={{ left: '0%', width: \`\${p.percentages[0]}%\` }} />
+      <div ref={(el) => { p.thumbRefs[0].current = el; }} className="absolute h-4 w-4 -translate-x-1/2 rounded-full border-2 border-blue-600 bg-white shadow focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500" style={{ left: \`\${p.percentages[0]}%\` }} {...p.getThumbAttributes(0)} />
+    </div>
+  </div>
+)} />
+<Slider disabled defaultValue={60} className="w-full max-w-xs" render={(p) => (
+  <div className="w-full">
+    <div ref={p.sliderRef} className="relative flex h-6 w-full items-center" {...p.sliderAttributes}>
+      <div className="h-1.5 w-full rounded-full bg-gray-200 dark:bg-gray-700 opacity-50" />
+      <div className="absolute h-1.5 rounded-full bg-blue-600" style={{ left: '0%', width: \`\${p.percentages[0]}%\` }} />
+      <div ref={(el) => { p.thumbRefs[0].current = el; }} className="absolute h-4 w-4 -translate-x-1/2 rounded-full border-2 border-blue-600 bg-white shadow" style={{ left: \`\${p.percentages[0]}%\` }} {...p.getThumbAttributes(0)} />
+    </div>
+  </div>
+)} />`}
         >
           <div className="w-full max-w-xs space-y-4">
             <TailwindSlider value={v} onValueChange={(nv: number) => setV(nv)} min={0} max={100} />

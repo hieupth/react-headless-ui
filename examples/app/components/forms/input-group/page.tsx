@@ -11,18 +11,18 @@ import { PropsTable } from '@/components/props-table';
 // and the embedded .input-field inputs / buttons.
 const groupBase =
   '[&_.input-item]:mb-3 ' +
-  '[&_.input-item_label]:mb-1 [&_.input-item_label]:block [&_.input-item_label]:text-sm [&_.input-item_label]:font-medium [&_.input-item_label]:text-gray-700 ' +
-  '[&_.input-field]:w-full [&_.input-field]:rounded-md [&_.input-field]:border [&_.input-field]:border-gray-300 ' +
-  '[&_.input-field]:bg-white [&_.input-field]:px-3 [&_.input-field]:py-2 [&_.input-field]:text-sm [&_.input-field]:text-gray-900 ' +
-  '[&_.input-field]:shadow-sm [&_.input-field]:placeholder:text-gray-400 ' +
-  '[&_.input-field]:focus:outline-none [&_.input-field]:focus:ring-2 [&_.input-field]:focus:ring-blue-500 ' +
+  '[&_.input-item_label]:mb-1 [&_.input-item_label]:block [&_.input-item_label]:text-sm [&_.input-item_label]:font-medium [&_.input-item_label]:text-gray-700 dark:[&_.input-item_label]:text-gray-200 ' +
+  '[&_.input-field]:w-full [&_.input-field]:rounded-md [&_.input-field]:border [&_.input-field]:border-gray-300 dark:[&_.input-field]:border-gray-600 ' +
+  '[&_.input-field]:bg-white dark:[&_.input-field]:bg-gray-900 [&_.input-field]:px-3 [&_.input-field]:py-2 [&_.input-field]:text-sm [&_.input-field]:text-gray-900 dark:[&_.input-field]:text-gray-100 ' +
+  '[&_.input-field]:shadow-sm dark:[&_.input-field]:shadow-none [&_.input-field]:placeholder:text-gray-400 ' +
+  '[&_.input-field]:focus:outline-none [&_.input-field]:focus:ring-2 [&_.input-field]:focus:ring-blue-500 [&_.input-field]:focus:border-blue-500 ' +
   '[&_.input-field]:disabled:opacity-50 ' +
-  '[&_button]:rounded-md [&_button]:border [&_button]:border-gray-300 [&_button]:bg-white [&_button]:px-3 [&_button]:py-1.5 ' +
-  '[&_button]:text-xs [&_button]:font-medium [&_button]:text-gray-700 [&_button]:transition-colors ' +
-  '[&_button:hover]:bg-gray-100 [&_button]:disabled:opacity-50 ' +
+  '[&_button]:rounded-md [&_button]:border [&_button]:border-gray-300 dark:[&_button]:border-gray-600 [&_button]:bg-white dark:[&_button]:bg-gray-800 [&_button]:px-3 [&_button]:py-1.5 ' +
+  '[&_button]:text-xs [&_button]:font-medium [&_button]:text-gray-700 dark:[&_button]:text-gray-200 [&_button]:transition-colors ' +
+  '[&_button:hover]:bg-gray-100 dark:[&_button:hover]:bg-gray-700 [&_button]:disabled:opacity-50 ' +
   '[&_.error-messages]:mt-1 [&_.error-messages]:text-xs [&_.error-messages]:text-red-600 ' +
-  '[&_.prefix-item]:-mt-2 [&_.prefix-item]:text-sm [&_.prefix-item]:text-gray-500 ' +
-  '[&_.helper-item]:-mt-2 [&_.helper-item]:text-xs [&_.helper-item]:text-gray-500';
+  '[&_.prefix-item]:-mt-2 [&_.prefix-item]:text-sm [&_.prefix-item]:text-gray-500 dark:[&_.prefix-item]:text-gray-400 ' +
+  '[&_.helper-item]:-mt-2 [&_.helper-item]:text-xs [&_.helper-item]:text-gray-500 dark:[&_.helper-item]:text-gray-400';
 
 const items = [
   { id: 'first', type: 'input' as const, content: 'First name', placeholder: 'Ada', required: true },
@@ -56,6 +56,7 @@ export default function InputGroupPage() {
         <Demo
           code={`<InputGroup
   layout="vertical"
+  className="[&_.input-item]:mb-3 [&_.input-item_label]:mb-1 [&_.input-item_label]:block [&_.input-item_label]:text-sm [&_.input-item_label]:font-medium [&_.input-item_label]:text-gray-700 dark:[&_.input-item_label]:text-gray-200 [&_.input-field]:w-full [&_.input-field]:rounded-md [&_.input-field]:border [&_.input-field]:border-gray-300 dark:[&_.input-field]:border-gray-600 [&_.input-field]:bg-white dark:[&_.input-field]:bg-gray-900 [&_.input-field]:px-3 [&_.input-field]:py-2 [&_.input-field]:text-sm [&_.input-field]:text-gray-900 dark:[&_.input-field]:text-gray-100 [&_.input-field]:shadow-sm dark:[&_.input-field]:shadow-none [&_.input-field]:placeholder:text-gray-400 [&_.input-field]:focus:outline-none [&_.input-field]:focus:ring-2 [&_.input-field]:focus:ring-blue-500 [&_.input-field]:focus:border-blue-500 [&_.input-field]:disabled:opacity-50 [&_button]:rounded-md [&_button]:border [&_button]:border-gray-300 dark:[&_button]:border-gray-600 [&_button]:bg-white dark:[&_button]:bg-gray-800 [&_button]:px-3 [&_button]:py-1.5 [&_button]:text-xs [&_button]:font-medium [&_button]:text-gray-700 dark:[&_button]:text-gray-200 [&_button]:transition-colors [&_button:hover]:bg-gray-100 dark:[&_button:hover]:bg-gray-700 [&_button]:disabled:opacity-50 [&_.error-messages]:mt-1 [&_.error-messages]:text-xs [&_.error-messages]:text-red-600 [&_.prefix-item]:-mt-2 [&_.prefix-item]:text-sm [&_.prefix-item]:text-gray-500 dark:[&_.prefix-item]:text-gray-400 [&_.helper-item]:-mt-2 [&_.helper-item]:text-xs [&_.helper-item]:text-gray-500 dark:[&_.helper-item]:text-gray-400"
   items={[
     { id: 'first', type: 'input', content: 'First name', required: true },
     { id: 'last', type: 'input', content: 'Last name', required: true },
@@ -78,6 +79,7 @@ export default function InputGroupPage() {
         <Demo
           code={`<InputGroup
   layout="inline"
+  className="[&_.input-item]:mb-3 [&_.input-item_label]:mb-1 [&_.input-item_label]:block [&_.input-item_label]:text-sm [&_.input-item_label]:font-medium [&_.input-item_label]:text-gray-700 dark:[&_.input-item_label]:text-gray-200 [&_.input-field]:w-full [&_.input-field]:rounded-md [&_.input-field]:border [&_.input-field]:border-gray-300 dark:[&_.input-field]:border-gray-600 [&_.input-field]:bg-white dark:[&_.input-field]:bg-gray-900 [&_.input-field]:px-3 [&_.input-field]:py-2 [&_.input-field]:text-sm [&_.input-field]:text-gray-900 dark:[&_.input-field]:text-gray-100 [&_.input-field]:shadow-sm dark:[&_.input-field]:shadow-none [&_.input-field]:placeholder:text-gray-400 [&_.input-field]:focus:outline-none [&_.input-field]:focus:ring-2 [&_.input-field]:focus:ring-blue-500 [&_.input-field]:focus:border-blue-500 [&_.input-field]:disabled:opacity-50 [&_button]:rounded-md [&_button]:border [&_button]:border-gray-300 dark:[&_button]:border-gray-600 [&_button]:bg-white dark:[&_button]:bg-gray-800 [&_button]:px-3 [&_button]:py-1.5 [&_button]:text-xs [&_button]:font-medium [&_button]:text-gray-700 dark:[&_button]:text-gray-200 [&_button]:transition-colors [&_button:hover]:bg-gray-100 dark:[&_button:hover]:bg-gray-700 [&_button]:disabled:opacity-50 [&_.error-messages]:mt-1 [&_.error-messages]:text-xs [&_.error-messages]:text-red-600 [&_.prefix-item]:-mt-2 [&_.prefix-item]:text-sm [&_.prefix-item]:text-gray-500 dark:[&_.prefix-item]:text-gray-400 [&_.helper-item]:-mt-2 [&_.helper-item]:text-xs [&_.helper-item]:text-gray-500 dark:[&_.helper-item]:text-gray-400"
   items={[
     { id: 'user', type: 'input', content: 'Username', placeholder: 'ada' },
     { id: 'pass', type: 'input', content: 'Password', inputType: 'password' },
@@ -116,6 +118,7 @@ export default function InputGroupPage() {
         </p>
         <Demo
           code={`<InputGroup
+  className="[&_.input-item]:mb-3 [&_.input-item_label]:mb-1 [&_.input-item_label]:block [&_.input-item_label]:text-sm [&_.input-item_label]:font-medium [&_.input-item_label]:text-gray-700 dark:[&_.input-item_label]:text-gray-200 [&_.input-field]:w-full [&_.input-field]:rounded-md [&_.input-field]:border [&_.input-field]:border-gray-300 dark:[&_.input-field]:border-gray-600 [&_.input-field]:bg-white dark:[&_.input-field]:bg-gray-900 [&_.input-field]:px-3 [&_.input-field]:py-2 [&_.input-field]:text-sm [&_.input-field]:text-gray-900 dark:[&_.input-field]:text-gray-100 [&_.input-field]:shadow-sm dark:[&_.input-field]:shadow-none [&_.input-field]:placeholder:text-gray-400 [&_.input-field]:focus:outline-none [&_.input-field]:focus:ring-2 [&_.input-field]:focus:ring-blue-500 [&_.input-field]:focus:border-blue-500 [&_.input-field]:disabled:opacity-50 [&_button]:rounded-md [&_button]:border [&_button]:border-gray-300 dark:[&_button]:border-gray-600 [&_button]:bg-white dark:[&_button]:bg-gray-800 [&_button]:px-3 [&_button]:py-1.5 [&_button]:text-xs [&_button]:font-medium [&_button]:text-gray-700 dark:[&_button]:text-gray-200 [&_button]:transition-colors [&_button:hover]:bg-gray-100 dark:[&_button:hover]:bg-gray-700 [&_button]:disabled:opacity-50 [&_.error-messages]:mt-1 [&_.error-messages]:text-xs [&_.error-messages]:text-red-600 [&_.prefix-item]:-mt-2 [&_.prefix-item]:text-sm [&_.prefix-item]:text-gray-500 dark:[&_.prefix-item]:text-gray-400 [&_.helper-item]:-mt-2 [&_.helper-item]:text-xs [&_.helper-item]:text-gray-500 dark:[&_.helper-item]:text-gray-400"
   items={[
     { id: 'name', type: 'input', content: 'Workspace', placeholder: 'my-team' },
     { id: 'pfx', type: 'prefix', content: 'reui.app/' },

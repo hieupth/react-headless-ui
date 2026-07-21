@@ -13,9 +13,9 @@ const toggleBase =
   'inline-flex items-center gap-2 rounded-md border px-3 py-1.5 text-sm font-medium transition-colors ' +
   'focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 ' +
   '[&_.toggle-content]:text-sm ' +
-  '[&.toggle-outline]:border-gray-300 [&.toggle-outline]:text-gray-700 ' +
+  '[&.toggle-outline]:border-gray-300 dark:[&.toggle-outline]:border-gray-600 [&.toggle-outline]:text-gray-700 dark:[&.toggle-outline]:text-gray-200 ' +
   '[&.toggle-outline.toggle-pressed]:border-blue-600 [&.toggle-outline.toggle-pressed]:bg-blue-600 [&.toggle-outline.toggle-pressed]:text-white ' +
-  '[&.toggle-ghost]:border-transparent [&.toggle-ghost]:text-gray-700 [&.toggle-ghost.toggle-pressed]:bg-gray-900 [&.toggle-ghost.toggle-pressed]:text-white';
+  '[&.toggle-ghost]:border-transparent [&.toggle-ghost]:text-gray-700 dark:[&.toggle-ghost]:text-gray-200 [&.toggle-ghost.toggle-pressed]:bg-gray-900 [&.toggle-ghost.toggle-pressed]:text-white dark:[&.toggle-ghost.toggle-pressed]:bg-white dark:[&.toggle-ghost.toggle-pressed]:text-gray-900';
 
 export default function TogglePage() {
   const [pressed, setPressed] = useState(false);
@@ -42,7 +42,7 @@ export default function TogglePage() {
         <p className="text-sm text-gray-600 dark:text-gray-400">
           A pressed/unpressed toggle. Click or press Space/Enter.
         </p>
-        <Demo code={`<Toggle variant="outline">Bookmark</Toggle>`}>
+        <Demo code={`<Toggle variant="outline" className="inline-flex items-center gap-2 rounded-md border px-3 py-1.5 text-sm font-medium transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 [&_.toggle-content]:text-sm [&.toggle-outline]:border-gray-300 dark:[&.toggle-outline]:border-gray-600 [&.toggle-outline]:text-gray-700 dark:[&.toggle-outline]:text-gray-200 [&.toggle-outline.toggle-pressed]:border-blue-600 [&.toggle-outline.toggle-pressed]:bg-blue-600 [&.toggle-outline.toggle-pressed]:text-white [&.toggle-ghost]:border-transparent [&.toggle-ghost]:text-gray-700 dark:[&.toggle-ghost]:text-gray-200 [&.toggle-ghost.toggle-pressed]:bg-gray-900 [&.toggle-ghost.toggle-pressed]:text-white dark:[&.toggle-ghost.toggle-pressed]:bg-white dark:[&.toggle-ghost.toggle-pressed]:text-gray-900">Bookmark</Toggle>`}>
           <Toggle className={toggleBase} variant="outline">Bookmark</Toggle>
         </Demo>
       </section>
@@ -55,9 +55,10 @@ export default function TogglePage() {
         </p>
         <Demo
           code={`<Toggle
-  pressedChildren="Following"
+  pressedChildren="Following ✓"
   unpressedChildren="Follow"
   variant="outline"
+  className="inline-flex items-center gap-2 rounded-md border px-3 py-1.5 text-sm font-medium transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 [&_.toggle-content]:text-sm [&.toggle-outline]:border-gray-300 dark:[&.toggle-outline]:border-gray-600 [&.toggle-outline]:text-gray-700 dark:[&.toggle-outline]:text-gray-200 [&.toggle-outline.toggle-pressed]:border-blue-600 [&.toggle-outline.toggle-pressed]:bg-blue-600 [&.toggle-outline.toggle-pressed]:text-white [&.toggle-ghost]:border-transparent [&.toggle-ghost]:text-gray-700 dark:[&.toggle-ghost]:text-gray-200 [&.toggle-ghost.toggle-pressed]:bg-gray-900 [&.toggle-ghost.toggle-pressed]:text-white dark:[&.toggle-ghost.toggle-pressed]:bg-white dark:[&.toggle-ghost.toggle-pressed]:text-gray-900"
 />`}
         >
           <Toggle
@@ -78,8 +79,10 @@ export default function TogglePage() {
         </p>
         <Demo
           code={`const [p, setP] = useState(false);
-<Toggle pressed={p} onPressedChange={setP} variant="ghost">Mute</Toggle>
-<FormatToggle format="bold" />`}
+<Toggle pressed={p} onPressedChange={setP} variant="ghost" className="inline-flex items-center gap-2 rounded-md border px-3 py-1.5 text-sm font-medium transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 [&_.toggle-content]:text-sm [&.toggle-outline]:border-gray-300 dark:[&.toggle-outline]:border-gray-600 [&.toggle-outline]:text-gray-700 dark:[&.toggle-outline]:text-gray-200 [&.toggle-outline.toggle-pressed]:border-blue-600 [&.toggle-outline.toggle-pressed]:bg-blue-600 [&.toggle-outline.toggle-pressed]:text-white [&.toggle-ghost]:border-transparent [&.toggle-ghost]:text-gray-700 dark:[&.toggle-ghost]:text-gray-200 [&.toggle-ghost.toggle-pressed]:bg-gray-900 [&.toggle-ghost.toggle-pressed]:text-white dark:[&.toggle-ghost.toggle-pressed]:bg-white dark:[&.toggle-ghost.toggle-pressed]:text-gray-900">
+  {p ? 'Unmute' : 'Mute'}
+</Toggle>
+<FormatToggle format="bold" className="inline-flex items-center gap-2 rounded-md border px-3 py-1.5 text-sm font-medium transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 [&_.toggle-content]:text-sm [&.toggle-outline]:border-gray-300 dark:[&.toggle-outline]:border-gray-600 [&.toggle-outline]:text-gray-700 dark:[&.toggle-outline]:text-gray-200 [&.toggle-outline.toggle-pressed]:border-blue-600 [&.toggle-outline.toggle-pressed]:bg-blue-600 [&.toggle-outline.toggle-pressed]:text-white [&.toggle-ghost]:border-transparent [&.toggle-ghost]:text-gray-700 dark:[&.toggle-ghost]:text-gray-200 [&.toggle-ghost.toggle-pressed]:bg-gray-900 [&.toggle-ghost.toggle-pressed]:text-white dark:[&.toggle-ghost.toggle-pressed]:bg-white dark:[&.toggle-ghost.toggle-pressed]:text-gray-900" />`}
         >
           <div className="flex flex-wrap items-center justify-center gap-3">
             <Toggle

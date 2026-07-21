@@ -10,13 +10,13 @@ import { PropsTable } from '@/components/props-table';
 // via descendant selectors.
 const fieldBase =
   'w-full ' +
-  '[&>label]:mb-1 [&>label]:block [&>label]:text-sm [&>label]:font-medium [&>label]:text-gray-700 ' +
-  '[&_input]:w-full [&_input]:rounded-md [&_input]:border [&_input]:border-gray-300 ' +
-  '[&_input]:bg-white [&_input]:px-3 [&_input]:py-2 [&_input]:text-sm [&_input]:text-gray-900 ' +
-  '[&_input]:shadow-sm [&_input]:placeholder:text-gray-400 ' +
+  '[&>label]:mb-1 [&>label]:block [&>label]:text-sm [&>label]:font-medium [&>label]:text-gray-700 dark:[&>label]:text-gray-200 ' +
+  '[&_input]:w-full [&_input]:rounded-md [&_input]:border [&_input]:border-gray-300 dark:[&_input]:border-gray-600 ' +
+  '[&_input]:bg-white dark:[&_input]:bg-gray-900 [&_input]:px-3 [&_input]:py-2 [&_input]:text-sm [&_input]:text-gray-900 dark:[&_input]:text-gray-100 ' +
+  '[&_input]:shadow-sm dark:[&_input]:shadow-none [&_input]:placeholder:text-gray-400 ' +
   '[&_input]:focus:outline-none [&_input]:focus:ring-2 [&_input]:focus:ring-blue-500 [&_input]:focus:border-blue-500 ' +
   '[&_input]:disabled:opacity-50 ' +
-  '[&_p]:mt-1 [&_p]:text-xs [&_p]:text-gray-500 ' +
+  '[&_p]:mt-1 [&_p]:text-xs [&_p]:text-gray-500 dark:[&_p]:text-gray-400 ' +
   '[&_.field-container_error]:text-red-600';
 
 export default function FieldPage() {
@@ -41,7 +41,7 @@ export default function FieldPage() {
           A labeled field with a placeholder and helper text.
         </p>
         <Demo
-          code={`<Field label="Full name" placeholder="Ada Lovelace" helperText="As it appears on your ID" />`}
+          code={`<Field label="Full name" placeholder="Ada Lovelace" helperText="As it appears on your ID" className="w-full [&>label]:mb-1 [&>label]:block [&>label]:text-sm [&>label]:font-medium [&>label]:text-gray-700 dark:[&>label]:text-gray-200 [&_input]:w-full [&_input]:rounded-md [&_input]:border [&_input]:border-gray-300 dark:[&_input]:border-gray-600 [&_input]:bg-white dark:[&_input]:bg-gray-900 [&_input]:px-3 [&_input]:py-2 [&_input]:text-sm [&_input]:text-gray-900 dark:[&_input]:text-gray-100 [&_input]:shadow-sm dark:[&_input]:shadow-none [&_input]:placeholder:text-gray-400 [&_input]:focus:outline-none [&_input]:focus:ring-2 [&_input]:focus:ring-blue-500 [&_input]:focus:border-blue-500 [&_input]:disabled:opacity-50 [&_p]:mt-1 [&_p]:text-xs [&_p]:text-gray-500 dark:[&_p]:text-gray-400 [&_.field-container_error]:text-red-600" />`}
         >
           <div className="w-full max-w-sm">
             <Field
@@ -64,9 +64,10 @@ export default function FieldPage() {
         <Demo
           code={`<Field
   label="Amount"
-  prefix="$"
-  suffix="USD"
+  prefix={<span className="text-gray-400">$</span>}
+  suffix={<span className="text-gray-400 text-xs">USD</span>}
   clearable
+  className="w-full [&>label]:mb-1 [&>label]:block [&>label]:text-sm [&>label]:font-medium [&>label]:text-gray-700 dark:[&>label]:text-gray-200 [&_input]:w-full [&_input]:rounded-md [&_input]:border [&_input]:border-gray-300 dark:[&_input]:border-gray-600 [&_input]:bg-white dark:[&_input]:bg-gray-900 [&_input]:px-3 [&_input]:py-2 [&_input]:text-sm [&_input]:text-gray-900 dark:[&_input]:text-gray-100 [&_input]:shadow-sm dark:[&_input]:shadow-none [&_input]:placeholder:text-gray-400 [&_input]:focus:outline-none [&_input]:focus:ring-2 [&_input]:focus:ring-blue-500 [&_input]:focus:border-blue-500 [&_input]:disabled:opacity-50 [&_p]:mt-1 [&_p]:text-xs [&_p]:text-gray-500 dark:[&_p]:text-gray-400 [&_.field-container_error]:text-red-600"
 />`}
         >
           <div className="w-full max-w-sm">
@@ -93,6 +94,7 @@ export default function FieldPage() {
   maxLength={20}
   showCount
   error="That username is taken"
+  className="w-full [&>label]:mb-1 [&>label]:block [&>label]:text-sm [&>label]:font-medium [&>label]:text-gray-700 dark:[&>label]:text-gray-200 [&_input]:w-full [&_input]:rounded-md [&_input]:border [&_input]:border-gray-300 dark:[&_input]:border-gray-600 [&_input]:bg-white dark:[&_input]:bg-gray-900 [&_input]:px-3 [&_input]:py-2 [&_input]:text-sm [&_input]:text-gray-900 dark:[&_input]:text-gray-100 [&_input]:shadow-sm dark:[&_input]:shadow-none [&_input]:placeholder:text-gray-400 [&_input]:focus:outline-none [&_input]:focus:ring-2 [&_input]:focus:ring-blue-500 [&_input]:focus:border-blue-500 [&_input]:disabled:opacity-50 [&_p]:mt-1 [&_p]:text-xs [&_p]:text-gray-500 dark:[&_p]:text-gray-400 [&_.field-container_error]:text-red-600"
 />`}
         >
           <div className="w-full max-w-sm">

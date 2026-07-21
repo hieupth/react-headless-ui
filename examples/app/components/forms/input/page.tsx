@@ -10,7 +10,7 @@ import { PropsTable } from '@/components/props-table';
 // <style> scope OR uses the `render` escape hatch to draw its own markup.
 // Here we use the render prop to fully control styling.
 const fieldBase =
-  'w-full rounded-md border bg-white px-3 py-2 text-sm text-gray-900 shadow-sm ' +
+  'w-full rounded-md border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-900 px-3 py-2 text-sm text-gray-900 dark:text-gray-100 shadow-sm dark:shadow-none ' +
   'placeholder:text-gray-400 transition-colors ' +
   'focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 ' +
   'disabled:opacity-50 disabled:cursor-not-allowed';
@@ -34,7 +34,7 @@ export default function InputPage() {
         <p className="text-sm text-gray-600 dark:text-gray-400">
           A controlled text input with a placeholder.
         </p>
-        <Demo code={`<Input placeholder="you@example.com" />`}>
+        <Demo code={`<Input placeholder="you@example.com" className="w-full rounded-md border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-900 px-3 py-2 text-sm text-gray-900 dark:text-gray-100 shadow-sm dark:shadow-none placeholder:text-gray-400 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 disabled:opacity-50 disabled:cursor-not-allowed" />`}>
           <Input
             placeholder="you@example.com"
             className={fieldBase}
@@ -49,8 +49,8 @@ export default function InputPage() {
           <code>aria-invalid</code> automatically.
         </p>
         <Demo
-          code={`<Input disabled placeholder="Disabled" />
-<Input error="This field is required" />`}
+          code={`<Input disabled placeholder="Disabled" className="w-full rounded-md border border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-900 px-3 py-2 text-sm text-gray-900 dark:text-gray-100 shadow-sm dark:shadow-none placeholder:text-gray-400 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 disabled:opacity-50 disabled:cursor-not-allowed" />
+<Input error="This field is required" className="w-full rounded-md border border-red-500 bg-white dark:bg-gray-900 px-3 py-2 text-sm text-gray-900 dark:text-gray-100 shadow-sm dark:shadow-none placeholder:text-gray-400 transition-colors focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500 disabled:opacity-50 disabled:cursor-not-allowed" />`}
         >
           <div className="w-full max-w-sm space-y-3">
             <Input
@@ -76,10 +76,11 @@ export default function InputPage() {
           code={`<Input
   label="Username"
   helperText="3–20 characters"
-  leadingElement={<span>@</span>}
-  trailingElement={<button>Check</button>}
+  leadingElement={<span className="text-gray-400">@</span>}
+  trailingElement={<button className="text-xs text-blue-600">Check</button>}
   showCharacterCount
   maxLength={20}
+  className="w-full rounded-md border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-900 px-3 py-2 text-sm text-gray-900 dark:text-gray-100 shadow-sm dark:shadow-none placeholder:text-gray-400 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 disabled:opacity-50 disabled:cursor-not-allowed"
 />`}
         >
           <div className="w-full max-w-sm">
