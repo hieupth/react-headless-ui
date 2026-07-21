@@ -52,28 +52,36 @@ export default function DirectionProviderPage() {
         </p>
         <Demo
           code={`<DirectionProvider defaultTextDirection="ltr">
-  <DirectionToggle />
-  <DirectionalFlex gap="12px">
-    <DirectionalText>First</DirectionalText>
-    <DirectionalText>Second</DirectionalText>
-    <DirectionalText>Third</DirectionalText>
-  </DirectionalFlex>
+  <div className="w-full space-y-4">
+    <DirectionToggle className="px-3 py-1.5 rounded-md border border-gray-300 text-sm text-gray-700 dark:border-gray-600 dark:text-gray-200" />
+    <DirectionalFlex gap="12px" className="rounded-md border border-gray-200 p-4 dark:border-gray-700">
+      <span className="rounded bg-blue-600 px-3 py-1 text-sm text-white">
+        <DirectionalText>First</DirectionalText>
+      </span>
+      <span className="rounded bg-blue-500 px-3 py-1 text-sm text-white">
+        <DirectionalText>Second</DirectionalText>
+      </span>
+      <span className="rounded bg-blue-400 px-3 py-1 text-sm text-white">
+        <DirectionalText>Third</DirectionalText>
+      </span>
+    </DirectionalFlex>
+  </div>
 </DirectionProvider>`}
         >
           <DirectionProvider defaultTextDirection={dir}>
             <div className="w-full space-y-4">
-              <DirectionToggle className="px-3 py-1.5 rounded-md border border-gray-300 dark:border-gray-600 text-sm text-gray-700 dark:text-gray-200" />
+              <DirectionToggle className="px-3 py-1.5 rounded-md border border-gray-300 text-sm text-gray-700 transition-colors hover:bg-gray-50 dark:border-gray-600 dark:text-gray-200 dark:hover:bg-gray-800" />
               <DirectionalFlex
                 gap="12px"
-                className="rounded-md border border-gray-200 dark:border-gray-700 p-4"
+                className="rounded-md border border-gray-200 bg-white p-4 shadow-sm dark:border-gray-700 dark:bg-gray-900"
               >
-                <span className="rounded bg-blue-600 px-3 py-1 text-sm text-white">
+                <span className="rounded bg-blue-600 px-3 py-1 text-sm font-medium text-white">
                   <DirectionalText>First</DirectionalText>
                 </span>
-                <span className="rounded bg-blue-500 px-3 py-1 text-sm text-white">
+                <span className="rounded bg-blue-500 px-3 py-1 text-sm font-medium text-white">
                   <DirectionalText>Second</DirectionalText>
                 </span>
-                <span className="rounded bg-blue-400 px-3 py-1 text-sm text-white">
+                <span className="rounded bg-blue-400 px-3 py-1 text-sm font-medium text-white">
                   <DirectionalText>Third</DirectionalText>
                 </span>
               </DirectionalFlex>
@@ -83,14 +91,14 @@ export default function DirectionProviderPage() {
             <button
               type="button"
               onClick={() => setDir('ltr')}
-              className="text-xs px-2 py-1 rounded border border-gray-300 dark:border-gray-600 text-gray-600 dark:text-gray-300"
+              className="text-xs px-2 py-1 rounded border border-gray-300 text-gray-600 transition-colors hover:bg-gray-50 dark:border-gray-600 dark:text-gray-300 dark:hover:bg-gray-800"
             >
               reset to LTR
             </button>
             <button
               type="button"
               onClick={() => setDir('rtl')}
-              className="text-xs px-2 py-1 rounded border border-gray-300 dark:border-gray-600 text-gray-600 dark:text-gray-300"
+              className="text-xs px-2 py-1 rounded border border-gray-300 text-gray-600 transition-colors hover:bg-gray-50 dark:border-gray-600 dark:text-gray-300 dark:hover:bg-gray-800"
             >
               reset to RTL
             </button>
@@ -108,7 +116,9 @@ export default function DirectionProviderPage() {
         </p>
         <Demo
           code={`<DirectionProvider textDirection="auto" locale="ar" autoDetectFromLocale>
-  <DirectionalText>مرحبا بالعالم</DirectionalText>
+  <div className="rounded-md border border-gray-200 bg-white p-4 text-lg text-gray-900 shadow-sm dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100">
+    <DirectionalText>مرحبا بالعالم — Hello world</DirectionalText>
+  </div>
 </DirectionProvider>`}
         >
           <DirectionProvider
@@ -116,7 +126,7 @@ export default function DirectionProviderPage() {
             defaultLocale="ar"
             autoDetectFromLocale
           >
-            <div className="rounded-md border border-gray-200 dark:border-gray-700 p-4 text-lg">
+            <div className="rounded-md border border-gray-200 bg-white p-4 text-lg text-gray-900 shadow-sm dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100">
               <DirectionalText>مرحبا بالعالم — Hello world</DirectionalText>
             </div>
           </DirectionProvider>

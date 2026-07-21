@@ -37,14 +37,14 @@ export default function SlotPage() {
         </p>
         <Demo
           code={`<SlotClone
-  className="px-4 py-2 rounded-md bg-blue-600 text-white"
+  className="inline-flex items-center justify-center rounded-md bg-blue-600 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-blue-700"
   mergeProps={{ 'data-slot': 'action', type: 'button' }}
 >
   <button>I keep my own element</button>
 </SlotClone>`}
         >
           <SlotClone
-            className="px-4 py-2 rounded-md bg-blue-600 text-white text-sm font-medium"
+            className="inline-flex items-center justify-center rounded-md bg-blue-600 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-blue-700"
             mergeProps={{ 'data-slot': 'action', type: 'button' }}
           >
             <button>I keep my own element</button>
@@ -66,9 +66,10 @@ export default function SlotPage() {
   clone
   mergeStrategy="merge"
   onClick={() => console.log('slot clicked')}
+  className="inline-flex items-center justify-center rounded-md border border-gray-300 px-4 py-2 text-sm font-medium text-gray-700 transition-colors hover:bg-gray-100 dark:border-gray-600 dark:text-gray-200 dark:hover:bg-gray-800"
   mergeProps={{ 'aria-label': 'Clickable slot' }}
 >
-  <button onClick={() => console.log('child clicked')}>
+  <button type="button" onClick={() => console.log('child clicked')}>
     Both handlers fire
   </button>
 </Slot>`}
@@ -77,7 +78,7 @@ export default function SlotPage() {
             clone
             mergeStrategy="merge"
             onClick={() => undefined}
-            className="px-4 py-2 rounded-md border border-gray-300 dark:border-gray-600 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800"
+            className="inline-flex items-center justify-center rounded-md border border-gray-300 px-4 py-2 text-sm font-medium text-gray-700 transition-colors hover:bg-gray-100 dark:border-gray-600 dark:text-gray-200 dark:hover:bg-gray-800"
             mergeProps={{ 'aria-label': 'Clickable slot' }}
           >
             <button type="button">Both handlers fire</button>
@@ -95,14 +96,14 @@ export default function SlotPage() {
         <Demo
           code={`<Slot
   as="span"
-  className="inline-flex items-center gap-1 rounded-full bg-emerald-100 px-3 py-1 text-emerald-700"
+  className="inline-flex items-center gap-1 rounded-full bg-emerald-100 px-3 py-1 text-sm font-medium text-emerald-700 dark:bg-emerald-950 dark:text-emerald-300"
 >
   Wrapped content
 </Slot>`}
         >
           <Slot
             as="span"
-            className="inline-flex items-center gap-1 rounded-full bg-emerald-100 dark:bg-emerald-950 px-3 py-1 text-sm text-emerald-700 dark:text-emerald-300"
+            className="inline-flex items-center gap-1 rounded-full bg-emerald-100 px-3 py-1 text-sm font-medium text-emerald-700 dark:bg-emerald-950 dark:text-emerald-300"
           >
             Wrapped content
           </Slot>

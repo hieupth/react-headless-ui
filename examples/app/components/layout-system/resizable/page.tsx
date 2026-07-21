@@ -42,8 +42,10 @@ export default function ResizablePage() {
   initialWidth={280}
   initialHeight={160}
   handles={['right','bottom','bottom-right','left','top','top-left','top-right','bottom-left']}
+  handlesVisible
+  className="border border-gray-300 rounded-md dark:border-gray-600"
 >
-  <div>Drag any edge or corner</div>
+  <div className={\`${boxClasses}\`}>Drag any edge or corner</div>
 </Resizable>`}
         >
           <Resizable
@@ -51,7 +53,7 @@ export default function ResizablePage() {
             initialHeight={160}
             handles={['right', 'bottom', 'bottom-right', 'left', 'top', 'top-left', 'top-right', 'bottom-left']}
             handlesVisible
-            className="border border-gray-300 dark:border-gray-600 rounded-md"
+            className="border border-gray-300 rounded-md dark:border-gray-600"
           >
             <div className={boxClasses}>Drag any edge or corner</div>
           </Resizable>
@@ -71,8 +73,10 @@ export default function ResizablePage() {
   initialHeight={120}
   handles={['right']}
   constraints={{ minWidth: 120, maxWidth: 400 }}
+  handlesVisible
+  className="border border-gray-300 rounded-md dark:border-gray-600"
 >
-  <div>Horizontal only, 120–400px</div>
+  <div className={\`${boxClasses}\`}>Horizontal only, 120–400px</div>
 </Resizable>`}
         >
           <Resizable
@@ -81,7 +85,7 @@ export default function ResizablePage() {
             handles={['right']}
             constraints={{ minWidth: 120, maxWidth: 400 }}
             handlesVisible
-            className="border border-gray-300 dark:border-gray-600 rounded-md"
+            className="border border-gray-300 rounded-md dark:border-gray-600"
           >
             <div className={boxClasses}>Horizontal only, 120–400px</div>
           </Resizable>
@@ -100,8 +104,10 @@ export default function ResizablePage() {
   initialHeight={160}
   handles={['bottom-right']}
   constraints={{ aspectRatio: 1 }}
+  handlesVisible
+  className="border border-gray-300 rounded-md dark:border-gray-600"
 >
-  <div>Square (1:1)</div>
+  <div className={\`${boxClasses}\`}>Square (1:1)</div>
 </Resizable>`}
         >
           <Resizable
@@ -110,7 +116,7 @@ export default function ResizablePage() {
             handles={['bottom-right']}
             constraints={{ aspectRatio: 1 }}
             handlesVisible
-            className="border border-gray-300 dark:border-gray-600 rounded-md"
+            className="border border-gray-300 rounded-md dark:border-gray-600"
           >
             <div className={boxClasses}>Square (1:1)</div>
           </Resizable>
