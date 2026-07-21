@@ -153,7 +153,14 @@ actions.addToast({
   variant: 'info',
   dismissible: true,
   action: { label: 'View', onClick: () => {} },
-});`}
+});
+
+{/* Each toast renders with: theme the emitted toast class hook, or style inline:
+      .toast { @apply flex items-start justify-between gap-3 rounded-lg border p-4 shadow-lg bg-white dark:bg-gray-900; }
+  success → bg-emerald-50 border-emerald-200 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-200
+  error   → bg-red-50 border-red-200 text-red-800 dark:bg-red-950 dark:text-red-200
+  warning → bg-amber-50 border-amber-200 text-amber-800 dark:bg-amber-950 dark:text-amber-200
+  info    → bg-blue-50 border-blue-200 text-blue-800 dark:bg-blue-950 dark:text-blue-200 */}`}
         >
           <ToastPlayground />
         </Demo>

@@ -35,9 +35,25 @@ export default function TooltipPage() {
           <code>delayShow</code> / <code>delayHide</code> prevent flicker.
         </p>
         <Demo
-          code={`<SimpleTooltip content="Copy to clipboard" position="top">
-  <button aria-label="Copy">⧉</button>
-</SimpleTooltip>`}
+          code={`{/* Tooltip portals to document.body. Theme the emitted tooltip class hook:
+      .tooltip { @apply pointer-events-none whitespace-nowrap rounded bg-gray-900 px-2 py-1 text-xs text-white shadow dark:bg-gray-700; } */}
+<div className="relative inline-flex">
+  <button
+    type="button"
+    aria-label="Copy"
+    className="rounded-md border border-gray-300 px-3 py-2 text-sm dark:border-gray-600"
+  >
+    ⧉
+  </button>
+  {open && (
+    <span
+      role="tooltip"
+      className="pointer-events-none absolute -top-9 left-1/2 -translate-x-1/2 whitespace-nowrap rounded bg-gray-900 px-2 py-1 text-xs text-white shadow"
+    >
+      Copy to clipboard
+    </span>
+  )}
+</div>`}
         >
           <div className="relative inline-flex">
             <button

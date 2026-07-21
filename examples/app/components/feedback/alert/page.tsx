@@ -43,10 +43,29 @@ export default function AlertPage() {
           <code>destructive</code>.
         </p>
         <Demo
-          code={`<Alert variant="default" open title="Heads up" description="A new version is available." />
-<Alert variant="success" open title="Saved" description="Your changes were saved." />
-<Alert variant="warning" open title="Check storage" description="You're near your quota." />
-<Alert variant="destructive" open title="Failed" description="The upload could not complete." />`}
+          code={`const base = 'flex items-start gap-3 rounded-lg border p-4 text-sm w-full max-w-md shadow-sm';
+
+<Alert variant="default" open className={\`\${base} bg-gray-50 border-gray-200 text-gray-800 dark:bg-gray-900 dark:border-gray-700 dark:text-gray-200\`}>
+  <span aria-hidden>ℹ️</span>
+  <div>
+    <p className="font-semibold">Heads up</p>
+    <p className="opacity-90">A new version is available.</p>
+  </div>
+</Alert>
+<Alert variant="success" open className={\`\${base} bg-emerald-50 border-emerald-200 text-emerald-800 dark:bg-emerald-950 dark:border-emerald-900 dark:text-emerald-200\`}>
+  <span aria-hidden>✅</span>
+  <div>
+    <p className="font-semibold">Saved</p>
+    <p className="opacity-90">Your changes were saved.</p>
+  </div>
+</Alert>
+<Alert variant="destructive" open className={\`\${base} bg-red-50 border-red-200 text-red-800 dark:bg-red-950 dark:border-red-900 dark:text-red-200\`}>
+  <span aria-hidden>⚠️</span>
+  <div>
+    <p className="font-semibold">Failed</p>
+    <p className="opacity-90">The upload could not complete.</p>
+  </div>
+</Alert>`}
         >
           <div className="flex flex-col items-stretch gap-3 w-full">
             <Alert variant="default" open className={`${alertBase} ${variantClasses.default}`}>
@@ -88,6 +107,7 @@ export default function AlertPage() {
   dismissible
   title="Session expiring"
   description="You'll be signed out in 5 minutes."
+  className="flex items-start gap-3 rounded-lg border p-4 text-sm w-full max-w-md shadow-sm bg-amber-50 border-amber-200 text-amber-800 dark:bg-amber-950 dark:border-amber-900 dark:text-amber-200"
   onDismiss={() => setOpen(false)}
 />`}
         >

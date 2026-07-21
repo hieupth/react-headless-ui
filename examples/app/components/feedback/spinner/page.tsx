@@ -45,9 +45,14 @@ export default function SpinnerPage() {
           Eight density steps from <code>xs</code> to <code>4xl</code>.
         </p>
         <Demo
-          code={`<Spinner active variant="spin" size="sm" />
-<Spinner active variant="spin" size="md" />
-<Spinner active variant="spin" size="lg" />`}
+          code={`const dim = { sm: 'h-4 w-4 border-2', md: 'h-6 w-6 border-2', lg: 'h-9 w-9 border-[3px]' };
+
+<Spinner active variant="spin" size="sm" showLabel={false}
+  className={\`inline-block animate-spin rounded-full border-gray-200 border-t-blue-600 \${dim.sm}\`} />
+<Spinner active variant="spin" size="md" showLabel={false}
+  className={\`inline-block animate-spin rounded-full border-gray-200 border-t-blue-600 \${dim.md}\`} />
+<Spinner active variant="spin" size="lg" showLabel={false}
+  className={\`inline-block animate-spin rounded-full border-gray-200 border-t-blue-600 \${dim.lg}\`} />`}
         >
           <div className="flex items-center justify-center gap-6 text-blue-600">
             <Ring size="sm" />
@@ -65,8 +70,15 @@ export default function SpinnerPage() {
           <code>fast</code>). Set <code>showLabel</code> to announce a status.
         </p>
         <Demo
-          code={`<Spinner active variant="dots" showLabel label="Loading data" />
-<Spinner active variant="bars" speed="fast" />`}
+          code={`{/* dots — staggered bounce */}
+<div className="flex items-center gap-1">
+  {[0, 0.15, 0.3, 0.45].map((d, i) => (
+    <span key={i}
+      className="h-5 w-1.5 animate-bounce rounded-full bg-blue-600"
+      style={{ animationDelay: \`\${d}s\` }} />
+  ))}
+</div>
+<span className="text-xs text-gray-500">Loading data</span>`}
         >
           <div className="flex flex-col items-center justify-center gap-4 text-blue-600">
             <div className="flex items-center gap-1">

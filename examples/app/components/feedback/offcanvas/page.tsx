@@ -35,15 +35,25 @@ export default function OffcanvasPage() {
         <Demo
           code={`const [open, setOpen] = useState(false);
 
+<button
+  type="button"
+  onClick={() => setOpen(true)}
+  className="inline-flex items-center justify-center gap-2 rounded-md bg-gray-900 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-gray-800 dark:bg-white dark:text-gray-900"
+>
+  Open menu
+</button>
+
+{/* Offcanvas portals a backdrop to document.body. Theme the emitted class hooks:
+      .offcanvas-backdrop { @apply fixed inset-0 z-50 bg-black/50; }
+      .offcanvas-panel    { @apply fixed inset-y-0 left-0 z-50 w-full max-w-xs bg-white p-4 shadow-xl dark:bg-gray-900 dark:text-gray-100; } */}
 <Offcanvas open={open} onToggle={setOpen} position="left" size="md" showBackdrop>
-  <OffcanvasTrigger>Menu</OffcanvasTrigger>
   {/* …nav items… */}
 </Offcanvas>`}
         >
           <button
             type="button"
             onClick={() => setOpen(true)}
-            className="rounded-md bg-gray-900 px-4 py-2 text-sm font-medium text-white hover:bg-gray-700 dark:bg-white dark:text-gray-900"
+            className="inline-flex items-center justify-center gap-2 rounded-md bg-gray-900 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-gray-800 dark:bg-white dark:text-gray-900"
           >
             Open menu
           </button>

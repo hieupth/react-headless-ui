@@ -30,9 +30,9 @@ export default function SkeletonPage() {
           <code>width</code> / <code>height</code> for exact dimensions.
         </p>
         <Demo
-          code={`<Skeleton variant="text" />
+          code={`<Skeleton variant="text" width={220} />
 <Skeleton variant="circular" width={48} height={48} />
-<Skeleton variant="rectangular" width={200} height={100} />`}
+<Skeleton variant="rectangular" width={200} height={80} />`}
         >
           <div className="flex flex-col items-center gap-4">
             <Skeleton variant="text" width={220} />
@@ -66,12 +66,14 @@ export default function SkeletonPage() {
           Combine shapes to preview a loading card while real data fetches.
         </p>
         <Demo
-          code={`<div className="card">
+          code={`<div className="flex items-center gap-3 w-full max-w-sm rounded-lg border border-gray-200 bg-white p-4 shadow-sm dark:border-gray-700 dark:bg-gray-900">
   <Skeleton variant="circular" width={40} height={40} />
-  <Skeleton variant="text" lines={2} />
+  <div className="flex-1">
+    <Skeleton variant="text" lines={2} />
+  </div>
 </div>`}
         >
-          <div className="flex items-center gap-3 w-full max-w-sm">
+          <div className="flex items-center gap-3 w-full max-w-sm rounded-lg border border-gray-200 bg-white p-4 shadow-sm dark:border-gray-700 dark:bg-gray-900">
             <Skeleton variant="circular" width={40} height={40} />
             <div className="flex-1">
               <Skeleton variant="text" lines={2} />
