@@ -59,13 +59,17 @@ export default function ToolbarPage() {
         <Demo
           code={`<Toolbar
   defaultItems={[
-    { id: 'new', label: 'New', type: 'button', variant: 'primary' },
-    { id: 'open', label: 'Open', type: 'button' },
-    { id: 'sep', label: '', type: 'separator' },
-    { id: 'copy', label: 'Copy', type: 'button' },
+    { id: 'new', label: 'New', type: 'button', icon: <span aria-hidden>＋</span>, variant: 'primary' },
+    { id: 'open', label: 'Open', type: 'button', icon: <span aria-hidden>📂</span> },
+    { id: 'sep1', label: '', type: 'separator' },
+    { id: 'cut', label: 'Cut', type: 'button', icon: <span aria-hidden>✂</span> },
+    { id: 'copy', label: 'Copy', type: 'button', icon: <span aria-hidden>⧉</span> },
     { id: 'paste', label: 'Paste', type: 'button', disabled: true },
+    { id: 'sep2', label: '', type: 'separator' },
+    { id: 'undo', label: 'Undo', type: 'button' },
   ]}
   orientation="horizontal"
+  className="flex items-center gap-2 rounded-lg border border-gray-200 bg-white p-2 shadow-sm dark:border-gray-700 dark:bg-gray-900"
   onItemActivate={(item) => console.log(item.id)}
 />`}
         >
@@ -73,6 +77,7 @@ export default function ToolbarPage() {
             defaultItems={fileItems}
             orientation="horizontal"
             label="File actions"
+            className="flex items-center gap-2 rounded-lg border border-gray-200 bg-white p-2 shadow-sm dark:border-gray-700 dark:bg-gray-900"
             onItemActivate={(item) => setLastActivated(String(item.id))}
           />
         </Demo>
@@ -89,7 +94,9 @@ export default function ToolbarPage() {
           code={`<Toolbar
   defaultItems={verticalItems}
   orientation="vertical"
+  size="sm"
   showLabels={false}
+  className="inline-flex flex-col items-center gap-2 rounded-lg border border-gray-200 bg-white p-2 shadow-sm dark:border-gray-700 dark:bg-gray-900"
 />`}
         >
           <Toolbar
@@ -97,6 +104,7 @@ export default function ToolbarPage() {
             orientation="vertical"
             size="sm"
             showLabels={false}
+            className="inline-flex flex-col items-center gap-2 rounded-lg border border-gray-200 bg-white p-2 shadow-sm dark:border-gray-700 dark:bg-gray-900"
             onItemActivate={(item) => setLastActivated(String(item.id))}
           />
         </Demo>
@@ -110,9 +118,25 @@ export default function ToolbarPage() {
         </p>
         <Demo
           code={`<Toolbar
-  defaultItems={items}
+  defaultItems={[
+    { id: 'left', label: 'Left', type: 'button' },
+    { id: 'center', label: 'Center', type: 'button' },
+    { id: 'right', label: 'Right', type: 'button' },
+  ]}
+  showBorder={false}
+  className="inline-flex items-center gap-1 rounded-lg border border-gray-200 bg-white p-1 shadow-sm dark:border-gray-700 dark:bg-gray-900"
   renderItem={({ item, isActive, onClick }) => (
-    <button onClick={onClick} data-active={isActive}>
+    <button
+      type="button"
+      onClick={onClick}
+      data-active={isActive}
+      className={
+        'rounded-md px-3 py-1.5 text-sm font-medium transition-colors ' +
+        (isActive
+          ? 'bg-blue-600 text-white'
+          : 'text-gray-700 hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-800')
+      }
+    >
       {item.label}
     </button>
   )}
@@ -125,15 +149,17 @@ export default function ToolbarPage() {
               { id: 'right', label: 'Right', type: 'button' },
             ]}
             showBorder={false}
+            className="inline-flex items-center gap-1 rounded-lg border border-gray-200 bg-white p-1 shadow-sm dark:border-gray-700 dark:bg-gray-900"
             renderItem={({ item, isActive, onClick }) => (
               <button
                 type="button"
                 onClick={onClick}
+                data-active={isActive}
                 className={
-                  'px-3 py-1.5 rounded-md text-sm font-medium transition-colors ' +
+                  'rounded-md px-3 py-1.5 text-sm font-medium transition-colors ' +
                   (isActive
                     ? 'bg-blue-600 text-white'
-                    : 'text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800')
+                    : 'text-gray-700 hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-800')
                 }
               >
                 {item.label}

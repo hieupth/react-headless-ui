@@ -56,6 +56,7 @@ export default function SortablePage() {
   ]}
   direction="vertical"
   showHandles
+  className="w-full max-w-sm space-y-2 rounded-lg border border-gray-200 bg-white p-4 shadow-sm dark:border-gray-700 dark:bg-gray-900"
   onReorder={(items) => console.log(items)}
 />`}
         >
@@ -64,6 +65,7 @@ export default function SortablePage() {
               defaultItems={initialTasks}
               direction="vertical"
               showHandles
+              className="w-full max-w-sm space-y-2 rounded-lg border border-gray-200 bg-white p-4 shadow-sm dark:border-gray-700 dark:bg-gray-900"
               onReorder={(items) =>
                 setOrder(items.map((i) => i.id).join(' → '))
               }
@@ -82,10 +84,15 @@ export default function SortablePage() {
           code={`<Sortable
   defaultItems={horizontalItems}
   direction="horizontal"
+  className="flex w-full gap-2 rounded-lg border border-gray-200 bg-white p-4 shadow-sm dark:border-gray-700 dark:bg-gray-900"
 />`}
         >
           <div className="w-full">
-            <Sortable defaultItems={horizontalItems} direction="horizontal" />
+            <Sortable
+              defaultItems={horizontalItems}
+              direction="horizontal"
+              className="flex w-full gap-2 rounded-lg border border-gray-200 bg-white p-4 shadow-sm dark:border-gray-700 dark:bg-gray-900"
+            />
           </div>
         </Demo>
       </section>
@@ -100,9 +107,21 @@ export default function SortablePage() {
         <Demo
           code={`<Sortable
   defaultItems={items}
+  direction="vertical"
+  className="w-full max-w-sm space-y-2 rounded-lg border border-gray-200 bg-white p-4 shadow-sm dark:border-gray-700 dark:bg-gray-900"
   renderItem={({ item, isDragging, dragProps }) => (
-    <div {...dragProps} style={{ opacity: isDragging ? 0.4 : 1 }}>
-      {item.label}
+    <div
+      {...dragProps}
+      className={
+        'flex items-center gap-2 rounded-md border px-3 py-2 text-sm ' +
+        (isDragging
+          ? 'border-blue-400 bg-blue-50 dark:bg-blue-950'
+          : 'border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900')
+      }
+    >
+      <span className="cursor-grab text-gray-400" aria-hidden>⠿</span>
+      <span className="flex-1">{item.label}</span>
+      {item.disabled && <span className="text-xs text-gray-400">locked</span>}
     </div>
   )}
 />`}
@@ -111,6 +130,7 @@ export default function SortablePage() {
             <Sortable
               defaultItems={initialTasks}
               direction="vertical"
+              className="w-full max-w-sm space-y-2 rounded-lg border border-gray-200 bg-white p-4 shadow-sm dark:border-gray-700 dark:bg-gray-900"
               renderItem={({ item, isDragging, dragProps }) => (
                 <div
                   {...dragProps}
@@ -118,10 +138,10 @@ export default function SortablePage() {
                     'flex items-center gap-2 rounded-md border px-3 py-2 text-sm ' +
                     (isDragging
                       ? 'border-blue-400 bg-blue-50 dark:bg-blue-950'
-                      : 'border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900')
+                      : 'border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900')
                   }
                 >
-                  <span className="text-gray-400 cursor-grab" aria-hidden>⠿</span>
+                  <span className="cursor-grab text-gray-400" aria-hidden>⠿</span>
                   <span className="flex-1">{item.label}</span>
                   {item.disabled && (
                     <span className="text-xs text-gray-400">locked</span>

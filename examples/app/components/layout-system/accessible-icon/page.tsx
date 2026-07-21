@@ -53,10 +53,12 @@ export default function AccessibleIconPage() {
           Inspect the markup to see the difference.
         </p>
         <Demo
-          code={`<AccessibleIcon icon={<StarSvg />} label="Favorite" size={32} color="#f59e0b" />
-<AccessibleIcon icon={<HeartSvg />} decorative size={32} color="#ef4444" />`}
+          code={`<div className="flex items-center gap-8 rounded-lg border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-700 dark:bg-gray-900">
+  <AccessibleIcon icon={<StarSvg />} label="Favorite" size={32} color="#f59e0b" />
+  <AccessibleIcon icon={<HeartSvg />} decorative size={32} color="#ef4444" />
+</div>`}
         >
-          <div className="flex items-center gap-8">
+          <div className="flex items-center gap-8 rounded-lg border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-700 dark:bg-gray-900">
             <AccessibleIcon
               icon={<StarSvg />}
               label="Favorite"
@@ -81,11 +83,13 @@ export default function AccessibleIconPage() {
           available via the hook&apos;s <code>rotate()</code> action.
         </p>
         <Demo
-          code={`<AccessibleIcon icon={<StarSvg />} label="Small" size={16} color="#3b82f6" />
-<AccessibleIcon icon={<StarSvg />} label="Medium" size={28} color="#3b82f6" />
-<AccessibleIcon icon={<StarSvg />} label="Large" size={44} color="#3b82f6" />`}
+          code={`<div className="flex items-end gap-8 rounded-lg border border-gray-200 bg-white p-6 text-blue-600 shadow-sm dark:border-gray-700 dark:bg-gray-900 dark:text-blue-400">
+  <AccessibleIcon icon={<StarSvg />} label="Small" size={16} color="#3b82f6" />
+  <AccessibleIcon icon={<StarSvg />} label="Medium" size={28} color="#3b82f6" />
+  <AccessibleIcon icon={<StarSvg />} label="Large" size={44} color="#3b82f6" />
+</div>`}
         >
-          <div className="flex items-end gap-8 text-blue-600 dark:text-blue-400">
+          <div className="flex items-end gap-8 rounded-lg border border-gray-200 bg-white p-6 text-blue-600 shadow-sm dark:border-gray-700 dark:bg-gray-900 dark:text-blue-400">
             <AccessibleIcon icon={<StarSvg />} label="Small star" size={16} color="#3b82f6" />
             <AccessibleIcon icon={<StarSvg />} label="Medium star" size={28} color="#3b82f6" />
             <AccessibleIcon icon={<StarSvg />} label="Large star" size={44} color="#3b82f6" />
@@ -107,6 +111,7 @@ export default function AccessibleIconPage() {
   size={28}
   color="#ef4444"
   interactive
+  className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-red-50 transition-colors hover:bg-red-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-500 dark:bg-red-950 dark:hover:bg-red-900"
   onClick={() => console.log('liked')}
 />`}
         >
@@ -116,6 +121,7 @@ export default function AccessibleIconPage() {
             size={28}
             color="#ef4444"
             interactive
+            className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-red-50 transition-colors hover:bg-red-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-500 dark:bg-red-950 dark:hover:bg-red-900"
             onClick={() => undefined}
           />
         </Demo>
