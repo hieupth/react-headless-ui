@@ -1,6 +1,6 @@
 "use client";
 /**
- * Headless hooks for React UI Forge.
+ * Headless hooks for @hieupth/react-headless-ui.
  * Behavior-only hooks (composition over inheritance).
  */
 

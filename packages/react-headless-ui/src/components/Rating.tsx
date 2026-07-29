@@ -118,8 +118,7 @@ export const Rating = forwardRef<HTMLDivElement, RatingProps>(({
 
     return (
       <svg
-        className={`
-          rating-star
+        className={`rating-star
           ${filled ? 'rating-star-filled' : 'rating-star-empty'}
           ${half ? 'rating-star-half' : ''}
           ${hover ? 'rating-star-hover' : ''}
@@ -158,8 +157,7 @@ export const Rating = forwardRef<HTMLDivElement, RatingProps>(({
 
     return (
       <svg
-        className={`
-          rating-heart
+        className={`rating-heart
           ${filled ? 'rating-heart-filled' : 'rating-heart-empty'}
           ${half ? 'rating-heart-half' : ''}
           ${hover ? 'rating-heart-hover' : ''}
@@ -198,8 +196,7 @@ export const Rating = forwardRef<HTMLDivElement, RatingProps>(({
 
     return (
       <svg
-        className={`
-          rating-thumbs
+        className={`rating-thumbs
           ${filled ? 'rating-thumbs-up' : 'rating-thumbs-down'}
           ${hover ? 'rating-thumbs-hover' : ''}
           ${focused ? 'rating-thumbs-focused' : ''}

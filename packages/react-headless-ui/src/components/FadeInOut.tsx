@@ -7,7 +7,6 @@
 import React, { forwardRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useFadeInOut, type UseFadeInOutProps } from '../hooks';
-import { useTheme } from '../providers/ThemeProvider';
 
 export interface FadeInOutProps extends UseFadeInOutProps {
   /** Additional CSS class names */
@@ -51,7 +50,6 @@ export const FadeInOut = forwardRef<HTMLDivElement, FadeInOutProps>(({
   onAnimationComplete,
   onOpacityChange
 }, ref) => {
-  const theme = useTheme();
   const {
     state,
     actions,

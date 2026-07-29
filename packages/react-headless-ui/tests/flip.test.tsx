@@ -44,7 +44,7 @@ describe('Flip', () => {
         Card
       </Flip>
     );
-    const inner = container.querySelector('[data-testid="flip"] > div')!;
+    const inner = container.querySelector('[data-testid="flip"] > div') as HTMLElement;
     expect(inner.style.transform).toContain('rotateY');
   });
 
@@ -58,7 +58,7 @@ describe('Flip', () => {
         Card
       </Flip>
     );
-    const inner = container.querySelector('[data-testid="flip"] > div')!;
+    const inner = container.querySelector('[data-testid="flip"] > div') as HTMLElement;
     expect(inner.style.transform).toMatch(re);
   });
 
@@ -68,7 +68,7 @@ describe('Flip', () => {
         Card
       </Flip>
     );
-    const inner = container.querySelector('[data-testid="flip"] > div')!;
+    const inner = container.querySelector('[data-testid="flip"] > div') as HTMLElement;
     expect(inner.style.transform).toMatch(/rotateX/);
   });
 
@@ -78,7 +78,7 @@ describe('Flip', () => {
         Card
       </Flip>
     );
-    const inner = container.querySelector('[data-testid="flip"] > div')!;
+    const inner = container.querySelector('[data-testid="flip"] > div') as HTMLElement;
     expect(inner.style.transform).toBe('none');
   });
 

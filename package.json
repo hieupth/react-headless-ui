@@ -2,18 +2,12 @@
   "name": "react-headless-ui",
   "version": "0.0.1",
   "description": "Headless React UI system inspired by Flutter patterns \u2014 composition over inheritance.",
-  "workspaces": [
-    "packages/*",
-    "examples/*"
-  ],
   "scripts": {
     "build": "pnpm --filter @hieupth/react-headless-ui build",
     "dev": "pnpm --filter showcase dev",
     "test": "pnpm --filter @hieupth/react-headless-ui test",
-    "test:e2e": "playwright test --config examples/next-demo/playwright.config.ts",
     "typecheck": "pnpm -r run typecheck",
-    "lint": "pnpm -r run lint",
-    "clean": "rm -rf node_modules packages/*/dist examples/*/.next examples/*/out"
+    "clean": "rm -rf node_modules packages/*/dist packages/*/*.tsbuildinfo examples/.next examples/out examples/tsconfig.tsbuildinfo packages/react-headless-ui/coverage test-results blob-report"
   },
   "keywords": [
     "react",
@@ -25,16 +19,8 @@
   ],
   "author": "Hieu Pham",
   "license": "AGPL-3.0, Commercial license required",
-  "packageManager": "pnpm@10.17.1",
-  "devDependencies": {
-    "@playwright/test": "^1.56.0",
-    "@types/node": "^24.5.2",
-    "@types/react": "^19.1.15",
-    "typescript": "^5.9.2"
+  "engines": {
+    "node": ">=22"
   },
-  "pnpm": {
-    "overrides": {
-      "serialize-javascript": ">=7.0.3"
-    }
-  }
+  "packageManager": "pnpm@10.17.1"
 }

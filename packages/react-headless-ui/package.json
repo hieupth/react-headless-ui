@@ -15,9 +15,7 @@
   },
   "files": [
     "dist",
-    "README.md",
-    "CHANGELOG.md",
-    "LICENSE"
+    "README.md"
   ],
   "sideEffects": false,
   "scripts": {
@@ -25,9 +23,10 @@
     "dev": "tsc -p tsconfig.build.json --watch",
     "test": "vitest run",
     "test:watch": "vitest",
-    "coverage": "vitest run --coverage",
+    "coverage": "vitest run --no-file-parallelism --coverage",
     "typecheck": "tsc --noEmit",
-    "prepublishOnly": "pnpm build && cp ../../README.md README.md && cp ../../LICENSE LICENSE"
+    "typecheck:tests": "tsc --noEmit -p tsconfig.tests.json",
+    "prepack": "cp ../../README.md README.md && cp ../../LICENSE LICENSE"
   },
   "keywords": [
     "react",
@@ -49,29 +48,31 @@
     "url": "https://github.com/hieupth/react-headless-ui/issues"
   },
   "engines": {
-    "node": ">=18"
+    "node": ">=22"
   },
   "publishConfig": {
     "access": "public"
   },
   "peerDependencies": {
+    "@tanstack/react-virtual": "^3",
     "framer-motion": "^12",
     "react": ">=19",
     "react-dom": ">=19"
   },
   "peerDependenciesMeta": {
-    "framer-motion": {
+    "@tanstack/react-virtual": {
       "optional": true
     }
   },
   "dependencies": {
-    "@tanstack/react-virtual": "^3.14.7",
-    "react-hook-form": "^7"
+    "react-hook-form": "^7.65.0"
   },
   "devDependencies": {
+    "@tanstack/react-virtual": "^3.14.7",
     "@testing-library/jest-dom": "^6.9.1",
     "@testing-library/react": "^16.3.2",
     "@testing-library/user-event": "^14.6.1",
+    "@types/node": "^22.10.0",
     "@types/react": "^19.1.15",
     "@types/react-dom": "^19.1.15",
     "@vitest/coverage-v8": "^4.1.9",
@@ -80,7 +81,7 @@
     "jsdom": "^29.1.1",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
-    "react-hook-form": "^7.65.0",
+    "react-hook-form": "^7",
     "typescript": "^5.9.2",
     "vitest": "^4.1.9"
   }

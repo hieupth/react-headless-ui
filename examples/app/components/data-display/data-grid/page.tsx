@@ -87,6 +87,7 @@ export default function DataGridPage() {
             showSelection
             showPagination
             pageSizeOptions={[5, 10, 25]}
+            onSelectionChange={(s) => console.log(s)}
             className="w-full rounded-lg border border-gray-200 text-sm dark:border-gray-700 [&_td]:px-3 [&_td]:py-2 [&_th]:px-3 [&_th]:py-2 [&_th]:text-left [&_th]:font-semibold"
           />
         </Demo>
@@ -95,23 +96,23 @@ export default function DataGridPage() {
       <section className="space-y-4">
         <h2 className="text-xl font-semibold">Virtualized</h2>
         <p className="text-sm text-gray-600 dark:text-gray-400">
-          With <code>virtualScrolling.enabled</code>, large grids render only
-          the visible rows plus an overscan buffer — governed by{' '}
-          <code>itemHeight</code> and a max body height.
+          Set <code>virtualize</code> to window the body so large grids render
+          only the visible rows. It kicks in automatically once{' '}
+          <code>data</code> grows past <code>virtualizeThreshold</code> (default{' '}
+          100), or set <code>virtualize</code> explicitly to force it on.
         </p>
         <Demo
           code={`<DataGrid
   columns={columns}
   data={largeData}
-  height={300}
-  virtualScrolling={{ enabled: true, itemHeight: 40, overscan: 5 }}
+  virtualize
+  virtualizeThreshold={100}
   className="w-full rounded-lg border border-gray-200 text-sm dark:border-gray-700 [&_td]:px-3 [&_td]:py-2 [&_th]:px-3 [&_th]:py-2 [&_th]:text-left [&_th]:font-semibold"
 />`}
         >
           <div className="text-xs text-gray-500 text-center py-2 border border-dashed border-gray-300 dark:border-gray-600 rounded w-full">
             Code-only: pass a large <code>data</code> array with{' '}
-            <code>virtualScrolling={'{ enabled: true }'}</code> to window the
-            body.
+            <code>virtualize</code> to window the body.
           </div>
         </Demo>
       </section>
@@ -127,8 +128,8 @@ export default function DataGridPage() {
             { name: 'pagination / defaultPagination', type: 'GridPagination', default: '—', description: 'Controlled / initial paging.' },
             { name: 'showHeader / showPagination / showSelection / showRowNumbers', type: 'boolean', default: '—', description: 'Feature visibility toggles.' },
             { name: 'pageSizeOptions', type: 'number[]', default: '—', description: 'Page-size choices for the pager.' },
-            { name: 'virtualScrolling', type: "{ enabled?, itemHeight?, overscan? }", default: '—', description: 'Body virtualization config.' },
-            { name: 'height / width', type: "number | string", default: '—', description: 'Grid dimensions.' },
+            { name: 'virtualize', type: 'boolean', default: 'auto', description: 'Force body virtualization on/off. Auto-enables past virtualizeThreshold.' },
+            { name: 'virtualizeThreshold', type: 'number', default: '100', description: 'Row count at which virtualization auto-enables.' },
             { name: 'onSortChange / onFilterChange / onSelectionChange', type: '(value) => void', default: '—', description: 'Feature change callbacks.' },
             { name: 'cellRenderer / headerRenderer', type: '(…) => ReactNode', default: '—', description: 'Per-cell / per-header render overrides.' },
           ]}

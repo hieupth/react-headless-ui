@@ -152,14 +152,14 @@ describe('usePortal hook — extended branches', () => {
       await Promise.resolve();
     });
     // No throw, element simply not inserted into a parent.
-    expect(ref.current.parentNode).toBeFalsy();
+    expect(ref.current!.parentNode).toBeFalsy();
     warn.mockRestore();
   });
 
   it('setZIndex mutates the portal element style', () => {
     const { api, ref } = setup({ cleanupContainer: false });
     act(() => api.actions.setZIndex(777));
-    expect(ref.current.style.zIndex).toBe('777');
+    expect(ref.current!.style.zIndex).toBe('777');
   });
 
   it('focus() focuses the first focusable descendant', () => {
@@ -303,7 +303,7 @@ describe('usePortal hook — extended branches', () => {
   it('unmount is a no-op when there is no parentNode', async () => {
     const { api, ref } = setup({ cleanupContainer: false });
     // Detach: ensure no parent.
-    expect(ref.current.parentNode).toBeNull();
+    expect(ref.current!.parentNode).toBeNull();
     await expect(act(async () => {
       await api.actions.unmount();
     })).resolves.toBeUndefined();
@@ -342,8 +342,8 @@ describe('usePortal hook — extended branches', () => {
     await act(async () => {
       await Promise.resolve();
     });
-    expect(ref.current.getAttribute('data-portal')).toBe('tooltip');
-    expect(ref.current.getAttribute('data-z-index')).toBe('1234');
+    expect(ref.current!.getAttribute('data-portal')).toBe('tooltip');
+    expect(ref.current!.getAttribute('data-z-index')).toBe('1234');
   });
 
   it('ensureContainer reuses an existing default container on second mount', async () => {

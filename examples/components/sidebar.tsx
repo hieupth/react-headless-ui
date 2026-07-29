@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { useState, type ReactNode } from 'react';
+import { useState } from 'react';
 import {
   componentCategories,
   getComponentsByCategory,
@@ -63,6 +63,9 @@ export function Sidebar() {
     >
       {sections.map((section) => {
         const isCollapsed = collapsed[section.title];
+        // Stable per-section id so the disclosure button references its list
+        // region (aria-controls ↔ id), letting assistive tech jump to it.
+        const listId = `sidebar-section-${section.title.toLowerCase().replace(/\s+/g, '-')}`;
         return (
           <div key={section.title} className="mb-4">
             <button
@@ -70,15 +73,15 @@ export function Sidebar() {
               onClick={() => toggle(section.title)}
               className="flex w-full items-center justify-between px-2 py-1 text-xs font-semibold uppercase tracking-wide text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200"
               aria-expanded={!isCollapsed}
+              aria-controls={listId}
             >
               <span>{section.title}</span>
               <span aria-hidden="true" className="transition-transform" style={{ transform: isCollapsed ? 'rotate(-90deg)' : 'none' }}>
                 ▾
               </span>
             </button>
-            {!isCollapsed && (
-              <ul className="mt-1 space-y-0.5">
-                {section.links.map((link) => {
+            <ul id={listId} className="mt-1 space-y-0.5" hidden={isCollapsed}>
+              {section.links.map((link) => {
                   const active = isActive(pathname, link.href);
                   return (
                     <li key={link.href}>
@@ -95,8 +98,7 @@ export function Sidebar() {
                     </li>
                   );
                 })}
-              </ul>
-            )}
+            </ul>
           </div>
         );
       })}
@@ -109,16 +111,6 @@ function isActive(pathname: string | null, href: string): boolean {
   if (!pathname) return false;
   const norm = (p: string) => p.replace(/\/+$/, '') || '/';
   return norm(pathname) === norm(href);
-}
-
-/** Convenience wrapper for layout composition. */
-export function SidebarLayout({ children }: { children: ReactNode }) {
-  return (
-    <div className="flex min-h-screen">
-      <Sidebar />
-      <main className="flex-1 min-w-0">{children}</main>
-    </div>
-  );
 }
 
 export default Sidebar;

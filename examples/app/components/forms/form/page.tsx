@@ -64,6 +64,51 @@ function SignInForm() {
   );
 }
 
+function ControlledSubmitForm() {
+  const [phase, setPhase] = useState<'idle' | 'done'>('idle');
+  return (
+    <Form
+      defaultValues={{ username: '' }}
+      onSubmit={async () => {
+        // Simulate an async request so state.isSubmitting flips true.
+        await new Promise((resolve) => setTimeout(resolve, 800));
+        setPhase('done');
+      }}
+    >
+      {(_rhf: UseFormReturns['rhf'], state, actions) => (
+        <div className="w-full max-w-sm space-y-3">
+          <input
+            className={`${inputCls} ${state.submissionError ? 'border-red-500' : ''}`}
+            placeholder="username"
+            {..._rhf.register('username', { required: 'Username is required' })}
+          />
+          <div className="flex gap-2">
+            <button
+              type="button"
+              onClick={() => actions.submit()}
+              disabled={state.isSubmitting}
+              className="flex-1 rounded-md bg-gray-900 px-4 py-2 text-sm font-medium text-white hover:bg-gray-700 disabled:opacity-50 dark:bg-white dark:text-gray-900 dark:hover:bg-gray-200"
+            >
+              {state.isSubmitting ? '…' : 'Submit'}
+            </button>
+            <button
+              type="button"
+              onClick={() => { actions.reset(); setPhase('idle'); }}
+              disabled={state.isSubmitting}
+              className="rounded-md border border-gray-300 px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100 disabled:opacity-50 dark:border-gray-600 dark:text-gray-200 dark:hover:bg-gray-800"
+            >
+              Reset
+            </button>
+          </div>
+          {phase === 'done' && !state.isSubmitting && (
+            <p className="text-xs text-green-600">Signed in (simulated).</p>
+          )}
+        </div>
+      )}
+    </Form>
+  );
+}
+
 export default function FormPage() {
   return (
     <div className="mx-auto max-w-3xl px-6 py-12 space-y-8">
@@ -138,7 +183,7 @@ export default function FormPage() {
         </p>
         <Demo
           code={`<Form onSubmit={async (data) => { await api.signIn(data); }}>
-  {(_, state, actions) => (
+  {(rhf, state, actions) => (
     <div className="w-full max-w-sm space-y-3">
       <input
         className="w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:border-gray-600 dark:bg-gray-900 dark:text-gray-100"
@@ -154,11 +199,7 @@ export default function FormPage() {
   )}
 </Form>`}
         >
-          <p className="text-sm text-gray-500">
-            The live form above already demonstrates this pattern (submit + the
-            serialized result). Swap <code>onSubmit</code> for an async function
-            to engage the <code>isSubmitting</code> loading state.
-          </p>
+          <ControlledSubmitForm />
         </Demo>
       </section>
 

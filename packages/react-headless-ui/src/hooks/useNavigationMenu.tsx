@@ -1,6 +1,6 @@
 "use client";
 /**
- * NavigationMenu headless hook for React UI Forge components.
+ * NavigationMenu headless hook for @hieupth/react-headless-ui components.
  * Provides behavior-only hooks following Flutter patterns.
  * Manages complex navigation with dropdowns, mega menus, and nested items.
  */
@@ -14,8 +14,8 @@ import { useFocusableMixin, usePressableMixin, useSemanticMixin } from '../mixin
 export interface NavigationMenuItem {
   /** Unique identifier for the menu item */
   id: string;
-  /** Menu item label or title */
-  label: string;
+  /** Menu item label or title (omitted for `separator`/`header`/`back` items) */
+  label?: string;
   /** Menu item description */
   description?: string;
   /** Menu item icon */
@@ -277,8 +277,10 @@ export function useNavigationMenu(props: UseNavigationMenuProps): UseNavigationM
 
     const lowerQuery = query.toLowerCase();
     return items.filter(item => {
+      // Separators/headers/back items have no label and are structural — keep them.
+      if (item.type && item.type !== 'item') return true;
       // Search in label and description
-      const matchesSearch = item.label.toLowerCase().includes(lowerQuery) ||
+      const matchesSearch = (item.label && item.label.toLowerCase().includes(lowerQuery)) ||
                           (item.description && item.description.toLowerCase().includes(lowerQuery));
 
       // Recursively search in children
@@ -420,17 +422,20 @@ export function useNavigationMenu(props: UseNavigationMenuProps): UseNavigationM
 
     const currentIndex = currentItems.findIndex(item => item.id === focusedItemId);
     let nextIndex = currentIndex < currentItems.length - 1 ? currentIndex + 1 : 0;
+    const startIndex = nextIndex;
 
     let nextItem: NavigationMenuItem | null = currentItems[nextIndex];
-    // Skip disabled items and separators
+    // Skip disabled items and separators. Bound by startIndex so the loop can't
+    // cycle forever when every item at this level is disabled or a separator
+    // (the empty-items case returned early, but all-disabled did not).
     while (nextItem && (nextItem.disabled || nextItem.type === 'separator')) {
       nextIndex = nextIndex < currentItems.length - 1 ? nextIndex + 1 : 0;
-      // nextIndex is always 0..length-1 (clamped above), so it always indexes a valid item.
+      if (nextIndex === startIndex) return; // full cycle, no enabled item
       nextItem = currentItems[nextIndex];
     }
 
     // nextItem is always a valid enabled item here (the skip loop above exits
-    // only on an enabled non-separator, and the empty-items case returned early).
+    // only on an enabled non-separator, the all-disabled case returned early).
     focusItem(nextItem!.id);
   }, [disabled, focusedItemId, hoverPath, searchQuery, focusItem]);
 
@@ -442,17 +447,19 @@ export function useNavigationMenu(props: UseNavigationMenuProps): UseNavigationM
 
     const currentIndex = currentItems.findIndex(item => item.id === focusedItemId);
     let prevIndex = currentIndex > 0 ? currentIndex - 1 : currentItems.length - 1;
+    const startIndex = prevIndex;
 
     let prevItem: NavigationMenuItem | null = currentItems[prevIndex];
-    // Skip disabled items and separators
+    // Skip disabled items and separators. Bound by startIndex so the loop can't
+    // cycle forever when every item at this level is disabled or a separator.
     while (prevItem && (prevItem.disabled || prevItem.type === 'separator')) {
       prevIndex = prevIndex > 0 ? prevIndex - 1 : currentItems.length - 1;
-      // prevIndex is always >= 0 (clamped above), so it always indexes a valid item.
+      if (prevIndex === startIndex) return; // full cycle, no enabled item
       prevItem = currentItems[prevIndex];
     }
 
     // prevItem is always a valid enabled item here (the skip loop above exits
-    // only on an enabled non-separator, and the empty-items case returned early).
+    // only on an enabled non-separator, the all-disabled case returned early).
     focusItem(prevItem!.id);
   }, [disabled, focusedItemId, hoverPath, searchQuery, focusItem]);
 

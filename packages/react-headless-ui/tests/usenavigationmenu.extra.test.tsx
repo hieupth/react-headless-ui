@@ -739,7 +739,7 @@ describe('useNavigationMenu (extra)', () => {
     });
 
     it('Escape closes the mobile menu when no dropdown is open', () => {
-      const { api } = setupMobile({ mobile: false });
+      const { api } = setupMobile();
       act(() => api.current.actions.toggleMobileMenu());
       expect(api.current.state.isMobileMenuOpen).toBe(true);
       // No dropdown open → Escape hits the `else if (isMobileMenuOpen)` arm.

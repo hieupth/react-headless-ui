@@ -6,7 +6,6 @@
 
 import React, { forwardRef } from 'react';
 import { useChip, type UseChipProps } from '../hooks';
-import { useTheme } from '../providers/ThemeProvider';
 
 export interface ChipProps extends UseChipProps {
   /** Additional CSS class names */
@@ -48,12 +47,10 @@ export const Chip = forwardRef<HTMLDivElement, ChipProps>(({
   maxLength = 20,
   ...chipProps
 }, ref) => {
-  const theme = useTheme();
   const {
     state,
     actions,
     computed,
-    chipAttributes,
     getContainerAttributes,
     getDeleteButtonAttributes
   } = useChip(chipProps);

@@ -7,7 +7,6 @@
 import React, { forwardRef } from 'react';
 import { motion } from 'framer-motion';
 import { useBounce, type UseBounceProps } from '../hooks';
-import { useTheme } from '../providers/ThemeProvider';
 
 export interface BounceProps extends UseBounceProps {
   /** Additional CSS class names */
@@ -40,7 +39,6 @@ export const Bounce = forwardRef<HTMLDivElement, BounceProps>(({
   transition,
   ...bounceProps
 }, ref) => {
-  const theme = useTheme();
   const {
     state,
     actions,

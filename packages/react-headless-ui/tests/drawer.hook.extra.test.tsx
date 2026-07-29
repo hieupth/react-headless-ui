@@ -57,7 +57,7 @@ function setup(opts: SetupOpts = {}) {
       labelledBy: opts.labelledBy,
       describedBy: opts.describedBy,
     });
-    const { attributes, overlayAttributes } = api.current;
+    const { attributes, overlayAttributes, setDrawerRef } = api.current;
 
     return (
       <div>
@@ -66,6 +66,7 @@ function setup(opts: SetupOpts = {}) {
         </button>
         <div data-testid="overlay" {...overlayAttributes} />
         <div
+          ref={setDrawerRef}
           data-testid="drawer"
           role="dialog"
           tabIndex={-1}

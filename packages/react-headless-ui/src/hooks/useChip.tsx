@@ -1,12 +1,11 @@
 "use client";
 /**
- * Chip headless hook for React UI Forge components.
+ * Chip headless hook for @hieupth/react-headless-ui components.
  * Provides behavior-only hooks following Flutter patterns.
  * Manages chip selection, deletion, and interaction states.
  */
 
 import { useState, useCallback, useMemo } from "react";
-import { useFocusableMixin, usePressableMixin, useSemanticMixin } from '../mixins';
 
 /**
  * Chip variant options

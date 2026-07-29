@@ -1,12 +1,11 @@
 "use client";
 /**
- * ScaleInOut headless hook for React UI Forge components.
+ * ScaleInOut headless hook for @hieupth/react-headless-ui components.
  * Provides scale animation behavior following Flutter patterns.
  * Manages scale states, timing, and accessibility considerations.
  */
 
 import { useState, useCallback, useEffect, useRef, useMemo } from 'react';
-import { useFocusableMixin, usePressableMixin, useSemanticMixin } from '../mixins';
 
 /**
  * Scale animation state interface

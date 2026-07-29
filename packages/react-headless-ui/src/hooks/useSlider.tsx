@@ -1,6 +1,6 @@
 "use client";
 /**
- * Slider headless hook for React UI Forge.
+ * Slider headless hook for @hieupth/react-headless-ui.
  * Provides range slider behavior with accessibility support.
  *
  * Features:
@@ -215,6 +215,13 @@ export const useSlider = (props: UseSliderProps): SliderReturns => {
   const isControlled = controlledValue !== undefined;
   const value = isControlled ? controlledValue : internalValue;
 
+  // Latest committed value, read by onValueCommit callers. The keyboard and
+  // drag-end commit handlers run in the same tick as setValue, which schedules
+  // an async state update — closing over `value` would hand the commit handler
+  // the pre-change value. This ref is updated synchronously inside setValue so
+  // the commit always reports the value just applied.
+  const latestValueRef = useRef<SliderValue>(value);
+
   // Interaction state
   const [activeThumb, setActiveThumb] = useState<number | null>(null);
   const [dragging, setDragging] = useState(false);
@@ -303,6 +310,9 @@ export const useSlider = (props: UseSliderProps): SliderReturns => {
     if (!isControlled) {
       setInternalValue(validatedValue);
     }
+    // Track the just-applied value synchronously so onValueCommit callers (which
+    // run before the state update commits) report the new value, not the stale one.
+    latestValueRef.current = validatedValue;
 
     // Call change handler
     onValueChange?.(validatedValue);
@@ -476,16 +486,15 @@ export const useSlider = (props: UseSliderProps): SliderReturns => {
     }
 
     if (handled) {
-      onValueCommit?.(value);
+      onValueCommit?.(latestValueRef.current);
     }
-  }, [disabled, readOnly, pressable.handleKeyDown, isRange, thumbRefs, decrement, increment, setToMin, setToMax, step, onValueCommit, value]);
+  }, [disabled, readOnly, pressable.handleKeyDown, isRange, thumbRefs, decrement, increment, setToMin, setToMax, step, onValueCommit]);
 
   /**
    * Handle focus events
    */
   const handleFocus = useCallback((event: React.FocusEvent) => {
     focusable.handleFocus(event as unknown as FocusEvent);
-    semantic.handlers?.onFocus?.(event);
 
     // Determine which thumb is focused
     if (isRange && thumbRefs[0].current?.contains(event.target as Node)) {
@@ -495,16 +504,15 @@ export const useSlider = (props: UseSliderProps): SliderReturns => {
     } else if (!isRange) {
       setActiveThumb(0);
     }
-  }, [focusable.handleFocus, semantic.handlers, isRange, thumbRefs]);
+  }, [focusable.handleFocus, isRange, thumbRefs]);
 
   /**
    * Handle blur events
    */
   const handleBlur = useCallback((event: React.FocusEvent) => {
     focusable.handleBlur(event as unknown as FocusEvent);
-    semantic.handlers?.onBlur?.(event);
     setActiveThumb(null);
-  }, [focusable.handleBlur, semantic.handlers]);
+  }, [focusable.handleBlur]);
 
   /**
    * Handle mouse down events
@@ -571,7 +579,7 @@ export const useSlider = (props: UseSliderProps): SliderReturns => {
 
     const handleEnd = () => {
       setDragging(false);
-      onValueCommit?.(value);
+      onValueCommit?.(latestValueRef.current);
     };
 
     const handleMouseMove = (event: MouseEvent) => {
@@ -606,7 +614,7 @@ export const useSlider = (props: UseSliderProps): SliderReturns => {
       document.removeEventListener('touchmove', handleTouchMove);
       document.removeEventListener('touchend', handleTouchEnd);
     };
-  }, [dragging, getValueFromPosition, setValue, onValueCommit, value]);
+  }, [dragging, getValueFromPosition, setValue, onValueCommit]);
 
   // Compose state from mixins
   const composedState = useMemo(() => composeState<SliderState>({

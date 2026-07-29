@@ -483,12 +483,12 @@ describe('useStepper', () => {
     const onStepChange = vi.fn();
     const hook = renderHook(() => useStepper({ steps, onStepChange }));
     const allowed = hook.result.current.getStepButtonAttributes(steps[1], 1);
-    await act(async () => { await allowed.onClick({} as any); });
+    await act(async () => { await allowed.onClick?.({} as any); });
     expect(onStepChange).toHaveBeenCalled();
 
     const locked = renderHook(() => useStepper({ steps, linear: true }));
     const attrs = locked.result.current.getStepButtonAttributes(steps[2], 2);
-    await act(async () => { await attrs.onClick({} as any); });
+    await act(async () => { await attrs.onClick?.({} as any); });
     expect(attrs.disabled).toBe(true);
     expect(attrs.tabIndex).toBe(-1);
   });

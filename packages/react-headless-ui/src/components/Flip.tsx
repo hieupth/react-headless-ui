@@ -7,7 +7,6 @@
 import React, { forwardRef } from 'react';
 import { motion } from 'framer-motion';
 import { useFlip, type UseFlipProps } from '../hooks';
-import { useTheme } from '../providers/ThemeProvider';
 
 export interface FlipProps extends UseFlipProps {
   /** Additional CSS class names */
@@ -40,7 +39,6 @@ export const Flip = forwardRef<HTMLDivElement, FlipProps>(({
   transition,
   ...flipProps
 }, ref) => {
-  const theme = useTheme();
   const {
     state,
     actions,

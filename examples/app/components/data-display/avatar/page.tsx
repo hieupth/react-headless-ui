@@ -30,7 +30,7 @@ export default function AvatarPage() {
         </p>
         <Demo
           code={`<Avatar
-  src="/avatars/ada.png"
+  src="https://i.pravatar.cc/96?img=12"
   fallback="Ada Lovelace"
   className="h-12 w-12 rounded-full bg-gray-200 overflow-hidden dark:bg-gray-700 flex items-center justify-center text-sm font-semibold"
 />

@@ -1,6 +1,6 @@
 "use client";
 /**
- * Panel headless hook for React UI Forge components.
+ * Panel headless hook for @hieupth/react-headless-ui components.
  * Provides behavior-only hooks following Flutter patterns.
  * Manages panel container state and interactions.
  */
@@ -221,10 +221,22 @@ export function usePanel(props: UsePanelProps): UsePanelReturns {
   } = props;
 
   // State management
+  // reason: localStorage may be missing (SSR/private mode) or hold a value
+  // that was edited/corrupted to invalid JSON. A throw inside this lazy
+  // initializer would propagate as a render error and crash the component, so
+  // both the storage read and the parse are guarded and fall back to
+  // defaultExpanded on any failure.
   const [internalExpanded, setInternalExpanded] = useState<boolean>(() => {
     if (rememberCollapsed && storageKey) {
-      const stored = localStorage.getItem(storageKey);
-      return stored ? JSON.parse(stored) : defaultExpanded;
+      try {
+        const stored = localStorage.getItem(storageKey);
+        if (stored != null) {
+          const parsed = JSON.parse(stored);
+          return typeof parsed === 'boolean' ? parsed : defaultExpanded;
+        }
+      } catch {
+        // Corrupt or unreadable stored value — discard and use the default.
+      }
     }
     return defaultExpanded;
   });

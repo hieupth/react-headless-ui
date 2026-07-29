@@ -1,11 +1,11 @@
 "use client";
 /**
- * Item headless hook for React UI Forge components.
+ * Item headless hook for @hieupth/react-headless-ui components.
  * Provides behavior-only hooks following Flutter patterns.
  * Manages generic item state for lists, menus, and dropdowns.
  */
 
-import { useState, useCallback, useMemo, useRef, useEffect } from 'react';
+import { useState, useCallback, useMemo, useRef } from 'react';
 import { useFocusableMixin, usePressableMixin, useSemanticMixin } from '../mixins';
 
 /**

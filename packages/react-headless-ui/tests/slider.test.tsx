@@ -37,7 +37,7 @@ function renderSlider(props: Partial<UseSliderProps> & { children?: React.ReactN
       step={1}
       isRange={false}
       orientation="horizontal"
-      {...props}
+      {...(props as Record<string, unknown>)}
       onValueChange={onValueChange}
       onValueCommit={onValueCommit}
     />

@@ -58,7 +58,7 @@ function ControlledMenu(props: {
 
 describe('DropdownMenu', () => {
   it('renders a menu trigger', () => {
-    render(<DropdownMenu items={items} />);
+    render(<DropdownMenu open={false} items={items} />);
     expect(screen.getByText('Menu')).toBeInTheDocument();
   });
 

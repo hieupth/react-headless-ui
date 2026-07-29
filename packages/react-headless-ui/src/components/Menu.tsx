@@ -128,25 +128,25 @@ export const Menu = forwardRef<HTMLElement, MenuProps>((props, ref) => {
       >
         {/* Icon */}
         {item.icon && (
-          <span className="   ">
+          <span className="menu">
             {item.icon}
           </span>
         )}
 
         {/* Label */}
-        <span className=" ">{item.label}</span>
+        <span className="menu">{item.label}</span>
 
         {/* Shortcut */}
         {item.shortcut && (
-          <span className="   ">
+          <span className="menu">
             {item.shortcut}
           </span>
         )}
 
         {/* Selection indicator */}
         {props.selected && (
-          <span className=" ">
-            <svg className="  " fill="currentColor" viewBox="0 0 20 20">
+          <span className="menu">
+            <svg className="menu" fill="currentColor" viewBox="0 0 20 20">
               <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
             </svg>
           </span>
@@ -179,10 +179,10 @@ export const Menu = forwardRef<HTMLElement, MenuProps>((props, ref) => {
 
     // Menu content
     const menuContent = props.open && (
-      <div className=" ">
+      <div className="menu">
         <ul
           ref={props.menuRef}
-          className={`       ${className || ''}`}
+          className={`${className || ''}`}
           style={{
             position: 'absolute',
             left: 0,
@@ -193,7 +193,7 @@ export const Menu = forwardRef<HTMLElement, MenuProps>((props, ref) => {
           onKeyDown={props.handleKeyDown}
         >
           {props.items.map((item, index) => {
-            const isSelected = props.selectedKeys.has(item.key);
+            const isSelected = props.selectedKeys.has(item.key ?? '');
             const isHighlighted = index === props.highlightedIndex;
 
             const itemProps: MenuItemRenderProps = {
@@ -201,7 +201,7 @@ export const Menu = forwardRef<HTMLElement, MenuProps>((props, ref) => {
               index,
               highlighted: isHighlighted,
               selected: isSelected,
-              onClick: () => menu.selectItem(item.key),
+              onClick: () => menu.selectItem(item.key ?? ''),
               onMouseEnter: () => menu.highlightItem(index)
             };
 
@@ -267,7 +267,7 @@ export const MenuSeparator = forwardRef<HTMLLIElement, MenuSeparatorProps>(({
   <li
     ref={ref}
     role="separator"
-    className={`   ${className || ''}`}
+    className={`${className || ''}`}
     style={style}
   />
 ));
@@ -300,7 +300,7 @@ export const MenuGroup = forwardRef<HTMLDivElement, MenuGroupProps>(({
     style={style}
   >
     {title && (
-      <div className="      ">
+      <div className="menu">
         {title}
       </div>
     )}

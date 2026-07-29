@@ -1,12 +1,11 @@
 "use client";
 /**
- * Toast headless hook for React UI Forge components.
+ * Toast headless hook for @hieupth/react-headless-ui components.
  * Provides behavior-only hooks following Flutter patterns.
  * Manages toast notifications with auto-dismiss and stacking.
  */
 
 import { useState, useCallback, useRef, useEffect, useMemo } from 'react';
-import { useFocusableMixin, usePressableMixin, useSemanticMixin } from '../mixins';
 
 /**
  * Toast variant options
@@ -127,7 +126,6 @@ export function useToast(props: UseToastProps = {}): UseToastReturns {
     maxToasts = 5,
     defaultDuration = 5000,
     pauseOnHover = true,
-    showProgress = false,
     onToastAdd,
     onToastRemove
   } = props;
@@ -138,7 +136,12 @@ export function useToast(props: UseToastProps = {}): UseToastReturns {
 
   // Refs for managing timers
   const timersRef = useRef<Map<string, NodeJS.Timeout>>(new Map());
-  const pauseTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  // Wall-clock time at which the stack was paused, so resume() can shift each
+  // toast's createdAt forward by the paused interval. Without this, resume()
+  // recomputes `remaining = duration - (now - createdAt)` using the original
+  // creation timestamp, which counts paused time as elapsed and expires toasts
+  // early across pause/resume cycles.
+  const pausedAtRef = useRef<number | null>(null);
 
   // Generate unique ID
   const generateId = useCallback(() => {
@@ -222,6 +225,7 @@ export function useToast(props: UseToastProps = {}): UseToastReturns {
     if (isPaused) return;
 
     setIsPaused(true);
+    pausedAtRef.current = Date.now();
 
     // Clear all active timers
     timersRef.current.forEach(timer => clearTimeout(timer));
@@ -234,11 +238,19 @@ export function useToast(props: UseToastProps = {}): UseToastReturns {
 
     setIsPaused(false);
 
+    // Paused interval to subtract from each toast's age so paused time is not
+    // counted as elapsed (the original bug counted it and expired toasts early).
+    const pausedFor = pausedAtRef.current !== null ? Date.now() - pausedAtRef.current : 0;
+    pausedAtRef.current = null;
+
     // Restart timers for all active toasts
     setToasts(currentToasts => {
       currentToasts.forEach(toast => {
         if (toast.duration !== undefined && toast.duration > 0) {
-          const elapsed = Date.now() - toast.createdAt;
+          // Shift createdAt forward by the paused interval so elapsed reflects
+          // only the time the toast was actually visible.
+          const effectiveCreatedAt = toast.createdAt + pausedFor;
+          const elapsed = Date.now() - effectiveCreatedAt;
           const remaining = toast.duration - elapsed;
 
           if (remaining > 0) {
@@ -252,7 +264,12 @@ export function useToast(props: UseToastProps = {}): UseToastReturns {
           }
         }
       });
-      return currentToasts;
+      // Persist the shifted createdAt so subsequent pause/resume cycles stay accurate.
+      return currentToasts.map(toast =>
+        toast.duration !== undefined && toast.duration > 0
+          ? { ...toast, createdAt: toast.createdAt + pausedFor }
+          : toast
+      );
     });
   }, [isPaused, removeToast]);
 
@@ -326,11 +343,6 @@ export function useToast(props: UseToastProps = {}): UseToastReturns {
   useEffect(() => {
     return () => {
       timersRef.current.forEach(timer => clearTimeout(timer));
-      /* c8 ignore start */ // reason: pauseTimeoutRef is declared but never assigned anywhere in the hook, so this cleanup branch is dead defensive code
-      if (pauseTimeoutRef.current) {
-        clearTimeout(pauseTimeoutRef.current);
-      }
-      /* c8 ignore end */
     };
   }, []);
 

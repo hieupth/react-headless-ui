@@ -4,7 +4,7 @@
  * Provides composable behavior for data grid/table components.
  */
 
-import { useState, useCallback, useMemo, useRef, useEffect } from 'react';
+import { useState, useCallback, useMemo, useEffect } from 'react';
 import { useSemanticMixin } from '../mixins/SemanticMixin';
 import { useFocusableMixin } from '../mixins/FocusableMixin';
 import type { SemanticProps } from '../contracts/SemanticContract';
@@ -35,7 +35,7 @@ export interface GridColumn {
   /** Column alignment */
   align?: 'left' | 'center' | 'right';
   /** Column type */
-  type?: 'text' | 'number' | 'date' | 'boolean' | 'custom';
+  type?: 'text' | 'number' | 'date' | 'boolean' | 'custom' | 'actions';
   /** Custom cell renderer */
   cellRenderer?: (value: any, row: any, rowIndex: number) => React.ReactNode;
   /** Custom header renderer */
@@ -242,8 +242,6 @@ export interface DataGridState {
   error?: string;
   /** Selected cell */
   selectedCell?: { rowIndex: number; columnId: string };
-  /** Hovered cell */
-  hoveredCell?: { rowIndex: number; columnId: string };
 }
 
 /**
@@ -341,7 +339,6 @@ export function useDataGrid(props: UseDataGridProps = {}) {
   const [pagination, setPagination] = useState<GridPagination>(controlledPagination || defaultPagination || { page: 1, pageSize: 10, total: 0, totalPages: 1 });
   const [selection, setSelection] = useState<GridSelection>(controlledSelection || defaultSelection || { selectedRows: [], mode: 'multiple' });
   const [selectedCell, setSelectedCell] = useState<{ rowIndex: number; columnId: string } | undefined>();
-  const [hoveredCell, setHoveredCell] = useState<{ rowIndex: number; columnId: string } | undefined>();
 
   // Determine if component is controlled
   const isSortControlled = controlledSort !== undefined;
@@ -486,7 +483,6 @@ export function useDataGrid(props: UseDataGridProps = {}) {
     loading,
     error: errorMessage,
     selectedCell,
-    hoveredCell,
     // Aliases matching the DataGrid component's expected state shape.
     data: paginatedRows,
     selectedRows: selection.selectedRows,
@@ -494,7 +490,7 @@ export function useDataGrid(props: UseDataGridProps = {}) {
     sortedData: paginatedRows,
     filteredData: paginatedRows,
     paginatedData: paginatedRows
-  }), [paginatedRows, propColumns, sort, filter, pagination, selection, disabled, focusableMixin.focused, loading, errorMessage, selectedCell, hoveredCell]);
+  }), [paginatedRows, propColumns, sort, filter, pagination, selection, disabled, focusableMixin.focused, loading, errorMessage, selectedCell]);
 
   // Event handlers
   const handleSort = useCallback((column: string, direction: 'asc' | 'desc') => {

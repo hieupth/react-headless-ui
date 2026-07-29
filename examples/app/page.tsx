@@ -2,7 +2,9 @@ import Link from 'next/link';
 import { CodeBlock } from '@/components/code-block';
 import { componentCategories, getComponentsByCategory } from '@/lib/component-meta';
 
-const installCommand = 'npm install @hieupth/react-headless-ui';
+// The package is unpublished; install from GitHub. Once published this becomes
+// `npm install @hieupth/react-headless-ui` (see docs/getting-started.mdx and the root README).
+const installCommand = 'npm install github:hieupth/react-headless-ui';
 
 const features = [
   {
@@ -23,7 +25,7 @@ const features = [
   {
     title: 'Theming',
     description:
-      'ThemeProvider exposes deep-merged design tokens (colors, radius, spacing) to renderer components.',
+      'ThemeProvider exposes per-section shallow-merged design tokens (colors, radius, spacing) to renderer components.',
   },
   {
     title: 'Accessible',
@@ -33,7 +35,7 @@ const features = [
   {
     title: 'Tree-shakeable',
     description:
-      'Pure ESM with per-component exports and an optional framer-motion peer dep.',
+      'Pure ESM with per-component exports and a peer-dep surface kept minimal.',
   },
 ];
 
@@ -44,7 +46,7 @@ const docLinks = [
 
 export default function Home() {
   return (
-    <main className="mx-auto max-w-5xl px-6 py-16">
+    <div className="mx-auto max-w-5xl px-6 py-16">
       {/* Hero */}
       <section className="flex flex-col items-center text-center">
         <span className="mb-4 inline-block rounded-full border border-gray-200 px-3 py-1 text-xs font-medium text-gray-600 dark:border-gray-700 dark:text-gray-400">
@@ -123,6 +125,6 @@ export default function Home() {
           </ul>
         </div>
       </section>
-    </main>
+    </div>
   );
 }

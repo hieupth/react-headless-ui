@@ -245,7 +245,7 @@ describe('InputGroup', () => {
     const handler = vi.fn();
     render(
       <InputGroup
-        items={[{ id: 'act', type: 'action', content: handler }]}
+        items={[{ id: 'act', type: 'action', content: handler as unknown as React.ReactNode }]}
         defaultValues={{ x: '1' }}
       />
     );
@@ -389,7 +389,7 @@ describe('useInputGroup (hook actions)', () => {
   it('getItemAttributes returns empty for unknown id and attributes for known input', () => {
     const res = setup({ items });
     expect(res.current.getItemAttributes('nope')).toEqual({});
-    const attrs = res.current.getItemAttributes('name');
+    const attrs = res.current.getItemAttributes('name') as Record<string, unknown>;
     expect(attrs['data-type']).toBe('input');
   });
 

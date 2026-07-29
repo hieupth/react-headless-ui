@@ -1,6 +1,6 @@
 'use client';
 
-import { useToast } from '@hieupth/react-headless-ui';
+import { useToast, Toast } from '@hieupth/react-headless-ui';
 import { Demo } from '@/components/demo';
 import { PropsTable } from '@/components/props-table';
 
@@ -184,10 +184,24 @@ actions.addToast({
   pauseOnHover
 />`}
         >
-          <p className="text-sm text-gray-500">
-            Mount <code>&lt;Toast&gt;</code> once near your app root; the hook's{' '}
-            <code>actions</code> push messages into it from anywhere.
-          </p>
+          {/*
+            <Toast> owns its own useToast queue (no external push API), so a
+            self-contained snippet renders the positioned, ARIA-live container.
+            In a real app the hook's `actions` push messages into it; the
+            interactive playground above shows that flow end to end.
+          */}
+          <div className="relative w-full h-32 rounded-md border border-dashed border-gray-300 dark:border-gray-600 overflow-hidden">
+            <Toast
+              position="bottom-right"
+              maxToasts={5}
+              defaultDuration={5000}
+              showProgress
+              pauseOnHover
+            />
+            <p className="absolute inset-0 flex items-center justify-center text-xs text-gray-400 pointer-events-none">
+              Mounted <code>&lt;Toast&gt;</code> container (role=&quot;status&quot;)
+            </p>
+          </div>
         </Demo>
       </section>
 

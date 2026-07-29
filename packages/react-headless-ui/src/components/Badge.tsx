@@ -6,6 +6,7 @@
 
 import React, { forwardRef } from 'react';
 import { useBadge } from '../hooks';
+import { mergeRefs } from '../utils';
 import type { UseBadgeProps } from '../hooks';
 
 export interface BadgeProps extends UseBadgeProps {
@@ -77,7 +78,7 @@ export const Badge = forwardRef<HTMLSpanElement, BadgeProps>(({
 
     return (
       <span
-        ref={props.badgeRef as React.RefObject<HTMLSpanElement>}
+        ref={mergeRefs(props.badgeRef, ref)}
         className={`${baseClasses} ${interactiveClasses} ${animationClasses} ${dotClasses} ${className || ''}`}
         style={style}
         {...props.semanticAttributes}
@@ -89,7 +90,7 @@ export const Badge = forwardRef<HTMLSpanElement, BadgeProps>(({
 
         {/* Dot indicator */}
         {badgeProps.dot && (
-          <span className="   " />
+          <span className="badge" />
         )}
       </span>
     );
@@ -145,19 +146,19 @@ export const BadgeWrapper = forwardRef<HTMLDivElement, BadgeWrapperProps>(({
   style
 }, ref) => {
   const getPositionClasses = (pos: string) => {
-    const positionMap = {
-      '': '  -translate-y-1/2 ',
-      '': '  -translate-y-1/2 -translate-x-1/2',
-      '': '   ',
-      '': '   -translate-x-1/2'
+    const positionMap: Record<string, string> = {
+      'top-right': 'absolute top-0 right-0 -translate-y-1/2 translate-x-1/2',
+      'top-left': 'absolute top-0 left-0 -translate-y-1/2 -translate-x-1/2',
+      'bottom-right': 'absolute bottom-0 right-0 translate-y-1/2 translate-x-1/2',
+      'bottom-left': 'absolute bottom-0 left-0 translate-y-1/2 -translate-x-1/2'
     };
-    return positionMap[pos as keyof typeof positionMap] || positionMap[''];
+    return positionMap[pos] || positionMap['top-right'];
   };
 
   return (
     <div
       ref={ref}
-      className={`    ${className || ''}`}
+      className={`relative inline-block ${className || ''}`}
       style={style}
     >
       {/* Main content */}
@@ -165,7 +166,7 @@ export const BadgeWrapper = forwardRef<HTMLDivElement, BadgeWrapperProps>(({
 
       {/* Badge overlay */}
       {badge && (
-        <div className={` ${getPositionClasses(position)} pointer-events-none`}>
+        <div className={`${getPositionClasses(position)} pointer-events-none`}>
           {badge}
         </div>
       )}

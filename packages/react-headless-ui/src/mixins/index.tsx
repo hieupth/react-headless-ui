@@ -1,6 +1,6 @@
 "use client";
 /**
- * Core mixins for React UI Forge components.
+ * Core mixins for @hieupth/react-headless-ui components.
  * Provides composable behavior following Flutter mixin patterns.
  */
 

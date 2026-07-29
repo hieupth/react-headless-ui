@@ -161,7 +161,7 @@ describe('useAccordionMenu (edge branches)', () => {
   it('Home/End on a menu with no items is a no-op (length guard)', () => {
     function P() {
       const { menuProps } = useAccordionMenu({ items: [] });
-      return <div {...menuProps} data-testid="menu" />;
+      return <div {...menuProps as any} data-testid="menu" />;
     }
     render(<P />);
     expect(() => fireEvent.keyDown(screen.getByTestId('menu'), { key: 'Home' })).not.toThrow();

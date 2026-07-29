@@ -1,12 +1,11 @@
 "use client";
 /**
- * Stepper headless hook for React UI Forge components.
+ * Stepper headless hook for @hieupth/react-headless-ui components.
  * Provides behavior-only hooks following Flutter patterns.
  * Manages multi-step processes with navigation and validation.
  */
 
-import { useState, useCallback, useMemo } from 'react';
-import { useFocusableMixin, usePressableMixin, useSemanticMixin } from '../mixins';
+import { useState, useMemo } from 'react';
 
 /**
  * Stepper step configuration

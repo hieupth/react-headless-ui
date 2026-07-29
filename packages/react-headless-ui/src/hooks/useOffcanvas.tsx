@@ -1,6 +1,6 @@
 "use client";
 /**
- * Offcanvas headless hook for React UI Forge components.
+ * Offcanvas headless hook for @hieupth/react-headless-ui components.
  * Provides behavior-only hooks following Flutter patterns.
  * Manages slide-in panel state and interactions.
  */

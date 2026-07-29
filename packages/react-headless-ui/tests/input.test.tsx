@@ -132,7 +132,7 @@ describe('useInput (hook)', () => {
       defaultValue: 'bad',
       validation: [{ validate: (v) => v !== 'bad', message: 'no bad values' }],
     });
-    act(() => res.current.handleChange({ target: { value: 'bad' } as any }));
+    act(() => res.current.handleChange({ target: { value: 'bad' } } as any));
     expect(res.current.error).toBe('no bad values');
   });
 

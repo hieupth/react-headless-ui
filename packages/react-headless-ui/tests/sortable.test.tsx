@@ -393,7 +393,7 @@ describe('Sortable', () => {
     expect(api.state.items[3].index).toBe(3);
   });
 
-  it('setDirection/lock/unlock are inert no-ops (state is prop-driven)', () => {
+  it('setDirection updates direction state; lock/unlock do not throw', () => {
     let api: any;
     render(<HookHarness defaultItems={defaultItems} onApi={(a) => (api = a)} />);
     expect(() => {
@@ -403,6 +403,7 @@ describe('Sortable', () => {
         api.actions.unlock();
       });
     }).not.toThrow();
+    expect(api.state.direction).toBe('horizontal');
   });
 
   it('fires onDragEnd when endDrag runs while an item is being dragged', () => {

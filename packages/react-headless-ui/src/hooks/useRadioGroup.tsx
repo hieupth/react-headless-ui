@@ -1,6 +1,6 @@
 "use client";
 /**
- * Radio Group headless hook for React UI Forge components.
+ * Radio Group headless hook for @hieupth/react-headless-ui components.
  * Provides behavior-only hooks following Flutter patterns.
  * Manages radio button group with single selection behavior.
  */

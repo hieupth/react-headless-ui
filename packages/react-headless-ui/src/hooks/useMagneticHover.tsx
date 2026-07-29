@@ -144,7 +144,17 @@ export function useMagneticHover(props: UseMagneticHoverProps = {}): UseMagnetic
     const rect = el.getBoundingClientRect();
 
     if (boundary === 'viewport') {
-      return true; // Allow movement within viewport
+      // (x, y) is the projected element center after the magnetic offset is
+      // applied. Keep the full element box inside the viewport: reject the
+      // position if the element's half-extents at (x, y) would cross an edge.
+      const halfW = rect.width / 2;
+      const halfH = rect.height / 2;
+      return (
+        x - halfW >= 0 &&
+        x + halfW <= window.innerWidth &&
+        y - halfH >= 0 &&
+        y + halfH <= window.innerHeight
+      );
     }
 
     if (boundary === 'parent' && parentRef.current) {

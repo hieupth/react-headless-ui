@@ -140,23 +140,23 @@ export const Select = forwardRef<HTMLElement, SelectProps>(({
       >
         {/* Icon */}
         {option.icon && (
-          <span className="   ">
+          <span className="select">
             {option.icon}
           </span>
         )}
 
         {/* Content */}
-        <div className=" ">
-          <div className=" ">{option.label}</div>
+        <div className="select">
+          <div className="select">{option.label}</div>
           {option.description && (
-            <div className="  ">{option.description}</div>
+            <div className="select">{option.description}</div>
           )}
         </div>
 
         {/* Selection indicator */}
         {props.selected && (
-          <span className=" ">
-            <svg className="  " fill="currentColor" viewBox="0 0 20 20">
+          <span className="select">
+            <svg className="select" fill="currentColor" viewBox="0 0 20 20">
               <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
             </svg>
           </span>
@@ -170,7 +170,7 @@ export const Select = forwardRef<HTMLElement, SelectProps>(({
     return (
       <button
         ref={props.triggerRef}
-        className={`      ${sizeClasses} ${variantClasses}    ${className || ''} ${select.disabled ? '  ' : ''}`}
+        className={`${sizeClasses} ${variantClasses} ${className || ''}`}
         style={style}
         onClick={props.handleTriggerClick}
         onKeyDown={props.handleKeyDown}
@@ -178,16 +178,16 @@ export const Select = forwardRef<HTMLElement, SelectProps>(({
         {...props.triggerAttributes}
       >
         {/* Selected value or placeholder */}
-        <span className=" ">
+        <span className="select">
           {props.selectedOption ? props.selectedOption.label : placeholder}
         </span>
 
         {/* Chevron icon */}
         {showChevron && (
-          <span className="   " style={{
+          <span className="select" style={{
             transform: props.open ? 'rotate(180deg)' : 'rotate(0deg)'
           }}>
-            <svg className="  " fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg className="select" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
             </svg>
           </span>
@@ -197,7 +197,7 @@ export const Select = forwardRef<HTMLElement, SelectProps>(({
         {select.allowClear && props.selectedOption && (
           <button
             type="button"
-            className="    "
+            className="select"
             onClick={(e: any) => {
               // reason: clearSelection is always provided by useSelect; the prior
               // `...(x ? {...} : {})` defensive spread false-arm was dead code.
@@ -206,7 +206,7 @@ export const Select = forwardRef<HTMLElement, SelectProps>(({
             }}
             aria-label="Clear selection"
           >
-            <svg className=" " fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg className="select" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
             </svg>
           </button>
@@ -222,7 +222,7 @@ export const Select = forwardRef<HTMLElement, SelectProps>(({
     // Calculate dropdown position and size
     const dropdownContent = (
       <div
-        className="  "
+        className="select"
         style={{
           minWidth: props.triggerRef.current?.offsetWidth || 200,
           maxWidth: 400
@@ -230,7 +230,7 @@ export const Select = forwardRef<HTMLElement, SelectProps>(({
       >
         <ul
           ref={props.listboxRef}
-          className={`       ${className || ''}`}
+          className={`${className || ''}`}
           style={{
             // reason: useSelect defaults maxDropdownHeight to 300, so the prior
             // `|| 300` fallback was unreachable dead code.
@@ -242,11 +242,11 @@ export const Select = forwardRef<HTMLElement, SelectProps>(({
         >
           {/* Search input */}
           {select.searchable && (
-            <li className="   ">
+            <li className="select">
               <input
                 ref={props.inputRef}
                 type="text"
-                className="         "
+                className="select"
                 placeholder="Search..."
                 value={props.inputValue}
                 onChange={(e: any) => props.handleInputChange(e.target.value)}
@@ -274,7 +274,7 @@ export const Select = forwardRef<HTMLElement, SelectProps>(({
               return renderOption ? renderOption(option, optionProps) : defaultOptionRender(option, optionProps);
             })
           ) : (
-            <li className="   ">
+            <li className="select">
               {props.inputValue ? 'No options found' : 'No options available'}
             </li>
           )}
@@ -288,7 +288,7 @@ export const Select = forwardRef<HTMLElement, SelectProps>(({
   // Default render function
   const defaultRender = (props: SelectRenderProps) => {
     return (
-      <div className=" ">
+      <div className="select">
         {/* Trigger */}
         {renderTrigger ? renderTrigger(props) : defaultTriggerRender(props)}
 
@@ -367,7 +367,7 @@ export const SelectGroup = forwardRef<HTMLLIElement, SelectGroupProps>(({
     style={style}
   >
     {label && (
-      <div className="       ">
+      <div className="select">
         {label}
       </div>
     )}

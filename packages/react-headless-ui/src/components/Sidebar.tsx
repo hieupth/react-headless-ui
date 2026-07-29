@@ -6,7 +6,6 @@
 
 import React, { forwardRef } from 'react';
 import { useSidebar, type UseSidebarProps } from '../hooks';
-import { useTheme } from '../providers/ThemeProvider';
 
 export interface SidebarProps extends Omit<UseSidebarProps, 'sidebarRef'> {
   /** Additional CSS class names */
@@ -39,7 +38,6 @@ export const Sidebar = forwardRef<HTMLDivElement, SidebarProps>(({
   trigger,
   ...sidebarProps
 }: SidebarProps, ref) => {
-  const theme = useTheme();
   const {
     state,
     actions,
@@ -137,7 +135,7 @@ export const Sidebar = forwardRef<HTMLDivElement, SidebarProps>(({
                 disabled={state.disabled}
               >
                 <svg
-                  className=" "
+                  className="sidebar"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
@@ -197,12 +195,12 @@ export const Sidebar = forwardRef<HTMLDivElement, SidebarProps>(({
         {(state.variant === 'permanent' || state.variant === 'persistent') && !state.isMobile && (
           <button
             onClick={actions.toggleCollapse}
-            className="     "
+            className="sidebar"
             aria-label={state.collapsed ? 'Expand sidebar' : 'Collapse sidebar'}
             aria-expanded={!state.collapsed}
           >
             <svg
-              className="  "
+              className="sidebar"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -280,11 +278,11 @@ export const SidebarItem = forwardRef<HTMLDivElement, SidebarItemProps>(({
       data-testid="sidebar-item"
     >
       {icon && (
-        <span className="  ">
+        <span className="sidebar">
           {icon}
         </span>
       )}
-      <span className=" ">
+      <span className="sidebar">
         {children}
       </span>
     </div>
@@ -316,7 +314,7 @@ export const SidebarGroup = forwardRef<HTMLDivElement, SidebarGroupProps>(({
   return (
     <div
       ref={ref}
-      className={`sidebar-group  ${className}`}
+      className={`sidebar-group ${className}`}
       style={style}
       data-testid="sidebar-group"
     >
@@ -351,7 +349,7 @@ export const SidebarDivider = forwardRef<HTMLDivElement, SidebarDividerProps>(({
   return (
     <div
       ref={ref}
-      className={`   ${className}`}
+      className={`${className}`}
       style={style}
       role="separator"
       aria-orientation="horizontal"

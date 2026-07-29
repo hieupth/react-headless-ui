@@ -184,7 +184,7 @@ describe('Portal', () => {
       return (
         <div>
           <button onClick={() => setOpen(true)}>reveal</button>
-          <Portal open={open} onOpenChange={(v) => setOpen(v)}>
+          <Portal open={open}>
             <button onClick={() => setOpen(false)}>hide</button>
           </Portal>
         </div>

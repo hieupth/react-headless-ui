@@ -8,11 +8,19 @@ import React, { forwardRef } from 'react';
 import { useAccordion } from '../hooks';
 import type { UseAccordionProps, AccordionItem } from '../hooks';
 
-export interface AccordionProps extends UseAccordionProps, React.AriaAttributes {
+export interface AccordionProps extends Omit<UseAccordionProps, 'items'>, React.AriaAttributes {
+  /**
+   * Accordion items. Required for the data-driven API, but optional when the
+   * compound children API (`<Accordion.Item>`) is used instead — items are
+   * derived from the children.
+   */
+  items?: UseAccordionProps['items'];
   /** Additional CSS class names */
   className?: string;
   /** Custom style object */
   style?: React.CSSProperties;
+  /** Container title (forwarded onto the rendered element as an attribute) */
+  title?: string;
   /** Custom render function for accordion container */
   render?: (props: AccordionRenderProps) => React.ReactElement;
   /** Custom render function for accordion items */
@@ -93,7 +101,7 @@ export interface AccordionItemRenderProps {
  * Styled accordion component with comprehensive behavior.
  * Uses headless hook for all logic and accessibility.
  */
-export const Accordion = forwardRef<HTMLDivElement, AccordionProps>(({
+const AccordionBase = forwardRef<HTMLDivElement, AccordionProps>(({
   className,
   style,
   render,
@@ -122,7 +130,7 @@ export const Accordion = forwardRef<HTMLDivElement, AccordionProps>(({
         disabled: c.props.disabled
       };
     });
-  const items = childItems.length > 0 ? childItems : accordionProps.items;
+  const items = childItems.length > 0 ? childItems : (accordionProps.items ?? []);
 
   const accordion = useAccordion({
     ...accordionProps,
@@ -231,17 +239,16 @@ export const Accordion = forwardRef<HTMLDivElement, AccordionProps>(({
   return defaultRender(renderProps);
 });
 
-Accordion.displayName = 'Accordion';
+AccordionBase.displayName = 'Accordion';
 
-// Attach compound sub-components: <Accordion.Item/Trigger/Content>.
-(Accordion as unknown as {
-  Item: typeof AccordionItem;
-  Trigger: typeof AccordionTrigger;
-  Content: typeof AccordionContent;
-}).Item = AccordionItem;
-(Accordion as unknown as {
-  Trigger: typeof AccordionTrigger;
-}).Trigger = AccordionTrigger;
-(Accordion as unknown as {
-  Content: typeof AccordionContent;
-}).Content = AccordionContent;
+// Attach compound sub-components: <Accordion.Item/Trigger/Content>. Object.assign
+// both mutates the component at runtime AND gives the exported `Accordion` const
+// an intersection type, so the shipped .d.ts declares `.Item/.Trigger/.Content`
+// and consumers see them as typeable.
+const Accordion = Object.assign(AccordionBase, {
+  Item: AccordionItem,
+  Trigger: AccordionTrigger,
+  Content: AccordionContent
+});
+
+export { Accordion };

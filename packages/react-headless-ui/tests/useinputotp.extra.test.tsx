@@ -278,7 +278,7 @@ describe('useInputOTP hook', () => {
 
   it('incrementAttempts without maxAttempts only increments', () => {
     const onMax = vi.fn();
-    const api = setup({ length: 2, maxAttempts: 0, onMax });
+    const api = setup({ length: 2, maxAttempts: 0, onMaxAttemptsReached: onMax });
     act(() => api.actions.incrementAttempts());
     act(() => api.actions.incrementAttempts());
     expect(api.state.attempts).toBe(2);

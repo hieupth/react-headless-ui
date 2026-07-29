@@ -4,9 +4,8 @@
  * Provides styled form with React Hook Form integration and comprehensive accessibility support.
  */
 
-import React, { forwardRef, useRef, useEffect } from 'react';
+import React, { forwardRef } from 'react';
 import { useForm, type UseFormProps, type FormState, type FormActions } from '../hooks';
-import { useTheme } from '../providers/ThemeProvider';
 
 export interface FormProps<TFieldValues extends Record<string, any> = Record<string, any>>
   extends Omit<UseFormProps<TFieldValues>, 'formRef'> {
@@ -54,7 +53,11 @@ export interface FormProps<TFieldValues extends Record<string, any> = Record<str
  * Form component with React Hook Form integration.
  * Supports multi-step forms, validation, loading states, and comprehensive accessibility.
  */
-export const Form = forwardRef<HTMLFormElement, FormProps>(({
+function FormInner<TFieldValues extends Record<string, any> = Record<string, any>>(
+  props: FormProps<TFieldValues>,
+  ref: React.ForwardedRef<HTMLFormElement>
+) {
+  const {
   className = '',
   style,
   layout = 'vertical',
@@ -74,9 +77,8 @@ export const Form = forwardRef<HTMLFormElement, FormProps>(({
   children,
   multiStep,
   ...formProps
-}: FormProps, ref) => {
-  const theme = useTheme();
-  const formApi = useForm({
+} = props;
+  const formApi = useForm<TFieldValues>({
     ...formProps,
     // multiStep is destructured above (used for local UI gates) but must also
     // reach the hook so state.totalSteps / currentStep drive navigation.
@@ -154,6 +156,9 @@ export const Form = forwardRef<HTMLFormElement, FormProps>(({
     handleSubmit,
     formState: { errors, touchedFields }
   } = rhf;
+  // Default field renderers register fields by an arbitrary runtime string id;
+  // alias register to a loose signature so those dynamic names typecheck.
+  const registerField = register as (name: string) => ReturnType<typeof register>;
 
   // Size classes
   const sizeClasses = {
@@ -219,10 +224,12 @@ export const Form = forwardRef<HTMLFormElement, FormProps>(({
     ${className || ''}
   `.trim().replace(/\s+/g, ' ');
 
-  // Default field renderer
+  // Default field renderer. `fieldName` is an arbitrary runtime string (the
+  // registered field id), so cast it at the RHF boundary — Path<TFieldValues>
+  // cannot be statically derived for a dynamic name.
   const defaultRenderField = (fieldName: string, fieldProps: any) => {
-    const fieldError = errors[fieldName];
-    const isTouched = touchedFields[fieldName];
+    const fieldError = (errors as Record<string, any>)[fieldName];
+    const isTouched = (touchedFields as Record<string, any>)[fieldName];
     const fieldId = `field-${fieldName}`;
     /* c8 ignore next -- reason: fieldError requires RHF validation errors, but
        the component registers default fields without rules, so errors stay
@@ -235,21 +242,18 @@ export const Form = forwardRef<HTMLFormElement, FormProps>(({
     const labelErrorClass = fieldError ? '' : '';
     const inputErrorClass = fieldError ? '  ' : '';
     const labelText = fieldProps.label || fieldName;
-    const requiredMarker = fieldProps.required ? <span className=" ">*</span> : null;
+    const requiredMarker = fieldProps.required ? <span className="form">*</span> : null;
     /* c8 ignore end */
 
     return (
-      <div key={fieldName} className={`
-        form-field
+      <div key={fieldName} className={`form-field
         ${fieldSpacingClasses[fieldSpacing]}
         ${layout === 'horizontal' || layout === 'inline' ? '' : ''}
       `}>
         {/* Field label */}
         <label
           htmlFor={fieldId}
-          className={`
-                
-            ${state.disabled ? '' : ''}
+          className={`${state.disabled ? '' : ''}
             ${labelErrorClass}
           `}
         >
@@ -265,11 +269,9 @@ export const Form = forwardRef<HTMLFormElement, FormProps>(({
             the component does not currently wire up. */}
         {fieldProps.type === 'select' ? (
           <select
-            {...register(fieldName)}
+            {...registerField(fieldName)}
             disabled={state.disabled || fieldProps.disabled}
-            className={`
-                  
-              ${borderRadiusClasses[borderRadius]}
+            className={`${borderRadiusClasses[borderRadius]}
               ${fieldError ? '  ' : ''}
               ${state.disabled ? ' ' : ' '}
                  
@@ -287,13 +289,11 @@ export const Form = forwardRef<HTMLFormElement, FormProps>(({
           </select>
         ) : fieldProps.type === 'textarea' ? (
           <textarea
-            {...register(fieldName)}
+            {...registerField(fieldName)}
             placeholder={fieldProps.placeholder}
             rows={fieldProps.rows || 3}
             disabled={state.disabled || fieldProps.disabled}
-            className={`
-                   
-              ${borderRadiusClasses[borderRadius]}
+            className={`${borderRadiusClasses[borderRadius]}
               ${fieldError ? '  ' : ''}
               ${state.disabled ? ' ' : ' '}
                  
@@ -304,37 +304,31 @@ export const Form = forwardRef<HTMLFormElement, FormProps>(({
             id={fieldId}
           />
         ) : fieldProps.type === 'checkbox' ? (
-          <div className=" ">
+          <div className="form">
             <input
               type="checkbox"
-              {...register(fieldName)}
+              {...registerField(fieldName)}
               disabled={state.disabled || fieldProps.disabled}
-              className={`
-                    
-                
-                ${fieldError ? '' : ''}
+              className={`${fieldError ? '' : ''}
                 ${state.disabled ? '' : ''}
               `}
               {...getFieldAttributes(fieldName)}
               id={fieldId}
             />
-            <label htmlFor={fieldId} className="  ">
+            <label htmlFor={fieldId} className="form">
               {fieldProps.checkboxLabel}
             </label>
           </div>
         ) : fieldProps.type === 'radio' ? (
-          <div className="">
+          <div className="form">
             {fieldProps.options?.map((option: any) => (
-              <div key={option.value} className=" ">
+              <div key={option.value} className="form">
                 <input
                   type="radio"
                   value={option.value}
-                  {...register(fieldName)}
+                  {...registerField(fieldName)}
                   disabled={state.disabled || fieldProps.disabled}
-                  className={`
-                       
-                    
-                    ${fieldError ? '' : ''}
+                  className={`${fieldError ? '' : ''}
                     ${state.disabled ? '' : ''}
                   `}
                   {...getFieldAttributes(fieldName)}
@@ -342,7 +336,7 @@ export const Form = forwardRef<HTMLFormElement, FormProps>(({
                 />
                 <label
                   htmlFor={`${fieldId}-${option.value}`}
-                  className="  "
+                  className="form"
                 >
                   {option.label}
                 </label>
@@ -353,12 +347,10 @@ export const Form = forwardRef<HTMLFormElement, FormProps>(({
           /* c8 ignore end */
           <input
             type={fieldProps.type || 'text'}
-            {...register(fieldName)}
+            {...registerField(fieldName)}
             placeholder={fieldProps.placeholder}
             disabled={state.disabled || fieldProps.disabled}
-            className={`
-                  
-              ${borderRadiusClasses[borderRadius]}
+            className={`${borderRadiusClasses[borderRadius]}
               ${inputErrorClass}
               ${state.disabled ? ' ' : ' '}
                  
@@ -372,7 +364,7 @@ export const Form = forwardRef<HTMLFormElement, FormProps>(({
 
         {/* Field helper text */}
         { /* c8 ignore next (default fieldProps never include a helper) */ fieldProps.helper && !fieldError && (
-          <div className="  ">
+          <div className="form">
             {fieldProps.helper}
           </div>
         )}
@@ -383,12 +375,12 @@ export const Form = forwardRef<HTMLFormElement, FormProps>(({
           const errorMessage =
             typeof fieldError.message === 'string' ? fieldError.message : undefined;
           return (
-            <div className="  " id={errorId}>
+            <div className="form" id={errorId}>
               {renderError ? (
                 renderError(errorMessage, fieldName)
               ) : (
-                <div className="  ">
-                  <span className="">•</span>
+                <div className="form">
+                  <span className="form">•</span>
                   <span>{errorMessage}</span>
                 </div>
               )}
@@ -403,16 +395,14 @@ export const Form = forwardRef<HTMLFormElement, FormProps>(({
   // Default actions renderer
   const defaultRenderActions = () => {
     return (
-      <div className={`
-        form-actions
+      <div className={`form-actions
         ${layout === 'horizontal' || layout === 'inline' ? ' ' : ' '}
         ${layout === 'vertical' ? '' : ''}
       `}>
         <button
           type="submit"
           disabled={state.disabled || state.loading || state.isSubmitting}
-          className={`
-            ${sizeClasses[size].button}
+          className={`${sizeClasses[size].button}
               
              
             ${borderRadiusClasses[borderRadius]}
@@ -427,8 +417,7 @@ export const Form = forwardRef<HTMLFormElement, FormProps>(({
           type="button"
           onClick={() => actions.reset()}
           disabled={state.disabled || state.loading || state.isSubmitting}
-          className={`
-            ${sizeClasses[size].button}
+          className={`${sizeClasses[size].button}
               
              
             ${borderRadiusClasses[borderRadius]}
@@ -446,8 +435,7 @@ export const Form = forwardRef<HTMLFormElement, FormProps>(({
               type="button"
               onClick={actions.previousStep}
               disabled={state.currentStep === 0 || state.isSubmitting}
-              className={`
-                ${sizeClasses[size].button}
+              className={`${sizeClasses[size].button}
                   
                  
                 ${borderRadiusClasses[borderRadius]}
@@ -463,8 +451,7 @@ export const Form = forwardRef<HTMLFormElement, FormProps>(({
                 type="button"
                 onClick={actions.nextStep}
                 disabled={state.isSubmitting}
-                className={`
-                  ${sizeClasses[size].button}
+                className={`${sizeClasses[size].button}
                     
                    
                   ${borderRadiusClasses[borderRadius]}
@@ -478,8 +465,7 @@ export const Form = forwardRef<HTMLFormElement, FormProps>(({
               <button
                 type="submit"
                 disabled={state.isSubmitting}
-                className={`
-                  ${sizeClasses[size].button}
+                className={`${sizeClasses[size].button}
                     
                    
                   ${borderRadiusClasses[borderRadius]}
@@ -501,10 +487,10 @@ export const Form = forwardRef<HTMLFormElement, FormProps>(({
     if (!showLoading || !state.loading) return null;
 
     return (
-      <div className="       ">
-        <div className="     ">
-          <div className="      "></div>
-          <p className="">{loadingText}</p>
+      <div className="form">
+        <div className="form">
+          <div className="form"></div>
+          <p className="form">{loadingText}</p>
         </div>
       </div>
     );
@@ -515,10 +501,10 @@ export const Form = forwardRef<HTMLFormElement, FormProps>(({
     if (!state.isSubmitted || !renderSuccess) return null;
 
     return (
-      <div className="     ">
-        <div className="">
-          <div className="">
-            <svg className="  " fill="currentColor" viewBox="0 0 20 20">
+      <div className="form">
+        <div className="form">
+          <div className="form">
+            <svg className="form" fill="currentColor" viewBox="0 0 20 20">
               <path
                 fillRule="evenodd"
                 d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
@@ -526,8 +512,8 @@ export const Form = forwardRef<HTMLFormElement, FormProps>(({
               />
             </svg>
           </div>
-          <div className="">
-            <h3 className="  ">Form submitted successfully!</h3>
+          <div className="form">
+            <h3 className="form">Form submitted successfully!</h3>
           </div>
         </div>
       </div>
@@ -539,14 +525,12 @@ export const Form = forwardRef<HTMLFormElement, FormProps>(({
     if (!multiStep?.enabled) return null;
 
     return (
-      <div className="">
-        <div className="  ">
+      <div className="form">
+        <div className="form">
           {Array.from({ length: state.totalSteps }, (_, index) => (
-            <div key={index} className=" ">
+            <div key={index} className="form">
               <div
-                className={`
-                         
-                  ${index < state.currentStep
+                className={`${index < state.currentStep
                     ? ' '
                     : index === state.currentStep
                     ? '   '
@@ -558,9 +542,7 @@ export const Form = forwardRef<HTMLFormElement, FormProps>(({
               </div>
               {index < state.totalSteps - 1 && (
                 <div
-                  className={`
-                      
-                    ${index < state.currentStep ? '' : ''}
+                  className={`${index < state.currentStep ? '' : ''}
                   `}
                 />
               )}
@@ -590,10 +572,10 @@ export const Form = forwardRef<HTMLFormElement, FormProps>(({
 
         {/* Form submission error */}
         {showErrors && state.submissionError && (
-          <div className="     ">
-            <div className="">
-              <div className="">
-                <svg className="  " fill="currentColor" viewBox="0 0 20 20">
+          <div className="form">
+            <div className="form">
+              <div className="form">
+                <svg className="form" fill="currentColor" viewBox="0 0 20 20">
                   <path
                     fillRule="evenodd"
                     d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z"
@@ -601,9 +583,9 @@ export const Form = forwardRef<HTMLFormElement, FormProps>(({
                   />
                 </svg>
               </div>
-              <div className="">
-                <h3 className="  ">Submission Error</h3>
-                <div className="  ">
+              <div className="form">
+                <h3 className="form">Submission Error</h3>
+                <div className="form">
                   {state.submissionError}
                 </div>
               </div>
@@ -643,8 +625,15 @@ export const Form = forwardRef<HTMLFormElement, FormProps>(({
       {renderLoadingOverlay()}
     </>
   );
-});
+}
 
-Form.displayName = 'Form';
+// Wire the generic component through forwardRef so consumers can write
+// <Form<MyValues>> and get typed field values. forwardRef itself is not
+// generic, so we cast through a generic call signature to preserve TFieldValues.
+const FormForwarded = forwardRef(FormInner);
+FormForwarded.displayName = 'Form';
+export const Form = FormForwarded as <TFieldValues extends Record<string, any> = Record<string, any>>(
+  props: FormProps<TFieldValues> & { ref?: React.ForwardedRef<HTMLFormElement> }
+) => React.ReactElement;
 
 export default Form;

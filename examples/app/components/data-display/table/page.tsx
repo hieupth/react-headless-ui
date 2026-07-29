@@ -107,6 +107,7 @@ export default function TablePage() {
             columns={columns}
             data={data}
             enableSelection
+            onSelectionChange={(s) => console.log(s)}
             className="w-full rounded-lg border border-gray-200 text-sm dark:border-gray-700 [&_td]:px-3 [&_td]:py-2 [&_th]:px-3 [&_th]:py-2 [&_th]:text-left [&_th]:font-semibold"
           />
         </Demo>

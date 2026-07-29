@@ -1,12 +1,11 @@
 "use client";
 /**
- * FadeInOut headless hook for React UI Forge components.
+ * FadeInOut headless hook for @hieupth/react-headless-ui components.
  * Provides fade in/out animation behavior following Flutter patterns.
  * Manages animation states, timing, and accessibility considerations.
  */
 
 import { useState, useCallback, useEffect, useRef, useMemo } from 'react';
-import { useFocusableMixin, usePressableMixin, useSemanticMixin } from '../mixins';
 
 /**
  * Fade animation direction options
@@ -66,8 +65,15 @@ export interface UseFadeInOutProps {
   trigger?: FadeTrigger;
   /** Animation delay in milliseconds */
   delay?: number;
-  /** Easing function name */
-  easing?: 'linear' | 'ease-in' | 'ease-out' | 'ease-in-out';
+  /**
+   * Easing. One of the named easings below (used for the JS rAF animation
+   * path) OR any CSS easing string (e.g. `cubic-bezier(0.1,0.2,0.3,0.4)`),
+   * which is passed through verbatim to the CSS transition / framer-motion.
+   * Unknown strings fall back to linear in the JS path. The `(string & {})`
+   * trick keeps the named literals auto-completable while allowing arbitrary
+   * CSS easing strings.
+   */
+  easing?: 'linear' | 'ease-in' | 'ease-out' | 'ease-in-out' | (string & {});
   /** Initial opacity value */
   initialOpacity?: number;
   /** Final opacity value */
@@ -218,8 +224,11 @@ export function useFadeInOut(props: UseFadeInOutProps = {}): UseFadeInOutReturns
         const adjustedElapsed = elapsed - delay;
         const progress = Math.min(adjustedElapsed / effectiveDuration, 1);
 
-        // Apply easing function
-        const easedProgress = easingFunctions[easing](progress);
+        // Apply easing function. A custom CSS easing string (e.g.
+        // cubic-bezier(...)) is only meaningful for the CSS/framer-motion path;
+        // in this JS rAF path it has no JS closure, so fall back to linear.
+        const easingFn = easingFunctions[easing as keyof typeof easingFunctions] ?? easingFunctions['linear'];
+        const easedProgress = easingFn(progress);
 
         // Calculate current opacity
         const newOpacity = from + (to - from) * easedProgress;

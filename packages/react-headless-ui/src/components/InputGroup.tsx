@@ -4,9 +4,8 @@
  * Provides styled input grouping with comprehensive layout support and validation.
  */
 
-import React, { forwardRef, useRef, useEffect } from 'react';
+import React, { forwardRef, useRef } from 'react';
 import { useInputGroup, type UseInputGroupProps } from '../hooks';
-import { useTheme } from '../providers/ThemeProvider';
 
 export interface InputGroupProps extends Omit<UseInputGroupProps, 'groupRef'> {
   /** Additional CSS class names */
@@ -48,7 +47,6 @@ export const InputGroup = forwardRef<HTMLDivElement, InputGroupProps>(({
   renderError,
   ...inputGroupProps
 }, ref) => {
-  const theme = useTheme();
   const {
     state,
     actions,
@@ -120,16 +118,13 @@ export const InputGroup = forwardRef<HTMLDivElement, InputGroupProps>(({
     switch (item.type) {
       case 'input':
         return (
-          <div key={item.id} className={`
-            input-item
+          <div key={item.id} className={`input-item
             ${state.layout === 'stacked' ? '' : ''}
             ${state.layout === 'horizontal' || state.layout === 'inline' ? '' : ''}
           `}>
             {/* Label */}
             {showLabels && item.content && (
-              <label className={`
-                    
-                ${state.disabled ? '' : ''}
+              <label className={`${state.disabled ? '' : ''}
                 ${item.required ? '  ' : ''}
               `}>
                 {item.content}
@@ -146,8 +141,7 @@ export const InputGroup = forwardRef<HTMLDivElement, InputGroupProps>(({
               onChange={(e) => actions.setValue(item.id, e.target.value)}
               onFocus={() => actions.focusItem(item.id)}
               onBlur={() => actions.blurItem(item.id)}
-              className={`
-                input-field
+              className={`input-field
                   
                 ${showBorders ? '' : ''}
                 ${hasError ? '  ' : ''}
@@ -176,10 +170,10 @@ export const InputGroup = forwardRef<HTMLDivElement, InputGroupProps>(({
                 {renderError ? (
                   renderError(item.id, itemErrors)
                 ) : (
-                  <div className=" ">
+                  <div className="input-group">
                     {itemErrors.map((error: string, errorIndex: number) => (
-                      <div key={errorIndex} className="  ">
-                        <span className="">•</span>
+                      <div key={errorIndex} className="input-group">
+                        <span className="input-group">•</span>
                         <span>{error}</span>
                       </div>
                     ))}
@@ -192,13 +186,10 @@ export const InputGroup = forwardRef<HTMLDivElement, InputGroupProps>(({
 
       case 'label':
         return (
-          <div key={item.id} className={`
-            label-item
+          <div key={item.id} className={`label-item
             ${state.layout === 'horizontal' || state.layout === 'inline' ? ' ' : ''}
           `}>
-            <label className={`
-                 
-              ${state.disabled ? '' : ''}
+            <label className={`${state.disabled ? '' : ''}
               ${item.required ? '  ' : ''}
             `}>
               {item.content}
@@ -208,8 +199,7 @@ export const InputGroup = forwardRef<HTMLDivElement, InputGroupProps>(({
 
       case 'helper':
         return (
-          <div key={item.id} className={`
-            helper-item
+          <div key={item.id} className={`helper-item
              
             ${state.layout === 'horizontal' || state.layout === 'inline' ? ' ' : ''}
           `}>
@@ -219,8 +209,7 @@ export const InputGroup = forwardRef<HTMLDivElement, InputGroupProps>(({
 
       case 'error':
         return (
-          <div key={item.id} className={`
-            error-item
+          <div key={item.id} className={`error-item
              
             ${state.layout === 'horizontal' || state.layout === 'inline' ? ' ' : ''}
           `}>
@@ -230,30 +219,27 @@ export const InputGroup = forwardRef<HTMLDivElement, InputGroupProps>(({
 
       case 'prefix':
         return (
-          <div key={item.id} className={`
-            prefix-item
+          <div key={item.id} className={`prefix-item
              
             ${state.layout === 'horizontal' || state.layout === 'inline' ? '' : ''}
           `}>
-            <span className=" ">{item.content}</span>
+            <span className="input-group">{item.content}</span>
           </div>
         );
 
       case 'suffix':
         return (
-          <div key={item.id} className={`
-            suffix-item
+          <div key={item.id} className={`suffix-item
              
             ${state.layout === 'horizontal' || state.layout === 'inline' ? ' ' : ''}
           `}>
-            <span className=" ">{item.content}</span>
+            <span className="input-group">{item.content}</span>
           </div>
         );
 
       case 'action':
         return (
-          <div key={item.id} className={`
-            action-item
+          <div key={item.id} className={`action-item
             ${state.layout === 'horizontal' || state.layout === 'inline' ? ' ' : ''}
           `}>
             <button
@@ -263,7 +249,7 @@ export const InputGroup = forwardRef<HTMLDivElement, InputGroupProps>(({
                   item.content(state.values, actions);
                 }
               }}
-              className="       "
+              className="input-group"
               disabled={state.disabled}
               data-testid={`action-${item.id}`}
             >
@@ -290,11 +276,11 @@ export const InputGroup = forwardRef<HTMLDivElement, InputGroupProps>(({
         {renderError ? (
           renderError('group', state.errors.group)
         ) : (
-          <div className="      ">
-            <div className=" ">Form Errors:</div>
+          <div className="input-group">
+            <div className="input-group">Form Errors:</div>
             {state.errors.group.map((error: string, index: number) => (
-              <div key={index} className="  ">
-                <span className="">•</span>
+              <div key={index} className="input-group">
+                <span className="input-group">•</span>
                 <span>{error}</span>
               </div>
             ))}
@@ -310,21 +296,21 @@ export const InputGroup = forwardRef<HTMLDivElement, InputGroupProps>(({
       <div className="form-actions   ">
         <button
           onClick={actions.validate}
-          className="       "
+          className="input-group"
           disabled={state.disabled}
         >
           Validate
         </button>
         <button
           onClick={actions.reset}
-          className="       "
+          className="input-group"
           disabled={state.disabled}
         >
           Reset
         </button>
         <button
           onClick={actions.clear}
-          className="       "
+          className="input-group"
           disabled={state.disabled}
         >
           Clear
@@ -340,8 +326,8 @@ export const InputGroup = forwardRef<HTMLDivElement, InputGroupProps>(({
     return (
       <div className="status-indicator  ">
         {state.isValid ? (
-          <div className="   ">
-            <svg className=" " fill="currentColor" viewBox="0 0 20 20">
+          <div className="input-group">
+            <svg className="input-group" fill="currentColor" viewBox="0 0 20 20">
               <path
                 fillRule="evenodd"
                 d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
@@ -351,8 +337,8 @@ export const InputGroup = forwardRef<HTMLDivElement, InputGroupProps>(({
             <span>Valid</span>
           </div>
         ) : (
-          <div className="   ">
-            <svg className=" " fill="currentColor" viewBox="0 0 20 20">
+          <div className="input-group">
+            <svg className="input-group" fill="currentColor" viewBox="0 0 20 20">
               <path
                 fillRule="evenodd"
                 d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z"
@@ -394,8 +380,8 @@ export const InputGroup = forwardRef<HTMLDivElement, InputGroupProps>(({
       {/* Empty state */}
       {state.items.length === 0 && (
         <div className="empty-state      ">
-          <div className="       ">
-            <svg className="  " fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <div className="input-group">
+            <svg className="input-group" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path
                 strokeLinecap="round"
                 strokeLinejoin="round"
@@ -404,8 +390,8 @@ export const InputGroup = forwardRef<HTMLDivElement, InputGroupProps>(({
               />
             </svg>
           </div>
-          <p className=" ">No form fields</p>
-          <p className="  ">Add items to create a form</p>
+          <p className="input-group">No form fields</p>
+          <p className="input-group">Add items to create a form</p>
         </div>
       )}
     </div>

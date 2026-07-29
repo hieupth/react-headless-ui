@@ -512,7 +512,7 @@ describe('DataGrid component rendering', () => {
   });
 
   it('invokes getCellProps and merges into cell attributes', () => {
-    const getCellProps = (cell: any, row: any, column: any) => ({ 'data-custom': `${column.id}-${row.id}` });
+    const getCellProps = ((cell: any, row: any, column: any) => ({ 'data-custom': `${column.id}-${row.id}` })) as NonNullable<React.ComponentProps<typeof DataGrid>['getCellProps']>;
     const { getByTestId } = render(
       <DataGrid
         data={data}
@@ -554,7 +554,7 @@ describe('DataGrid component rendering', () => {
 
   it('invokes getHeaderCellProps and renders non-sortable header without onClick', () => {
     const cols: GridColumn[] = [{ id: 'name', header: 'Name', sortable: false }];
-    const getHeaderCellProps = (column: any) => ({ 'data-hp': column.id });
+    const getHeaderCellProps = ((column: any) => ({ 'data-hp': column.id })) as NonNullable<React.ComponentProps<typeof DataGrid>['getHeaderCellProps']>;
     const { getByTestId } = render(
       <DataGrid
         data={data}
@@ -765,7 +765,7 @@ describe('DataGrid component rendering', () => {
   });
 
   it('applies getRowProps and highlights selected rows', () => {
-    const getRowProps = (row: any) => ({ 'data-rowid': row.id });
+    const getRowProps = ((row: any) => ({ 'data-rowid': row.id })) as NonNullable<React.ComponentProps<typeof DataGrid>['getRowProps']>;
     const { getByTestId } = render(
       <DataGrid
         data={data}
@@ -796,7 +796,7 @@ describe('DataGrid component rendering', () => {
 
   it('forwards the ref to the table element', () => {
     let tableRef: HTMLTableElement | null = null;
-    render(<DataGrid ref={(el: HTMLTableElement | null) => (tableRef = el)} data={data} columns={columns} showSelection={false} showColumnFilters={false} />);
+    render(<DataGrid ref={(el: HTMLTableElement | null) => { tableRef = el; }} data={data} columns={columns} showSelection={false} showColumnFilters={false} />);
     expect(tableRef).not.toBeNull();
     expect(tableRef!.tagName).toBe('TABLE');
   });

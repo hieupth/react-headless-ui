@@ -84,7 +84,6 @@ export const AccordionMenu = forwardRef<HTMLDivElement, AccordionMenuProps>((pro
   } = props as AccordionMenuResolvedProps;
 
   const {
-    state,
     actions,
     semanticAttributes,
     menuProps,
@@ -144,32 +143,28 @@ export const AccordionMenu = forwardRef<HTMLDivElement, AccordionMenuProps>((pro
         {/* Item Header */}
         <div
           {...headerProps}
-          className={`
-                  
-               
-              
-            ${item.disabled ? ' ' : ''}
+          className={`${item.disabled ? ' ' : ''}
             ${isOpen ? '' : ''}
           `}
         >
-          <div className="   ">
+          <div className="accordion-menu">
             {/* Icon */}
             {showIcons && item.icon && (
-              <span className="    ">
+              <span className="accordion-menu">
                 {item.icon}
               </span>
             )}
 
             {/* Label */}
-            <span className="  ">
+            <span className="accordion-menu">
               {item.label}
             </span>
           </div>
 
-          <div className="  ">
+          <div className="accordion-menu">
             {/* Badge */}
             {showBadges && item.badge && (
-              <span className="        ">
+              <span className="accordion-menu">
                 {item.badge}
               </span>
             )}
@@ -177,9 +172,7 @@ export const AccordionMenu = forwardRef<HTMLDivElement, AccordionMenuProps>((pro
             {/* Expand/Collapse Icon */}
             {hasChildren && (
               <span
-                className={`
-                       
-                  ${isOpen ? '' : ''}
+                className={`${isOpen ? '' : ''}
                 `}
               >
                 <svg fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -194,13 +187,11 @@ export const AccordionMenu = forwardRef<HTMLDivElement, AccordionMenuProps>((pro
         {hasChildren && (
           <div
             {...contentProps}
-            className={`
-              
-              ${isOpen ? ' ' : ' '}
+            className={`${isOpen ? ' ' : ' '}
                duration-${animationDuration}
             `}
           >
-            <div className="">
+            <div className="accordion-menu">
               {actions.getItemChildren(item.id).map((child) => renderItem(child, depth + 1))}
             </div>
           </div>
@@ -230,7 +221,7 @@ export const AccordionMenu = forwardRef<HTMLDivElement, AccordionMenuProps>((pro
       className={`${baseClasses} ${className}`}
       {...navSemanticAttributes}
     >
-      <div className="">
+      <div className="accordion-menu">
         {items.map((item) => renderItem(item))}
       </div>
     </nav>

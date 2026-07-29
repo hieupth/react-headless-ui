@@ -27,11 +27,16 @@ export interface SelectOption {
 }
 
 export interface UseSelectProps extends
-  FocusableMixinProps,
+  Omit<FocusableMixinProps, 'focusStrategy'>,
   PressableMixinProps,
   SemanticMixinProps {
   /** Select options */
   options: SelectOption[];
+  /**
+   * Focus strategy. Extends the mixin's set with `'selected'`, which focuses the
+   * currently selected option on open (falls back to `'auto'` for the mixin).
+   */
+  focusStrategy?: 'auto' | 'manual' | 'programmatic' | 'first' | 'selected';
   /** Selected value */
   value?: any;
   /** Default selected value */
@@ -355,7 +360,12 @@ export const useSelect = (props: UseSelectProps): UseSelectReturns => {
         event.preventDefault();
         if (!open) {
           openSelect();
-        } else {
+        } else if (filtered.some(option => !option.disabled)) {
+          // Bound the cycle: when `highlightedIndex === -1` (the common initial
+          // value) the `nextIndex !== highlightedIndex` guard can never fire, so
+          // without this pre-check the do/while never terminates when every
+          // filtered option is disabled. With >=1 enabled option the loop finds
+          // it within a single full cycle, so the guard stays correct.
           let nextIndex = highlightedIndex;
           do {
             nextIndex = (nextIndex + 1) % filtered.length;
@@ -368,7 +378,7 @@ export const useSelect = (props: UseSelectProps): UseSelectReturns => {
         event.preventDefault();
         if (!open) {
           openSelect();
-        } else {
+        } else if (filtered.some(option => !option.disabled)) {
           let prevIndex = highlightedIndex;
           do {
             prevIndex = prevIndex <= 0 ? filtered.length - 1 : prevIndex - 1;

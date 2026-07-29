@@ -65,12 +65,12 @@ export interface UseHoverLiftReturns {
   ref: React.RefCallback<HTMLElement>;
   /** Event handlers for element */
   eventHandlers: {
-    onMouseEnter: () => void;
-    onMouseLeave: () => void;
-    onFocus: () => void;
-    onBlur: () => void;
-    onPointerEnter: () => void;
-    onPointerLeave: () => void;
+    onMouseEnter: (event: React.MouseEvent) => void;
+    onMouseLeave: (event: React.MouseEvent) => void;
+    onFocus: (event: React.FocusEvent) => void;
+    onBlur: (event: React.FocusEvent) => void;
+    onPointerEnter: (event: React.PointerEvent) => void;
+    onPointerLeave: (event: React.PointerEvent) => void;
     onPointerMove: (event: React.PointerEvent) => void;
   };
   /** ARIA attributes for accessibility */

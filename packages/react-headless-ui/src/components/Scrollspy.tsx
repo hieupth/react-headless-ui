@@ -6,7 +6,6 @@
 
 import React, { forwardRef, useEffect } from 'react';
 import { useScrollspy, type UseScrollspyProps } from '../hooks';
-import { useTheme } from '../providers/ThemeProvider';
 
 export interface ScrollspyProps extends Omit<UseScrollspyProps, 'scrollspyRef'> {
   /** Additional CSS class names */
@@ -45,7 +44,6 @@ export const Scrollspy = forwardRef<HTMLDivElement, ScrollspyProps>(({
   orientation = 'vertical',
   ...scrollspyProps
 }, ref) => {
-  const theme = useTheme();
   const {
     state,
     actions,
@@ -101,9 +99,9 @@ export const Scrollspy = forwardRef<HTMLDivElement, ScrollspyProps>(({
     const indicatorClass = isActive ? '' : '';
     /* c8 ignore next */
     const activeArrowNode = (isActive && orientation === 'vertical') ? (
-      <span className="">
+      <span className="scrollspy">
         <svg
-          className="  "
+          className="scrollspy"
           fill="currentColor"
           viewBox="0 0 20 20"
         >
@@ -143,21 +141,19 @@ export const Scrollspy = forwardRef<HTMLDivElement, ScrollspyProps>(({
       >
         {/* Indicator */}
         {showIndicators && (
-          <div className={`
-               
-            ${indicatorClass}
+          <div className={`${indicatorClass}
           `} />
         )}
 
         {/* Section Icon */}
         {showIcons && section.icon && (
-          <span className="">
+          <span className="scrollspy">
             {section.icon}
           </span>
         )}
 
         {/* Section Label */}
-        <span className=" ">
+        <span className="scrollspy">
           {section.label}
         </span>
 
@@ -237,7 +233,7 @@ export const Scrollspy = forwardRef<HTMLDivElement, ScrollspyProps>(({
     >
       {/* Header */}
       <div className="scrollspy-header ">
-        <h3 className="    ">
+        <h3 className="scrollspy">
           Table of Contents
         </h3>
       </div>
@@ -262,9 +258,9 @@ export const Scrollspy = forwardRef<HTMLDivElement, ScrollspyProps>(({
 
       {/* Empty State */}
       {state.sections.length === 0 && (
-        <div className="     ">
+        <div className="scrollspy">
           <svg
-            className="  "
+            className="scrollspy"
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"
@@ -276,18 +272,18 @@ export const Scrollspy = forwardRef<HTMLDivElement, ScrollspyProps>(({
               d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"
             />
           </svg>
-          <p className="">No sections available</p>
+          <p className="scrollspy">No sections available</p>
         </div>
       )}
 
       {/* Scroll Position Indicator */}
       {showProgress && orientation === 'horizontal' && (
         <div className="scroll-position-indicator ">
-          <div className="    ">
+          <div className="scrollspy">
             <span>Position:</span>
-            <div className="   ">
+            <div className="scrollspy">
               <div
-                className="    "
+                className="scrollspy"
                 style={{ width: `${Math.min((state.scrollPosition / (document.documentElement.scrollHeight - window.innerHeight)) * 100, 100)}%` }}
               />
             </div>
@@ -358,9 +354,7 @@ export const ScrollspySection = forwardRef<HTMLDivElement, ScrollspySectionProps
     >
       {/* Indicator */}
       {showIndicators && (
-        <div className={`
-             
-          ${isActive
+        <div className={`${isActive
             ? ''
             : ''
           }
@@ -369,21 +363,21 @@ export const ScrollspySection = forwardRef<HTMLDivElement, ScrollspySectionProps
 
       {/* Section Icon */}
       {showIcons && section.icon && (
-        <span className="">
+        <span className="scrollspy">
           {section.icon}
         </span>
       )}
 
       {/* Section Label */}
-      <span className=" ">
+      <span className="scrollspy">
         {section.label}
       </span>
 
       {/* Active indicator arrow */}
       {isActive && (
-        <span className="">
+        <span className="scrollspy">
           <svg
-            className="  "
+            className="scrollspy"
             fill="currentColor"
             viewBox="0 0 20 20"
           >

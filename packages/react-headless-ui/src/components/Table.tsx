@@ -6,7 +6,6 @@
 
 import React, { forwardRef } from 'react';
 import { useTable, type UseTableProps } from '../hooks';
-import { useTheme } from '../providers/ThemeProvider';
 
 export interface TableProps extends UseTableProps {
   /** Additional CSS class names */
@@ -54,7 +53,6 @@ export const Table = forwardRef<HTMLTableElement, TableProps>(({
   renderPagination,
   ...tableProps
 }, ref) => {
-  const theme = useTheme();
   const {
     state,
     actions,
@@ -106,8 +104,8 @@ export const Table = forwardRef<HTMLTableElement, TableProps>(({
 
   // Default empty state
   const defaultRenderEmpty = () => (
-    <div className="    ">
-      <div className="">
+    <div className="table">
+      <div className="table">
         <svg
           className="mx-auto   "
           fill="none"
@@ -121,8 +119,8 @@ export const Table = forwardRef<HTMLTableElement, TableProps>(({
             d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
           />
         </svg>
-        <h3 className="   ">No data</h3>
-        <p className="  ">
+        <h3 className="table">No data</h3>
+        <p className="table">
           No items to display
         </p>
       </div>
@@ -131,10 +129,10 @@ export const Table = forwardRef<HTMLTableElement, TableProps>(({
 
   // Default loading state
   const defaultRenderLoading = () => (
-    <div className="   ">
-      <div className="  ">
-        <div className="     "></div>
-        <span className="">Loading...</span>
+    <div className="table">
+      <div className="table">
+        <div className="table"></div>
+        <span className="table">Loading...</span>
       </div>
     </div>
   );
@@ -149,28 +147,28 @@ export const Table = forwardRef<HTMLTableElement, TableProps>(({
     const endIndex = Math.min(startIndex + pageSize - 1, total);
 
     return (
-      <div className="        ">
-        <div className=" ">
-          <p className=" ">
-            Showing <span className="">{startIndex}</span> to{' '}
-            <span className="">{endIndex}</span> of{' '}
-            <span className="">{total}</span> results
+      <div className="table">
+        <div className="table">
+          <p className="table">
+            Showing <span className="table">{startIndex}</span> to{' '}
+            <span className="table">{endIndex}</span> of{' '}
+            <span className="table">{total}</span> results
           </p>
         </div>
-        <div className="  ">
+        <div className="table">
           <button
             onClick={() => actions.setPage(page - 1)}
             disabled={page === 0}
-            className="              "
+            className="table"
           >
             Previous
           </button>
-          <div className="  ">
+          <div className="table">
             {Array.from({ length: totalPages }, (_, i) => (
               <button
                 key={i}
                 onClick={() => actions.setPage(i)}
-                className={`        ${
+                className={`${
                   i === page
                     ? ' '
                     : '    '
@@ -183,7 +181,7 @@ export const Table = forwardRef<HTMLTableElement, TableProps>(({
           <button
             onClick={() => actions.setPage(page + 1)}
             disabled={page === totalPages - 1}
-            className="              "
+            className="table"
           >
             Next
           </button>
@@ -211,7 +209,7 @@ export const Table = forwardRef<HTMLTableElement, TableProps>(({
   }
 
   return (
-    <div className="" data-testid="table-container">
+    <div className="table" data-testid="table-container">
       <table
         ref={ref}
         className={tableClasses}
@@ -220,14 +218,14 @@ export const Table = forwardRef<HTMLTableElement, TableProps>(({
       >
         {/* Table Header */}
         {showHeaders && (
-          <thead className="">
+          <thead className="table">
             <tr>
               {/* Selection column */}
               {state.selection && (
-                <th className="  ">
+                <th className="table">
                   <input
                     type="checkbox"
-                    className="     "
+                    className="table"
                     checked={computed.allRowsSelected}
                     onChange={(e) => {
                       if (e.target.checked) {
@@ -243,14 +241,14 @@ export const Table = forwardRef<HTMLTableElement, TableProps>(({
 
               {/* Expansion column */}
               {state.enableExpansion && (
-                <th className="  ">
+                <th className="table">
                   <span className="sr-only">Expand</span>
                 </th>
               )}
 
               {/* Row number column */}
               {showRowNumbers && (
-                <th className="       ">
+                <th className="table">
                   #
                 </th>
               )}
@@ -266,22 +264,20 @@ export const Table = forwardRef<HTMLTableElement, TableProps>(({
                     key={column.key}
                     {...attributes}
                     onClick={() => handleHeaderClick(column)}
-                    className={`
-                             
-                      ${column.sortable ? ' ' : ''}
+                    className={`${column.sortable ? ' ' : ''}
                       ${column.align === 'center' ? '' : ''}
                       ${column.align === 'right' ? '' : ''}
                     `}
                     style={{ width: column.width }}
                   >
-                    <div className="  ">
+                    <div className="table">
                       <span>
                         {renderHeader ? renderHeader(column, columnIndex) : column.title}
                       </span>
                       {column.sortable && (
-                        <span className=" ">
+                        <span className="table">
                           <svg
-                            className={`   ${
+                            className={`${
                               isSorted && sortDirection === 'asc' ? '' : ''
                             }`}
                             fill="currentColor"
@@ -294,7 +290,7 @@ export const Table = forwardRef<HTMLTableElement, TableProps>(({
                             />
                           </svg>
                           <svg
-                            className={`  ${
+                            className={`${
                               isSorted && sortDirection === 'desc' ? '' : ''
                             }`}
                             fill="currentColor"
@@ -317,7 +313,7 @@ export const Table = forwardRef<HTMLTableElement, TableProps>(({
         )}
 
         {/* Table Body */}
-        <tbody className="  ">
+        <tbody className="table">
           {computed.paginatedData.map((row, rowIndex) => {
             const rowAttributes = getRowAttributes(row, rowIndex);
             const rowKey = state.selection?.getRowKey(row) || `row-${rowIndex}`;
@@ -327,18 +323,16 @@ export const Table = forwardRef<HTMLTableElement, TableProps>(({
               <React.Fragment key={rowKey}>
                 <tr
                   {...rowAttributes}
-                  className={`
-                    
-                    ${rowIndex % 2 === 1 && variant === 'striped' ? '' : ''}
+                  className={`${rowIndex % 2 === 1 && variant === 'striped' ? '' : ''}
                     ${state.selection?.selectedRowKeys.includes(rowKey) ? '' : ''}
                   `}
                 >
                   {/* Selection checkbox */}
                   {state.selection && (
-                    <td className="  ">
+                    <td className="table">
                       <input
                         type="checkbox"
-                        className="     "
+                        className="table"
                         {...getSelectionCheckboxAttributes(row)}
                       />
                     </td>
@@ -346,13 +340,13 @@ export const Table = forwardRef<HTMLTableElement, TableProps>(({
 
                   {/* Expansion button */}
                   {state.enableExpansion && (
-                    <td className="  ">
+                    <td className="table">
                       <button
                         {...getExpanderAttributes(row)}
-                        className="   "
+                        className="table"
                       >
                         <svg
-                          className={`  transform  ${isExpanded ? '' : ''}`}
+                          className={`transform  ${isExpanded ? '' : ''}`}
                           fill="none"
                           stroke="currentColor"
                           viewBox="0 0 24 24"
@@ -370,7 +364,7 @@ export const Table = forwardRef<HTMLTableElement, TableProps>(({
 
                   {/* Row number */}
                   {showRowNumbers && (
-                    <td className="    ">
+                    <td className="table">
                       {rowIndex + 1}
                     </td>
                   )}
@@ -384,9 +378,7 @@ export const Table = forwardRef<HTMLTableElement, TableProps>(({
                       <td
                         key={`${column.key}-${rowIndex}`}
                         {...cellAttributes}
-                        className={`
-                              
-                          ${column.align === 'center' ? '' : ''}
+                        className={`${column.align === 'center' ? '' : ''}
                           ${column.align === 'right' ? '' : ''}
                         `}
                       >
@@ -412,11 +404,11 @@ export const Table = forwardRef<HTMLTableElement, TableProps>(({
                         1 +
                         (showRowNumbers ? 1 : 0)
                       }
-                      className="  "
+                      className="table"
                     >
-                      <div className=" ">
-                        <h4 className="  ">Row Details</h4>
-                        <pre className="">{JSON.stringify(row, null, 2)}</pre>
+                      <div className="table">
+                        <h4 className="table">Row Details</h4>
+                        <pre className="table">{JSON.stringify(row, null, 2)}</pre>
                       </div>
                     </td>
                   </tr>

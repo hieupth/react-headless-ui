@@ -7,7 +7,6 @@
 import React, { forwardRef } from 'react';
 import { motion } from 'framer-motion';
 import { useRevealOnScroll, type UseRevealOnScrollProps } from '../hooks';
-import { useTheme } from '../providers/ThemeProvider';
 
 export interface RevealOnScrollProps extends UseRevealOnScrollProps {
   /** Additional CSS class names */
@@ -40,7 +39,6 @@ export const RevealOnScroll = forwardRef<HTMLDivElement, RevealOnScrollProps>(({
   transition,
   ...revealProps
 }, ref) => {
-  const theme = useTheme();
   const {
     state,
     actions,

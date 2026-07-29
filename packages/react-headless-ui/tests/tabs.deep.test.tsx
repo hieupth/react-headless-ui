@@ -155,11 +155,11 @@ describe('useTabs', () => {
     render(<Probe />);
     fireEvent.click(screen.getByTestId('sel-b'));
     fireEvent.click(screen.getByTestId('sel-z'));
-    // disabled and unknown ignored; selectedKey stays 'a' (uncontrolled but no internal state update)
+    // disabled and unknown ignored; selectedKey stays 'a'
     expect(screen.getByTestId('sel').textContent).toBe('a');
     fireEvent.click(screen.getByTestId('sel-c'));
-    // selectTab fires onSelectionChange but selectedKey (derived) stays 'a' unless controlled
-    expect(screen.getByTestId('sel').textContent).toBe('a');
+    // valid enabled key in uncontrolled mode updates internal state -> 'c'
+    expect(screen.getByTestId('sel').textContent).toBe('c');
   });
 
   it('highlightTab only highlights enabled tabs', () => {

@@ -6,7 +6,6 @@
 
 import React, { forwardRef } from 'react';
 import { useToast, type UseToastProps } from '../hooks';
-import { useTheme } from '../providers/ThemeProvider';
 
 export interface ToastProps extends UseToastProps {
   /** Additional CSS class names */
@@ -31,52 +30,51 @@ export const Toast = forwardRef<HTMLDivElement, ToastProps>(({
   renderToast,
   showProgress: showProgressProp = false,
   closeButtonContent,
+  pauseOnHover = true,
   ...toastProps
 }, ref) => {
-  const theme = useTheme();
   const {
     state,
     actions,
     containerAttributes
   } = useToast({
     ...toastProps,
+    pauseOnHover,
     showProgress: showProgressProp
   });
 
-  // Position classes
+  // Position classes — container translate transforms per toast stack corner/edge.
   const getPositionClasses = (position: string) => {
-    const positions = {
-      '': ' ',
-      '': ' ',
-      '': '  transform -translate-x-1/2',
-      '': ' ',
-      '': ' ',
-      '': '  transform -translate-x-1/2'
+    const positions: Record<string, string> = {
+      'top-left': 'top-4 left-4',
+      'top-center': 'top-4 left-1/2 transform -translate-x-1/2',
+      'top-right': 'top-4 right-4',
+      'bottom-left': 'bottom-4 left-4',
+      'bottom-center': 'bottom-4 left-1/2 transform -translate-x-1/2',
+      'bottom-right': 'bottom-4 right-4'
     };
-    return positions[position as keyof typeof positions] || '';
+    return positions[position] || positions['top-right'];
   };
 
   // Variant classes
   const getVariantClasses = (variant: string) => {
-    const variants = {
-      default: ' ',
-      success: ' ',
-      error: ' ',
-      warning: ' ',
-      info: ' '
+    const variants: Record<string, string> = {
+      default: 'toast-default',
+      success: 'toast-success',
+      error: 'toast-error',
+      warning: 'toast-warning',
+      info: 'toast-info'
     };
-    return variants[variant as keyof typeof variants] || variants.default;
+    return variants[variant] || variants.default;
   };
 
   // Base container classes
-  const containerClasses = `
-    toast-container
-     
-     
-    pointer-events-none
-    ${getPositionClasses(state.position)}
-    ${className || ''}
-  `.trim().replace(/\s+/g, ' ');
+  const containerClasses = [
+    'toast-container',
+    'pointer-events-none',
+    getPositionClasses(state.position),
+    className || ''
+  ].filter(Boolean).join(' ');
 
   // Default toast renderer
   const defaultRenderToast = (toast: any, index: number, onDismiss: () => void) => {
@@ -87,30 +85,26 @@ export const Toast = forwardRef<HTMLDivElement, ToastProps>(({
     return (
       <div
         key={toast.id}
-        className={`
-          toast-item
-          ${variantClasses}
-              
-           
-          pointer-events-auto
-            
-          ${index > 0 ? '' : ''}
-          ${state.isPaused ? '' : ''}
-        `}
-        onMouseEnter={() => actions.pause()}
-        onMouseLeave={() => actions.resume()}
+        className={[
+          'toast-item',
+          variantClasses,
+          'pointer-events-auto',
+          state.isPaused ? 'toast-paused' : ''
+        ].filter(Boolean).join(' ')}
+        onMouseEnter={() => { if (pauseOnHover) actions.pause(); }}
+        onMouseLeave={() => { if (pauseOnHover) actions.resume(); }}
         data-testid={`toast-${toast.id}`}
       >
         {/* Toast content */}
-        <div className="  ">
+        <div className="toast">
           {/* Message */}
-          <div className=" ">
+          <div className="toast">
             {toast.title && (
-              <h4 className="  ">
+              <h4 className="toast">
                 {toast.title}
               </h4>
             )}
-            <p className=" ">
+            <p className="toast">
               {toast.message}
             </p>
 
@@ -118,7 +112,7 @@ export const Toast = forwardRef<HTMLDivElement, ToastProps>(({
             {toast.action && (
               <button
                 onClick={toast.action.onClick}
-                className="          "
+                className="toast"
               >
                 {toast.action.label}
               </button>
@@ -129,12 +123,12 @@ export const Toast = forwardRef<HTMLDivElement, ToastProps>(({
           {toast.dismissible && (
             <button
               onClick={onDismiss}
-              className="         "
+              className="toast"
               aria-label="Dismiss notification"
             >
               {closeButtonContent || (
                 <svg
-                  className=" "
+                  className="toast"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
@@ -153,10 +147,10 @@ export const Toast = forwardRef<HTMLDivElement, ToastProps>(({
 
         {/* Progress bar */}
         {showProgressProp && toast.duration > 0 && (
-          <div className="">
-            <div className="  ">
+          <div className="toast">
+            <div className="toast">
               <div
-                className="    "
+                className="toast"
                 style={{
                   width: `${100 - progress}%`
                 }}

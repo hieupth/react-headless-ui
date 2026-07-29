@@ -5,8 +5,8 @@
  */
 
 import { useState, useCallback, useMemo, useRef } from 'react';
-import { useSemanticMixin, useFocusableMixin, usePressableMixin } from '../mixins';
-import { composeState, composeHandlers } from '../utils';
+import { useSemanticMixin } from '../mixins';
+import { composeState } from '../utils';
 import type { SemanticMixinProps, FocusableMixinProps, PressableMixinProps } from '../mixins';
 
 export type CalendarMode = 'single' | 'multiple' | 'range';
@@ -122,7 +122,6 @@ export interface UseCalendarReturns {
  * Supports single, multiple, and range selection modes.
  */
 export const useCalendar = (props: UseCalendarProps = {}): UseCalendarReturns => {
-  const { totalItems, ...restProps } = props as UseCalendarProps & { totalItems?: number };
   const {
     mode = 'single',
     defaultValue,
@@ -139,8 +138,13 @@ export const useCalendar = (props: UseCalendarProps = {}): UseCalendarReturns =>
     showWeekNumber = false,
     formatMonth = (date: Date) => date.toLocaleDateString('en-US', { month: 'long', year: 'numeric' }),
     formatWeekday = (date: Date) => date.toLocaleDateString('en-US', { weekday: 'short' }),
+    // `format` is declared on UseCalendarProps but consumed only by the Calendar
+    // component (which reads it from its own props). Strip it here so it does
+    // not fall into ...semanticProps and get spread onto the grid DOM element
+    // as a stray attribute (a function rendered as an attribute value).
+    format: _format,
     ...semanticProps
-  } = restProps;
+  } = props;
 
   // Internal state
   const [internalValue, setInternalValue] = useState<CalendarValue>(() => {

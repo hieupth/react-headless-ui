@@ -101,23 +101,23 @@ export const Card = forwardRef<HTMLDivElement, CardProps>(({
     return (
       <div
         ref={props.headerRef}
-        className="   "
+        className="card"
       >
-        <div className=" ">
+        <div className="card">
           {title && (
             <h3
               id={`${props.semanticAttributes.role || 'card'}-title`}
-              className="   "
+              className="card"
             >
               {title}
             </h3>
           )}
           {subtitle && (
-            <p className="  ">{subtitle}</p>
+            <p className="card">{subtitle}</p>
           )}
         </div>
         {actions && (
-          <div className=" ">
+          <div className="card">
             {actions}
           </div>
         )}
@@ -130,18 +130,18 @@ export const Card = forwardRef<HTMLDivElement, CardProps>(({
     return (
       <div
         ref={props.bodyRef}
-        className=""
+        className="card"
       >
         {description && (
           <p
             id={`${props.semanticAttributes.role || 'card'}-description`}
-            className="  "
+            className="card"
           >
             {description}
           </p>
         )}
         {children && (
-          <div className="">
+          <div className="card">
             {children}
           </div>
         )}
@@ -156,7 +156,7 @@ export const Card = forwardRef<HTMLDivElement, CardProps>(({
     return (
       <div
         ref={props.footerRef}
-        className="   "
+        className="card"
       >
         {footer}
       </div>
@@ -165,12 +165,12 @@ export const Card = forwardRef<HTMLDivElement, CardProps>(({
 
   // Default render function
   const defaultRender = (props: CardRenderProps) => {
-    const baseClasses = `   ${card.variantClasses} ${card.sizeClasses}`;
-    const interactiveClasses = cardProps.interactive ? '' : '';
-    const hoverClasses = props.hovered && cardProps.hoverable ? 'transform -translate-y-1 ' : '';
-    const focusClasses = props.focused ? '  ' : '';
-    const selectedClasses = props.selected ? '   ' : '';
-    const disabledClasses = props.disabled ? ' ' : '';
+    const baseClasses = `card ${card.variantClasses} ${card.sizeClasses}`;
+    const interactiveClasses = cardProps.interactive ? 'card-interactive' : '';
+    const hoverClasses = props.hovered && cardProps.hoverable ? 'card-hovered transform -translate-y-1' : '';
+    const focusClasses = props.focused ? 'card-focused' : '';
+    const selectedClasses = props.selected ? 'card-selected' : '';
+    const disabledClasses = props.disabled ? 'card-disabled' : '';
 
     return (
       <div
@@ -242,7 +242,7 @@ export const CardHeader = forwardRef<HTMLDivElement, CardSectionProps>(({
 }, ref) => (
   <div
     ref={ref}
-    className={`    ${className || ''}`}
+    className={`${className || ''}`}
     style={style}
   >
     {children}
@@ -258,7 +258,7 @@ export const CardBody = forwardRef<HTMLDivElement, CardSectionProps>(({
 }, ref) => (
   <div
     ref={ref}
-    className={` ${className || ''}`}
+    className={`${className || ''}`}
     style={style}
   >
     {children}
@@ -274,7 +274,7 @@ export const CardFooter = forwardRef<HTMLDivElement, CardSectionProps>(({
 }, ref) => (
   <div
     ref={ref}
-    className={`    ${className || ''}`}
+    className={`${className || ''}`}
     style={style}
   >
     {children}
@@ -302,7 +302,7 @@ export const CardTitle = forwardRef<HTMLHeadingElement, CardTitleProps>(({
 }, ref) => (
   <h3
     ref={ref}
-    className={`    ${className || ''}`}
+    className={`${className || ''}`}
     style={style}
   >
     {children}
@@ -321,7 +321,7 @@ export const CardSubtitle = forwardRef<HTMLParagraphElement, CardTitleProps>(({
 }, ref) => (
   <p
     ref={ref}
-    className={`   ${className || ''}`}
+    className={`${className || ''}`}
     style={style}
   >
     {children}
@@ -340,7 +340,7 @@ export const CardDescription = forwardRef<HTMLParagraphElement, CardTitleProps>(
 }, ref) => (
   <p
     ref={ref}
-    className={`   ${className || ''}`}
+    className={`${className || ''}`}
     style={style}
   >
     {children}

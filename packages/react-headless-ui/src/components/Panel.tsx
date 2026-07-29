@@ -5,7 +5,7 @@
  */
 
 import React, { forwardRef } from 'react';
-import { usePanel, type UsePanelProps, type PanelVariant, type PanelSize } from '../hooks';
+import { usePanel, type UsePanelProps } from '../hooks';
 import { useTheme } from '../providers/ThemeProvider';
 
 export interface PanelProps extends Omit<UsePanelProps, 'panelRef'> {

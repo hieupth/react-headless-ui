@@ -5,7 +5,7 @@
  */
 
 import { useState, useCallback, useRef, useMemo } from 'react';
-import { useSemanticMixin, useFocusableMixin } from '../mixins';
+import { useSemanticMixin } from '../mixins';
 import { composeState } from '../utils';
 import type { SemanticMixinProps, FocusableMixinProps } from '../mixins';
 

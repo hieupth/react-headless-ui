@@ -126,13 +126,13 @@ export default function PopoverPage() {
             {
               name: 'position',
               type: 'PopoverPosition',
-              default: "'top'",
+              default: "'bottom'",
               description: 'Placement relative to the trigger (12 options).',
             },
             {
               name: 'openDelay / closeDelay',
               type: 'number',
-              default: '—',
+              default: '300 / 150',
               description: 'Hover open/close delays in ms.',
             },
             {

@@ -262,8 +262,8 @@ describe('Slot', () => {
   it('SlotRadioGroup honours a controlled value and horizontal orientation', () => {
     render(
       <SlotRadioGroup value="b" orientation="horizontal">
-        <span value="a">A</span>
-        <span value="b">B</span>
+        <span {...{ value: 'a' } as any}>A</span>
+        <span {...{ value: 'b' } as any}>B</span>
       </SlotRadioGroup>
     );
     const group = screen.getByTestId('slot-radio-group');
@@ -452,10 +452,10 @@ describe('useSlot', () => {
       return <div ref={slotRef as any} data-testid="host" tabIndex={0} />;
     }
     render(<Probe />);
-    act(() => api!.attributes.onFocus({} as any));
+    act(() => api!.attributes.onFocus!({} as any));
     expect(api!.state.focused).toBe(true);
     expect(onFocus).toHaveBeenCalled();
-    act(() => api!.attributes.onBlur({} as any));
+    act(() => api!.attributes.onBlur!({} as any));
     expect(api!.state.focused).toBe(false);
     expect(onBlur).toHaveBeenCalled();
   });

@@ -344,14 +344,17 @@ describe('useSpinner (interaction + animation)', () => {
     expect(onActiveChange).toHaveBeenLastCalledWith(false);
   });
 
-  it('setSpeed/setVariant/setSize are no-op stubs that do not throw', () => {
+  it('setSpeed/setVariant/setSize mutate the spinner config', () => {
     let result: any;
     const Probe = () => { result = useSpinner({}); return null; };
     render(<Probe />);
-    expect(() => {
+    act(() => {
       result.actions.setSpeed('fast');
       result.actions.setVariant('dots');
       result.actions.setSize('lg');
-    }).not.toThrow();
+    });
+    expect(result.config.speed).toBe('fast');
+    expect(result.config.variant).toBe('dots');
+    expect(result.config.size).toBe('lg');
   });
 });

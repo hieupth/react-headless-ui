@@ -1,12 +1,11 @@
 "use client";
 /**
- * Table headless hook for React UI Forge components.
+ * Table headless hook for @hieupth/react-headless-ui components.
  * Provides behavior-only hooks following Flutter patterns.
  * Manages table data, sorting, filtering, and pagination.
  */
 
-import { useState, useCallback, useMemo, useRef } from 'react';
-import { useFocusableMixin, usePressableMixin, useSemanticMixin } from '../mixins';
+import { useState, useMemo } from 'react';
 
 /**
  * Table column definition

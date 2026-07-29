@@ -177,7 +177,7 @@ describe('useCard', () => {
   });
 
   it('forwards an object ref to the root node', () => {
-    const ref = { current: null } as React.RefObject<HTMLDivElement>;
+    const ref = { current: null } as unknown as React.RefObject<HTMLDivElement>;
     render(<Card ref={ref}>x</Card>);
     expect(ref.current?.tagName).toBe('DIV');
   });

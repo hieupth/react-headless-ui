@@ -6,8 +6,7 @@
  * @param props - Motion component properties
  * @returns Motion state and handlers
  */
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 
 export interface MotionProps {
   /** Whether animation should respect user's motion preferences */
@@ -72,7 +71,6 @@ export const useMotion = (props: MotionProps = {}): MotionState & MotionHandlers
   const [isMounted, setIsMounted] = useState(false);
   const [variant, setVariant] = useState<'hidden' | 'visible' | 'enter' | 'exit'>('hidden');
   const [isActive, setIsActive] = useState(false);
-  const controlsRef = useRef<any>(null);
 
   // Check if user prefers reduced motion
   const prefersReducedMotion = respectReducedMotion &&

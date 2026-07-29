@@ -5,7 +5,7 @@ import { Dialog } from '../src/components/Dialog';
 
 describe('Dialog', () => {
   it('renders nothing when closed', () => {
-    const { container } = render(<Dialog>Body</Dialog>);
+    const { container } = render(<Dialog open={false}>Body</Dialog>);
     expect(container.firstChild).toBeNull();
   });
 

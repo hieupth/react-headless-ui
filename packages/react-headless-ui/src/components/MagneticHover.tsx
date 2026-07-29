@@ -7,7 +7,6 @@
 import React, { forwardRef } from 'react';
 import { motion } from 'framer-motion';
 import { useMagneticHover, type UseMagneticHoverProps } from '../hooks';
-import { useTheme } from '../providers/ThemeProvider';
 
 export interface MagneticHoverProps extends UseMagneticHoverProps {
   /** Additional CSS class names */
@@ -40,7 +39,6 @@ export const MagneticHover = forwardRef<HTMLDivElement, MagneticHoverProps>(({
   transition,
   ...magneticHoverProps
 }, ref) => {
-  const theme = useTheme();
   const {
     state,
     actions,

@@ -176,7 +176,6 @@ export function useContextMenu(props: UseContextMenuProps) {
 
   // State management
   const [open, setOpen] = useState(defaultOpen);
-  const [position, setPosition] = useState(defaultPosition);
   const [focusedIndex, setFocusedIndex] = useState(-1);
   const [internalPosition, setInternalPosition] = useState(defaultPosition);
   const hoverTimeoutRef = useRef<NodeJS.Timeout | undefined>(undefined);

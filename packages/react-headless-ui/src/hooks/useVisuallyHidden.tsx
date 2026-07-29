@@ -1,6 +1,6 @@
 "use client";
 /**
- * VisuallyHidden headless hook for React UI Forge components.
+ * VisuallyHidden headless hook for @hieupth/react-headless-ui components.
  * Provides behavior-only hooks following Flutter patterns.
  * Manages screen reader-only content with proper accessibility.
  */
@@ -155,7 +155,6 @@ export function useVisuallyHidden(props: UseVisuallyHiddenProps): UseVisuallyHid
   const [focusable, setFocusableState] = useState<boolean>(initialFocusable);
   const [announcement, setAnnouncement] = useState<string>(initialAnnouncement);
   const [currentPriority, setCurrentPriority] = useState<'polite' | 'assertive' | 'off'>(initialPriority);
-  const [focused, setFocused] = useState<boolean>(false);
   const [element, setElement] = useState<HTMLElement | null>(null);
 
   // Refs
@@ -196,6 +195,14 @@ export function useVisuallyHidden(props: UseVisuallyHiddenProps): UseVisuallyHid
     }
   }, [currentVisible, hideAction, showAction]);
 
+  // Focusable mixin — declared before the focus actions so they can forward
+  // DOM focus/blur into it, making `state.focused` track real focus changes
+  // (previously a dead local `focused` state that was never updated).
+  const focusableMixin = useFocusableMixin({
+    disabled: !focusable || !currentVisible,
+    ref: elementRefProp
+  });
+
   /**
    * Set focusable state
    */
@@ -208,14 +215,16 @@ export function useVisuallyHidden(props: UseVisuallyHiddenProps): UseVisuallyHid
    */
   const focusAction = useCallback(() => {
     elementRefProp.current?.focus();
-  }, []);
+    focusableMixin.handleFocus(new FocusEvent('focus'));
+  }, [focusableMixin]);
 
   /**
    * Blur the element
    */
   const blurAction = useCallback(() => {
     elementRefProp.current?.blur();
-  }, []);
+    focusableMixin.handleBlur(new FocusEvent('blur'));
+  }, [focusableMixin]);
 
   /**
    * Announce message to screen readers
@@ -275,8 +284,8 @@ export function useVisuallyHidden(props: UseVisuallyHiddenProps): UseVisuallyHid
   // NOTE: handleFocus/handleBlur/handleKeyDown previously lived here but were
   // never returned from the hook nor wired to the DOM, making them dead code
   // (the onFocus/onBlur/onKeyDown props were accepted but never invoked). They
-  // have been removed. The setFocused state is still driven by the focusable
-  // mixin's own focus handling where applicable.
+  // have been removed. The public `state.focused` now reads directly from the
+  // focusable mixin, which the focus/blur actions forward DOM events into.
 
   // Track element reference
   useEffect(() => {
@@ -301,6 +310,13 @@ export function useVisuallyHidden(props: UseVisuallyHiddenProps): UseVisuallyHid
     };
   }, []);
 
+  // Semantic mixin (declared alongside the focusable mixin above, before the
+  // state object that consumes it).
+  const semantic = useSemanticMixin({
+    role: useLiveRegion ? 'status' : 'presentation',
+    ref: elementRefProp
+  });
+
   // Build state
   const state: VisuallyHiddenState = {
     visible: currentVisible,
@@ -308,7 +324,7 @@ export function useVisuallyHidden(props: UseVisuallyHiddenProps): UseVisuallyHid
     announce: !!announcement,
     announcement,
     priority: currentPriority,
-    focused,
+    focused: focusableMixin.focused,
     element
   };
 
@@ -342,17 +358,6 @@ export function useVisuallyHidden(props: UseVisuallyHiddenProps): UseVisuallyHid
     ...visuallyHiddenStyles,
     ...(currentVisible ? {} : { display: 'none' })
   };
-
-  // Mixins
-  const focusableMixin = useFocusableMixin({
-    disabled: !focusable || !currentVisible,
-    ref: elementRefProp
-  });
-
-  const semantic = useSemanticMixin({
-    role: useLiveRegion ? 'status' : 'presentation',
-    ref: elementRefProp
-  });
 
   return useMemo(() => ({
     state,

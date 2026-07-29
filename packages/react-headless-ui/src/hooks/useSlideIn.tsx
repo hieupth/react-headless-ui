@@ -1,12 +1,11 @@
 "use client";
 /**
- * SlideIn headless hook for React UI Forge components.
+ * SlideIn headless hook for @hieupth/react-headless-ui components.
  * Provides slide in/out animation behavior following Flutter patterns.
  * Manages slide states, directions, and accessibility considerations.
  */
 
 import { useState, useCallback, useEffect, useRef, useMemo } from 'react';
-import { useFocusableMixin, usePressableMixin, useSemanticMixin } from '../mixins';
 
 /**
  * Slide direction options

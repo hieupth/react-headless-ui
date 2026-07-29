@@ -1,14 +1,14 @@
 import { describe, it, expect, vi } from 'vitest';
 import { render, act } from '@testing-library/react';
 import { useList } from '../src/hooks';
-import type { UseListProps, ListItem } from '../src/hooks';
+import type { UseListProps, UseListReturns, ListItem } from '../src/hooks';
 
 const items = (n = 3): ListItem[] =>
   Array.from({ length: n }, (_, i) => ({ id: `i${i}`, value: i, label: `Item ${i}` }));
 
 // Headless-hook harness following the useportal.hook.test.tsx canonical pattern.
 function setup(props: UseListProps) {
-  const api = { state: null as any, actions: null as any, attributes: null as any, classes: null as any, ref: null as HTMLElement | null };
+  const api: { state: UseListReturns['state']; actions: UseListReturns['actions']; attributes: any; classes: any; ref: HTMLElement | null } = { state: null as any, actions: null as any, attributes: null as any, classes: null as any, ref: null };
   const refObj = { current: null as HTMLElement | null };
   function Harness() {
     const result = useList({ listRef: refObj as any, ...props });
@@ -356,7 +356,7 @@ describe('useList hook - sorting', () => {
       sortable: true,
       autoFocus: true,
       pagination: { enabled: true, itemsPerPage: 1 },
-      sortFunction: (a, b) => (a.value % 2) - (b.value % 2), // even first
+      sortFunction: (a, b) => (Number(a.value) % 2) - (Number(b.value) % 2), // even first
     });
     act(() => api.actions.setSorting('value', 'asc'));
     expect(api.state.activeItem).toBe('a'); // value 2 is even -> sorts first

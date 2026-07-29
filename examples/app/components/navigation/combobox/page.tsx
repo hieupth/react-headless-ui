@@ -22,7 +22,7 @@ const options = [
 ];
 
 export default function ComboboxPage() {
-  const [value, setValue] = useState<any>(null);
+  const [value, setValue] = useState<string | null>(null);
   const [input, setInput] = useState('');
 
   return (
@@ -36,8 +36,8 @@ export default function ComboboxPage() {
           free-text entry, roves focus with full keyboard support (arrows,
           Enter, Escape), and{' '}
           <strong>virtualizes the dropdown past ~100 options</strong>. Compose
-          with <code>Combobox.Input</code>, <code>Combobox.List</code>,{' '}
-          <code>Combobox.Option</code>, and <code>Combobox.Group</code> — or pass
+          with <code>ComboboxInput</code>, <code>ComboboxList</code>,{' '}
+          <code>ComboboxOption</code>, and <code>ComboboxGroup</code> — or pass
           an <code>options</code> array. The renderer emits class hooks; apply
           your own styling.
         </p>
@@ -90,7 +90,7 @@ export default function ComboboxPage() {
           Group options with <code>groups</code>; show a loading state with{' '}
           <code>loading</code> (or a custom <code>loadingRenderer</code>). For
           large option sets the dropdown virtualizes past{' '}
-          <code>virtualizationThreshold</code> (default 100).
+          <code>virtualizeThreshold</code> (default 100).
         </p>
         <Demo
           code={`<Combobox
@@ -100,7 +100,7 @@ export default function ComboboxPage() {
     { id: 'backend', label: 'Backend', options: backendOpts }
   ]}
   loading={isLoading}
-  virtualizationThreshold={100}
+  virtualizeThreshold={100}
 />`}
         >
           <p className="text-sm text-gray-500">

@@ -45,11 +45,12 @@ function ThemedCard() {
 }
 ```
 
-## Deep-merged overrides
+## Per-section shallow overrides
 
 Pass a partial `theme` prop to override only the tokens you care about. The
-provider **deep-merges** your overrides onto the default theme, section by
-section — so overriding a single color does not blank out the rest of the
+provider does a **per-section shallow merge** of your overrides onto the default
+theme: each top-level section (`colors`, `borderRadius`, …) is shallow-merged
+one level deep, so overriding a single color does not blank out the rest of the
 `colors` object:
 
 ```tsx
@@ -73,8 +74,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 }
 ```
 
-Without deep-merge, a shallow `{ ...default, ...override }` would replace the
-entire `colors` section and leave `background` / `foreground` undefined.
+With a plain shallow `{ ...default, ...override }`, supplying a `colors` object
+would replace the entire `colors` section and leave `background` / `foreground`
+undefined. The per-section shallow merge avoids that by spreading each section
+individually.
 
 ## Token categories
 
@@ -134,7 +137,8 @@ export function App({ children }: { children: React.ReactNode }) {
 
 - `ThemeProvider` is **client-side only** — it uses React context, so wrap it
   inside your client boundary (or mark the layout `'use client'` if needed).
-- The deep-merge recurses one level into each token section, which matches the
-  flat `token → value` shape of every category.
+- The merge is a **per-section shallow merge, not a recursive deep merge**: each
+  top-level section is spread one level deep, which matches the flat
+  `token → value` shape of every category.
 - Headless components ignore the theme entirely; only renderer components and
   your own styled wrappers consume it.

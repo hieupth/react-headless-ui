@@ -6,40 +6,71 @@ can render them with Tailwind, CSS Modules, or plain CSS.
 
 ## Installation
 
-Install the library from npm:
+The package is not yet published to the npm registry. The repository ships
+source only — `dist/` is gitignored and **not** built into a GitHub install, so
+installing directly from GitHub leaves you without resolvable entry points.
+There are two ways to consume it today:
+
+**Option A — Clone and build locally (recommended for now):**
 
 ```bash
-npm install @hieupth/react-headless-ui
+git clone https://github.com/hieupth/react-headless-ui.git
+cd react-headless-ui
+pnpm install
+pnpm build          # emits packages/react-headless-ui/dist/{index.js,index.cjs,index.d.ts}
+```
+
+Then reference the local package by path (e.g. `pnpm add ../react-headless-ui/packages/react-headless-ui`).
+
+**Option B — GitHub install, then build in your project:**
+
+```bash
+npm install github:hieupth/react-headless-ui
+# then, because dist/ is not included, build it where it landed:
+npm explore @hieupth/react-headless-ui -- pnpm install && pnpm build
 ```
 
 or with pnpm / yarn / bun:
 
 ```bash
-pnpm add @hieupth/react-headless-ui
-yarn add @hieupth/react-headless-ui
-bun add @hieupth/react-headless-ui
+pnpm add github:hieupth/react-headless-ui
+yarn add github:hieupth/react-headless-ui
+bun add github:hieupth/react-headless-ui
 ```
+
+Once published to npm, a plain `npm install @hieupth/react-headless-ui` will resolve a
+prebuilt package (the Release workflow builds `dist/` and ships it in the
+tarball), and none of the above build steps will be needed.
 
 ## Peer dependencies
 
-Most components are pure React and need no extra packages. `react-hook-form`
-(the engine behind `Form` / `useForm`) ships bundled as a regular dependency,
-so it is already in your tree — no separate install required. One opt-in
-feature pulls in an optional peer dependency:
+Most components are pure React and need no extra packages. The peer
+dependencies you may need, depending on which components you import:
 
-| Feature           | Peer dependency  | Optional? | Install                       |
-| ----------------- | ---------------- | --------- | ----------------------------- |
-| Motion components | `framer-motion`  | yes       | `npm install framer-motion`   |
-| `Form` validation | `react-hook-form` | no — bundled | _(already installed)_      |
+| Feature                  | Peer dependency          | Optional? | Install                            |
+| ------------------------ | ------------------------ | --------- | ---------------------------------- |
+| Motion components        | `framer-motion`          | no        | `npm install framer-motion`        |
+| `Command` / `Combobox`   | `@tanstack/react-virtual` | no\*     | `npm install @tanstack/react-virtual` |
+| `Form` / `useForm`       | `react-hook-form`        | yes       | `npm install react-hook-form`      |
 
-If you use any Motion component (`FadeInOut`, `SlideIn`, `RevealOnScroll`, …),
-install `framer-motion` yourself; it is marked optional so non-motion bundles
-stay lean. Tree-shaking keeps everything you don't use out of your bundle.
+\* `@tanstack/react-virtual` is declared an *optional* peer, but `Command` and
+`Combobox` statically `import` it at module top level (via `useVirtualList`), so
+if you import either component you **must** install it. It is only genuinely
+optional if you never import those two components.
+
+`framer-motion` is a **required** peer: the motion components (`FadeInOut`,
+`SlideIn`, `RevealOnScroll`, …) statically `import { motion } from 'framer-motion'`,
+and those components are re-exported from the package barrel, so the package
+resolves `framer-motion` at import time — you must install it. Tree-shaking
+keeps everything you don't use out of your bundle.
+
+`react-hook-form` is an **optional** peer: only `Form` / `useForm` consume it,
+so install it only if you use those.
 
 ## Requirements
 
 - **React 19+** (uses the new JSX transform and concurrent features).
-- **Node 18+** (matches the React 19 toolchain and modern bundlers).
+- **Node 22+** (the workspace `engines.node` is `>=22`; Node 20 reached end-of-life in April 2026).
 - A bundler that supports ESM (Vite, Next.js 14+, webpack 5, esbuild, etc.).
 
 ## Quick example
@@ -60,19 +91,7 @@ export default function App() {
 ```
 
 <Demo code={`<Button onPress={() => alert('Hello!')}>Click me</Button>`}>
-  <button
-    type="button"
-    style={{
-      padding: '0.5rem 1rem',
-      borderRadius: '0.375rem',
-      border: '1px solid #3b82f6',
-      background: '#3b82f6',
-      color: '#ffffff',
-      cursor: 'pointer',
-    }}
-  >
-    Click me
-  </button>
+  <InteractiveDemo label="Click me" />
 </Demo>
 
 ## What's included

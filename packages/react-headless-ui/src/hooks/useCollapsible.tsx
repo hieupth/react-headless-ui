@@ -1,6 +1,6 @@
 "use client";
 import { useState, useCallback, useRef, useMemo } from 'react';
-import { useSemanticMixin, useFocusableMixin, usePressableMixin } from '../mixins';
+import { useSemanticMixin } from '../mixins';
 import { composeState, composeHandlers } from '../utils';
 import type { SemanticMixinProps, FocusableMixinProps, PressableMixinProps } from '../mixins';
 

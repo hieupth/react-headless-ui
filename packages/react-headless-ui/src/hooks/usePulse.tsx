@@ -1,12 +1,11 @@
 "use client";
 /**
- * Pulse headless hook for React UI Forge components.
+ * Pulse headless hook for @hieupth/react-headless-ui components.
  * Provides pulse animation behavior following Flutter patterns.
  * Manages pulse states, timing, and accessibility considerations.
  */
 
 import { useState, useCallback, useEffect, useRef, useMemo } from 'react';
-import { useFocusableMixin, usePressableMixin, useSemanticMixin } from '../mixins';
 
 /**
  * Pulse animation state interface

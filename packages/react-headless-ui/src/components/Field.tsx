@@ -69,7 +69,6 @@ export const Field = forwardRef<HTMLInputElement, FieldProps>(
 
     const {
       label,
-      placeholder,
       description,
       helperText,
       maxLength,
@@ -79,7 +78,6 @@ export const Field = forwardRef<HTMLInputElement, FieldProps>(
       readOnly
     }: {
       label?: string;
-      placeholder?: string;
       description?: string;
       helperText?: string;
       maxLength?: number;
@@ -130,9 +128,7 @@ export const Field = forwardRef<HTMLInputElement, FieldProps>(
         {/* Label */}
         {label && labelPosition !== 'inside' && (
           <label
-            className={`
-                
-              ${state.disabled ? '' : ''}
+            className={`${state.disabled ? '' : ''}
               ${orientation === 'horizontal' ? ' ' : ''}
               ${required ? '  ' : ''}
             `}
@@ -142,7 +138,7 @@ export const Field = forwardRef<HTMLInputElement, FieldProps>(
         )}
 
         {/* Field Wrapper */}
-        <div className=" ">
+        <div className="field">
           {/* Start Adornment */}
           {(startAdornment || prefix) && (
             <div className="   transform -translate-y-1/2 ">
@@ -163,7 +159,7 @@ export const Field = forwardRef<HTMLInputElement, FieldProps>(
             {clearable && state.filled && !disabled && !readOnly && (
               <button
                 type="button"
-                className="     "
+                className="field"
                 onClick={handlers.handleClear}
                 aria-label="Clear input"
               >
@@ -175,7 +171,7 @@ export const Field = forwardRef<HTMLInputElement, FieldProps>(
 
             {/* Suffix */}
             {suffix && (
-              <span className="">
+              <span className="field">
                 {suffix}
               </span>
             )}
@@ -194,18 +190,18 @@ export const Field = forwardRef<HTMLInputElement, FieldProps>(
 
         {/* Helper Text, Error Message, and Character Count */}
         {(helperText || state.error || showCount) && (
-          <div className="  ">
-            <div className="">
+          <div className="field">
+            <div className="field">
               {/* Error Message */}
               {state.error && (
-                <p className="  " role="alert">
+                <p className="field" role="alert">
                   {state.error}
                 </p>
               )}
 
               {/* Helper Text */}
               {!state.error && helperText && (
-                <p className="  ">
+                <p className="field">
                   {helperText}
                 </p>
               )}
@@ -213,7 +209,7 @@ export const Field = forwardRef<HTMLInputElement, FieldProps>(
 
             {/* Character Count */}
             {showCount && maxLength && (
-              <span className={`   ${
+              <span className={`${
                 state.value.length > maxLength * 0.9 ? '' : ''
               }`}>
                 {state.value.length}/{maxLength}
@@ -224,14 +220,14 @@ export const Field = forwardRef<HTMLInputElement, FieldProps>(
 
         {/* Description */}
         {description && (
-          <p className="  ">
+          <p className="field">
             {description}
           </p>
         )}
 
         {/* Validation Requirements */}
         {(minLength || maxLength) && (
-          <p className="  ">
+          <p className="field">
             {minLength && `Minimum ${minLength} characters`}
             {minLength && maxLength && ' • '}
             {maxLength && `Maximum ${maxLength} characters`}

@@ -1,6 +1,6 @@
 "use client";
 /**
- * Form headless hook for React UI Forge components.
+ * Form headless hook for @hieupth/react-headless-ui components.
  * Provides behavior-only hooks following Flutter patterns.
  * Manages form state with React Hook Form integration.
  */
@@ -125,8 +125,8 @@ export interface UseFormProps<TFieldValues extends FieldValues = FieldValues> ex
   validationRules?: FormValidationRule<TFieldValues>[];
   /** Multi-step form configuration */
   multiStep?: MultiStepFormConfig;
-  /** Submit handler */
-  onSubmit: SubmitHandler<TFieldValues>;
+  /** Submit handler. Optional — a <Form> can render (and be reset/validated) without one. */
+  onSubmit?: SubmitHandler<TFieldValues>;
   /** Submit error handler */
   onSubmitError?: SubmitErrorHandler<TFieldValues>;
   /** Form submission handler (async) */
@@ -256,13 +256,12 @@ export function useForm<TFieldValues extends FieldValues = FieldValues>(
   const {
     handleSubmit,
     reset,
-    setError,
     clearErrors,
     setFocus,
     getValues,
     setValue,
     trigger,
-    formState: { isValid, dirtyFields, errors, isDirty }
+    formState: { isValid, errors, isDirty }
   } = rhf;
 
   // Calculate total steps
@@ -285,8 +284,10 @@ export function useForm<TFieldValues extends FieldValues = FieldValues>(
             await onFormSubmit(data);
           }
 
-          // Call original submit handler
-          await onSubmit(data);
+          // Call original submit handler (optional — a form may render without one)
+          if (onSubmit) {
+            await onSubmit(data);
+          }
 
           // Update submission state
           setSubmitted(true);
@@ -480,13 +481,12 @@ export function useForm<TFieldValues extends FieldValues = FieldValues>(
     onValidationChange?.(isValid);
   }, [isValid, onValidationChange]);
 
-  // Watch data changes
+  // Watch data changes — fire when form dirty-state changes.
   useEffect(() => {
-    const currentData = getValues();
     if (isDirty) {
-      onDataChange?.(currentData);
+      onDataChange?.(getValues());
     }
-  }, [Object.values(dirtyFields).some(Boolean)]); // eslint-disable-line
+  }, [isDirty, onDataChange, getValues]);
 
   // Mixins
   const focusable = useFocusableMixin({

@@ -7,15 +7,15 @@
 import { useState, useCallback, useEffect, useMemo, useRef } from 'react';
 import { useFocusableMixin, usePressableMixin, useSemanticMixin } from '../mixins';
 import { composeState } from '../utils';
-import type { FocusableMixinProps, PressableMixinProps, SemanticMixinProps } from '../mixins';
+import type { FocusableMixinProps, SemanticMixinProps } from '../mixins';
 
 export interface UseDialogProps extends
   FocusableMixinProps,
   SemanticMixinProps {
   /** Whether dialog is open */
   open: boolean;
-  /** Open change handler */
-  onOpenChange: (open: boolean) => void;
+  /** Open change handler. Optional — a controlled dialog may render without one. */
+  onOpenChange?: (open: boolean) => void;
   /** Initial focus selector */
   initialFocus?: string | HTMLElement;
   /** Close on overlay click */
@@ -109,9 +109,7 @@ export const useDialog = (props: UseDialogProps): UseDialogReturns => {
   } = props;
 
   // State management
-  const [focused, setFocused] = useState(defaultFocused);
   const [focusTrapped, setFocusTrapped] = useState(false);
-  const [overlayActive, setOverlayActive] = useState(false);
 
   // References
   const dialogRef = useRef<HTMLDivElement>(null);
@@ -142,6 +140,21 @@ export const useDialog = (props: UseDialogProps): UseDialogReturns => {
     disabled,
     ...semanticProps
   });
+
+  // Resolve the element to focus when the dialog opens. Declared before
+  // setupFocusTrap (which calls it) so it can be listed in that callback's deps.
+  const getInitialFocusElement = useCallback(() => {
+    if (!open) return null;
+
+    if (initialFocus) {
+      if (typeof initialFocus === 'string') {
+        return document.querySelector(initialFocus) as HTMLElement;
+      }
+      return initialFocus;
+    }
+
+    return null;
+  }, [open, initialFocus]);
 
   // Focus trap implementation
   const setupFocusTrap = useCallback(() => {
@@ -194,29 +207,15 @@ export const useDialog = (props: UseDialogProps): UseDialogReturns => {
       document.removeEventListener('keydown', handleKeyDown);
       setFocusTrapped(false);
     };
-  }, [modal, open]);
-
-  // Handle overlay click
-  const handleOverlayClick = useCallback((event: React.MouseEvent) => {
-    if (event.target === overlayRef.current) {
-      pressableMixin.handleClick(event);
-      if (closeOnOverlayClick) {
-        closeDialog();
-      }
-    }
-  }, [pressableMixin, closeOnOverlayClick]);
-
-  // Handle keyboard events
-  const handleKeyDown = useCallback((event: React.KeyboardEvent) => {
-    focusableMixin.handleKeyDown(event);
-
-    if (closeOnEscape && event.key === 'Escape') {
-      event.preventDefault();
-      cancel();
-    }
-  }, [focusableMixin, closeOnEscape]);
+    // reason: getInitialFocusElement is listed so the trap re-runs (and re-reads
+    // the freshest initialFocus) when it changes, not the stale closure captured
+    // at first run.
+  }, [modal, open, getInitialFocusElement]);
 
   // Dialog actions
+  // reason: declared before the keyboard/overlay handlers below, which call
+  // closeDialog/cancel and list them as useCallback deps — `const` is not
+  // initialized before its declaration line, so the handlers must come after.
   const openDialog = useCallback(() => {
     onOpenChange?.(true);
   }, [onOpenChange]);
@@ -235,22 +234,29 @@ export const useDialog = (props: UseDialogProps): UseDialogReturns => {
     closeDialog();
   }, [onCancel, closeDialog]);
 
+  // Handle overlay click
+  const handleOverlayClick = useCallback((event: React.MouseEvent) => {
+    if (event.target === overlayRef.current) {
+      pressableMixin.handleClick(event);
+      if (closeOnOverlayClick) {
+        closeDialog();
+      }
+    }
+  }, [pressableMixin, closeOnOverlayClick, closeDialog]);
+
+  // Handle keyboard events
+  const handleKeyDown = useCallback((event: React.KeyboardEvent) => {
+    focusableMixin.handleKeyDown(event);
+
+    if (closeOnEscape && event.key === 'Escape') {
+      event.preventDefault();
+      cancel();
+    }
+  }, [focusableMixin, closeOnEscape, cancel]);
+
   const focus = useCallback(() => {
     focusableMixin.focus();
   }, [focusableMixin]);
-
-  const getInitialFocusElement = useCallback(() => {
-    if (!open) return null;
-
-    if (initialFocus) {
-      if (typeof initialFocus === 'string') {
-        return document.querySelector(initialFocus) as HTMLElement;
-      }
-      return initialFocus;
-    }
-
-    return null;
-  }, [open, initialFocus]);
 
   // Setup focus trap when dialog opens
   useEffect(() => {
@@ -266,7 +272,6 @@ export const useDialog = (props: UseDialogProps): UseDialogReturns => {
   // Handle body scroll lock
   useEffect(() => {
     if (modal && open) {
-      const originalStyle = window.getComputedStyle(document.body);
       const originalOverflow = document.body.style.overflow;
       const originalPaddingRight = document.body.style.paddingRight;
 
@@ -284,11 +289,6 @@ export const useDialog = (props: UseDialogProps): UseDialogReturns => {
       };
     }
   }, [modal, open]);
-
-  // Update focused state
-  useEffect(() => {
-    setFocused(focusableMixin.focused);
-  }, [focusableMixin.focused]);
 
   // Computed state
   const state = useMemo(() => composeState<UseDialogState>({

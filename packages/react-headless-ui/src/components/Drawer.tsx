@@ -35,8 +35,6 @@ export interface DrawerTriggerProps {
   children: React.ReactNode;
   /** Open handler */
   onOpen?: () => void;
-  /** Close handler */
-  onClose?: () => void;
   /** Additional CSS classes */
   className?: string;
   /** Additional CSS styles */
@@ -97,10 +95,11 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
       state,
       handlers,
       attributes,
-      overlayAttributes
+      overlayAttributes,
+      setDrawerRef
     } = useDrawer(props);
 
-    const { side, size, variant, modal } = state;
+    const { side, size, modal } = state;
     const { title, subtitle, showCloseButton } = props;
 
     // openingClass: `opening` is only set by useDrawer.handleOpen, which the
@@ -168,9 +167,7 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
         <div
           {...overlayAttributes}
           data-testid="drawer-overlay"
-          className={`
-               
-            ${overlayOpacity}
+          className={`${overlayOpacity}
             ${overlayOpening}
             ${overlayClosing}
           `}
@@ -192,15 +189,15 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
       }
 
       return (
-        <div className="     ">
+        <div className="drawer">
           <div>
             {title && (
-              <h2 className="  " id={attributes['aria-labelledby']}>
+              <h2 className="drawer" id={attributes['aria-labelledby']}>
                 {title}
               </h2>
             )}
             {subtitle && (
-              <p className="  " id={attributes['aria-describedby']}>
+              <p className="drawer" id={attributes['aria-describedby']}>
                 {subtitle}
               </p>
             )}
@@ -209,7 +206,7 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
             <button
               type="button"
               onClick={handlers.handleClose}
-              className="      "
+              className="drawer"
               aria-label="Close drawer"
             >
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -226,7 +223,7 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
       if (!footerRenderer) return null;
 
       return (
-        <div className="  ">
+        <div className="drawer">
           {footerRenderer({ onClose: handlers.handleClose })}
         </div>
       );
@@ -235,7 +232,10 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
     // Render drawer content
     const content = (
       <div
-        ref={drawerRef}
+        ref={(node: HTMLDivElement | null) => {
+          drawerRef.current = node;
+          setDrawerRef(node);
+        }}
         className={drawerClasses}
         {...attributes}
         style={{
@@ -248,7 +248,7 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
         {renderHeader()}
 
         {/* Main content */}
-        <div className=" " data-testid="drawer-content">
+        <div className="drawer" data-testid="drawer-content">
           {children}
         </div>
 
@@ -290,7 +290,6 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
 export const DrawerTrigger: React.FC<DrawerTriggerProps> = ({
   children,
   onOpen,
-  onClose,
   className = '',
   style
 }) => {

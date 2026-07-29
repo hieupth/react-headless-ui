@@ -126,7 +126,7 @@ export const Carousel: React.FC<CarouselProps> = ({
       className="carousel-arrow carousel-arrow-previous"
       type="button"
     >
-      <svg className=" " fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <svg className="carousel" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
       </svg>
     </button>
@@ -140,7 +140,7 @@ export const Carousel: React.FC<CarouselProps> = ({
       className="carousel-arrow carousel-arrow-next"
       type="button"
     >
-      <svg className=" " fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <svg className="carousel" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
       </svg>
     </button>

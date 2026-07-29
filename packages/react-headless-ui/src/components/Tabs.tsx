@@ -8,7 +8,13 @@ import React, { forwardRef } from 'react';
 import { useTabs } from '../hooks';
 import type { UseTabsProps, TabItem } from '../hooks';
 
-export interface TabsProps extends UseTabsProps, React.AriaAttributes {
+export interface TabsProps extends Omit<UseTabsProps, 'items'>, React.AriaAttributes {
+  /**
+   * Tab items. Required for the data-driven API, but optional when the
+   * compound children API (`<Tabs.List><Tabs.Trigger/></Tabs.List>`) is used
+   * instead — items are derived from the children.
+   */
+  items?: UseTabsProps['items'];
   /** Additional CSS class names */
   className?: string;
   /** Custom style object */
@@ -130,7 +136,7 @@ export interface TabPanelRenderProps {
  * Styled tabs component with comprehensive behavior.
  * Uses headless hook for all logic and accessibility.
  */
-export const Tabs = forwardRef<HTMLDivElement, TabsProps>(({
+const TabsBase = forwardRef<HTMLDivElement, TabsProps>(({
   className,
   style,
   render,
@@ -171,7 +177,7 @@ export const Tabs = forwardRef<HTMLDivElement, TabsProps>(({
       if (contentByKey[it.key] !== undefined) it.content = contentByKey[it.key];
     });
   }
-  const items = hasCompoundChildren ? childItems : tabsProps.items;
+  const items = hasCompoundChildren ? childItems : (tabsProps.items ?? []);
 
   const tabs = useTabs({
     ...tabsProps,
@@ -226,17 +232,17 @@ export const Tabs = forwardRef<HTMLDivElement, TabsProps>(({
       >
         {/* Icon */}
         {tab.icon && (
-          <span className="   ">
+          <span className="tabs">
             {tab.icon}
           </span>
         )}
 
         {/* Label */}
-        <span className="">{tab.label}</span>
+        <span className="tabs">{tab.label}</span>
 
         {/* Badge */}
         {tab.badge && (
-          <span className="      ">
+          <span className="tabs">
             {tab.badge}
           </span>
         )}
@@ -254,7 +260,7 @@ export const Tabs = forwardRef<HTMLDivElement, TabsProps>(({
       <div
         key={`${tab.key}-panel`}
         id={`${tab.key}-panel`}
-        className={` ${animationClasses}`}
+        className={`${animationClasses}`}
         style={{
           display: props.selected ? 'block' : 'none',
           opacity: props.selected ? 1 : 0,
@@ -272,7 +278,7 @@ export const Tabs = forwardRef<HTMLDivElement, TabsProps>(({
     const isVertical = tabsProps.orientation === 'vertical';
 
     return (
-      <div className={` ${isVertical ? '' : ''} ${variantClasses}`}>
+      <div className={`${isVertical ? '' : ''} ${variantClasses}`}>
         {props.items.map((tab, index) => {
           const isSelected = tab.key === props.selectedKey;
           const isHighlighted = index === props.highlightedIndex;
@@ -335,10 +341,10 @@ export const Tabs = forwardRef<HTMLDivElement, TabsProps>(({
     } else if (contentPosition === 'left') {
       return (
         <div className={`tabs-container  ${isVertical ? '' : ''}`}>
-          <div className=" ">
+          <div className="tabs">
             {tabListElement}
           </div>
-          <div className="">
+          <div className="tabs">
             {tabPanels}
           </div>
         </div>
@@ -346,10 +352,10 @@ export const Tabs = forwardRef<HTMLDivElement, TabsProps>(({
     } else if (contentPosition === 'right') {
       return (
         <div className={`tabs-container  ${isVertical ? '' : ''}`}>
-          <div className="">
+          <div className="tabs">
             {tabPanels}
           </div>
-          <div className=" ">
+          <div className="tabs">
             {tabListElement}
           </div>
         </div>
@@ -396,23 +402,24 @@ export const Tabs = forwardRef<HTMLDivElement, TabsProps>(({
   return defaultRender(renderProps);
 });
 
-Tabs.displayName = 'Tabs';
+TabsBase.displayName = 'Tabs';
 
-// Attach compound sub-components: <Tabs.List/Trigger/Content>.
-(Tabs as unknown as {
-  List: typeof TabsList;
-  Trigger: typeof TabsTrigger;
-  Content: typeof TabsContent;
-}).List = TabsList;
-(Tabs as unknown as { Trigger: typeof TabsTrigger }).Trigger = TabsTrigger;
-(Tabs as unknown as { Content: typeof TabsContent }).Content = TabsContent;
+// Attach compound sub-components: <Tabs.List/Trigger/Content>. Object.assign
+// both mutates the component at runtime AND gives the exported `Tabs` const an
+// intersection type, so the shipped .d.ts declares `.List/.Trigger/.Content`
+// and consumers see them as typeable.
+const Tabs = Object.assign(TabsBase, {
+  List: TabsList,
+  Trigger: TabsTrigger,
+  Content: TabsContent
+});
+
+export { Tabs };
 
 /**
  * Tab component for individual tab items.
  */
 export interface TabProps {
-  /** Tab key */
-  key: string;
   /** Tab label */
   label: string;
   /** Tab content */
@@ -458,8 +465,6 @@ Tab.displayName = 'Tab';
  * Tab panel component for tab content.
  */
 export interface TabPanelProps {
-  /** Tab key */
-  key: string;
   /** Whether panel is selected */
   selected?: boolean;
   /** Panel content */

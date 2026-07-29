@@ -77,7 +77,7 @@ describe('TreeView custom renderNode', () => {
     const spy = vi.fn(() => <div data-testid="custom-node" />);
     render(<TreeView nodes={tree} renderNode={spy} />);
     expect(screen.getAllByTestId('custom-node').length).toBeGreaterThan(0);
-    const lastCall = spy.mock.calls[spy.mock.calls.length - 1];
+    const lastCall = spy.mock.calls[spy.mock.calls.length - 1] as [any, number, boolean, boolean];
     // signature: (node, level, isExpanded, isSelected)
     expect(lastCall[0].id).toBe('root');
     expect(typeof lastCall[1]).toBe('number');

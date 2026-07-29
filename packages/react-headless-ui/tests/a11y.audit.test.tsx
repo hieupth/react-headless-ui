@@ -10,9 +10,6 @@ import {
 // minimal state, must pass axe with zero violations. Run with the rest of the
 // suite. New violations here block the build (see CI).
 
-const suppress = (consoleErr: unknown) => void consoleErr;
-suppress(console.error); // silence React a11y-dev noise during render
-
 async function expectNoViolations(ui: React.ReactElement) {
   const { container } = render(ui);
   const results = await axe(container);
@@ -27,7 +24,7 @@ describe('a11y audit — interactive components', () => {
     await expectNoViolations(<Badge count={5}>Inbox</Badge>);
   });
   it('Alert', async () => {
-    await expectNoViolations(<Alert>Saved successfully</Alert>);
+    await expectNoViolations(<Alert open={false}>Saved successfully</Alert>);
   });
   it('Switch', async () => {
     await expectNoViolations(<Switch aria-label="Notifications" />);

@@ -1,6 +1,6 @@
 "use client";
 /**
- * Slot headless hook for React UI Forge components.
+ * Slot headless hook for @hieupth/react-headless-ui components.
  * Provides behavior-only hooks following Flutter patterns.
  * Manages flexible content composition with element forwarding.
  */
@@ -115,6 +115,8 @@ export interface UseSlotReturns {
     'data-disabled'?: boolean;
     'data-focused'?: boolean;
     'data-merge-strategy'?: string;
+    onFocus: (event: React.FocusEvent) => void;
+    onBlur: (event: React.FocusEvent) => void;
   };
   /** Focusable mixin returns */
   focusable: any;

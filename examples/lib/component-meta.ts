@@ -29,14 +29,6 @@ export interface ComponentMeta {
   description: string;
 }
 
-/** Convert a PascalCase / camelCase name to kebab-case. */
-export function toKebab(name: string): string {
-  return name
-    .replace(/([a-z0-9])([A-Z])/g, '$1-$2')
-    .replace(/([A-Z]+)([A-Z][a-z])/g, '$1-$2')
-    .toLowerCase();
-}
-
 export const componentMeta: ComponentMeta[] = [
   // ── Buttons ──────────────────────────────────────────────────────────────
   { name: 'Button', category: 'Buttons', categoryFolder: 'buttons', slug: 'button', description: 'Versatile trigger button with variants, sizes, loading and icon support.' },
@@ -149,11 +141,6 @@ export const componentCategories: ComponentCategory[] = [
   'Layout/System',
   'Motion',
 ];
-
-/** Look up a component by its slug. */
-export function getComponentBySlug(slug: string): ComponentMeta | undefined {
-  return componentMeta.find((c) => c.slug === slug);
-}
 
 /** All components within a category. */
 export function getComponentsByCategory(category: ComponentCategory): ComponentMeta[] {

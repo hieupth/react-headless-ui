@@ -1,12 +1,11 @@
 "use client";
 /**
- * Resizable headless hook for React UI Forge components.
+ * Resizable headless hook for @hieupth/react-headless-ui components.
  * Provides behavior-only hooks following Flutter patterns.
  * Manages element resizing with handles and constraints.
  */
 
 import { useState, useCallback, useRef, useEffect, useMemo } from 'react';
-import { useFocusableMixin, usePressableMixin, useSemanticMixin } from '../mixins';
 
 /**
  * Resize direction options
@@ -510,6 +509,8 @@ export function useResizable(props: UseResizableProps = {}): UseResizableReturns
     role: 'region',
     'aria-label': 'Resizable element',
     'aria-roledescription': 'Resizable element with drag handles',
+    'data-show-handles': showHandles,
+    'data-resize-class': resizeClassName,
     style: {
       width: constrainedWidth,
       height: constrainedHeight,
@@ -564,7 +565,7 @@ export function useResizable(props: UseResizableProps = {}): UseResizableReturns
       actions.stopResize();
     },
     disabled,
-    className: `resize-handle resize-handle-${handle} ${isResizing && activeHandle === handle ? 'resize-handle-active' : ''} ${disabled ? 'resize-handle-disabled' : ''}`
+    className: `${resizeClassName} resize-handle resize-handle-${handle} ${isResizing && activeHandle === handle ? 'resize-handle-active' : ''} ${disabled ? 'resize-handle-disabled' : ''}`
   });
 
   // Build handle styles

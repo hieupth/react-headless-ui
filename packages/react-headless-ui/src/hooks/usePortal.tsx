@@ -1,6 +1,6 @@
 "use client";
 /**
- * Portal headless hook for React UI Forge components.
+ * Portal headless hook for @hieupth/react-headless-ui components.
  * Provides behavior-only hooks following Flutter patterns.
  * Manages portal mounting with container management.
  */

@@ -34,9 +34,9 @@ export default function CommandPage() {
           keyboard support (arrows, Enter, type-ahead), and{' '}
           <strong>virtualizes the list past ~100 items</strong> for constant
           memory. Ideal for ⌘K app launchers. Compose with{' '}
-          <code>Command.Input</code>, <code>Command.List</code>,{' '}
-          <code>Command.Item</code>, <code>Command.Group</code>, and{' '}
-          <code>Command.Empty</code> — or pass an <code>items</code> array. The
+          <code>CommandInput</code>, <code>CommandList</code>,{' '}
+          <code>CommandItem</code>, <code>CommandGroup</code>, and{' '}
+          <code>CommandEmpty</code> — or pass an <code>items</code> array. The
           renderer emits class hooks; apply your own styling.
         </p>
       </header>
@@ -84,8 +84,8 @@ export default function CommandPage() {
           Group items with <code>groups</code> ({'{'}
           <code>id</code>, <code>label</code>, <code>items</code>). For large
           lists the renderer virtualizes automatically past{' '}
-          <code>virtualizationThreshold</code> (default 100); override with{' '}
-          <code>forceVirtualization</code>.
+          <code>virtualizeThreshold</code> (default 100); override with{' '}
+          <code>virtualize</code>.
         </p>
         <Demo
           code={`<Command
@@ -94,7 +94,7 @@ export default function CommandPage() {
     { id: 'file', label: 'File', items: fileItems },
     { id: 'edit', label: 'Edit', items: editItems }
   ]}
-  virtualizationThreshold={100}
+  virtualizeThreshold={100}
 />`}
         >
           <p className="text-sm text-gray-500">

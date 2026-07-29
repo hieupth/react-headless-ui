@@ -19,8 +19,8 @@ const ALWAYS_VALID_CUSTOM_VALUE = () => true;
  * Combobox option interface
  */
 export interface ComboboxOption {
-  /** Unique identifier */
-  id: string;
+  /** Unique identifier (optional — `value` is used as the option identity) */
+  id?: string;
   /** Display label */
   label: string;
   /** Option value */
@@ -531,16 +531,29 @@ export function useCombobox(props: UseComboboxProps = {}) {
     const options = stablePropGroups.length > 0 ?
       filteredGroups.flatMap(group => group.options) :
       filteredOptions;
-    const navigableOptions = options.filter(option => !option.disabled);
+    // reason: `selectedIndex` is an index into the FULL options list (it is set
+    // by handleOptionFocus and consumed by aria-activedescendant / option ids).
+    // Indexing a filtered `navigableOptions` array with it would diverge
+    // whenever a disabled option precedes the selection, making the highlighted
+    // (aria) option differ from the one Enter selects. Navigate against the full
+    // list instead, skipping disabled entries, so the three stay aligned.
+
+    const findNextEnabled = (from: number, dir: 1 | -1): number => {
+      for (let step = 1; step <= options.length; step++) {
+        const candidate = (from + dir * step + options.length) % options.length;
+        if (!options[candidate].disabled) return candidate;
+      }
+      return -1;
+    };
 
     switch (event.key) {
       case 'ArrowDown':
         event.preventDefault();
         if (!isOpen) {
           handleOpen();
-        } else if (navigableOptions.length > 0) {
-          const nextIndex = selectedIndex < navigableOptions.length - 1 ? selectedIndex + 1 : 0;
-          handleOptionFocus(nextIndex);
+        } else if (options.some(o => !o.disabled)) {
+          const start = selectedIndex >= 0 ? selectedIndex : -1;
+          handleOptionFocus(findNextEnabled(start, 1));
         }
         break;
 
@@ -548,17 +561,19 @@ export function useCombobox(props: UseComboboxProps = {}) {
         event.preventDefault();
         if (!isOpen) {
           handleOpen();
-        } else if (navigableOptions.length > 0) {
-          const prevIndex = selectedIndex > 0 ? selectedIndex - 1 : navigableOptions.length - 1;
-          handleOptionFocus(prevIndex);
+        } else if (options.some(o => !o.disabled)) {
+          const start = selectedIndex >= 0 ? selectedIndex : 0;
+          handleOptionFocus(findNextEnabled(start, -1));
         }
         break;
 
       case 'Enter':
         event.preventDefault();
-        if (isOpen && selectedIndex >= 0 && selectedIndex < navigableOptions.length) {
-          const option = navigableOptions[selectedIndex];
-          handleSelect(option);
+        if (isOpen && selectedIndex >= 0 && selectedIndex < options.length) {
+          const option = options[selectedIndex];
+          if (!option.disabled) {
+            handleSelect(option);
+          }
         } else if (allowCustomValue && currentInputValue.trim()) {
           // Handle custom value
           if (validateCustomValueFn(currentInputValue)) {

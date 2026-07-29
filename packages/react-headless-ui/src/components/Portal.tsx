@@ -7,7 +7,6 @@
 import React, { forwardRef, useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import { usePortal, type UsePortalProps } from '../hooks';
-import { useTheme } from '../providers/ThemeProvider';
 
 export interface PortalProps extends UsePortalProps {
   /** Portal content */
@@ -16,8 +15,8 @@ export interface PortalProps extends UsePortalProps {
   className?: string;
   /** Custom style object */
   style?: React.CSSProperties;
-  /** Portal container selector */
-  container?: string;
+  /** Portal container — a CSS selector or an HTMLElement. Defaults to document.body. */
+  container?: string | HTMLElement | null;
   /** Whether to show backdrop */
   showBackdrop?: boolean;
   /** Backdrop click handler */
@@ -58,7 +57,6 @@ export const Portal = forwardRef<HTMLDivElement, PortalProps>(({
   wrapperProps = {},
   ...portalProps
 }, ref) => {
-  const theme = useTheme();
   const {
     state,
     actions,
@@ -223,8 +221,7 @@ export const Portal = forwardRef<HTMLDivElement, PortalProps>(({
       {/* Backdrop */}
       {showBackdrop && (
         <div
-          className={`
-            portal-backdrop
+          className={`portal-backdrop
             ${backdropClassName || ''}
             /* c8 ignore start */ // reason: mounting/unmounting classes — hook flips these transient flags true→false within one batched async block; never committed in a render
             ${state.mounting ? 'backdrop-mounting' : ''}

@@ -131,7 +131,7 @@ export default function AccordionPage() {
             {
               name: 'collapsible',
               type: 'boolean',
-              default: '—',
+              default: 'false',
               description: 'Allow all panels to be closed (no forced-open one).',
             },
             {

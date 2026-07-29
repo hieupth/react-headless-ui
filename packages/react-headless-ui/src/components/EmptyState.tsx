@@ -111,35 +111,35 @@ export const EmptyState = forwardRef<HTMLDivElement, EmptyStateProps>(
       >
         {/* Icon/Illustration */}
         {icon && (
-          <div className=" " role="img" aria-hidden={true}>
+          <div className="empty-state" role="img" aria-hidden={true}>
             {icon}
           </div>
         )}
 
         {/* Title */}
         {title && (
-          <h3 className="   ">
+          <h3 className="empty-state">
             {title}
           </h3>
         )}
 
         {/* Description */}
         {description && (
-          <p className="  ">
+          <p className="empty-state">
             {description}
           </p>
         )}
 
         {/* Custom content */}
         {children && (
-          <div className="">
+          <div className="empty-state">
             {children}
           </div>
         )}
 
         {/* Action buttons */}
         {state.showActions && (primaryActionText || secondaryActionText) && (
-          <div className="   ">
+          <div className="empty-state">
             {primaryActionText && (
               <EmptyStateAction onClick={handlers.handlePrimaryAction} variant="primary">
                 {primaryActionText}
@@ -156,7 +156,7 @@ export const EmptyState = forwardRef<HTMLDivElement, EmptyStateProps>(
         {/* Dismiss button */}
         {state.dismissible && (
           <button
-            className="       "
+            className="empty-state"
             onClick={handlers.handleDismiss}
             aria-label="Dismiss empty state"
           >

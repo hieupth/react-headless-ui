@@ -1,6 +1,6 @@
 "use client";
 /**
- * Renderer components for React UI Forge.
+ * Renderer components for @hieupth/react-headless-ui.
  * Provides styled components using headless hooks.
  */
 
@@ -14,7 +14,7 @@ export { Input } from './Input';
 export type { InputProps, InputRenderProps } from './Input';
 
 export { Accordion } from './Accordion';
-export type { AccordionProps, AccordionRenderProps, AccordionItemRenderProps } from './Accordion';
+export type { AccordionProps, AccordionRenderProps, AccordionItemRenderProps, AccordionItemProps, AccordionTriggerProps, AccordionContentProps } from './Accordion';
 
 export { Dialog } from './Dialog';
 export type { DialogProps, DialogRenderProps, DialogOverlayRenderProps, DialogContentRenderProps } from './Dialog';
@@ -29,7 +29,7 @@ export { Select, SearchableSelect, SelectGroup, SimpleSelect } from './Select';
 export type { SelectProps, SelectRenderProps, SelectOptionRenderProps, SelectGroupProps, SimpleSelectProps } from './Select';
 
 export { Tabs, SimpleTabs, VerticalTabs, Tab, TabPanel } from './Tabs';
-export type { TabsProps, TabsRenderProps, TabRenderProps, TabPanelRenderProps, TabProps, TabPanelProps, SimpleTabsProps } from './Tabs';
+export type { TabsProps, TabsRenderProps, TabRenderProps, TabPanelRenderProps, TabProps, TabPanelProps, SimpleTabsProps, TabsListProps, TabsTriggerProps, TabsContentProps } from './Tabs';
 
 export { Switch, LabeledSwitch, SimpleSwitch } from './Switch';
 export type { SwitchProps, SwitchRenderProps, SwitchThumbRenderProps, SwitchLabelRenderProps, SimpleSwitchProps } from './Switch';
@@ -184,7 +184,7 @@ export { Popover } from './Popover';
 export type { PopoverProps } from './Popover';
 
 export { RadioGroup } from './RadioGroup';
-export type { RadioGroupProps } from './RadioGroup';
+export type { RadioGroupProps, RadioGroupItemProps } from './RadioGroup';
 
 export { Toast, ToastProvider } from './Toast';
 export type { ToastProps } from './Toast';
@@ -276,5 +276,5 @@ export type { SortableProps } from './Sortable';
 export { Toolbar } from './Toolbar';
 export type { ToolbarProps } from './Toolbar';
 
-// All 85 components implemented and exported
-// React UI Forge component library complete
+// All 86 components implemented and exported
+// @hieupth/react-headless-ui component library complete

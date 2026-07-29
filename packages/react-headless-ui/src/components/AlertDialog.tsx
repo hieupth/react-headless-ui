@@ -236,7 +236,7 @@ export const AlertDialog = forwardRef<HTMLDivElement, AlertDialogProps>(({
     switch (variant) {
       case 'destructive':
         return (
-          <div className="   ">
+          <div className="alert-dialog">
             <svg fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z" />
             </svg>
@@ -244,7 +244,7 @@ export const AlertDialog = forwardRef<HTMLDivElement, AlertDialogProps>(({
         );
       case 'warning':
         return (
-          <div className="   ">
+          <div className="alert-dialog">
             <svg fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z" />
             </svg>
@@ -252,7 +252,7 @@ export const AlertDialog = forwardRef<HTMLDivElement, AlertDialogProps>(({
         );
       default:
         return (
-          <div className="   ">
+          <div className="alert-dialog">
             <svg fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>
@@ -296,19 +296,19 @@ export const AlertDialog = forwardRef<HTMLDivElement, AlertDialogProps>(({
         className={`${contentBaseClasses} ${variantClasses[variant]}`}
       >
         {/* Header */}
-        <div className="    ">
+        <div className="alert-dialog">
           {getVariantIcon()}
-          <div className=" ">
+          <div className="alert-dialog">
             <h3
               {...titleProps}
-              className="   "
+              className="alert-dialog"
             >
               {title}
             </h3>
             {description && (
               <p
                 {...descriptionProps}
-                className="  "
+                className="alert-dialog"
               >
                 {description}
               </p>
@@ -317,7 +317,7 @@ export const AlertDialog = forwardRef<HTMLDivElement, AlertDialogProps>(({
         </div>
 
         {/* Footer */}
-        <div className="        ">
+        <div className="alert-dialog">
           {showCancel && (
             <button
               {...cancelButtonProps}
@@ -333,8 +333,8 @@ export const AlertDialog = forwardRef<HTMLDivElement, AlertDialogProps>(({
             }`}
           >
             {state.confirming ? (
-              <div className="  ">
-                <div className="      " />
+              <div className="alert-dialog">
+                <div className="alert-dialog" />
                 <span>{confirmText}</span>
               </div>
             ) : (
@@ -360,7 +360,7 @@ export const AlertDialogTrigger = React.forwardRef<
     ref={ref}
     {...props}
     onClick={onClick}
-    className="                "
+    className="alert-dialog"
   />
 ));
 

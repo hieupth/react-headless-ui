@@ -1,6 +1,6 @@
 "use client";
 /**
- * PasswordMeter headless hook for React UI Forge components.
+ * PasswordMeter headless hook for @hieupth/react-headless-ui components.
  * Provides behavior-only hooks following Flutter patterns.
  * Manages password strength analysis and feedback.
  */
@@ -12,6 +12,19 @@ import { useFocusableMixin, usePressableMixin, useSemanticMixin } from '../mixin
  * Password strength levels
  */
 export type PasswordStrength = 'very-weak' | 'weak' | 'fair' | 'good' | 'strong' | 'very-strong';
+
+/**
+ * Ordinal rank of each strength level, used to compare a password's computed
+ * strength against the configured `minStrength` threshold.
+ */
+const STRENGTH_RANK: Record<PasswordStrength, number> = {
+  'very-weak': 0,
+  'weak': 1,
+  'fair': 2,
+  'good': 3,
+  'strong': 4,
+  'very-strong': 5
+};
 
 /**
  * Password criteria interface
@@ -131,7 +144,7 @@ export interface UsePasswordMeterProps {
   estimateCrackTime?: boolean;
   /** Custom validation rules */
   validationRules?: PasswordValidationRule[];
-  /** Minimum acceptable strength */
+  /** Minimum acceptable strength (defaults to 'good', i.e. score >= 60). */
   minStrength?: PasswordStrength;
   /** Analysis debounce time in ms */
   analysisDelay?: number;
@@ -205,7 +218,7 @@ export function usePasswordMeter(props: UsePasswordMeterProps): UsePasswordMeter
     calculateEntropy = true,
     estimateCrackTime = true,
     validationRules = [],
-    minStrength = 'fair',
+    minStrength = 'good',
     analysisDelay = 300,
     autoAnalyze = true,
     onPasswordChange,
@@ -394,6 +407,7 @@ export function usePasswordMeter(props: UsePasswordMeterProps): UsePasswordMeter
       // Generate warnings
       const warnings: string[] = [];
       if (pwd.length > 50) warnings.push('Very long passwords may be hard to remember');
+      if (pwd.length > maxLength) warnings.push(`Password exceeds the maximum length of ${maxLength} characters`);
       if (checkCommonPasswords && COMMON_PASSWORDS.includes(pwd.toLowerCase())) {
         warnings.push('This is a very common password');
       }
@@ -401,10 +415,13 @@ export function usePasswordMeter(props: UsePasswordMeterProps): UsePasswordMeter
         warnings.push('Consider using a longer password');
       }
 
-      // Check if acceptable. Custom rules marked `required: true` are mapped
-      // onto the criterion's `requiredLevel` field; any such required criterion
-      // that is unmet renders the password unacceptable.
-      const isAcceptable = score >= 60 && allCriteria.filter(c => c.requiredLevel).every(c => c.met);
+      // Check if acceptable. The password must meet the configured minimum
+      // strength (minStrength, default 'good' = score >= 60) and any custom
+      // required rules. Custom rules marked `required: true` are mapped onto
+      // the criterion's `requiredLevel` field; any such required criterion that
+      // is unmet renders the password unacceptable.
+      const meetsMinStrength = STRENGTH_RANK[strength] >= STRENGTH_RANK[minStrength];
+      const isAcceptable = meetsMinStrength && allCriteria.filter(c => c.requiredLevel).every(c => c.met);
 
       const analysis: PasswordAnalysis = {
         password: pwd,

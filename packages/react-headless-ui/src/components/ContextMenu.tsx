@@ -80,7 +80,7 @@ export const ContextMenu = forwardRef<HTMLDivElement, ContextMenuProps>(
       attributes
     } = useContextMenu(props);
 
-    const { items, variant, alignment, direction, position } = state;
+    const { items, variant, alignment, direction } = state;
 
     // Size classes
     const sizeClasses = {
@@ -119,7 +119,7 @@ export const ContextMenu = forwardRef<HTMLDivElement, ContextMenuProps>(
         return (
           <div
             key={item.id || `separator-${index}`}
-            className="  "
+            className="context-menu"
             role="separator"
             aria-orientation="horizontal"
           />
@@ -274,49 +274,49 @@ const ContextMenuItemComponent: React.FC<ContextMenuItemProps> = ({
       onFocus={onFocus}
       data-testid={`context-menu-item-${item.id}`}
     >
-      <div className="   ">
+      <div className="context-menu">
         {/* Icon */}
         {item.icon && (
-          <span className=" ">
+          <span className="context-menu">
             {item.icon}
           </span>
         )}
 
         {/* Label */}
-        <span className=" ">
+        <span className="context-menu">
           {item.label}
         </span>
 
         {/* Description */}
         {item.description && (
-          <span className="  ">
+          <span className="context-menu">
             {item.description}
           </span>
         )}
 
         {/* Shortcut */}
         {item.shortcut && (
-          <span className="  ">
+          <span className="context-menu">
             {item.shortcut}
           </span>
         )}
 
         {/* Checkbox/Radio indicator */}
         {item.type === 'checkbox' && (
-          <span className=" ">
+          <span className="context-menu">
             {item.checked ? '✓' : ''}
           </span>
         )}
 
         {item.type === 'radio' && (
-          <span className=" ">
+          <span className="context-menu">
             {item.checked ? '●' : ''}
           </span>
         )}
 
         {/* Submenu indicator */}
         {item.type === 'submenu' && (
-          <span className=" ">
+          <span className="context-menu">
             ▶
           </span>
         )}

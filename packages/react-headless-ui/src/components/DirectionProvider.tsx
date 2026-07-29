@@ -109,7 +109,7 @@ export const DirectionalText = forwardRef<HTMLSpanElement, {
   /** Custom style object */
   style?: React.CSSProperties;
   /** Text alignment */
-  align?: 'auto' | 'left' | 'right' | 'start' | 'end';
+  align?: 'auto' | 'left' | 'right' | 'center' | 'start' | 'end';
   /** Whether to auto-detect direction */
   autoDetect?: boolean;
 }>(({ children, className = '', style, align = 'auto', autoDetect = false }, ref) => {

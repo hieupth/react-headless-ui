@@ -1,6 +1,6 @@
 "use client";
 /**
- * Sortable headless hook for React UI Forge components.
+ * Sortable headless hook for @hieupth/react-headless-ui components.
  * Provides behavior-only hooks following Flutter patterns.
  * Manages drag-and-drop reordering functionality.
  */
@@ -113,8 +113,6 @@ export interface UseSortableProps {
   showHandles?: boolean;
   /** Whether to lock sorting */
   locked?: boolean;
-  /** Drag threshold in pixels */
-  dragThreshold?: number;
   /** Whether to auto-scroll */
   autoScroll?: boolean;
   /** Auto-scroll speed */
@@ -190,7 +188,6 @@ export function useSortable(props: UseSortableProps): UseSortableReturns {
     animated = true,
     showHandles = false,
     locked = false,
-    dragThreshold = 5,
     autoScroll = true,
     autoScrollSpeed = 5,
     onReorder,
@@ -209,7 +206,10 @@ export function useSortable(props: UseSortableProps): UseSortableReturns {
   const [draggingItem, setDraggingItem] = useState<SortableItem | null>(null);
   const [dragOverIndex, setDragOverIndex] = useState<number | null>(null);
   const [dropZoneActive, setDropZoneActive] = useState<boolean>(false);
-  const [dragStartPos, setDragStartPos] = useState<{ x: number; y: number } | null>(null);
+  // direction prop is the initial value; setDirection mutates this internal
+  // state (previously a no-op stub).
+  const [directionState, setDirectionState] = useState<'vertical' | 'horizontal'>(direction);
+  const currentDirection = directionState;
 
   // Refs
   const internalRef = useRef<HTMLElement>(null);
@@ -237,7 +237,6 @@ export function useSortable(props: UseSortableProps): UseSortableReturns {
     if (disabled || locked || item.disabled) return;
 
     setDraggingItem(item);
-    setDragStartPos({ x: event.clientX, y: event.clientY });
 
     // Set drag image
     if (dragImage && typeof dragImage === 'string') {
@@ -248,18 +247,21 @@ export function useSortable(props: UseSortableProps): UseSortableReturns {
       event.dataTransfer?.setDragImage(dragImage, 0, 0);
     }
 
-    // Set data transfer
+    // Set data transfer — honor the configured dataTransferTypes (defaults to
+    // ['text/plain', 'application/json']) instead of hardcoding the same pair.
     if (event.dataTransfer) {
-      event.dataTransfer.effectAllowed = 'move';
-      event.dataTransfer.setData('application/json', JSON.stringify(item));
-      event.dataTransfer.setData('text/plain', item.label);
+      event.dataTransfer.effectAllowed = allowCrossOrigin ? 'copyMove' : 'move';
+      const payload = JSON.stringify(item);
+      for (const type of dataTransferTypes) {
+        event.dataTransfer.setData(type, type === 'text/plain' ? item.label : payload);
+      }
     }
 
     // Store dragged element reference
     draggedElementRef.current = event.target as HTMLElement;
 
     onDragStart?.(item);
-  }, [disabled, locked, dragImage, onDragStart]);
+  }, [disabled, locked, dragImage, allowCrossOrigin, dataTransferTypes, onDragStart]);
 
   /**
    * End dragging
@@ -268,7 +270,6 @@ export function useSortable(props: UseSortableProps): UseSortableReturns {
     setDraggingItem(null);
     setDragOverIndex(null);
     setDropZoneActive(false);
-    setDragStartPos(null);
     draggedElementRef.current = null;
 
     if (draggingItem) {
@@ -411,10 +412,11 @@ export function useSortable(props: UseSortableProps): UseSortableReturns {
   }, [currentItems, disabled, locked, setItemsAction]);
 
   /**
-   * Set direction
+   * Set direction — mutates the internal direction state (the `direction`
+   * prop is the initial value). Previously a no-op stub.
    */
   const setDirectionAction = useCallback((newDirection: 'vertical' | 'horizontal') => {
-    // Direction is managed externally via props
+    setDirectionState(newDirection);
   }, []);
 
   /**
@@ -444,11 +446,11 @@ export function useSortable(props: UseSortableProps): UseSortableReturns {
   const getAccessibilityPropsAction = useCallback(() => {
     return {
       role: 'list',
-      'aria-orientation': direction,
+      'aria-orientation': currentDirection,
       'aria-disabled': disabled,
       'aria-busy': !!draggingItem
     };
-  }, [direction, disabled, draggingItem]);
+  }, [currentDirection, disabled, draggingItem]);
 
   // Global drag event handlers
   useEffect(() => {
@@ -465,7 +467,7 @@ export function useSortable(props: UseSortableProps): UseSortableReturns {
       const rect = container.getBoundingClientRect();
       const scrollThreshold = 50;
 
-      if (direction === 'vertical') {
+      if (currentDirection === 'vertical') {
         if (event.clientY < rect.top + scrollThreshold) {
           container.scrollTop -= autoScrollSpeed;
         } else if (event.clientY > rect.bottom - scrollThreshold) {
@@ -487,7 +489,7 @@ export function useSortable(props: UseSortableProps): UseSortableReturns {
       document.removeEventListener('dragend', handleGlobalDragEnd);
       document.removeEventListener('dragover', handleGlobalDragOver);
     };
-  }, [draggingItem, autoScroll, autoScrollSpeed, direction, endDragAction]);
+  }, [draggingItem, autoScroll, autoScrollSpeed, currentDirection, endDragAction]);
 
   // Build state
   const state: SortableState = {
@@ -496,7 +498,7 @@ export function useSortable(props: UseSortableProps): UseSortableReturns {
     draggingItem,
     dragOverIndex,
     dropZoneActive,
-    direction,
+    direction: currentDirection,
     animated,
     showHandles,
     sortOrder: 'asc',
@@ -532,7 +534,7 @@ export function useSortable(props: UseSortableProps): UseSortableReturns {
     dropZone: dropZoneActive ? 'sortable-drop-zone' : '',
     disabled: disabled ? 'sortable-disabled' : '',
     locked: locked ? 'sortable-locked' : '',
-    [`sortable-${direction}`]: true,
+    [`sortable-${currentDirection}`]: true,
     'sortable-animated': animated
   };
 

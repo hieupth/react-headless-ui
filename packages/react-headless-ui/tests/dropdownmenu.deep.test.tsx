@@ -15,7 +15,7 @@ function Controlled({
   closeOnEscape = true,
   closeOnClickOutside = true,
 }: {
-  items: DropdownMenuItem[];
+  items: DropdownMenuItemType[];
   initialOpen?: boolean;
   closeOnSelect?: boolean;
   loop?: boolean;
@@ -39,13 +39,13 @@ function Controlled({
   );
 }
 
-const baseItems: DropdownMenuItem[] = [
+const baseItems: DropdownMenuItemType[] = [
   { id: 'edit', label: 'Edit', onClick: vi.fn() },
   { id: 'cut', label: 'Cut', onClick: vi.fn() },
   { id: 'paste', label: 'Paste', onClick: vi.fn() },
 ];
 
-const withDisabled: DropdownMenuItem[] = [
+const withDisabled: DropdownMenuItemType[] = [
   { id: 'a', label: 'A', onClick: vi.fn() },
   { id: 'b', label: 'B', disabled: true, onClick: vi.fn() },
   { id: 'c', label: 'C', onClick: vi.fn() },
@@ -82,7 +82,7 @@ describe('useDropdownMenu', () => {
   it('clicking an item fires onClick and closes when closeOnSelect', async () => {
     const user = userEvent.setup();
     const onClick = vi.fn();
-    const items: DropdownMenuItem[] = [{ id: 'x', label: 'X', onClick }];
+    const items: DropdownMenuItemType[] = [{ id: 'x', label: 'X', onClick }];
     render(<Controlled items={items} initialOpen />);
     await user.click(screen.getByText('X'));
     expect(onClick).toHaveBeenCalledTimes(1);
@@ -92,7 +92,7 @@ describe('useDropdownMenu', () => {
   it('closeOnSelect=false keeps menu open after item click', async () => {
     const user = userEvent.setup();
     const onClick = vi.fn();
-    const items: DropdownMenuItem[] = [{ id: 'x', label: 'X', onClick }];
+    const items: DropdownMenuItemType[] = [{ id: 'x', label: 'X', onClick }];
     render(<Controlled items={items} initialOpen closeOnSelect={false} />);
     await user.click(screen.getByText('X'));
     expect(onClick).toHaveBeenCalledTimes(1);
@@ -146,7 +146,7 @@ describe('useDropdownMenu', () => {
 
   it('Enter on focused item activates and closes', async () => {
     const onClick = vi.fn();
-    const items: DropdownMenuItem[] = [
+    const items: DropdownMenuItemType[] = [
       { id: 'a', label: 'A', onClick },
       { id: 'b', label: 'B' },
     ];

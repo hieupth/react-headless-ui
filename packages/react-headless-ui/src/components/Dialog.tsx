@@ -4,7 +4,7 @@
  * Provides styled modal dialog with focus trap and accessibility.
  */
 
-import React, { forwardRef, useEffect } from 'react';
+import React, { forwardRef } from 'react';
 import { createPortal } from 'react-dom';
 import { useDialog } from '../hooks';
 import { Button } from './Button';

@@ -46,7 +46,7 @@ describe('referential stability of memoized hooks', () => {
   });
 
   it('useAccordion: stable across re-renders with same props', () => {
-    const items = [{ id: 'a', title: 'A', content: 'aa' }];
+    const items = [{ id: 'a', trigger: 'A', content: 'aa' }];
     const utils = setupHook(useAccordion, {
       items,
       defaultOpenItems: ['a']
@@ -57,7 +57,7 @@ describe('referential stability of memoized hooks', () => {
   });
 
   it('useAccordion: opening an item updates state — not stale', () => {
-    const items = [{ id: 'a', title: 'A', content: 'aa' }];
+    const items = [{ id: 'a', trigger: 'A', content: 'aa' }];
     const utils = setupHook(useAccordion, { items, defaultOpenItems: [] });
     const before = utils.result.current.openItems;
     expect(before).toEqual([]);

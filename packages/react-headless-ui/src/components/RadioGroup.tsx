@@ -6,13 +6,20 @@
 
 import React, { forwardRef } from 'react';
 import { useRadioGroup, type UseRadioGroupProps } from '../hooks';
-import { useTheme } from '../providers/ThemeProvider';
 
-export interface RadioGroupProps extends Omit<UseRadioGroupProps, 'radioGroupRef'>, React.AriaAttributes {
+export interface RadioGroupProps extends Omit<UseRadioGroupProps, 'radioGroupRef' | 'options'>, React.AriaAttributes {
+  /**
+   * Radio option values. Required for the data-driven API, but optional when
+   * the compound children API (`<RadioGroup.Item>`) is used instead — options
+   * are derived from the children.
+   */
+  options?: string[];
   /** Additional CSS class names */
   className?: string;
   /** Custom style object */
   style?: React.CSSProperties;
+  /** HTML title attribute — passed through to the group element. */
+  title?: string;
   /** Size variant */
   size?: 'sm' | 'md' | 'lg';
   /** Color variant */
@@ -54,7 +61,7 @@ RadioGroupItem.displayName = 'RadioGroup.Item';
  * RadioGroup component with single selection behavior.
  * Supports horizontal/vertical layouts and proper accessibility.
  */
-export const RadioGroup = forwardRef<HTMLDivElement, RadioGroupProps>(({
+const RadioGroupBase = forwardRef<HTMLDivElement, RadioGroupProps>(({
   className = '',
   style,
   size = 'md',
@@ -66,14 +73,13 @@ export const RadioGroup = forwardRef<HTMLDivElement, RadioGroupProps>(({
   children,
   ...radioGroupProps
 }, ref) => {
-  const theme = useTheme();
 
   // Compound children API: derive options + labels from <RadioGroup.Item>.
   const childOptions = React.Children.toArray(children) as React.ReactElement<RadioGroupItemProps>[];
   const fromChildren = childOptions.length > 0;
   const options = fromChildren
     ? childOptions.map((c) => c.props.value)
-    : radioGroupProps.options;
+    : (radioGroupProps.options ?? []);
   const optionLabels = fromChildren
     ? Object.fromEntries(childOptions.map((c) => [c.props.value, c.props.children]))
     : optionLabelsProp;
@@ -155,8 +161,7 @@ export const RadioGroup = forwardRef<HTMLDivElement, RadioGroupProps>(({
     return (
       <div
         key={value}
-        className={`
-          radio-option
+        className={`radio-option
           ${state.orientation === 'horizontal' ? ' ' : ' '}
           ${focusRing}
           ${!state.disabled ? '' : ''}
@@ -168,8 +173,7 @@ export const RadioGroup = forwardRef<HTMLDivElement, RadioGroupProps>(({
         data-testid={`radio-option-${value}`}
       >
         {/* Radio Button */}
-        <div className={`
-          radio-button
+        <div className={`radio-button
           
           ${sizeClasses.radio}
            
@@ -191,25 +195,18 @@ export const RadioGroup = forwardRef<HTMLDivElement, RadioGroupProps>(({
 
         {/* Label and Description */}
         {showLabels && (
-          <div className={`
-            ${state.orientation === 'horizontal' ? '' : ''}
+          <div className={`${state.orientation === 'horizontal' ? '' : ''}
             
           `}>
             <div
               id={labelId}
-              className={`
-              
-              ${isSelected ? '' : ''}
+              className={`${isSelected ? '' : ''}
               ${state.disabled ? '' : ''}
             `}>
               {label}
             </div>
             {description && (
-              <div className={`
-                
-                
-                
-                ${state.disabled ? '' : ''}
+              <div className={`${state.disabled ? '' : ''}
               `}>
                 {description}
               </div>
@@ -234,24 +231,30 @@ export const RadioGroup = forwardRef<HTMLDivElement, RadioGroupProps>(({
         const isFocused = actions.isOptionFocused(option);
 
         return renderOption
-          ? renderOption(option, index, isSelected, isFocused)
+          ? <React.Fragment key={option}>{renderOption(option, index, isSelected, isFocused)}</React.Fragment>
           : defaultRenderOption(option, index, isSelected, isFocused);
       })}
 
       {/* Empty state */}
       {state.options.length === 0 && (
-        <div className="     ">
+        <div className="radio-group">
           <div className={sizeClasses.radio} />
-          <p className=" ">No options available</p>
+          <p className="radio-group">No options available</p>
         </div>
       )}
     </div>
   );
 });
 
-RadioGroup.displayName = 'RadioGroup';
+RadioGroupBase.displayName = 'RadioGroup';
 
 // Attach the compound option sub-component: <RadioGroup.Item value="…" />.
-(RadioGroup as unknown as { Item: typeof RadioGroupItem }).Item = RadioGroupItem;
+// Object.assign both mutates the component at runtime AND gives the exported
+// `RadioGroup` const an intersection type, so the shipped .d.ts declares
+// `.Item` and consumers see it as typeable.
+const RadioGroup = Object.assign(RadioGroupBase, {
+  Item: RadioGroupItem
+});
 
+export { RadioGroup };
 export default RadioGroup;

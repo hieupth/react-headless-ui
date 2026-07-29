@@ -5,7 +5,6 @@
  */
 
 import React, { forwardRef, useRef, useEffect, useMemo } from 'react';
-import { createPortal } from 'react-dom';
 import { useCombobox } from '../hooks';
 import { useVirtualList } from '../hooks';
 import type { UseComboboxProps, ComboboxOption as ComboboxOptionData, ComboboxGroup as ComboboxGroupData } from '../hooks';
@@ -198,9 +197,7 @@ export const Combobox = forwardRef<HTMLDivElement, ComboboxProps>(
         <div
           {...optionAttributes}
           key={option.id || index}
-          className={`
-                 
-            ${selectedIndex === index ? ' ' : ' '}
+          className={`${selectedIndex === index ? ' ' : ' '}
             ${option.disabled ? ' ' : ''}
             ${selectedOption?.value === option.value ? '  ' : ''}
             ${className}
@@ -208,23 +205,23 @@ export const Combobox = forwardRef<HTMLDivElement, ComboboxProps>(
           style={overrideAttributes?.style}
           data-testid="combobox-option"
         >
-          <div className="  ">
-            <div className="  ">
+          <div className="combobox">
+            <div className="combobox">
               {option.icon && (
-                <span className="    ">
+                <span className="combobox">
                   {option.icon}
                 </span>
               )}
               <span>{option.label}</span>
             </div>
             {selectedOption?.value === option.value && (
-              <svg className="  " fill="currentColor" viewBox="0 0 20 20">
+              <svg className="combobox" fill="currentColor" viewBox="0 0 20 20">
                 <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
               </svg>
             )}
           </div>
           {option.description && (
-            <p className="   ">
+            <p className="combobox">
               {option.description}
             </p>
           )}
@@ -240,7 +237,7 @@ export const Combobox = forwardRef<HTMLDivElement, ComboboxProps>(
 
       return (
         <div key={group.id} className="combobox-group" data-testid="combobox-group">
-          <div className="       ">
+          <div className="combobox">
             {group.heading}
           </div>
           <div className="combobox-group-options">
@@ -264,7 +261,7 @@ export const Combobox = forwardRef<HTMLDivElement, ComboboxProps>(
       }
 
       return (
-        <div className="   " data-testid="combobox-empty">
+        <div className="combobox" data-testid="combobox-empty">
           {props.noResultsMessage || 'No results found.'}
         </div>
       );
@@ -279,7 +276,7 @@ export const Combobox = forwardRef<HTMLDivElement, ComboboxProps>(
       }
 
       return (
-        <div className="   " data-testid="combobox-loading">
+        <div className="combobox" data-testid="combobox-loading">
           Loading...
         </div>
       );
@@ -296,7 +293,7 @@ export const Combobox = forwardRef<HTMLDivElement, ComboboxProps>(
           className="   transform -translate-y-1/2     "
           data-testid="combobox-clear"
         >
-          <svg className=" " fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <svg className="combobox" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
           </svg>
         </button>
@@ -309,7 +306,7 @@ export const Combobox = forwardRef<HTMLDivElement, ComboboxProps>(
 
       return (
         <div className="   transform -translate-y-1/2 ">
-          <svg className=" " fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <svg className="combobox" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
           </svg>
         </div>
@@ -340,10 +337,7 @@ export const Combobox = forwardRef<HTMLDivElement, ComboboxProps>(
       <div
         ref={listRef}
         {...listAttributes}
-        className={`
-                   
-          
-          ${opening ? '' : ''}
+        className={`${opening ? '' : ''}
           ${closing ? '' : ''}
         `}
         style={{
@@ -361,15 +355,13 @@ export const Combobox = forwardRef<HTMLDivElement, ComboboxProps>(
     return (
       <div
         ref={comboboxRef}
-        className={`
-          
-          ${className}
+        className={`${className}
         `}
         style={style}
         data-testid="combobox"
       >
         {/* Input Field */}
-        <div className="">
+        <div className="combobox">
           {renderSearchIcon()}
           <input
             {...inputAttributes}
@@ -377,9 +369,7 @@ export const Combobox = forwardRef<HTMLDivElement, ComboboxProps>(
             {...(props.id ? { id: props.id } : {})}
             {...(props['data-testid'] ? { 'data-testid': props['data-testid'] } : {})}
             aria-autocomplete="list"
-            className={`
-                        
-              ${showSearchIcon ? '' : ''}
+            className={`${showSearchIcon ? '' : ''}
               ${showClearButton && inputValue ? '' : ''}
               ${className}
             `}
@@ -405,7 +395,7 @@ export const ComboboxInput: React.FC<ComboboxInputProps> = ({
   return (
     <input
       {...inputProps}
-      className={`           ${className}`}
+      className={`${className}`}
       style={style}
       data-testid="combobox-input"
       role="combobox"
@@ -423,7 +413,7 @@ export const ComboboxList: React.FC<ComboboxListProps> = ({
 }) => {
   return (
     <div
-      className={`           ${className}`}
+      className={`${className}`}
       style={style}
       role="listbox"
       data-testid="combobox-list"
@@ -455,9 +445,7 @@ export const ComboboxOption: React.FC<ComboboxOptionProps> = ({
 
   return (
     <div
-      className={`
-             
-        ${disabled ? ' ' : ' '}
+      className={`${disabled ? ' ' : ' '}
         ${selected ? '  ' : ''}
         ${className}
       `}
@@ -469,23 +457,23 @@ export const ComboboxOption: React.FC<ComboboxOptionProps> = ({
       data-selected={selected}
       data-testid="combobox-option"
     >
-      <div className="  ">
-        <div className="  ">
+      <div className="combobox">
+        <div className="combobox">
           {icon && (
-            <span className="    ">
+            <span className="combobox">
               {icon}
             </span>
           )}
           <span>{children}</span>
         </div>
         {selected && (
-          <svg className="  " fill="currentColor" viewBox="0 0 20 20">
+          <svg className="combobox" fill="currentColor" viewBox="0 0 20 20">
             <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
           </svg>
         )}
       </div>
       {description && (
-        <p className="   ">
+        <p className="combobox">
           {description}
         </p>
       )}
@@ -504,7 +492,7 @@ export const ComboboxGroup: React.FC<ComboboxGroupProps> = ({
 }) => {
   return (
     <div className={`combobox-group ${className}`} style={style} data-testid="combobox-group">
-      <div className="       ">
+      <div className="combobox">
         {heading}
       </div>
       <div className="combobox-group-options">
@@ -524,7 +512,7 @@ export const ComboboxEmpty: React.FC<ComboboxEmptyProps> = ({
 }) => {
   return (
     <div
-      className={`    ${className}`}
+      className={`${className}`}
       style={style}
       data-testid="combobox-empty"
     >

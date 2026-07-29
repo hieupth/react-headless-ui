@@ -1,6 +1,6 @@
 "use client";
 /**
- * List headless hook for React UI Forge components.
+ * List headless hook for @hieupth/react-headless-ui components.
  * Provides behavior-only hooks following Flutter patterns.
  * Manages list state, selection, and timeline visualization.
  */

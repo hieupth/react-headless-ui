@@ -245,8 +245,7 @@ export const VisuallyHiddenSkipLink = forwardRef<HTMLAnchorElement, {
     <a
       ref={ref}
       href={target}
-      className={`
-        visually-hidden-skip-link
+      className={`visually-hidden-skip-link
         visually-hidden-focusable
         ${className}
       `.trim().replace(/\s+/g, ' ')}

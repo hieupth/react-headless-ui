@@ -100,7 +100,7 @@ export default function OffcanvasPage() {
             {
               name: 'position',
               type: "'left' | 'right' | 'top' | 'bottom'",
-              default: "'left'",
+              default: "'right'",
               description: 'Edge the panel slides from.',
             },
             {

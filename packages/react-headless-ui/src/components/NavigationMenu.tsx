@@ -6,7 +6,6 @@
 
 import React, { forwardRef } from 'react';
 import { useNavigationMenu, type UseNavigationMenuProps } from '../hooks';
-import { useTheme } from '../providers/ThemeProvider';
 
 export interface NavigationMenuProps extends Omit<UseNavigationMenuProps, 'navigationMenuRef'> {
   /** Additional CSS class names */
@@ -45,7 +44,6 @@ export const NavigationMenu = forwardRef<HTMLDivElement, NavigationMenuProps>(({
   showDescriptions = false,
   ...navigationMenuProps
 }, ref) => {
-  const theme = useTheme();
   const {
     state,
     actions,
@@ -81,8 +79,7 @@ export const NavigationMenu = forwardRef<HTMLDivElement, NavigationMenuProps>(({
     if (item.type === 'separator') {
       return (
         <div
-          className={`
-            ${showSeparators ? '  ' : ''}
+          className={`${showSeparators ? '  ' : ''}
             ${level === 0 ? ' ' : ' '}
           `}
           role="separator"
@@ -93,9 +90,7 @@ export const NavigationMenu = forwardRef<HTMLDivElement, NavigationMenuProps>(({
     if (item.type === 'header') {
       return (
         <div
-          className={`
-              
-            ${level === 0 ? ' ' : ' '}
+          className={`${level === 0 ? ' ' : ' '}
           `}
           role="heading"
           aria-level={level + 1}
@@ -107,8 +102,7 @@ export const NavigationMenu = forwardRef<HTMLDivElement, NavigationMenuProps>(({
 
     return (
       <div
-        className={`
-          navigation-menu-item
+        className={`navigation-menu-item
             
           ${level === 0 ? ' ' : ' '}
           ${item.disabled ? ' ' : '  '}
@@ -146,22 +140,22 @@ export const NavigationMenu = forwardRef<HTMLDivElement, NavigationMenuProps>(({
       >
         {/* Item Icon */}
         {showIcons && item.icon && (
-          <span className="">
+          <span className="navigation-menu">
             {item.icon}
           </span>
         )}
 
         {/* Item Content */}
-        <div className=" ">
-          <div className="  ">
+        <div className="navigation-menu">
+          <div className="navigation-menu">
             {/* Item Label */}
-            <span className=" ">
+            <span className="navigation-menu">
               {item.label}
             </span>
 
             {/* Badge */}
             {showBadges && item.badge && (
-              <span className="           ">
+              <span className="navigation-menu">
                 {item.badge}
               </span>
             )}
@@ -169,7 +163,7 @@ export const NavigationMenu = forwardRef<HTMLDivElement, NavigationMenuProps>(({
 
           {/* Description */}
           {showDescriptions && item.description && (
-            <p className="   ">
+            <p className="navigation-menu">
               {item.description}
             </p>
           )}
@@ -177,9 +171,9 @@ export const NavigationMenu = forwardRef<HTMLDivElement, NavigationMenuProps>(({
 
         {/* Submenu Arrow */}
         {item.children && item.children.length > 0 && (
-          <span className=" ">
+          <span className="navigation-menu">
             <svg
-              className=" "
+              className="navigation-menu"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -270,7 +264,7 @@ export const NavigationMenu = forwardRef<HTMLDivElement, NavigationMenuProps>(({
         aria-expanded={state.isMobileMenuOpen}
       >
         <svg
-          className=" "
+          className="navigation-menu"
           fill="none"
           stroke="currentColor"
           viewBox="0 0 24 24"
@@ -318,7 +312,7 @@ export const NavigationMenu = forwardRef<HTMLDivElement, NavigationMenuProps>(({
               <input
                 type="text"
                 placeholder="Search menu..."
-                className="        "
+                className="navigation-menu"
                 value={state.searchQuery}
                 onChange={(e) => actions.setSearchQuery(e.target.value)}
                 aria-label="Search navigation menu"
@@ -345,7 +339,7 @@ export const NavigationMenu = forwardRef<HTMLDivElement, NavigationMenuProps>(({
               <input
                 type="text"
                 placeholder="Search menu..."
-                className="        "
+                className="navigation-menu"
                 value={state.searchQuery}
                 onChange={(e) => actions.setSearchQuery(e.target.value)}
                 aria-label="Search navigation menu"
@@ -354,7 +348,7 @@ export const NavigationMenu = forwardRef<HTMLDivElement, NavigationMenuProps>(({
           )}
 
           {/* Mobile Menu Items */}
-          <div className=" ">
+          <div className="navigation-menu">
             {renderItems(
               actions.filterItems(state.items, state.searchQuery),
               0
@@ -382,9 +376,9 @@ export const NavigationMenu = forwardRef<HTMLDivElement, NavigationMenuProps>(({
 
       {/* Empty State */}
       {state.items.length === 0 && (
-        <div className="     ">
+        <div className="navigation-menu">
           <svg
-            className="  "
+            className="navigation-menu"
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"
@@ -396,15 +390,15 @@ export const NavigationMenu = forwardRef<HTMLDivElement, NavigationMenuProps>(({
               d="M4 6h16M4 12h16M4 18h16"
             />
           </svg>
-          <p className="">No navigation items</p>
+          <p className="navigation-menu">No navigation items</p>
         </div>
       )}
 
       {/* No Search Results */}
       {state.searchQuery && actions.filterItems(state.items, state.searchQuery).length === 0 && (
-        <div className="     ">
+        <div className="navigation-menu">
           <svg
-            className="  "
+            className="navigation-menu"
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"
@@ -416,7 +410,7 @@ export const NavigationMenu = forwardRef<HTMLDivElement, NavigationMenuProps>(({
               d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
             />
           </svg>
-          <p className="">No results found for "{state.searchQuery}"</p>
+          <p className="navigation-menu">No results found for "{state.searchQuery}"</p>
         </div>
       )}
     </div>

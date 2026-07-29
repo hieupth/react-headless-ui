@@ -7,7 +7,6 @@
 import React, { forwardRef } from 'react';
 import { motion } from 'framer-motion';
 import { useScaleInOut, type UseScaleInOutProps } from '../hooks';
-import { useTheme } from '../providers/ThemeProvider';
 
 export interface ScaleInOutProps extends UseScaleInOutProps {
   /** Additional CSS class names */
@@ -40,7 +39,6 @@ export const ScaleInOut = forwardRef<HTMLDivElement, ScaleInOutProps>(({
   transition,
   ...scaleInOutProps
 }, ref) => {
-  const theme = useTheme();
   const {
     state,
     actions,

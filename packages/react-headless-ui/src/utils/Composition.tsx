@@ -109,3 +109,24 @@ export const composeStyles = (
     return result;
   }, {} as React.CSSProperties);
 };
+
+/**
+ * Merges multiple refs (object, function, or null) into a single callback ref
+ * that forwards the node to each. Used by forwardRef components that also need
+ * to attach an internal hook ref to the same element, so a consumer's forwarded
+ * ref is no longer silently dropped.
+ */
+export const mergeRefs = <T,>(
+  ...refs: (React.Ref<T> | undefined | null)[]
+): React.RefCallback<T> => {
+  return (node) => {
+    for (const ref of refs) {
+      if (!ref) continue;
+      if (typeof ref === 'function') {
+        ref(node);
+      } else if (typeof ref === 'object') {
+        (ref as React.MutableRefObject<T | null>).current = node;
+      }
+    }
+  };
+};

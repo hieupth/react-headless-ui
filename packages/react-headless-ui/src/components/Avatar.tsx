@@ -6,6 +6,7 @@
 
 import React, { forwardRef } from 'react';
 import { useAvatar } from '../hooks';
+import { mergeRefs } from '../utils';
 import type { UseAvatarProps } from '../hooks';
 
 export interface AvatarProps extends UseAvatarProps {
@@ -71,7 +72,7 @@ export const Avatar = forwardRef<HTMLDivElement, AvatarProps>(({
   // Default fallback render function
   const defaultFallbackRender = (props: AvatarRenderProps) => {
     return (
-      <div className={`      ${props.sizeClasses}`}>
+      <div className={`${props.sizeClasses}`}>
         {props.fallbackText}
       </div>
     );
@@ -85,7 +86,7 @@ export const Avatar = forwardRef<HTMLDivElement, AvatarProps>(({
 
     return (
       <div
-        ref={props.avatarRef as React.RefObject<HTMLDivElement>}
+        ref={mergeRefs(props.avatarRef, ref)}
         className={`${baseClasses} ${interactiveClasses} ${stateClasses}`}
         style={style}
         {...props.semanticAttributes}
@@ -96,7 +97,7 @@ export const Avatar = forwardRef<HTMLDivElement, AvatarProps>(({
             ref={props.imageRef}
             src={src}
             alt={alt}
-            className={`  object-cover ${props.loading ? '' : ''}  `}
+            className={`object-cover ${props.loading ? '' : ''}  `}
             onLoad={props.handleImageLoad}
             onError={props.handleImageError}
           />
@@ -109,14 +110,14 @@ export const Avatar = forwardRef<HTMLDivElement, AvatarProps>(({
 
         {/* Loading indicator */}
         {props.loading && (
-          <div className="    ">
-            <div className="    "></div>
+          <div className="avatar">
+            <div className="avatar"></div>
           </div>
         )}
 
         {/* Children (overlay content) */}
         {children && (
-          <div className="    ">
+          <div className="avatar">
             {children}
           </div>
         )}

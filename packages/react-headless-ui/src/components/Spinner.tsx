@@ -20,7 +20,7 @@ export interface SpinnerProps extends UseSpinnerProps {
   /** Custom label render function */
   renderLabel?: (props: SpinnerLabelRenderProps) => React.ReactNode;
   /** Color variant */
-  color?: 'primary' | 'success' | 'warning' | 'error' | 'info' | 'gray';
+  color?: 'primary' | 'secondary' | 'success' | 'warning' | 'error' | 'info' | 'gray';
   /** Custom width/height */
   dimension?: number;
   /** Custom border radius */
@@ -52,9 +52,9 @@ export interface SpinnerRenderProps {
   stop: () => void;
   toggle: () => void;
   reset: () => void;
-  setSpeed: (speed: UseSpinnerProps['speed']) => void;
-  setVariant: (variant: UseSpinnerProps['variant']) => void;
-  setSize: (size: UseSpinnerProps['size']) => void;
+  setSpeed: (speed: NonNullable<UseSpinnerProps['speed']>) => void;
+  setVariant: (variant: NonNullable<UseSpinnerProps['variant']>) => void;
+  setSize: (size: NonNullable<UseSpinnerProps['size']>) => void;
   /** Semantic attributes */
   spinnerAttributes: Record<string, any>;
   formAttributes: Record<string, any>;
@@ -177,6 +177,7 @@ export const Spinner = forwardRef<HTMLDivElement, SpinnerProps>(({
   // Color classes
   const colorClasses = {
     primary: '',
+    secondary: '',
     success: '',
     warning: '',
     error: '',
@@ -197,9 +198,7 @@ export const Spinner = forwardRef<HTMLDivElement, SpinnerProps>(({
       case 'spin':
         return (
           <div
-            className={`
-              
-              ${sizeClasses}
+            className={`${sizeClasses}
               ${variantClasses}
               ${colorClasses}
               ${animating ? animationClasses : ''}
@@ -213,9 +212,7 @@ export const Spinner = forwardRef<HTMLDivElement, SpinnerProps>(({
       case 'pulse':
         return (
           <div
-            className={`
-              
-              ${sizeClasses}
+            className={`${sizeClasses}
               ${colorClasses}
               ${animating ? '' : ''}
               ${props.disabled ? '' : ''}
@@ -228,8 +225,7 @@ export const Spinner = forwardRef<HTMLDivElement, SpinnerProps>(({
       case 'bounce':
         return (
           <div
-            className={`
-              ${sizeClasses}
+            className={`${sizeClasses}
               ${colorClasses}
               ${animating ? '' : ''}
               ${props.disabled ? '' : ''}
@@ -243,9 +239,7 @@ export const Spinner = forwardRef<HTMLDivElement, SpinnerProps>(({
       case 'dots':
         return (
           <div
-            className={`
-               
-              ${props.disabled ? '' : ''}
+            className={`${props.disabled ? '' : ''}
               ${props.className}
             `}
             style={props.style}
@@ -253,8 +247,7 @@ export const Spinner = forwardRef<HTMLDivElement, SpinnerProps>(({
             {[0, 1, 2].map((index) => (
               <div
                 key={index}
-                className={`
-                  ${{
+                className={`${{
                     xs: ' ',
                     sm: ' ',
                     md: ' ',
@@ -281,9 +274,7 @@ export const Spinner = forwardRef<HTMLDivElement, SpinnerProps>(({
       case 'bars':
         return (
           <div
-            className={`
-               
-              ${props.disabled ? '' : ''}
+            className={`${props.disabled ? '' : ''}
               ${props.className}
             `}
             style={props.style}
@@ -291,8 +282,7 @@ export const Spinner = forwardRef<HTMLDivElement, SpinnerProps>(({
             {[0, 1, 2, 3].map((index) => (
               <div
                 key={index}
-                className={`
-                  ${{
+                className={`${{
                     xs: ' ',
                     sm: ' ',
                     md: ' ',
@@ -318,9 +308,7 @@ export const Spinner = forwardRef<HTMLDivElement, SpinnerProps>(({
       case 'ring':
         return (
           <div
-            className={`
-              
-              ${sizeClasses}
+            className={`${sizeClasses}
               ${props.disabled ? '' : ''}
               ${props.className}
             `}
@@ -328,23 +316,12 @@ export const Spinner = forwardRef<HTMLDivElement, SpinnerProps>(({
           >
             {/* Background ring */}
             <div
-              className={`
-                 
-                
-                
-                ${colorClasses.replace('border-', 'border-') + '-200'}
+              className={`${colorClasses.replace('border-', 'border-') + '-200'}
               `}
             />
             {/* Progress ring */}
             <div
-              className={`
-                 
-                
-                
-                
-                
-                
-                ${colorClasses}
+              className={`${colorClasses}
                 ${animating ? animationClasses : ''}
               `}
               style={{
@@ -449,9 +426,7 @@ export const Spinner = forwardRef<HTMLDivElement, SpinnerProps>(({
       <div className={baseSpinnerClasses}>
         <div
           ref={props.spinnerRef}
-          className={`
-            
-            ${dimension ? `w-${dimension} h-${dimension}` : sizeClasses}
+          className={`${dimension ? `w-${dimension} h-${dimension}` : sizeClasses}
             ${props.disabled ? ' ' : ''}
           `}
           onFocus={props.onFocus}
@@ -469,7 +444,7 @@ export const Spinner = forwardRef<HTMLDivElement, SpinnerProps>(({
         </div>
         {labelElement}
         {showTooltip && tooltipText && (
-          <div className="          ">
+          <div className="spinner">
             {tooltipText}
           </div>
         )}
@@ -545,7 +520,7 @@ export interface SimpleSpinnerProps {
   /** Size variant */
   size?: UseSpinnerProps['size'];
   /** Color variant */
-  color?: 'primary' | 'success' | 'warning' | 'error' | 'info' | 'gray';
+  color?: 'primary' | 'secondary' | 'success' | 'warning' | 'error' | 'info' | 'gray';
   /** Additional CSS class names */
   className?: string;
   /** Custom style object */

@@ -4,11 +4,17 @@ import { notFound } from 'next/navigation';
 import { MDXRemote } from 'next-mdx-remote/rsc';
 import { Demo } from '@/components/demo';
 import { CodeBlock } from '@/components/code-block';
+import { InteractiveDemo } from '@/components/interactive-demo';
 
 const docsDir = path.join(process.cwd(), 'docs');
 
-/** MDX components exposed to every docs page. */
-const mdxComponents = { Demo, CodeBlock };
+/**
+ * MDX components exposed to every docs page. Interactive pieces (e.g. a button
+ * that fires `onPress`) are exposed as client components so their event-handler
+ * props are constructed on the client — Server Components cannot pass function
+ * props to Client Components, which would otherwise break the static export.
+ */
+const mdxComponents = { Demo, CodeBlock, InteractiveDemo };
 
 /**
  * List every docs/*.mdx file as a static `[...slug]` param so the static

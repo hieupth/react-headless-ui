@@ -21,11 +21,10 @@ describe('Resizable', () => {
 
   it('renders resize handles when showHandles is set', () => {
     render(
-      <Resizable showHandles handles={['se']}>
+      <Resizable showHandles handles={['bottom-right']}>
         <span>handles</span>
       </Resizable>
     );
-    // 'se' is not a valid HandlePosition; component should still render container
     expect(screen.getByTestId('resizable')).toBeInTheDocument();
   });
 

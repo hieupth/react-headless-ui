@@ -92,7 +92,7 @@ describe('AlertDialog', () => {
       </AlertDialog>
     );
     // Overlay still mounts and the render-prop output is rendered.
-    expect(container.firstElementChild?.style.display).toBe('flex');
+    expect((container.firstElementChild as HTMLElement | null)?.style.display).toBe('flex');
     expect(screen.getByTestId('open-state').textContent).toBe('true');
     expect(screen.getByTestId('rendered-confirm')).toBeInTheDocument();
   });

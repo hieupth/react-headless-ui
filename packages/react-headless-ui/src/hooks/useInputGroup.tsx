@@ -1,6 +1,6 @@
 "use client";
 /**
- * InputGroup headless hook for React UI Forge components.
+ * InputGroup headless hook for @hieupth/react-headless-ui components.
  * Provides behavior-only hooks following Flutter patterns.
  * Manages input field grouping with layout and accessibility.
  */

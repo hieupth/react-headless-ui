@@ -6,7 +6,6 @@
 
 import React, { forwardRef } from 'react';
 import { useAccessibleIcon, type UseAccessibleIconProps } from '../hooks';
-import { useTheme } from '../providers/ThemeProvider';
 
 export interface AccessibleIconProps extends Omit<UseAccessibleIconProps, 'iconRef'> {
   /** Additional CSS class names */
@@ -61,7 +60,6 @@ export const AccessibleIcon = forwardRef<HTMLElement, AccessibleIconProps>(({
   interactive = false,
   ...accessibleIconProps
 }, ref) => {
-  const theme = useTheme();
   const {
     state,
     actions,
@@ -155,7 +153,6 @@ export const AccessibleIcon = forwardRef<HTMLElement, AccessibleIconProps>(({
 
   // Build container styles
   const containerStyles: React.CSSProperties = {};
-  const labelClasses = [];
 
   // Adjust container based on label position
   switch (labelPosition) {

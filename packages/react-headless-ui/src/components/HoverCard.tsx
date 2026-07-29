@@ -6,7 +6,6 @@
 
 import React, { forwardRef } from 'react';
 import { useHoverCard, type UseHoverCardProps } from '../hooks';
-import { useTheme } from '../providers/ThemeProvider';
 
 export interface HoverCardProps extends Omit<UseHoverCardProps, 'triggerRef' | 'cardRef'> {
   /** Additional CSS class names */
@@ -45,7 +44,6 @@ export const HoverCard = forwardRef<HTMLDivElement, HoverCardProps>(({
   preventTextSelection = true,
   ...hoverCardProps
 }: HoverCardProps, ref) => {
-  const theme = useTheme();
   const {
     state,
     actions,
@@ -144,7 +142,7 @@ export const HoverCard = forwardRef<HTMLDivElement, HoverCardProps>(({
   return (
     <div
       ref={ref}
-      className={`hover-card   ${className}`}
+      className={`hover-card ${className}`}
       style={style}
       data-testid="hover-card"
     >

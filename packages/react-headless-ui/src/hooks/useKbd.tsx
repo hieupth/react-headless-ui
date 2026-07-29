@@ -1,6 +1,6 @@
 "use client";
 /**
- * Keyboard Key headless hook for React UI Forge components.
+ * Keyboard Key headless hook for @hieupth/react-headless-ui components.
  * Provides behavior-only hooks following Flutter patterns.
  * Manages keyboard key display state and interactions.
  */
@@ -202,9 +202,6 @@ export function useKbd(props: UseKbdProps): UseKbdReturns {
     animateOnPress = true,
     defaultModifiers = {},
     modifiers: controlledModifiers,
-    size = 'md',
-    variant = 'default',
-    shape = 'rounded',
     onPress,
     onRelease,
     onFocus,
@@ -214,10 +211,7 @@ export function useKbd(props: UseKbdProps): UseKbdReturns {
     keyRef,
     label,
     description,
-    combo = false,
-    comboSeparator = '+',
-    capitalize = false,
-    showAsIcon = false
+    capitalize = false
   } = props;
 
   // State management
@@ -271,7 +265,8 @@ export function useKbd(props: UseKbdProps): UseKbdReturns {
     if (!interactive || disabled) return;
     setFocused(true);
     elementRef.current?.focus();
-  }, [interactive, disabled]);
+    onFocus?.();
+  }, [interactive, disabled, onFocus]);
 
   /**
    * Blur key
@@ -279,7 +274,8 @@ export function useKbd(props: UseKbdProps): UseKbdReturns {
   const blurAction = useCallback(() => {
     setFocused(false);
     elementRef.current?.blur();
-  }, []);
+    onBlur?.();
+  }, [onBlur]);
 
   /**
    * Hover key

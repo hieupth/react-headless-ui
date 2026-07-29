@@ -4,9 +4,9 @@
  * Provides comprehensive text input behavior with validation and accessibility.
  */
 
-import { useState, useCallback, useMemo, useRef, useEffect } from 'react';
+import { useState, useCallback, useMemo, useRef } from 'react';
 import { useFocusableMixin, useSemanticMixin } from '../mixins';
-import { composeState, composeHandlers } from '../utils';
+import { composeState } from '../utils';
 import type { FocusableMixinProps, SemanticMixinProps } from '../mixins';
 
 export interface UseInputProps extends

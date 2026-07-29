@@ -98,7 +98,7 @@ export default function MegaMenuPage() {
           Set <code>orientation="vertical"</code> for a side-stacked menu.
           <code>animationDuration</code> tunes the panel transition;{' '}
           <code>panelPosition</code> controls where the panel appears relative
-          to its trigger; <code>showArrows</code> adds expand indicators.
+          to its trigger; <code>showPanelArrows</code> adds expand indicators.
         </p>
         <Demo
           code={`<MegaMenu
@@ -107,7 +107,7 @@ export default function MegaMenuPage() {
   orientation="vertical"
   animationDuration={200}
   panelPosition="right"
-  showArrows
+  showPanelArrows
 />`}
         >
           <p className="text-sm text-gray-500">

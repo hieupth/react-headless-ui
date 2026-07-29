@@ -71,7 +71,7 @@ export default function MenubarPage() {
               className={menubarCls}
               items={items}
               orientation="horizontal"
-              onItemActivate={(item) => setActive(item.id)}
+              onItemActivate={(item) => setActive(item.id ?? null)}
             />
             <span className="text-xs text-gray-500">
               {active ? `Activated: ${active}` : 'The bar renders structure + a11y — theme it with CSS.'}

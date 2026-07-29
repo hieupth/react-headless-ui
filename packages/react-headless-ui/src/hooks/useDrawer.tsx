@@ -159,8 +159,15 @@ export function useDrawer(props: UseDrawerProps = {}) {
   const [open, setOpen] = useState(defaultOpen);
   const [opening, setOpening] = useState(false);
   const [closing, setClosing] = useState(false);
-  const focusTriggerRef = useRef<HTMLElement | null>(null);
   const previousFocusRef = useRef<HTMLElement | null>(null);
+  // Ref to the drawer panel element. Consumers bind this (via the returned
+  // setDrawerRef) to the rendered dialog so handleOpen focuses THIS drawer
+  // instead of the first [role="dialog"] anywhere in the document (which is
+  // wrong when multiple dialogs/drawers are mounted).
+  const drawerRef = useRef<HTMLElement | null>(null);
+  const setDrawerRef = useCallback((node: HTMLElement | null) => {
+    drawerRef.current = node;
+  }, []);
 
   // Determine if component is controlled
   const isControlled = controlledOpen !== undefined;
@@ -218,12 +225,12 @@ export function useDrawer(props: UseDrawerProps = {}) {
     onOpenChange?.(true);
     onOpen?.();
 
-    // Focus management
+    // Focus management — focus this drawer's own panel, not the first
+    // [role="dialog"] in the document (wrong when multiple are mounted).
     if (trapFocus) {
       setTimeout(() => {
-        const drawer = document.querySelector('[role="dialog"]');
-        if (drawer) {
-          (drawer as HTMLElement).focus();
+        if (drawerRef.current) {
+          drawerRef.current.focus();
         }
       }, 50);
     }
@@ -433,7 +440,8 @@ export function useDrawer(props: UseDrawerProps = {}) {
       handleBeforeClose
     },
     attributes: semanticAttributes,
-    overlayAttributes
+    overlayAttributes,
+    setDrawerRef
   }), [
     state,
     handleOpen,
@@ -444,6 +452,7 @@ export function useDrawer(props: UseDrawerProps = {}) {
     handleBeforeOpen,
     handleBeforeClose,
     semanticAttributes,
-    overlayAttributes
+    overlayAttributes,
+    setDrawerRef
   ]);
 }

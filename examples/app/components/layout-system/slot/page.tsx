@@ -1,5 +1,6 @@
 'use client';
 
+import { useState } from 'react';
 import { Slot, SlotClone } from '@hieupth/react-headless-ui';
 import { Demo } from '@/components/demo';
 import { PropsTable } from '@/components/props-table';
@@ -11,6 +12,9 @@ import { PropsTable } from '@/components/props-table';
 // composition primitive that powers asChild-style APIs across the library.
 
 export default function SlotPage() {
+  // Demonstrates that under mergeStrategy="merge" BOTH the slot onClick and the
+  // child onClick fire — the count increments by 101 per click (1 + 100).
+  const [mergeClicks, setMergeClicks] = useState(0);
   return (
     <div className="mx-auto max-w-3xl px-6 py-12 space-y-8">
       <header className="space-y-3">
@@ -77,11 +81,13 @@ export default function SlotPage() {
           <Slot
             clone
             mergeStrategy="merge"
-            onClick={() => undefined}
+            onClick={() => setMergeClicks((n) => n + 1)}
             className="inline-flex items-center justify-center rounded-md border border-gray-300 px-4 py-2 text-sm font-medium text-gray-700 transition-colors hover:bg-gray-100 dark:border-gray-600 dark:text-gray-200 dark:hover:bg-gray-800"
             mergeProps={{ 'aria-label': 'Clickable slot' }}
           >
-            <button type="button">Both handlers fire</button>
+            <button type="button" onClick={() => setMergeClicks((n) => n + 100)}>
+              Both handlers fire ({mergeClicks})
+            </button>
           </Slot>
         </Demo>
       </section>

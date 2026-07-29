@@ -6,7 +6,7 @@
 
 import React, { forwardRef } from 'react';
 import { createPortal } from 'react-dom';
-import { useOffcanvas, type UseOffcanvasProps, type OffcanvasPosition, type OffcanvasSize } from '../hooks';
+import { useOffcanvas, type UseOffcanvasProps } from '../hooks';
 import { useTheme } from '../providers/ThemeProvider';
 
 export interface OffcanvasProps extends Omit<UseOffcanvasProps, 'offcanvasRef'> {

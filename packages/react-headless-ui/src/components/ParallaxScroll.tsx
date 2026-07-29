@@ -7,7 +7,6 @@
 import React, { forwardRef } from 'react';
 import { motion } from 'framer-motion';
 import { useParallaxScroll, type UseParallaxScrollProps } from '../hooks';
-import { useTheme } from '../providers/ThemeProvider';
 
 export interface ParallaxScrollProps extends UseParallaxScrollProps {
   /** Additional CSS class names */
@@ -40,7 +39,6 @@ export const ParallaxScroll = forwardRef<HTMLDivElement, ParallaxScrollProps>(({
   transition,
   ...parallaxProps
 }, ref) => {
-  const theme = useTheme();
   const {
     state,
     actions,

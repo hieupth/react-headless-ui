@@ -144,11 +144,12 @@ describe('useHoverLift', () => {
 
   it('focus/blur event handlers lift and drop', () => {
     const hook = renderHook(() => useHoverLift());
-    act(() => hook.result.current.eventHandlers.onFocus());
+    const fakeEvent = {} as React.FocusEvent;
+    act(() => hook.result.current.eventHandlers.onFocus(fakeEvent));
     act(() => vi.advanceTimersByTime(300));
     actAndRerender(hook, () => {});
     expect(hook.result.current.state.isLifted).toBe(true);
-    act(() => hook.result.current.eventHandlers.onBlur());
+    act(() => hook.result.current.eventHandlers.onBlur(fakeEvent));
     act(() => vi.advanceTimersByTime(300));
     actAndRerender(hook, () => {});
     expect(hook.result.current.state.isLifted).toBe(false);

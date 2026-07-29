@@ -7,7 +7,6 @@
 import React, { forwardRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useSlideIn, type UseSlideInProps } from '../hooks';
-import { useTheme } from '../providers/ThemeProvider';
 
 export interface SlideInProps extends UseSlideInProps {
   /** Additional CSS class names */
@@ -40,7 +39,6 @@ export const SlideIn = forwardRef<HTMLDivElement, SlideInProps>(({
   transition,
   ...slideInProps
 }, ref) => {
-  const theme = useTheme();
   const {
     state,
     actions,

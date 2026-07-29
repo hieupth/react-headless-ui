@@ -4,9 +4,8 @@
  * Provides styled password strength meter with comprehensive visual feedback.
  */
 
-import React, { forwardRef, useRef, useEffect } from 'react';
+import React, { forwardRef, useRef } from 'react';
 import { usePasswordMeter, type UsePasswordMeterProps } from '../hooks';
-import { useTheme } from '../providers/ThemeProvider';
 
 export interface PasswordMeterProps extends Omit<UsePasswordMeterProps, 'meterRef'> {
   /** Additional CSS class names */
@@ -66,7 +65,6 @@ export const PasswordMeter = forwardRef<HTMLDivElement, PasswordMeterProps>(({
   strengthColors,
   ...passwordMeterProps
 }, ref) => {
-  const theme = useTheme();
   const {
     state,
     actions,
@@ -145,15 +143,13 @@ export const PasswordMeter = forwardRef<HTMLDivElement, PasswordMeterProps>(({
     return (
       <div className="strength-bar-container">
         <div
-          className={`
-            strength-bar ${sizeClasses[size].bar}
+          className={`strength-bar ${sizeClasses[size].bar}
               
             ${animated ? '  ' : ''}
           `}
         >
           <div
-            className={`
-              strength-bar-fill 
+            className={`strength-bar-fill 
               ${animated ? '  ' : ''}
             `}
             style={{
@@ -217,7 +213,7 @@ export const PasswordMeter = forwardRef<HTMLDivElement, PasswordMeterProps>(({
             y="50"
             textAnchor="middle"
             dominantBaseline="middle"
-            className=""
+            className="password-meter"
             fill={strengthColor}
             fontSize={size === 'sm' ? '14' : size === 'md' ? '16' : '18'}
           >
@@ -257,8 +253,7 @@ export const PasswordMeter = forwardRef<HTMLDivElement, PasswordMeterProps>(({
         {dots.map((index) => (
           <div
             key={index}
-            className={`
-              strength-dot 
+            className={`strength-dot 
               ${size === 'sm' ? ' ' : size === 'md' ? ' ' : ' '}
               ${animated ? '  ' : ''}
             `}
@@ -284,9 +279,7 @@ export const PasswordMeter = forwardRef<HTMLDivElement, PasswordMeterProps>(({
     return (
       <div className="strength-text">
         <span
-          className={`
-             
-            ${sizeClasses[size].text}
+          className={`${sizeClasses[size].text}
             ${animated ? '  ' : ''}
           `}
           style={{ color: strengthColor }}
@@ -294,7 +287,7 @@ export const PasswordMeter = forwardRef<HTMLDivElement, PasswordMeterProps>(({
           {strengthText}
         </span>
         {showScore && (
-          <span className=" ">
+          <span className="password-meter">
             ({actions.getStrengthPercentage()}%)
           </span>
         )}
@@ -346,20 +339,18 @@ export const PasswordMeter = forwardRef<HTMLDivElement, PasswordMeterProps>(({
         {state.analysis.criteria.map((criterion: any, index: number) => (
           <div
             key={index}
-            className={`
-              criteria-item    
+            className={`criteria-item    
               ${criterion.met ? '' : ''}
               ${animated ? ' ' : ''}
             `}
           >
             <div
-              className={`
-                criteria-icon      
+              className={`criteria-icon      
                 ${criterion.met ? '' : ''}
               `}
             >
               {criterion.met ? (
-                <svg className="  " fill="currentColor" viewBox="0 0 20 20">
+                <svg className="password-meter" fill="currentColor" viewBox="0 0 20 20">
                   <path
                     fillRule="evenodd"
                     d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414l4.586 4.586a1 1 0 001.414 0z"
@@ -367,7 +358,7 @@ export const PasswordMeter = forwardRef<HTMLDivElement, PasswordMeterProps>(({
                   />
                 </svg>
               ) : (
-                <div className="   " />
+                <div className="password-meter" />
               )}
             </div>
             <span>{criterion.description}</span>
@@ -385,11 +376,11 @@ export const PasswordMeter = forwardRef<HTMLDivElement, PasswordMeterProps>(({
 
     return (
       <div className="suggestions ">
-        <h4 className="   ">Suggestions:</h4>
-        <ul className="">
+        <h4 className="password-meter">Suggestions:</h4>
+        <ul className="password-meter">
           {state.analysis.suggestions.map((suggestion: string, index: number) => (
-            <li key={index} className="    ">
-              <span className="">•</span>
+            <li key={index} className="password-meter">
+              <span className="password-meter">•</span>
               <span>{suggestion}</span>
             </li>
           ))}
@@ -407,8 +398,8 @@ export const PasswordMeter = forwardRef<HTMLDivElement, PasswordMeterProps>(({
     return (
       <div className="warnings ">
         {state.analysis.warnings.map((warning: string, index: number) => (
-          <div key={index} className="    ">
-            <svg className=" " fill="currentColor" viewBox="0 0 20 20">
+          <div key={index} className="password-meter">
+            <svg className="password-meter" fill="currentColor" viewBox="0 0 20 20">
               <path
                 fillRule="evenodd"
                 d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z"
@@ -431,12 +422,12 @@ export const PasswordMeter = forwardRef<HTMLDivElement, PasswordMeterProps>(({
     return (
       <div className="additional-info  ">
         {showEntropy && (
-          <div className=" ">
+          <div className="password-meter">
             Entropy: {state.analysis.entropy} bits
           </div>
         )}
         {showCrackTime && state.analysis.estimatedCrackTime && (
-          <div className=" ">
+          <div className="password-meter">
             Crack time: {state.analysis.estimatedCrackTime}
           </div>
         )}
@@ -445,7 +436,7 @@ export const PasswordMeter = forwardRef<HTMLDivElement, PasswordMeterProps>(({
             batching), so it is never true at a render boundary. The prior
             `{state.analyzing && <div>Analyzing...</div>}` was unreachable dead code. */}
         {state.error && (
-          <div className=" " id="password-meter-error">
+          <div className="password-meter" id="password-meter-error">
             Error: {state.error}
           </div>
         )}
@@ -468,7 +459,7 @@ export const PasswordMeter = forwardRef<HTMLDivElement, PasswordMeterProps>(({
         disabled={state.disabled}
       >
         {state.visible ? (
-          <svg className=" " fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <svg className="password-meter" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path
               strokeLinecap="round"
               strokeLinejoin="round"
@@ -477,7 +468,7 @@ export const PasswordMeter = forwardRef<HTMLDivElement, PasswordMeterProps>(({
             />
           </svg>
         ) : (
-          <svg className=" " fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <svg className="password-meter" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path
               strokeLinecap="round"
               strokeLinejoin="round"
@@ -511,8 +502,7 @@ export const PasswordMeter = forwardRef<HTMLDivElement, PasswordMeterProps>(({
           type={state.visible ? 'text' : 'password'}
           value={state.password}
           onChange={(e) => actions.setPassword(e.target.value)}
-          className={`
-            password-input      
+          className={`password-input      
                
             ${state.disabled ? ' ' : ''}
           `}
@@ -528,7 +518,7 @@ export const PasswordMeter = forwardRef<HTMLDivElement, PasswordMeterProps>(({
       <div className="strength-indicator ">
         {showStrengthText && state.analysis && (
           <div className="strength-label ">
-            <span className="  ">Password Strength</span>
+            <span className="password-meter">Password Strength</span>
           </div>
         )}
         {renderStrengthIndicator()}
@@ -550,14 +540,14 @@ export const PasswordMeter = forwardRef<HTMLDivElement, PasswordMeterProps>(({
       <div className="meter-actions   ">
         <button
           onClick={actions.clear}
-          className="      "
+          className="password-meter"
           disabled={state.disabled || !state.password}
         >
           Clear
         </button>
         <button
           onClick={() => actions.analyze(state.password)}
-          className="       "
+          className="password-meter"
           disabled={state.disabled || !state.password || state.analyzing}
         >
           {/* reason: state.analyzing is never true at a render boundary (see note above),

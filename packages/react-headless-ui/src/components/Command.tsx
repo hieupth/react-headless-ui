@@ -52,8 +52,6 @@ export interface CommandTriggerProps {
   children: React.ReactNode;
   /** Open handler */
   onOpen?: () => void;
-  /** Close handler */
-  onClose?: () => void;
   /** Additional CSS classes */
   className?: string;
   /** Additional CSS styles */
@@ -209,7 +207,7 @@ export const Command = forwardRef<HTMLDivElement, CommandProps>(
         <div className="command-search   ">
           <input
             {...searchInputAttributes}
-            className={`           ${className}`}
+            className={`${className}`}
             data-testid="command-input"
           />
         </div>
@@ -233,30 +231,28 @@ export const Command = forwardRef<HTMLDivElement, CommandProps>(
         <div
           {...itemAttributes}
           key={item.id || index}
-          className={`
-                 
-            ${selectedIndex === index ? ' ' : ' '}
+          className={`${selectedIndex === index ? ' ' : ' '}
             ${item.disabled ? ' ' : ''}
             ${className}
           `}
           style={overrideAttributes?.style}
           data-testid="command-item"
         >
-          <div className="  ">
-            <div className="  ">
+          <div className="command">
+            <div className="command">
               {item.icon && (
-                <span className="    ">
+                <span className="command">
                   {item.icon}
                 </span>
               )}
-              <span className="">{item.label}</span>
+              <span className="command">{item.label}</span>
             </div>
             {item.shortcut && (
-              <div className=" ">
+              <div className="command">
                 {item.shortcut.map((key, i) => (
                   <kbd
                     key={i}
-                    className="       "
+                    className="command"
                   >
                     {key}
                   </kbd>
@@ -265,7 +261,7 @@ export const Command = forwardRef<HTMLDivElement, CommandProps>(
             )}
           </div>
           {item.description && (
-            <p className="   ">
+            <p className="command">
               {item.description}
             </p>
           )}
@@ -281,7 +277,7 @@ export const Command = forwardRef<HTMLDivElement, CommandProps>(
 
       return (
         <div key={group.id} className="command-group" data-testid="command-group">
-          <div className="       ">
+          <div className="command">
             {group.heading}
           </div>
           <div className="command-group-items">
@@ -305,7 +301,7 @@ export const Command = forwardRef<HTMLDivElement, CommandProps>(
       }
 
       return (
-        <div className="   " data-testid="command-empty">
+        <div className="command" data-testid="command-empty">
           {props.noResultsMessage || 'No results found.'}
         </div>
       );
@@ -315,9 +311,7 @@ export const Command = forwardRef<HTMLDivElement, CommandProps>(
     const content = (
       <div
         ref={commandRef}
-        className={`
-                
-          ${className}
+        className={`${className}
         `}
         style={{
           ...style,
@@ -373,7 +367,6 @@ export const Command = forwardRef<HTMLDivElement, CommandProps>(
 export const CommandTrigger: React.FC<CommandTriggerProps> = ({
   children,
   onOpen,
-  onClose,
   className = '',
   style
 }) => {
@@ -414,7 +407,7 @@ export const CommandInput: React.FC<CommandInputProps> = ({
     <div className={`command-input-wrapper ${className}`} style={style}>
       <input
         {...inputProps}
-        className={`           ${className}`}
+        className={`${className}`}
         data-testid="command-input"
       />
     </div>
@@ -463,9 +456,7 @@ export const CommandItem: React.FC<CommandItemProps> = ({
 
   return (
     <div
-      className={`
-             
-        ${disabled ? ' ' : ' '}
+      className={`${disabled ? ' ' : ' '}
         ${className}
       `}
       style={style}
@@ -475,21 +466,21 @@ export const CommandItem: React.FC<CommandItemProps> = ({
       data-disabled={disabled}
       data-testid="command-item"
     >
-      <div className="  ">
-        <div className="  ">
+      <div className="command">
+        <div className="command">
           {icon && (
-            <span className="    ">
+            <span className="command">
               {icon}
             </span>
           )}
-          <span className="">{children}</span>
+          <span className="command">{children}</span>
         </div>
         {shortcut && (
-          <div className=" ">
+          <div className="command">
             {shortcut.map((key, i) => (
               <kbd
                 key={i}
-                className="       "
+                className="command"
               >
                 {key}
               </kbd>
@@ -498,7 +489,7 @@ export const CommandItem: React.FC<CommandItemProps> = ({
         )}
       </div>
       {description && (
-        <p className="   ">
+        <p className="command">
           {description}
         </p>
       )}
@@ -517,7 +508,7 @@ export const CommandGroup: React.FC<CommandGroupProps> = ({
 }) => {
   return (
     <div className={`command-group ${className}`} style={style} data-testid="command-group">
-      <div className="       ">
+      <div className="command">
         {heading}
       </div>
       <div className="command-group-items">
@@ -536,7 +527,7 @@ export const CommandSeparator: React.FC<CommandSeparatorProps> = ({
 }) => {
   return (
     <div
-      className={`   ${className}`}
+      className={`${className}`}
       style={style}
       role="separator"
       data-testid="command-separator"
@@ -554,7 +545,7 @@ export const CommandEmpty: React.FC<CommandEmptyProps> = ({
 }) => {
   return (
     <div
-      className={`    ${className}`}
+      className={`${className}`}
       style={style}
       data-testid="command-empty"
     >

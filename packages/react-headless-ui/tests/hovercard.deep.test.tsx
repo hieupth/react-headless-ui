@@ -248,11 +248,11 @@ describe('useHoverCard (hook actions)', () => {
     const onOpenChange = vi.fn();
     const { result } = renderHook(() => useHoverCard({ open: false, hoverDelay: 0, leaveDelay: 0, onOpenChange }));
     // handleTriggerMouseEnter -> handleOpen (controlled branch of the internal-state guard)
-    act(() => result.current.triggerProps.onMouseEnter({} as any));
+    act(() => result.current.triggerProps.onMouseEnter!({} as any));
     act(() => { vi.advanceTimersByTime(0); });
     expect(onOpenChange).toHaveBeenLastCalledWith(true);
     // handleTriggerMouseLeave while not over the card -> handleClose (controlled branch)
-    act(() => result.current.triggerProps.onMouseLeave({} as any));
+    act(() => result.current.triggerProps.onMouseLeave!({} as any));
     act(() => { vi.advanceTimersByTime(0); });
     expect(onOpenChange).toHaveBeenLastCalledWith(false);
     vi.useRealTimers();
@@ -263,23 +263,23 @@ describe('useHoverCard (hook actions)', () => {
     const onOpenChange = vi.fn();
     const { result } = renderHook(() => useHoverCard({ open: true, hoverDelay: 0, leaveDelay: 0, onOpenChange }));
     // open=true -> onFocus does not call openImmediate again
-    act(() => result.current.triggerProps.onFocus({} as any));
+    act(() => result.current.triggerProps.onFocus!({} as any));
     act(() => { vi.advanceTimersByTime(0); });
     expect(onOpenChange).not.toHaveBeenCalled();
     // Move over the card (isOverCard true); blurring the trigger then keeps it open.
-    act(() => result.current.cardProps.onMouseEnter({} as any));
-    act(() => result.current.triggerProps.onBlur({} as any));
+    act(() => result.current.cardProps.onMouseEnter!({} as any));
+    act(() => result.current.triggerProps.onBlur!({} as any));
     act(() => { vi.advanceTimersByTime(0); });
     expect(onOpenChange).not.toHaveBeenCalled();
     // Hover the trigger (isOverTrigger true), then leave the card while over the trigger
     // -> the !isOverTrigger guard is false, so no close is scheduled.
-    act(() => result.current.triggerProps.onMouseEnter({} as any));
+    act(() => result.current.triggerProps.onMouseEnter!({} as any));
     act(() => { vi.advanceTimersByTime(0); });
-    act(() => result.current.cardProps.onMouseLeave({} as any));
+    act(() => result.current.cardProps.onMouseLeave!({} as any));
     act(() => { vi.advanceTimersByTime(0); });
     expect(onOpenChange).not.toHaveBeenCalled();
     // Moving off the trigger (and not over the card) schedules a close.
-    act(() => result.current.triggerProps.onMouseLeave({} as any));
+    act(() => result.current.triggerProps.onMouseLeave!({} as any));
     act(() => { vi.advanceTimersByTime(0); });
     expect(onOpenChange).toHaveBeenLastCalledWith(false);
     vi.useRealTimers();
@@ -289,7 +289,7 @@ describe('useHoverCard (hook actions)', () => {
     const onOpenChange = vi.fn();
     const { result } = renderHook(() => useHoverCard({ open: true, hoverDelay: 0, leaveDelay: 0, onOpenChange }));
     const preventDefault = vi.fn();
-    act(() => result.current.cardProps.onKeyDown({ key: 'Tab', preventDefault } as any));
+    act(() => result.current.cardProps.onKeyDown!({ key: 'Tab', preventDefault } as any));
     expect(preventDefault).not.toHaveBeenCalled();
     expect(onOpenChange).not.toHaveBeenCalled();
   });

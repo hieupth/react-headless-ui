@@ -1,6 +1,6 @@
 "use client";
 /**
- * AccessibleIcon headless hook for React UI Forge components.
+ * AccessibleIcon headless hook for @hieupth/react-headless-ui components.
  * Provides behavior-only hooks following Flutter patterns.
  * Manages accessible icon with proper screen reader support.
  */

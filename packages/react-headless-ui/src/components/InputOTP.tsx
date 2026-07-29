@@ -4,9 +4,8 @@
  * Provides styled OTP input with comprehensive accessibility support and validation.
  */
 
-import React, { forwardRef, useRef, useEffect } from 'react';
+import React, { forwardRef, useRef } from 'react';
 import { useInputOTP, type UseInputOTPProps } from '../hooks';
-import { useTheme } from '../providers/ThemeProvider';
 
 export interface InputOTPProps extends Omit<UseInputOTPProps, 'otpRef'> {
   /** Additional CSS class names */
@@ -45,7 +44,6 @@ export const InputOTP = forwardRef<HTMLDivElement, InputOTPProps>(({
   showCompleteIndicator = true,
   ...inputOTPProps
 }, ref) => {
-  const theme = useTheme();
   const {
     state,
     actions,
@@ -153,9 +151,9 @@ export const InputOTP = forwardRef<HTMLDivElement, InputOTPProps>(({
 
     return (
       <div className="complete-indicator ">
-        <div className="      ">
+        <div className="input-otp">
           <svg
-            className="  "
+            className="input-otp"
             fill="currentColor"
             viewBox="0 0 20 20"
           >
@@ -182,7 +180,7 @@ export const InputOTP = forwardRef<HTMLDivElement, InputOTPProps>(({
         data-testid="otp-clear"
       >
         <svg
-          className=" "
+          className="input-otp"
           fill="none"
           stroke="currentColor"
           viewBox="0 0 24 24"
@@ -205,9 +203,9 @@ export const InputOTP = forwardRef<HTMLDivElement, InputOTPProps>(({
     return (
       <div className="errors " id="otp-errors">
         {state.errors.map((error, index) => (
-          <div key={index} className="    ">
+          <div key={index} className="input-otp">
             <svg
-              className=" "
+              className="input-otp"
               fill="currentColor"
               viewBox="0 0 20 20"
             >
@@ -235,9 +233,9 @@ export const InputOTP = forwardRef<HTMLDivElement, InputOTPProps>(({
 
     return (
       <div className="attempts  ">
-        <span className={`   ${isNearLimit ? '' : ''}`}>
+        <span className={`${isNearLimit ? '' : ''}`}>
           <svg
-            className=" "
+            className="input-otp"
             fill="currentColor"
             viewBox="0 0 20 20"
           >
@@ -250,7 +248,7 @@ export const InputOTP = forwardRef<HTMLDivElement, InputOTPProps>(({
           <span>
             Attempts: {state.attempts}
             {remainingAttempts !== null && (
-              <span className=""> ({remainingAttempts} remaining)</span>
+              <span className="input-otp"> ({remainingAttempts} remaining)</span>
             )}
           </span>
         </span>
@@ -265,13 +263,13 @@ export const InputOTP = forwardRef<HTMLDivElement, InputOTPProps>(({
 
     return (
       <div className="progress-container ">
-        <div className="   ">
+        <div className="input-otp">
           <div
-            className="    "
+            className="input-otp"
             style={{ width: `${progress}%` }}
           />
         </div>
-        <div className="    ">
+        <div className="input-otp">
           <span>{state.value.length}/{inputOTPProps.length}</span>
           <span>{Math.round(progress)}%</span>
         </div>
@@ -289,7 +287,7 @@ export const InputOTP = forwardRef<HTMLDivElement, InputOTPProps>(({
     >
       {/* Label */}
       <div className="otp-label ">
-        <label className="  ">
+        <label className="input-otp">
           Enter verification code
         </label>
       </div>

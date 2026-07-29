@@ -1,6 +1,6 @@
 "use client";
 /**
- * InputOTP headless hook for React UI Forge components.
+ * InputOTP headless hook for @hieupth/react-headless-ui components.
  * Provides behavior-only hooks following Flutter patterns.
  * Manages one-time password input with validation and formatting.
  */

@@ -286,7 +286,6 @@ export const Chart = forwardRef<SVGSVGElement, ChartProps>(
       const points = chartData[datasetIndex]?.points || [];
       const color = dataset.color || colors[datasetIndex % colors.length] || '#000000';
       const barWidth = width / points.length * 0.8;
-      const barSpacing = width / points.length * 0.2;
 
       if (barRenderer) {
         return points.map((point, pointIndex) =>

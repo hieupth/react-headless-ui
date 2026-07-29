@@ -1,6 +1,6 @@
 "use client";
 /**
- * TreeView headless hook for React UI Forge components.
+ * TreeView headless hook for @hieupth/react-headless-ui components.
  * Provides behavior-only hooks following Flutter patterns.
  * Manages tree structure with expandable/collapsible nodes and selection.
  */

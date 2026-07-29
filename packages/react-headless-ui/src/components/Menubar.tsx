@@ -6,7 +6,6 @@
 
 import React, { forwardRef } from 'react';
 import { useMenubar, type UseMenubarProps } from '../hooks';
-import { useTheme } from '../providers/ThemeProvider';
 
 export interface MenubarProps extends Omit<UseMenubarProps, 'menubarRef'> {
   /** Additional CSS class names */
@@ -42,7 +41,6 @@ export const Menubar = forwardRef<HTMLDivElement, MenubarProps>(({
   showShortcuts = false,
   ...menubarProps
 }, ref) => {
-  const theme = useTheme();
   const {
     state,
     actions,
@@ -74,8 +72,7 @@ export const Menubar = forwardRef<HTMLDivElement, MenubarProps>(({
     if (item.separator) {
       return (
         <div
-          className={`
-            ${showSeparators ? '  ' : ''}
+          className={`${showSeparators ? '  ' : ''}
             ${level === 0 ? ' ' : ' '}
           `}
           role="separator"
@@ -85,8 +82,7 @@ export const Menubar = forwardRef<HTMLDivElement, MenubarProps>(({
 
     return (
       <div
-        className={`
-          menubar-item
+        className={`menubar-item
             
           ${level === 0 ? ' ' : ' '}
           ${item.disabled ? ' ' : '  '}
@@ -117,13 +113,13 @@ export const Menubar = forwardRef<HTMLDivElement, MenubarProps>(({
       >
         {/* Item Icon */}
         {showIcons && item.icon && (
-          <span className="">
+          <span className="menubar">
             {item.icon}
           </span>
         )}
 
         {/* Item Label */}
-        <span className=" ">
+        <span className="menubar">
           {item.label}
         </span>
 
@@ -136,9 +132,9 @@ export const Menubar = forwardRef<HTMLDivElement, MenubarProps>(({
 
         {/* Submenu Arrow */}
         {item.children && item.children.length > 0 && (
-          <span className=" ">
+          <span className="menubar">
             <svg
-              className=" "
+              className="menubar"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -169,7 +165,7 @@ export const Menubar = forwardRef<HTMLDivElement, MenubarProps>(({
 
     return (
       <div className={submenuClasses} role="menu">
-        {items.map((item) => defaultRenderItem(item, level, false, false))}
+        {items.map((item) => <div key={item.id}>{defaultRenderItem(item, level, false, false)}</div>)}
       </div>
     );
   };
@@ -239,9 +235,9 @@ export const Menubar = forwardRef<HTMLDivElement, MenubarProps>(({
 
       {/* Empty State */}
       {state.items.length === 0 && (
-        <div className="     ">
+        <div className="menubar">
           <svg
-            className="  "
+            className="menubar"
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"
@@ -253,7 +249,7 @@ export const Menubar = forwardRef<HTMLDivElement, MenubarProps>(({
               d="M4 6h16M4 12h16M4 18h16"
             />
           </svg>
-          <p className="">No menu items</p>
+          <p className="menubar">No menu items</p>
         </div>
       )}
     </div>
@@ -305,9 +301,7 @@ export const MenubarItem = forwardRef<HTMLDivElement, MenubarItemProps>(({
     return (
       <div
         ref={ref}
-        className={`
-            
-          ${level === 0 ? ' ' : ' '}
+        className={`${level === 0 ? ' ' : ' '}
           ${className || ''}
         `}
         style={style}
@@ -345,13 +339,13 @@ export const MenubarItem = forwardRef<HTMLDivElement, MenubarItemProps>(({
     >
       {/* Item Icon */}
       {showIcons && item.icon && (
-        <span className="">
+        <span className="menubar">
           {item.icon}
         </span>
       )}
 
       {/* Item Label */}
-      <span className=" ">
+      <span className="menubar">
         {item.label}
       </span>
 
@@ -364,9 +358,9 @@ export const MenubarItem = forwardRef<HTMLDivElement, MenubarItemProps>(({
 
       {/* Submenu Arrow */}
       {item.children && item.children.length > 0 && (
-        <span className=" ">
+        <span className="menubar">
           <svg
-            className=" "
+            className="menubar"
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"

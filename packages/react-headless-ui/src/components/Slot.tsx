@@ -7,7 +7,6 @@
 import React, { forwardRef, cloneElement, Children, isValidElement } from 'react';
 import ReactDOM from 'react-dom';
 import { useSlot, type UseSlotProps } from '../hooks';
-import { useTheme } from '../providers/ThemeProvider';
 
 export interface SlotProps extends Omit<UseSlotProps, 'slotRef' | 'forwardedRef'> {
   /** Additional CSS class names */
@@ -44,7 +43,6 @@ export const Slot = forwardRef<HTMLElement, SlotProps>(({
   priorityProps,
   ...slotProps
 }: SlotProps, ref) => {
-  const theme = useTheme();
   const {
     state,
     actions,
@@ -104,25 +102,25 @@ export const Slot = forwardRef<HTMLElement, SlotProps>(({
     // className is in DEFAULT_EXCLUDE_PROPS so mergeProps drops it; re-apply explicitly.
     mergedProps.className = builtClassName;
 
-    // Handle ref forwarding
-    const childRef = (child as any).ref;
-    const mergedRef = (element: HTMLElement) => {
-      if (allowRefForward) {
-        if (typeof childRef === 'function') {
-          childRef(element);
-        } else if (childRef && typeof childRef === 'object') {
-          (childRef as React.RefObject<HTMLElement>).current = element;
-        }
-      }
-
-      if (typeof ref === 'function') {
-        ref(element);
-      } else if (ref && typeof ref === 'object') {
-        (ref as React.RefObject<HTMLElement>).current = element;
-      }
-    };
-
     if (state.clone || clone) {
+      // Handle ref forwarding (only meaningful when cloning the child).
+      const childRef = (child as any).ref;
+      const mergedRef = (element: HTMLElement) => {
+        if (allowRefForward) {
+          if (typeof childRef === 'function') {
+            childRef(element);
+          } else if (childRef && typeof childRef === 'object') {
+            (childRef as React.RefObject<HTMLElement>).current = element;
+          }
+        }
+
+        if (typeof ref === 'function') {
+          ref(element);
+        } else if (ref && typeof ref === 'object') {
+          (ref as React.RefObject<HTMLElement>).current = element;
+        }
+      };
+
       return cloneElement(child, {
         ...mergedProps,
         ref: mergedRef
@@ -416,8 +414,7 @@ export const SlotRadioGroup = forwardRef<HTMLDivElement, {
   return (
     <div
       ref={ref}
-      className={`
-        slot-radio-group
+      className={`slot-radio-group
         slot-radio-group-${orientation}
         ${className}
       `.trim().replace(/\s+/g, ' ')}

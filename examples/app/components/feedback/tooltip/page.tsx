@@ -142,13 +142,13 @@ export default function TooltipPage() {
             {
               name: 'delayShow / delayHide',
               type: 'number',
-              default: '—',
+              default: '0 / 0',
               description: 'Show/hide delays in ms.',
             },
             {
               name: 'arrow / offset / maxWidth',
               type: 'boolean / number / number',
-              default: '—',
+              default: 'true / 8 / 300',
               description: 'Arrow pointer, gap, and max width.',
             },
             {

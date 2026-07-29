@@ -21,7 +21,6 @@ blob-report/
 
 # Misc
 .DS_Store
-.env*.local
 *.log
 *.tmp
 .idea/
@@ -40,5 +39,8 @@ packages/react-headless-ui/README.md
 packages/react-headless-ui/LICENSE
 
 # Env (defense-in-depth)
-.env
 **/.env
+.env*.local
+
+# Local evaluation artifacts (not part of the source tree)
+EVALUATION.md

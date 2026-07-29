@@ -109,7 +109,7 @@ export const Tooltip = forwardRef<HTMLElement, TooltipProps>((props, ref) => {
     return (
       <div
         style={props.arrowStyles}
-        className=""
+        className="tooltip"
       />
     );
   };
@@ -146,7 +146,7 @@ export const Tooltip = forwardRef<HTMLElement, TooltipProps>((props, ref) => {
     const tooltipContent = props.open && (
       <div
         ref={props.tooltipRef}
-        className={`         pointer-events-none   ${
+        className={`pointer-events-none   ${
           props.showing ? '' : props.hiding ? '' : ''
         } ${className || ''}`}
         style={{
@@ -163,7 +163,7 @@ export const Tooltip = forwardRef<HTMLElement, TooltipProps>((props, ref) => {
         )}
 
         {/* Content */}
-        <div className=" ">
+        <div className="tooltip">
           {renderContent ? renderContent(props) : defaultContentRender(props)}
         </div>
       </div>
@@ -287,15 +287,15 @@ export const RichTooltip = forwardRef<HTMLElement, RichTooltipProps>((props, ref
     ...tooltipProps
   } = props as RichTooltipProps;
   const content = (
-    <div className="">
+    <div className="tooltip">
       {title && (
-        <div className="  ">{title}</div>
+        <div className="tooltip">{title}</div>
       )}
       {description && (
-        <div className=" ">{description}</div>
+        <div className="tooltip">{description}</div>
       )}
       {actions && (
-        <div className="   ">{actions}</div>
+        <div className="tooltip">{actions}</div>
       )}
     </div>
   );
@@ -304,7 +304,7 @@ export const RichTooltip = forwardRef<HTMLElement, RichTooltipProps>((props, ref
     <Tooltip
       {...tooltipProps}
       content={content}
-      className={`    ${className || ''}`}
+      className={`${className || ''}`}
       style={{
         maxWidth: 320,
         ...style

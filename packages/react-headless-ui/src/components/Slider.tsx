@@ -256,7 +256,7 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>(({
         {...props.attributes}
       >
         {showTooltip && (
-          <div className="         ">
+          <div className="slider">
             {props.value}
           </div>
         )}
@@ -338,7 +338,7 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>(({
       const secondLabel = isRange ? <span>{values[1]}</span> : null;
       /* c8 ignore end */
       valueLabels = (
-        <div className={`     ${isHorizontal ? '' : ''}`}>
+        <div className={`${isHorizontal ? '' : ''}`}>
           <span>{values[0]}</span>
           {secondLabel}
         </div>
@@ -355,9 +355,7 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>(({
       <div className={baseSliderClasses}>
         <div
           ref={props.sliderRef}
-          className={`
-            
-            ${isHorizontal ? '' : ''}
+          className={`${isHorizontal ? '' : ''}
             ${props.disabled ? ' ' : ''}
           `}
           onKeyDown={props.onKeyDown}

@@ -18,8 +18,6 @@ export interface FileUploadProps extends UseFileUploadProps {
   variant?: 'outline' | 'filled' | 'ghost';
   /** Show file list */
   showFileList?: boolean;
-  /** Show upload progress */
-  showProgress?: boolean;
   /** Custom upload button text */
   uploadText?: string;
   /** Custom drag text */
@@ -40,7 +38,6 @@ export const FileUpload = forwardRef<HTMLDivElement, FileUploadProps>(
     size = 'md',
     variant = 'outline',
     showFileList = true,
-    showProgress = false,
     uploadText = 'Upload files',
     dragText = 'Drag and drop files here',
     browseText = 'Browse files',
@@ -61,7 +58,6 @@ export const FileUpload = forwardRef<HTMLDivElement, FileUploadProps>(
     const sizeVariant: 'sm' | 'md' | 'lg' = size;
     const variantName: 'outline' | 'filled' | 'ghost' = variant;
     const showFileListFlag: boolean = showFileList;
-    const showProgressFlag: boolean = showProgress;
     const uploadLabel: string = uploadText;
     const dragLabel: string = dragText;
     const browseLabel: string = browseText;
@@ -144,7 +140,7 @@ export const FileUpload = forwardRef<HTMLDivElement, FileUploadProps>(
           accept={acceptTypes}
           disabled={disabledFlag}
           required={requiredFlag}
-          className=""
+          className="file-upload"
           onChange={(e) => handlers.handleFileSelect(e.target.files)}
           onFocus={handlers.handleFocus}
           onBlur={handlers.handleBlur}
@@ -167,34 +163,34 @@ export const FileUpload = forwardRef<HTMLDivElement, FileUploadProps>(
           aria-required={requiredFlag}
         >
           {/* Upload Icon */}
-          <div className="">
+          <div className="file-upload">
             {state.isDragging ? (
-              <svg className="  " fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg className="file-upload" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
               </svg>
             ) : (
-              <svg className="  " fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg className="file-upload" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
               </svg>
             )}
           </div>
 
           {/* Upload Text */}
-          <div className="">
-            <p className={` ${state.disabled ? '' : ''}`}>
+          <div className="file-upload">
+            <p className={`${state.disabled ? '' : ''}`}>
               {state.isDragging ? 'Drop files here' : uploadLabel}
             </p>
-            <p className={`  ${state.disabled ? '' : ''}`}>
+            <p className={`${state.disabled ? '' : ''}`}>
               {dragLabel}
             </p>
-            <p className={`  ${state.disabled ? '' : ''}`}>
+            <p className={`${state.disabled ? '' : ''}`}>
               {browseLabel}
             </p>
           </div>
 
           {/* Requirements */}
           {(maxSizeBytes || maxFilesCount || acceptTypes) && (
-            <div className="   ">
+            <div className="file-upload">
               {maxSizeBytes && (
                 <p>Maximum file size: {formatFileSize(maxSizeBytes)}</p>
               )}
@@ -210,38 +206,38 @@ export const FileUpload = forwardRef<HTMLDivElement, FileUploadProps>(
 
         {/* Error Message */}
         {state.error && (
-          <div id="file-upload-error" className="  " role="alert">
+          <div id="file-upload-error" className="file-upload" role="alert">
             {state.error}
           </div>
         )}
 
         {/* File List */}
         {showFileListFlag && state.files.length > 0 && (
-          <div className=" ">
-            <h4 className="  ">
+          <div className="file-upload">
+            <h4 className="file-upload">
               Files ({state.files.length})
             </h4>
-            <div className="">
+            <div className="file-upload">
               {state.files.map((file, index) => (
                 <div
                   key={index}
-                  className="     "
+                  className="file-upload"
                   role="listitem"
                 >
-                  <div className="    ">
+                  <div className="file-upload">
                     {/* File Icon */}
-                    <div className="">
-                      <svg className="  " fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <div className="file-upload">
+                      <svg className="file-upload" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                       </svg>
                     </div>
 
                     {/* File Info */}
-                    <div className=" ">
-                      <p className="   ">
+                    <div className="file-upload">
+                      <p className="file-upload">
                         {file.name}
                       </p>
-                      <p className=" ">
+                      <p className="file-upload">
                         {formatFileType(file)} • {formatFileSize(file.size)}
                       </p>
                     </div>
@@ -250,7 +246,7 @@ export const FileUpload = forwardRef<HTMLDivElement, FileUploadProps>(
                   {/* Remove Button */}
                   <button
                     type="button"
-                    className="      "
+                    className="file-upload"
                     onClick={() => handleRemoveFile(index)}
                     aria-label={`Remove ${file.name}`}
                     disabled={disabledFlag}
@@ -264,10 +260,6 @@ export const FileUpload = forwardRef<HTMLDivElement, FileUploadProps>(
             </div>
           </div>
         )}
-
-        {/* Progress Indicator (placeholder) — showProgress prop is accepted but
-            the progress UI is intentionally disabled (feature not yet wired up). */}
-        {/* reason: dead block — original `showProgressFlag && false && (...)` could never render. */}
       </div>
     );
   }

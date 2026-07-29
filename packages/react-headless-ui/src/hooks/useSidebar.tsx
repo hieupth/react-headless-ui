@@ -1,6 +1,6 @@
 "use client";
 /**
- * Sidebar headless hook for React UI Forge components.
+ * Sidebar headless hook for @hieupth/react-headless-ui components.
  * Provides behavior-only hooks following Flutter patterns.
  * Manages sidebar state including open/close, collapse/expand, and responsive behavior.
  */
@@ -302,11 +302,13 @@ export function useSidebar(props: UseSidebarProps = {}): UseSidebarReturns {
     handleEscapeKey
   };
 
-  // Build attributes
+  // Build attributes. Keys must be the kebab-case DOM attribute names so React
+  // renders aria-hidden / aria-modal (camelCase ariaHidden/ariaModal would be
+  // emitted verbatim as invalid ariahidden/ariamodal attributes).
   const attributes = {
-    ariaHidden: !open,
+    'aria-hidden': !open,
     'aria-label': semantic.ariaLabel,
-    ariaModal: showOverlay,
+    'aria-modal': showOverlay,
     'role': semantic.role,
     'data-state': (open ? 'open' : 'closed') as 'open' | 'closed',
     'data-position': position,

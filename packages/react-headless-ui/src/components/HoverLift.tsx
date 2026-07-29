@@ -7,7 +7,6 @@
 import React, { forwardRef } from 'react';
 import { motion } from 'framer-motion';
 import { useHoverLift, type UseHoverLiftProps } from '../hooks';
-import { useTheme } from '../providers/ThemeProvider';
 
 export interface HoverLiftProps extends UseHoverLiftProps {
   /** Additional CSS class names */
@@ -40,7 +39,6 @@ export const HoverLift = forwardRef<HTMLDivElement, HoverLiftProps>(({
   transition,
   ...hoverLiftProps
 }, ref) => {
-  const theme = useTheme();
   const {
     state,
     actions,

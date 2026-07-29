@@ -5,9 +5,9 @@
  */
 
 import { useState, useCallback, useMemo } from 'react';
-import { useFocusableMixin, usePressableMixin, useSemanticMixin } from '../mixins';
+import { useFocusableMixin, useSemanticMixin } from '../mixins';
 import { composeState } from '../utils';
-import type { FocusableMixinProps, PressableMixinProps, SemanticMixinProps } from '../mixins';
+import type { FocusableMixinProps, SemanticMixinProps } from '../mixins';
 
 export interface AccordionItem {
   /** Unique identifier for the item */

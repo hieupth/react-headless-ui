@@ -30,7 +30,7 @@ export default function AspectRatioPage() {
         </p>
         <Demo
           code={`<AspectRatio ratio={16 / 9} className="relative w-full overflow-hidden rounded-lg bg-gray-100 dark:bg-gray-800">
-  <img src="/photo.jpg" alt="A landscape" className="h-full w-full object-cover" />
+  <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb" alt="A landscape" className="h-full w-full object-cover" />
 </AspectRatio>`}
         >
           <div className="w-80">

@@ -1,36 +1,18 @@
 "use client";
 /**
- * Menubar headless hook for React UI Forge components.
+ * Menubar headless hook for @hieupth/react-headless-ui components.
  * Provides behavior-only hooks following Flutter patterns.
  * Manages menubar state with menu items and submenus.
  */
 
 import { useState, useCallback, useMemo, useRef, useEffect } from 'react';
 import { useFocusableMixin, usePressableMixin, useSemanticMixin } from '../mixins';
-
-/**
- * Menu item interface
- */
-export interface MenuItem {
-  /** Unique identifier for the menu item */
-  id: string;
-  /** Menu item label text */
-  label: string;
-  /** Whether menu item is disabled */
-  disabled?: boolean;
-  /** Menu item icon */
-  icon?: React.ReactNode;
-  /** Keyboard shortcut */
-  shortcut?: string;
-  /** Menu item action handler */
-  action?: () => void;
-  /** Submenu items */
-  children?: MenuItem[];
-  /** Whether menu item is a separator */
-  separator?: boolean;
-  /** Additional menu item data */
-  data?: any;
-}
+// Re-export the single shared menu-item type so consumers (and the hooks barrel)
+// see one canonical `MenuItem` regardless of which menu hook they import from.
+// useMenubar identifies items by `id` and nests via `children`; useMenu uses
+// `key` and `submenu`. The unified type accepts both vocabularies.
+export type { MenuItem } from './useMenu';
+import type { MenuItem } from './useMenu';
 
 /**
  * Menu orientation options
@@ -261,8 +243,8 @@ export function useMenubar(props: UseMenubarProps): UseMenubarReturns {
   }
 
   // Focus actions
-  const focusItem = useCallback((itemId: string) => {
-    if (disabled) return;
+  const focusItem = useCallback((itemId: string | undefined) => {
+    if (disabled || !itemId) return;
 
     const item = findItemById(items, itemId);
     if (item && !item.disabled) {
@@ -387,7 +369,7 @@ export function useMenubar(props: UseMenubarProps): UseMenubarReturns {
         // because it reads `activePath` from state, which only reflects the just-
         // dispatched openSubmenu() update on the next render (stale closure).
         const firstChild = item.children.find(child => !child.disabled && !child.separator);
-        if (firstChild) {
+        if (firstChild && firstChild.id) {
           setFocusedItemId(firstChild.id);
         }
       }

@@ -27,13 +27,13 @@ afterEach(() => {
   if (originalClientHeight) {
     Object.defineProperty(HTMLElement.prototype, 'clientHeight', originalClientHeight);
   } else {
-    // @ts-expect-error delete is fine here for test cleanup
+    // `as any` widens the prototype so the delete is accepted; no directive needed.
     delete (HTMLElement.prototype as any).clientHeight;
   }
   if (originalOffsetHeight) {
     Object.defineProperty(HTMLElement.prototype, 'offsetHeight', originalOffsetHeight);
   } else {
-    // @ts-expect-error delete is fine here for test cleanup
+    // `as any` widens the prototype so the delete is accepted; no directive needed.
     delete (HTMLElement.prototype as any).offsetHeight;
   }
   cleanup();

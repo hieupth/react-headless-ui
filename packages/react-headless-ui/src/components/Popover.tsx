@@ -6,7 +6,6 @@
 
 import React, { forwardRef, useRef } from 'react';
 import { usePopover, type UsePopoverProps } from '../hooks';
-import { useTheme } from '../providers/ThemeProvider';
 
 export interface PopoverProps extends Omit<UsePopoverProps, 'triggerRef' | 'contentRef' | 'trigger'> {
   /** Additional CSS class names */
@@ -48,7 +47,6 @@ export const Popover = forwardRef<HTMLDivElement, PopoverProps>(({
   closeButtonContent,
   ...popoverProps
 }, ref) => {
-  const theme = useTheme();
   // Wire the hook's outside-click detection: without these refs the hook cannot
   // tell the trigger/content apart from the rest of the document, so clicks
   // outside would never close the popover.
@@ -208,7 +206,7 @@ export const Popover = forwardRef<HTMLDivElement, PopoverProps>(({
               >
                 {closeButtonContent || (
                   <svg
-                    className=" "
+                    className="popover"
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"

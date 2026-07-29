@@ -141,6 +141,12 @@ export const useTabs = (props: UseTabsProps): UseTabsReturns => {
 
   // State management
   const [highlightedIndex, setHighlightedIndex] = useState(-1);
+  // Internal selected key for uncontrolled usage. Controlled `value`/
+  // `selectedKey` (when provided) overrides this. Previously there was no
+  // internal state, so uncontrolled selection never updated after the first
+  // render — clicks/key navigation called the change handler but the visible
+  // selection stayed frozen on the default.
+  const [internalSelectedKey, setInternalSelectedKey] = useState<string | undefined>(undefined);
 
   // References
   const tablistRef = React.useRef<HTMLDivElement>(null);
@@ -174,13 +180,19 @@ export const useTabs = (props: UseTabsProps): UseTabsReturns => {
       return controlledSelectedKey;
     }
 
+    // Uncontrolled: prefer the internal state once the user has selected, then
+    // the defaultValue/defaultSelectedKey alias, then the first enabled tab.
+    if (internalSelectedKey !== undefined) {
+      return internalSelectedKey;
+    }
+
     if (defaultSelectedKeyValue && items.find(item => item.key === defaultSelectedKeyValue && !item.disabled)) {
       return defaultSelectedKeyValue;
     }
     // Fall back to first enabled tab
     const firstEnabledTab = items.find(item => !item.disabled);
     return firstEnabledTab?.key || items[0]?.key || '';
-  }, [isControlledSelected, controlledSelectedKey, defaultSelectedKeyValue, items]);
+  }, [isControlledSelected, controlledSelectedKey, internalSelectedKey, defaultSelectedKeyValue, items]);
 
   // Get selected index
   const selectedIndex = useMemo(() => {
@@ -214,8 +226,8 @@ export const useTabs = (props: UseTabsProps): UseTabsReturns => {
 
     // Update selection
     if (!isControlledSelected) {
-      // Note: In uncontrolled mode, the parent component should handle state
-      // This is a simplified approach - in production, you'd want proper state management
+      // Uncontrolled: persist the selection so the hook tracks it across renders.
+      setInternalSelectedKey(key);
     }
     handleChange(key);
   }, [items, isControlledSelected, handleChange]);

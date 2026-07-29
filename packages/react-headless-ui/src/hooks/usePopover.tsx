@@ -1,6 +1,6 @@
 "use client";
 /**
- * Popover headless hook for React UI Forge components.
+ * Popover headless hook for @hieupth/react-headless-ui components.
  * Provides behavior-only hooks following Flutter patterns.
  * Manages floating panel appearing relative to trigger element.
  */

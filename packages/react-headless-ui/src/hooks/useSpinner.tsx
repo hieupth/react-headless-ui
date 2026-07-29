@@ -1,6 +1,6 @@
 "use client";
 /**
- * useSpinner hook for React UI Forge.
+ * useSpinner hook for @hieupth/react-headless-ui.
  * Provides comprehensive loading state management with accessibility support.
  *
  * Features:
@@ -92,11 +92,11 @@ export interface SpinnerReturns {
     /** Reset spinner to initial state */
     reset: () => void;
     /** Set custom speed */
-    setSpeed: (speed: UseSpinnerProps['speed']) => void;
+    setSpeed: (speed: NonNullable<UseSpinnerProps['speed']>) => void;
     /** Set variant */
-    setVariant: (variant: UseSpinnerProps['variant']) => void;
+    setVariant: (variant: NonNullable<UseSpinnerProps['variant']>) => void;
     /** Set size */
-    setSize: (size: UseSpinnerProps['size']) => void;
+    setSize: (size: NonNullable<UseSpinnerProps['size']>) => void;
   };
   /** Utility functions */
   utils: {
@@ -296,13 +296,22 @@ export const useSpinner = (props: UseSpinnerProps = {}): SpinnerReturns => {
   // State management
   const [active, setActive] = useSpinnerState(defaultActive);
   const [progress, setProgress] = useState(0);
+  // size/speed/variant props are the initial (uncontrolled) values; the
+  // setSpeed/setVariant/setSize actions mutate this internal state. Previously
+  // those actions were no-op stubs.
+  const [sizeState, setSizeState] = useState<NonNullable<UseSpinnerProps['size']>>(size);
+  const [speedState, setSpeedState] = useState<NonNullable<UseSpinnerProps['speed']>>(speed);
+  const [variantState, setVariantState] = useState<NonNullable<UseSpinnerProps['variant']>>(variant);
+  const currentSize = sizeState;
+  const currentSpeed = speedState;
+  const currentVariant = variantState;
 
   // Focus and hover states
   const { focused, onFocus, onBlur } = useFocusState(disabled);
   const { hovered, onMouseEnter, onMouseLeave } = useHoverState(disabled);
 
   // Animation state
-  const { frame, elapsed, getDuration } = useAnimationState(active, speed, customDuration);
+  const { frame, elapsed, getDuration } = useAnimationState(active, currentSpeed, customDuration);
 
   // Determine if component is controlled or uncontrolled
   const isControlled = controlledActive !== undefined;
@@ -310,14 +319,14 @@ export const useSpinner = (props: UseSpinnerProps = {}): SpinnerReturns => {
 
   // Calculate progress for advanced variants
   useEffect(() => {
-    if (currentActive && variant !== 'spin' && variant !== 'pulse') {
-      const duration = getDuration(speed, customDuration);
+    if (currentActive && currentVariant !== 'spin' && currentVariant !== 'pulse') {
+      const duration = getDuration(currentSpeed, customDuration);
       const newProgress = Math.min((elapsed % duration) / duration * 100, 100);
       setProgress(newProgress);
     } else {
       setProgress(currentActive ? 100 : 0);
     }
-  }, [currentActive, elapsed, variant, speed, customDuration, getDuration]);
+  }, [currentActive, elapsed, currentVariant, currentSpeed, customDuration, getDuration]);
 
   // Actions
   const actions = {
@@ -351,19 +360,16 @@ export const useSpinner = (props: UseSpinnerProps = {}): SpinnerReturns => {
       onActiveChange?.(defaultActive);
     }, [isControlled, defaultActive, setActive, onActiveChange]),
 
-    setSpeed: useCallback((newSpeed: UseSpinnerProps['speed']) => {
-      // Speed change would be handled by parent component
-      // This is for API completeness
+    setSpeed: useCallback((newSpeed: NonNullable<UseSpinnerProps['speed']>) => {
+      setSpeedState(newSpeed);
     }, []),
 
-    setVariant: useCallback((newVariant: UseSpinnerProps['variant']) => {
-      // Variant change would be handled by parent component
-      // This is for API completeness
+    setVariant: useCallback((newVariant: NonNullable<UseSpinnerProps['variant']>) => {
+      setVariantState(newVariant);
     }, []),
 
-    setSize: useCallback((newSize: UseSpinnerProps['size']) => {
-      // Size change would be handled by parent component
-      // This is for API completeness
+    setSize: useCallback((newSize: NonNullable<UseSpinnerProps['size']>) => {
+      setSizeState(newSize);
     }, [])
   };
 
@@ -388,8 +394,8 @@ export const useSpinner = (props: UseSpinnerProps = {}): SpinnerReturns => {
     'aria-label': utils.formatLabel(currentActive, label),
     'aria-busy': currentActive,
     'aria-live': (currentActive ? 'polite' : 'off') as 'polite' | 'off',
-    'role': variant === 'ring' ? 'progressbar' as const : 'img' as const,
-    ...(variant === 'ring' && currentActive ? {
+    'role': currentVariant === 'ring' ? 'progressbar' as const : 'img' as const,
+    ...(currentVariant === 'ring' && currentActive ? {
       'aria-valuemin': 0,
       'aria-valuemax': 100,
       'aria-valuenow': Math.round(progress)
@@ -400,9 +406,9 @@ export const useSpinner = (props: UseSpinnerProps = {}): SpinnerReturns => {
   const formAttributes = {
     'data-active': currentActive,
     'data-disabled': disabled,
-    'data-size': size,
-    'data-speed': speed,
-    'data-variant': variant,
+    'data-size': currentSize,
+    'data-speed': currentSpeed,
+    'data-variant': currentVariant,
     'data-frame': frame,
     'data-progress': Math.round(progress)
   };
@@ -447,12 +453,12 @@ export const useSpinner = (props: UseSpinnerProps = {}): SpinnerReturns => {
       active: controlledActive || defaultActive,
       defaultActive,
       disabled,
-      size,
-      speed,
-      variant,
+      size: currentSize,
+      speed: currentSpeed,
+      variant: currentVariant,
       label,
       showLabel,
-      duration: customDuration || getDuration(speed),
+      duration: customDuration || getDuration(currentSpeed),
       className,
       theme: {
         color: theme.color || 'current',
@@ -473,5 +479,5 @@ export const useSpinner = (props: UseSpinnerProps = {}): SpinnerReturns => {
     formAttributes,
     spinnerRef,
     labelRef
-  }), [currentActive, utils, frame, progress, elapsed, focused, hovered, controlledActive, defaultActive, disabled, size, speed, variant, label, showLabel, customDuration, getDuration, className, theme, onFocus, onBlur, onKeyDown, onMouseEnter, onMouseLeave, actions, ariaAttributes, formAttributes, spinnerRef, labelRef]);
+  }), [currentActive, utils, frame, progress, elapsed, focused, hovered, controlledActive, defaultActive, disabled, currentSize, currentSpeed, currentVariant, label, showLabel, customDuration, getDuration, className, theme, onFocus, onBlur, onKeyDown, onMouseEnter, onMouseLeave, actions, ariaAttributes, formAttributes, spinnerRef, labelRef]);
 };

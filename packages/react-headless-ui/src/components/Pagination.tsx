@@ -96,33 +96,33 @@ export const Pagination = forwardRef<HTMLDivElement, PaginationProps>(({
 
   // Variant classes
   const variantClasses = {
-    default: '   ',
-    outline: '  ',
+    default: '',
+    outline: '',
     ghost: ''
   }[variant];
 
   // Color classes for active/current page
   const colorClasses = {
-    primary: '  ',
-    secondary: '  ',
-    success: '  ',
-    warning: '  ',
-    error: '  '
+    primary: '',
+    secondary: '',
+    success: '',
+    warning: '',
+    error: ''
   }[color];
 
   // Button base classes
-  const buttonBaseClasses = '          ';
+  const buttonBaseClasses = '';
 
   // Page number button classes
-  const pageButtonClasses = `${buttonBaseClasses} ${sizeClasses}    ${variantClasses}`;
+  const pageButtonClasses = `${buttonBaseClasses} ${sizeClasses} ${variantClasses}`;
 
   // Navigation button classes
-  const navButtonClasses = `${buttonBaseClasses} ${sizeClasses}   ${variantClasses}`;
+  const navButtonClasses = `${buttonBaseClasses} ${sizeClasses} ${variantClasses}`;
 
   return (
     <nav
       ref={ref}
-      className={`    ${variantClasses}  ${className || ''}`}
+      className={`${variantClasses} ${className || ''}`}
       style={style}
       {...attributes}
       // The hook emits `aria-current` as the numeric page number, which is
@@ -142,7 +142,7 @@ export const Pagination = forwardRef<HTMLDivElement, PaginationProps>(({
           aria-disabled={!state.hasPrevious}
         >
           <svg
-            className=" "
+            className="pagination"
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"
@@ -167,7 +167,7 @@ export const Pagination = forwardRef<HTMLDivElement, PaginationProps>(({
           aria-disabled={!state.hasPrevious}
         >
           <svg
-            className=" "
+            className="pagination"
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"
@@ -191,7 +191,7 @@ export const Pagination = forwardRef<HTMLDivElement, PaginationProps>(({
           return (
             <span
               key={`ellipsis-${index}`}
-              className={`  ${sizeClasses} `}
+              className={sizeClasses}
               aria-hidden={true}
             >
               ...
@@ -230,7 +230,7 @@ export const Pagination = forwardRef<HTMLDivElement, PaginationProps>(({
           aria-disabled={!state.hasNext}
         >
           <svg
-            className=" "
+            className="pagination"
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"
@@ -255,7 +255,7 @@ export const Pagination = forwardRef<HTMLDivElement, PaginationProps>(({
           aria-disabled={!state.hasNext}
         >
           <svg
-            className=" "
+            className="pagination"
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"
@@ -304,18 +304,18 @@ export const CompactPagination = forwardRef<HTMLDivElement, PaginationProps>(({
 
   // Variant classes
   const variantClasses = {
-    default: '   ',
-    outline: '  ',
+    default: '',
+    outline: '',
     ghost: ''
   }[variant];
 
   // Button base classes
-  const buttonBaseClasses = '          ';
+  const buttonBaseClasses = '';
 
   return (
     <nav
       ref={ref}
-      className={`   ${variantClasses}   ${sizeClasses} ${className || ''}`}
+      className={`${variantClasses} ${sizeClasses} ${className || ''}`}
       style={style}
       {...attributes}
       aria-current={undefined}
@@ -325,7 +325,7 @@ export const CompactPagination = forwardRef<HTMLDivElement, PaginationProps>(({
       <button
         onClick={handlers.handlePrevious}
         disabled={!state.hasPrevious}
-        className={`${buttonBaseClasses}   ${state.hasPrevious ? ' ' : ''}`}
+        className={buttonBaseClasses}
         aria-label="Go to previous page"
         aria-disabled={!state.hasPrevious}
       >
@@ -333,16 +333,16 @@ export const CompactPagination = forwardRef<HTMLDivElement, PaginationProps>(({
       </button>
 
       {/* Page info */}
-      <span className="">
-        Page <span className="">{state.page}</span> of{' '}
-        <span className="">{state.totalPages}</span>
+      <span className="pagination">
+        Page <span className="pagination">{state.page}</span> of{' '}
+        <span className="pagination">{state.totalPages}</span>
       </span>
 
       {/* Next */}
       <button
         onClick={handlers.handleNext}
         disabled={!state.hasNext}
-        className={`${buttonBaseClasses}   ${state.hasNext ? ' ' : ''}`}
+        className={buttonBaseClasses}
         aria-label="Go to next page"
         aria-disabled={!state.hasNext}
       >
@@ -393,44 +393,44 @@ export const JumpPagination = forwardRef<HTMLDivElement, PaginationProps>(({
 
   // Variant classes
   const variantClasses = {
-    default: '   ',
-    outline: '  ',
+    default: '',
+    outline: '',
     ghost: ''
   }[variant];
 
   // Color classes for active/current page
   const colorClasses = {
-    primary: '  ',
-    secondary: '  ',
-    success: '  ',
-    warning: '  ',
-    error: '  '
+    primary: '',
+    secondary: '',
+    success: '',
+    warning: '',
+    error: ''
   }[color];
 
   // Button base classes
-  const buttonBaseClasses = '          ';
+  const buttonBaseClasses = '';
 
   // Page number button classes
-  const pageButtonClasses = `${buttonBaseClasses} ${sizeClasses}    ${variantClasses}`;
+  const pageButtonClasses = `${buttonBaseClasses} ${sizeClasses} ${variantClasses}`;
 
   return (
     <nav
       ref={ref}
-      className={`    ${variantClasses}  ${className || ''}`}
+      className={`${variantClasses} ${className || ''}`}
       style={style}
       {...attributes}
       aria-current={undefined}
       aria-label="Jump pagination navigation"
     >
       {/* Standard pagination */}
-      <div className="  ">
+      <div className="pagination">
         {/* Page numbers */}
         {pages.map((pageNum, index) => {
           if (pageNum === '...') {
             return (
               <span
                 key={`ellipsis-${index}`}
-                className={`  ${sizeClasses} `}
+                className={sizeClasses}
                 aria-hidden={true}
               >
                 ...
@@ -461,8 +461,8 @@ export const JumpPagination = forwardRef<HTMLDivElement, PaginationProps>(({
       </div>
 
       {/* Jump input */}
-      <div className="  ">
-        <span className={` ${sizeClasses}`}>Go to page:</span>
+      <div className="pagination">
+        <span className={`${sizeClasses}`}>Go to page:</span>
         <input
           type="number"
           min={1}
@@ -470,14 +470,14 @@ export const JumpPagination = forwardRef<HTMLDivElement, PaginationProps>(({
           value={jumpValue}
           onChange={(e) => setJumpValue(e.target.value)}
           onKeyPress={(e) => e.key === 'Enter' && handleJump()}
-          className={`         ${sizeClasses}`}
+          className={`${sizeClasses}`}
           placeholder="1"
           aria-label="Jump to page number"
         />
         <button
           onClick={handleJump}
           disabled={!jumpValue || (parseInt(jumpValue) < 1 || parseInt(jumpValue) > state.totalPages)}
-          className={`${buttonBaseClasses}   bg-${color}-600  ${color}-700 ${sizeClasses}`}
+          className={`${buttonBaseClasses} bg-${color}-600 ${color}-700 ${sizeClasses}`}
           aria-label="Jump to page"
         >
           Go

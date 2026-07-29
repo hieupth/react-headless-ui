@@ -4,7 +4,7 @@
  * Provides visual representation for data grid components using HTML table.
  */
 
-import React, { forwardRef, useMemo, useRef, useEffect } from 'react';
+import React, { forwardRef, useMemo, useRef } from 'react';
 import { useDataGrid } from '../hooks';
 import { useVirtualList } from '../hooks';
 import type { UseDataGridProps, GridColumn, GridRow, GridPagination } from '../hooks';
@@ -203,13 +203,13 @@ export const DataGrid = forwardRef<HTMLTableElement, DataGridProps>(
       if (cellType === 'boolean') {
         const boolValue = Boolean(cell.value);
         content = (
-          <span className={`  ${boolValue ? '' : ''}`}>
+          <span className={`${boolValue ? '' : ''}`}>
             {boolValue ? '✓' : '✗'}
           </span>
         );
       } else if (cellType === 'number') {
         content = (
-          <span className="  ">
+          <span className="data-grid">
             {column.format ? column.format(cell.value) : String(cell.value ?? '')}
           </span>
         );
@@ -219,14 +219,14 @@ export const DataGrid = forwardRef<HTMLTableElement, DataGridProps>(
       } else if (cellType === 'actions') {
         const actions = (Array.isArray(cell.value) ? cell.value : []) as GridAction[];
         content = (
-          <div className=" ">
+          <div className="data-grid">
             {actions.map((action, index: number) => {
               const handleAction = action.onClick;
               return (
               <button
                 key={index}
                 {...(handleAction ? { onClick: () => handleAction(row) } : {})}
-                className="         "
+                className="data-grid"
                 disabled={Boolean(action.disabled)}
               >
                 {action.label}
@@ -250,36 +250,35 @@ export const DataGrid = forwardRef<HTMLTableElement, DataGridProps>(
       const sortDirection = sort.direction;
 
       const headerProps = {
-        key: column.id,
         'data-testid': `data-grid-header-${column.id}`,
         'data-column-id': column.id,
         'data-sortable': column.sortable,
         'data-sorted': isSorted,
         'data-sort-direction': isSorted ? sortDirection : undefined,
-        className: `data-grid-header-cell ${column.className || ''} ${column.sortable ? ' ' : ''}`,
+        className: `data-grid-header-cell ${column.className || ''} ${column.sortable ? 'data-grid-sortable' : ''}`,
         ...(column.sortable ? { onClick: (e: React.MouseEvent) => handleHeaderClick(column, e) } : {}),
         ...(getHeaderCellProps?.(column) || {})
       };
 
       if (headerRenderer) {
-        return <th {...headerProps}>{headerRenderer(column)}</th>;
+        return <th key={column.id} {...headerProps}>{headerRenderer(column)}</th>;
       }
 
       return (
-        <th {...headerProps}>
-          <div className="  ">
-            <span className="">{column.title}</span>
+        <th key={column.id} {...headerProps}>
+          <div className="data-grid">
+            <span className="data-grid">{column.title}</span>
             {column.sortable && (
-              <div className="  ">
+              <div className="data-grid">
                 <svg
-                  className={`  ${isSorted && sortDirection === 'asc' ? '' : ''}`}
+                  className={`${isSorted && sortDirection === 'asc' ? '' : ''}`}
                   fill="currentColor"
                   viewBox="0 0 20 20"
                 >
                   <path fillRule="evenodd" d="M14.707 12.707a1 1 0 01-1.414 0L10 9.414l-3.293 3.293a1 1 0 01-1.414-1.414l4-4a1 1 0 011.414 0l4 4a1 1 0 010 1.414z" clipRule="evenodd" />
                 </svg>
                 <svg
-                  className={`   ${isSorted && sortDirection === 'desc' ? '' : ''}`}
+                  className={`${isSorted && sortDirection === 'desc' ? '' : ''}`}
                   fill="currentColor"
                   viewBox="0 0 20 20"
                 >
@@ -299,13 +298,13 @@ export const DataGrid = forwardRef<HTMLTableElement, DataGridProps>(
       const filterValue = filter?.column === column.id ? filter.value : '';
 
       return (
-        <th key={`filter-${column.id}`} className="  ">
+        <th key={`filter-${column.id}`} className="data-grid">
           <input
             type="text"
             value={filterValue}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleFilter(column.id, e.target.value)}
             placeholder={`Filter ${column.title}...`}
-            className="         "
+            className="data-grid"
             data-testid={`data-grid-filter-${column.id}`}
           />
         </th>
@@ -317,7 +316,6 @@ export const DataGrid = forwardRef<HTMLTableElement, DataGridProps>(
       if (!showSelection) return null;
 
       const isSelected = selectedRows.includes(row.id);
-      const rowProps = getRowProps?.(row, rowIndex) || {};
 
       return (
         <td
@@ -329,7 +327,7 @@ export const DataGrid = forwardRef<HTMLTableElement, DataGridProps>(
             type="checkbox"
             checked={isSelected}
             onChange={() => handleRowClick(row, {} as React.MouseEvent)}
-            className="     "
+            className="data-grid"
             aria-label={`Select row ${rowIndex + 1}`}
           />
         </td>
@@ -356,15 +354,15 @@ export const DataGrid = forwardRef<HTMLTableElement, DataGridProps>(
     // Render a single table row for the given data row + index.
     const renderRow = (row: GridRow, rowIndex: number, keyOverride?: React.Key) => {
       const rowProps = {
-        key: keyOverride ?? row.id,
         'data-testid': `data-grid-row-${rowIndex}`,
         'data-row-id': row.id,
         className: `data-grid-row  ${selectedRows.includes(row.id) ? '' : ''}`,
         ...(getRowProps?.(row, rowIndex) || {})
       };
+      const rowKey = keyOverride ?? row.id;
 
       return (
-        <tr {...rowProps}>
+        <tr key={rowKey} {...rowProps}>
           {renderSelectionCell(row, rowIndex)}
           {renderRowNumber(rowIndex)}
           {columns.map((column) => {
@@ -390,7 +388,7 @@ export const DataGrid = forwardRef<HTMLTableElement, DataGridProps>(
           <tr>
             <td
               colSpan={columns.length + (showSelection ? 1 : 0) + (showRowNumbers ? 1 : 0)}
-              className="  "
+              className="data-grid"
               data-testid="data-grid-empty"
             >
               {emptyRenderer ? emptyRenderer() : 'No data available'}
@@ -437,26 +435,26 @@ export const DataGrid = forwardRef<HTMLTableElement, DataGridProps>(
       const endIndex = Math.min(startIndex + pagination.pageSize, pagination.total);
 
       return (
-        <div className="     " data-testid="data-grid-pagination">
-          <div className=" ">
+        <div className="data-grid" data-testid="data-grid-pagination">
+          <div className="data-grid">
             Showing {pagination.total === 0 ? 0 : startIndex + 1} to {endIndex} of {pagination.total} items
           </div>
-          <div className=" ">
+          <div className="data-grid">
             <button
               onClick={() => handlePagination(pagination.page - 1)}
               disabled={pagination.page === 1}
-              className="            "
+              className="data-grid"
               data-testid="data-grid-prev-page"
             >
               Previous
             </button>
-            <span className="  ">
+            <span className="data-grid">
               Page {pagination.page} of {pagination.totalPages}
             </span>
             <button
               onClick={() => handlePagination(pagination.page + 1)}
               disabled={pagination.page === pagination.totalPages}
-              className="            "
+              className="data-grid"
               data-testid="data-grid-next-page"
             >
               Next
@@ -470,14 +468,14 @@ export const DataGrid = forwardRef<HTMLTableElement, DataGridProps>(
     if (loading) {
       return (
         <div
-          className={`data-grid-loading     ${className}`}
+          className={`data-grid-loading ${className}`}
           style={{ minHeight: 200, ...style }}
           data-testid="data-grid-loading"
         >
           {loadingRenderer ? loadingRenderer() : (
-            <div className="  ">
-              <div className="     "></div>
-              <span className=" ">Loading...</span>
+            <div className="data-grid">
+              <div className="data-grid"></div>
+              <span className="data-grid">Loading...</span>
             </div>
           )}
         </div>
@@ -487,7 +485,7 @@ export const DataGrid = forwardRef<HTMLTableElement, DataGridProps>(
     return (
       <div
         ref={scrollRef}
-        className={`data-grid-container  ${className}`}
+        className={`data-grid-container ${className}`}
         style={{ ...style, maxHeight: virtualizeEnabled ? VIRTUAL_MAX_HEIGHT : style?.maxHeight }}
         data-testid="data-grid"
         {...tableContainerProps}
@@ -496,23 +494,23 @@ export const DataGrid = forwardRef<HTMLTableElement, DataGridProps>(
           ref={ref}
           {...attributes}
           {...tableProps}
-          className={`data-grid    ${tableProps.className || ''}`}
+          className={`data-grid ${tableProps.className || ''}`}
         >
-          <thead {...theadProps} className="">
+          <thead {...theadProps} className="data-grid">
             <tr>
               {showSelection && (
-                <th className="  ">
+                <th className="data-grid">
                   <input
                     type="checkbox"
                     checked={selectedRows.length === data.length && data.length > 0}
                     onChange={() => handleSelectAll()}
-                    className="     "
+                    className="data-grid"
                     data-testid="data-grid-select-all"
                   />
                 </th>
               )}
               {showRowNumbers && (
-                <th className="     ">
+                <th className="data-grid">
                   #
                 </th>
               )}
@@ -520,13 +518,13 @@ export const DataGrid = forwardRef<HTMLTableElement, DataGridProps>(
             </tr>
             {showColumnFilters && (
               <tr>
-                {showSelection && <th className="  "></th>}
-                {showRowNumbers && <th className="  "></th>}
+                {showSelection && <th className="data-grid"></th>}
+                {showRowNumbers && <th className="data-grid"></th>}
                 {columns.map(renderFilterInput)}
               </tr>
             )}
           </thead>
-          <tbody {...tbodyProps} className="  ">
+          <tbody {...tbodyProps} className="data-grid">
             {renderRows()}
           </tbody>
         </table>

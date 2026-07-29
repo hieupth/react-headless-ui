@@ -5,7 +5,7 @@
  */
 
 import { useState, useCallback, useRef, useEffect, useMemo } from 'react';
-import { useSemanticMixin, useFocusableMixin, usePressableMixin } from '../mixins';
+import { useSemanticMixin, usePressableMixin } from '../mixins';
 import { composeState } from '../utils';
 import type { SemanticMixinProps, FocusableMixinProps, PressableMixinProps } from '../mixins';
 
@@ -42,8 +42,8 @@ export interface UseDropdownMenuProps extends
   items: DropdownMenuItem[];
   /** Whether menu is open */
   open: boolean;
-  /** Open change handler */
-  onOpenChange: (open: boolean) => void;
+  /** Open change handler. Optional — a controlled menu may render without one. */
+  onOpenChange?: (open: boolean) => void;
   /** Placement relative to trigger */
   placement?: 'bottom' | 'bottom-start' | 'bottom-end' | 'top' | 'top-start' | 'top-end';
   /** Alignment */
@@ -125,7 +125,7 @@ export const useDropdownMenu = (props: UseDropdownMenuProps) => {
   const {
     items = [],
     open,
-    onOpenChange,
+    onOpenChange = () => {},
     placement = 'bottom',
     align = 'start',
     offset = 4,

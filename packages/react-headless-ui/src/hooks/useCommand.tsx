@@ -14,8 +14,8 @@ import type { FocusableProps } from '../contracts/ComponentContract';
  * Command item interface
  */
 export interface CommandItem {
-  /** Unique identifier */
-  id: string;
+  /** Unique identifier. Optional — when omitted, the renderer falls back to the item's index as the React key. */
+  id?: string;
   /** Display label */
   label: string;
   /** Optional description */
@@ -285,10 +285,19 @@ export function useCommand(props: UseCommandProps = {}) {
     })).filter(group => group.items.length > 0);
   }, [propGroups, searchValue, shouldFilter, filterFunction]);
 
-  // Update selected index when filtered items change
+  // Unified navigable items — the single source of truth for keyboard nav,
+  // index reset, and selection. Both grouped (flatMap) and flat modes use this
+  // so selectedIndex stays consistent across all operations.
+  const navigableItems = useMemo(() =>
+    propGroups.length > 0 ? filteredGroups.flatMap(g => g.items) : filteredItems,
+    [propGroups.length, filteredGroups, filteredItems]
+  );
+
+  // Update selected index when navigable items change (search filter, open/close).
   useEffect(() => {
-    setSelectedIndex(0);
-  }, [filteredItems]);
+    const firstEnabled = navigableItems.findIndex(item => !item.disabled);
+    setSelectedIndex(firstEnabled >= 0 ? firstEnabled : 0);
+  }, [navigableItems]);
 
   // Compose command state
   const state = useMemo(() => ({
@@ -413,14 +422,10 @@ export function useCommand(props: UseCommandProps = {}) {
   }, [onSelect, closeOnSelect, handleClose]);
 
   const handleItemFocus = useCallback((index: number) => {
-    const items = propGroups.length > 0 ?
-      filteredGroups.flatMap(group => group.items) :
-      filteredItems;
-
-    if (index >= 0 && index < items.length) {
+    if (index >= 0 && index < navigableItems.length) {
       setSelectedIndex(index);
     }
-  }, [filteredItems, filteredGroups, propGroups.length]);
+  }, [navigableItems]);
 
   const handleKeyDown = useCallback((event: React.KeyboardEvent) => {
     if (!focusable || disabled) return;
@@ -432,33 +437,40 @@ export function useCommand(props: UseCommandProps = {}) {
       return;
     }
 
-    const items = propGroups.length > 0 ?
-      filteredGroups.flatMap(group => group.items) :
-      filteredItems;
-    const navigableItems = items.filter(item => !item.disabled);
+    const items = navigableItems;
+
+    const findNextEnabled = (from: number, dir: 1 | -1): number => {
+      for (let step = 1; step <= items.length; step++) {
+        const candidate = (from + dir * step + items.length) % items.length;
+        if (!items[candidate].disabled) return candidate;
+      }
+      return -1;
+    };
 
     switch (event.key) {
       case 'ArrowDown':
         event.preventDefault();
-        if (navigableItems.length > 0) {
-          const nextIndex = selectedIndex < navigableItems.length - 1 ? selectedIndex + 1 : 0;
-          handleItemFocus(nextIndex);
+        if (items.some(item => !item.disabled)) {
+          const start = selectedIndex >= 0 ? selectedIndex : -1;
+          handleItemFocus(findNextEnabled(start, 1));
         }
         break;
 
       case 'ArrowUp':
         event.preventDefault();
-        if (navigableItems.length > 0) {
-          const prevIndex = selectedIndex > 0 ? selectedIndex - 1 : navigableItems.length - 1;
-          handleItemFocus(prevIndex);
+        if (items.some(item => !item.disabled)) {
+          const start = selectedIndex >= 0 ? selectedIndex : 0;
+          handleItemFocus(findNextEnabled(start, -1));
         }
         break;
 
       case 'Enter':
         event.preventDefault();
-        if (selectedIndex >= 0 && selectedIndex < navigableItems.length) {
-          const item = navigableItems[selectedIndex];
-          handleSelect(item);
+        if (selectedIndex >= 0 && selectedIndex < items.length) {
+          const item = items[selectedIndex];
+          if (!item.disabled) {
+            handleSelect(item);
+          }
         }
         break;
 
@@ -480,7 +492,7 @@ export function useCommand(props: UseCommandProps = {}) {
         }
         break;
     }
-  }, [focusable, disabled, keyBindings, selectedIndex, filteredItems, filteredGroups, propGroups.length, handleItemFocus, handleSelect, closeOnEscape, handleClose]);
+  }, [focusable, disabled, keyBindings, selectedIndex, navigableItems, handleItemFocus, handleSelect, closeOnEscape, handleClose]);
 
   const handleBeforeOpen = useCallback(async () => {
     if (onBeforeOpen) {

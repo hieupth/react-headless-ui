@@ -108,11 +108,11 @@ export const Resizable = forwardRef<HTMLDivElement, ResizableProps>(({
           style={styles}
           data-testid={`resize-handle-${handle}`}
         >
-          <div className="">
-            <div className="" />
-            <div className="" />
-            <div className="" />
-            <div className="" />
+          <div className="resizable">
+            <div className="resizable" />
+            <div className="resizable" />
+            <div className="resizable" />
+            <div className="resizable" />
           </div>
         </div>
       );
@@ -126,7 +126,7 @@ export const Resizable = forwardRef<HTMLDivElement, ResizableProps>(({
         style={styles}
         data-testid={`resize-handle-${handle}`}
       >
-        <div className="" />
+        <div className="resizable" />
       </div>
     );
   };
@@ -167,7 +167,7 @@ export const Resizable = forwardRef<HTMLDivElement, ResizableProps>(({
         const isActive = state.activeHandle === handle;
 
         return (
-          <div key={handle} className="">
+          <div key={handle} className="resizable">
             {renderHandle
               ? renderHandle(handle, isActive, attributes, styles)
               : defaultRenderHandle(handle, isActive, attributes, styles)}

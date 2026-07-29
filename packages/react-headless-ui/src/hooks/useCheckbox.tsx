@@ -4,9 +4,9 @@
  * Provides tri-state checkbox behavior with proper accessibility.
  */
 
-import { useState, useCallback, useMemo, useRef } from 'react';
+import { useState, useCallback, useMemo, useRef, useEffect } from 'react';
 import { useFocusableMixin, usePressableMixin, useSemanticMixin } from '../mixins';
-import { composeState, composeHandlers } from '../utils';
+import { composeState } from '../utils';
 import type { FocusableMixinProps, PressableMixinProps, SemanticMixinProps } from '../mixins';
 
 export type CheckboxValue = boolean | 'indeterminate';
@@ -224,7 +224,11 @@ export const useCheckbox = (props: UseCheckboxProps = {}): UseCheckboxReturns =>
   }, [focusableMixin.blur]);
 
   // Sync indeterminate state with DOM
-  useMemo(() => {
+  // reason: assigning `el.indeterminate` mutates the DOM node and is a side
+  // effect — it must not run during render. useMemo runs during render, so a
+  // future concurrent render could mutate a DOM node that is then discarded,
+  // corrupting state. useEffect runs after commit, which is the correct phase.
+  useEffect(() => {
     if (inputRef.current) {
       inputRef.current.indeterminate = indeterminate;
     }

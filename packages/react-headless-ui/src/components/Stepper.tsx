@@ -6,7 +6,6 @@
 
 import React, { forwardRef } from 'react';
 import { useStepper, type UseStepperProps, type StepperStep } from '../hooks';
-import { useTheme } from '../providers/ThemeProvider';
 
 export interface StepperProps extends UseStepperProps {
   /** Additional CSS class names */
@@ -57,7 +56,6 @@ export const Stepper = forwardRef<HTMLDivElement, StepperProps>(({
   skipButtonText = 'Skip',
   ...stepperProps
 }: StepperProps, ref) => {
-  const theme = useTheme();
   const {
     state,
     actions,
@@ -121,8 +119,7 @@ export const Stepper = forwardRef<HTMLDivElement, StepperProps>(({
       return (
         <div
           {...stepAttributes}
-          className={`
-            step-dot
+          className={`step-dot
             ${isActive ? 'step-dot-active' : ''}
             ${isCompleted ? 'step-dot-completed' : ''}
             ${hasError ? 'step-dot-error' : ''}
@@ -130,8 +127,7 @@ export const Stepper = forwardRef<HTMLDivElement, StepperProps>(({
         >
           <button
             {...buttonAttributes}
-            className={`
-              step-dot-button
+            className={`step-dot-button
               ${isActive ? 'step-dot-button-active' : ''}
               ${isCompleted ? 'step-dot-button-completed' : ''}
               ${hasError ? 'step-dot-button-error' : ''}
@@ -155,8 +151,7 @@ export const Stepper = forwardRef<HTMLDivElement, StepperProps>(({
       return (
         <div
           {...stepAttributes}
-          className={`
-            step-progress
+          className={`step-progress
             ${isActive ? 'step-progress-active' : ''}
             ${isCompleted ? 'step-progress-completed' : ''}
             ${hasError ? 'step-progress-error' : ''}
@@ -165,8 +160,7 @@ export const Stepper = forwardRef<HTMLDivElement, StepperProps>(({
           <div className="step-progress-header">
             <button
               {...buttonAttributes}
-              className={`
-                step-progress-button
+              className={`step-progress-button
                 ${isActive ? 'step-progress-button-active' : ''}
                 ${isCompleted ? 'step-progress-button-completed' : ''}
                 ${hasError ? 'step-progress-button-error' : ''}
@@ -196,8 +190,7 @@ export const Stepper = forwardRef<HTMLDivElement, StepperProps>(({
     return (
       <div
         {...stepAttributes}
-        className={`
-          step-default
+        className={`step-default
           ${isActive ? 'step-default-active' : ''}
           ${isCompleted ? 'step-default-completed' : ''}
           ${hasError ? 'step-default-error' : ''}
@@ -205,8 +198,7 @@ export const Stepper = forwardRef<HTMLDivElement, StepperProps>(({
       >
         <button
           {...buttonAttributes}
-          className={`
-            step-default-button
+          className={`step-default-button
             ${isActive ? 'step-default-button-active' : ''}
             ${isCompleted ? 'step-default-button-completed' : ''}
             ${hasError ? 'step-default-button-error' : ''}
@@ -214,7 +206,7 @@ export const Stepper = forwardRef<HTMLDivElement, StepperProps>(({
         >
           <div className="step-default-indicator">
             {isCompleted ? (
-              <svg className="  " fill="currentColor" viewBox="0 0 20 20">
+              <svg className="stepper" fill="currentColor" viewBox="0 0 20 20">
                 <path
                   fillRule="evenodd"
                   d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
@@ -222,7 +214,7 @@ export const Stepper = forwardRef<HTMLDivElement, StepperProps>(({
                 />
               </svg>
             ) : hasError ? (
-              <svg className="  " fill="currentColor" viewBox="0 0 20 20">
+              <svg className="stepper" fill="currentColor" viewBox="0 0 20 20">
                 <path
                   fillRule="evenodd"
                   d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z"
@@ -373,8 +365,7 @@ export const Stepper = forwardRef<HTMLDivElement, StepperProps>(({
               {/* Connector line */}
               {state.orientation === 'horizontal' && index < stepperProps.steps.length - 1 && (
                 <div
-                  className={`
-                    step-connector
+                  className={`step-connector
                     ${isCompleted ? 'step-connector-completed' : ''}
                     ${state.variant === 'dots' ? 'step-connector-dots' : ''}
                     ${state.variant === 'progress' ? 'step-connector-progress' : ''}

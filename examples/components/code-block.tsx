@@ -45,7 +45,7 @@ export function CodeBlock({ code, language = 'tsx' }: CodeBlockProps) {
       <button
         type="button"
         onClick={handleCopy}
-        className="absolute top-2 right-2 z-10 px-2 py-1 text-xs rounded bg-gray-800/80 text-gray-100 opacity-0 group-hover:opacity-100 transition-opacity hover:bg-gray-700"
+        className="absolute top-2 right-2 z-10 px-2 py-1 text-xs rounded bg-gray-800/80 text-gray-100 opacity-0 group-hover:opacity-100 focus-visible:opacity-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-400 transition-opacity hover:bg-gray-700"
         aria-label="Copy code"
       >
         {copied ? 'Copied!' : 'Copy'}
@@ -53,7 +53,6 @@ export function CodeBlock({ code, language = 'tsx' }: CodeBlockProps) {
       {html ? (
         <div
           className="overflow-x-auto text-sm [&>pre]:!m-0 [&>pre]:!bg-transparent [&>pre]:p-4"
-          // eslint-disable-next-line react/no-danger
           dangerouslySetInnerHTML={{ __html: html }}
         />
       ) : (

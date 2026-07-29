@@ -7,7 +7,6 @@
 import React, { forwardRef } from 'react';
 import { motion } from 'framer-motion';
 import { useBlurInOut, type UseBlurInOutProps } from '../hooks';
-import { useTheme } from '../providers/ThemeProvider';
 
 export interface BlurInOutProps extends UseBlurInOutProps {
   /** Additional CSS class names */
@@ -40,7 +39,6 @@ export const BlurInOut = forwardRef<HTMLDivElement, BlurInOutProps>(({
   transition,
   ...blurInOutProps
 }, ref) => {
-  const theme = useTheme();
   const {
     state,
     actions,

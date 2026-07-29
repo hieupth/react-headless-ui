@@ -6,6 +6,15 @@
 
 import React, { createContext, useContext } from 'react';
 
+/**
+ * Recursively-optional Theme. mergeTheme merges each section one level deep, so
+ * a consumer can override individual tokens (`{ colors: { primary: '#f00' } }`)
+ * or pass an empty section (`{ colors: {} }`) without supplying the full map.
+ */
+export type DeepPartial<T> = {
+  [P in keyof T]?: T[P] extends Record<string, any> ? DeepPartial<T[P]> : T[P];
+};
+
 export interface Theme {
   colors: {
     background: string;
@@ -144,25 +153,27 @@ const defaultTheme: Theme = {
 const ThemeContext = createContext<Theme>(defaultTheme);
 
 /**
- * Deep-merge two theme objects, section by section.
+ * Merge a partial theme override onto the default theme, section by section.
  *
- * reason: a shallow merge (`{...defaultTheme, ...theme}`) replaces an entire
- * section (e.g. `colors`) when a consumer overrides only part of it, leaving
- * sibling keys (background, foreground, border) undefined. Each theme section
- * is a plain object of token → value, so we recurse into object-valued keys
- * rather than cloning them wholesale. Non-object values fall back to the
- * default, exactly as before.
+ * reason: a naive shallow merge (`{...defaultTheme, ...theme}`) replaces an
+ * entire section (e.g. `colors`) when a consumer overrides only part of it,
+ * leaving sibling tokens (background, foreground, border) undefined. Each top
+ * level theme section (colors, spacing, ...) is a flat map of token → value,
+ * so we merge each section one level deep (`{...baseSection, ...overrideSection}`).
+ * This is a per-section shallow merge, not a recursive deep merge: nested
+ * structures deeper than a section are not recursed into. Non-object values
+ * fall back to the default, exactly as before.
  */
 const isPlainObject = (value: unknown): value is Record<string, unknown> =>
   typeof value === 'object' && value !== null && !Array.isArray(value);
 
-const mergeTheme = (base: Theme, override: Partial<Theme>): Theme => {
+const mergeTheme = (base: Theme, override: DeepPartial<Theme>): Theme => {
   const out: Record<string, unknown> = { ...(base as unknown as Record<string, unknown>) };
   for (const key of Object.keys(override)) {
     const baseValue = out[key];
     const overrideValue = (override as Record<string, unknown>)[key];
     if (isPlainObject(baseValue) && isPlainObject(overrideValue)) {
-      // Recurse one level: token key → value within the section.
+      // One-level shallow merge of the section's token map (no recursion).
       out[key] = { ...baseValue, ...overrideValue };
     } else if (overrideValue !== undefined) {
       out[key] = overrideValue;
@@ -178,7 +189,7 @@ const mergeTheme = (base: Theme, override: Partial<Theme>): Theme => {
  */
 export const ThemeProvider: React.FC<{
   children: React.ReactNode;
-  theme?: Partial<Theme>;
+  theme?: DeepPartial<Theme>;
 }> = ({ children, theme }) => {
   const mergedTheme = theme ? mergeTheme(defaultTheme, theme) : defaultTheme;
 

@@ -4,10 +4,9 @@
  * Provides sequential animations for multiple children with comprehensive accessibility support.
  */
 
-import React, { forwardRef, Children, cloneElement, ReactElement } from 'react';
+import React, { forwardRef, Children } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useStaggerChildren, type UseStaggerChildrenProps } from '../hooks';
-import { useTheme } from '../providers/ThemeProvider';
 
 export interface StaggerChildrenProps extends UseStaggerChildrenProps {
   /** Additional CSS class names */
@@ -40,7 +39,6 @@ export const StaggerChildren = forwardRef<HTMLDivElement, StaggerChildrenProps>(
   childTransition,
   ...staggerProps
 }, ref) => {
-  const theme = useTheme();
   const childrenArray = Children.toArray(children);
   const childrenCount = childrenArray.length;
 

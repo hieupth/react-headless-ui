@@ -1,12 +1,11 @@
 "use client";
 /**
- * Rating headless hook for React UI Forge components.
+ * Rating headless hook for @hieupth/react-headless-ui components.
  * Provides behavior-only hooks following Flutter patterns.
  * Manages star ratings with hover states and selection.
  */
 
-import { useState, useCallback, useRef, useEffect, useMemo } from 'react';
-import { useFocusableMixin, usePressableMixin, useSemanticMixin } from '../mixins';
+import { useState, useRef, useEffect, useMemo } from 'react';
 
 /**
  * Rating value type

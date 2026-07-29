@@ -93,6 +93,10 @@ export const useButtonGroup = (props: UseButtonGroupProps & {
   const [internalSelectedIndex, setInternalSelectedIndex] = useState<number | null>(
     defaultSelectedIndex
   );
+  // disabled prop is the initial value; setDisabled mutates this internal
+  // state (previously a no-op stub).
+  const [disabledState, setDisabledState] = useState<boolean>(disabled);
+  const currentDisabled = disabledState;
 
   // Determine if component is controlled or uncontrolled
   const isControlled = controlledSelectedIndex !== undefined;
@@ -126,20 +130,20 @@ export const useButtonGroup = (props: UseButtonGroupProps & {
 
   // Select a button
   const selectButton = useCallback((index: number) => {
-    if (disabled || index < 0 || index >= totalItems) return;
+    if (currentDisabled || index < 0 || index >= totalItems) return;
 
     handleSelectionChange(index);
-  }, [disabled, totalItems, handleSelectionChange]);
+  }, [currentDisabled, totalItems, handleSelectionChange]);
 
   // Deselect all buttons
   const deselectAll = useCallback(() => {
-    if (disabled) return;
+    if (currentDisabled) return;
     // No-op (and no notification) when nothing is selected: keeps the action
     // idempotent instead of emitting a redundant null change.
     if (selectedIndex === null) return;
 
     handleSelectionChange(null);
-  }, [disabled, selectedIndex, handleSelectionChange]);
+  }, [currentDisabled, selectedIndex, handleSelectionChange]);
 
   // Check if a button is selected
   const isSelected = useCallback((index: number) => {
@@ -152,8 +156,7 @@ export const useButtonGroup = (props: UseButtonGroupProps & {
 
   // Set disabled state
   const setDisabled = useCallback((newDisabled: boolean) => {
-    // This would typically be handled by the parent component
-    // but we provide the action for consistency
+    setDisabledState(newDisabled);
   }, []);
 
   // Group props
@@ -162,11 +165,11 @@ export const useButtonGroup = (props: UseButtonGroupProps & {
     'aria-orientation': orientation === 'vertical' ? 'vertical' : undefined,
     'data-orientation': orientation,
     'data-attached': attached,
-    'data-disabled': disabled,
+    'data-disabled': currentDisabled,
     'data-size': size,
     'data-variant': variant,
     onKeyDown: (event: React.KeyboardEvent) => {
-      if (disabled) return;
+      if (currentDisabled) return;
 
       // Handle keyboard navigation
       let targetIndex: number | null = null;
@@ -208,7 +211,7 @@ export const useButtonGroup = (props: UseButtonGroupProps & {
         selectButton(targetIndex);
       }
     }
-  }), [orientation, attached, disabled, size, variant, totalItems, selectedIndex, selectButton, handleSelectionChange]);
+  }), [orientation, attached, currentDisabled, size, variant, totalItems, selectedIndex, selectButton, handleSelectionChange]);
 
   // Button props generator
   const getButtonProps = useCallback((index: number, additionalProps: React.ButtonHTMLAttributes<HTMLButtonElement> = {}) => {
@@ -233,16 +236,16 @@ export const useButtonGroup = (props: UseButtonGroupProps & {
       'data-size': size,
       'data-variant': variant,
       'data-position': index === 0 ? 'first' : index === totalItems - 1 ? 'last' : 'middle',
-      disabled: disabled || additionalProps.disabled,
+      disabled: currentDisabled || additionalProps.disabled,
       tabIndex: isSelected ? 0 : -1,
       onClick: (event: React.MouseEvent<HTMLButtonElement>) => {
-        if (disabled) return;
+        if (currentDisabled) return;
 
         selectButton(index);
         additionalOnClick?.(event);
       },
       onKeyDown: (event: React.KeyboardEvent<HTMLButtonElement>) => {
-        if (disabled) return;
+        if (currentDisabled) return;
 
         if (event.key === 'Enter' || event.key === ' ') {
           event.preventDefault();
@@ -251,15 +254,15 @@ export const useButtonGroup = (props: UseButtonGroupProps & {
         additionalOnKeyDown?.(event);
       }
     };
-  }, [exclusive, selectedIndex, orientation, attached, size, variant, disabled, totalItems, selectButton]);
+  }, [exclusive, selectedIndex, orientation, attached, size, variant, currentDisabled, totalItems, selectButton]);
 
   // Composed state
   const state = useMemo(() => composeState<UseButtonGroupState>({
     selectedIndex,
     buttonCount: totalItems,
-    disabled,
+    disabled: currentDisabled,
     orientation
-  }), [selectedIndex, totalItems, disabled, orientation]);
+  }), [selectedIndex, totalItems, currentDisabled, orientation]);
 
   // Composed actions
   const actions = useMemo(() => ({

@@ -5,9 +5,9 @@
  */
 
 import { useState, useCallback, useEffect, useMemo, useRef } from 'react';
-import { useFocusableMixin, usePressableMixin, useSemanticMixin } from '../mixins';
+import { useSemanticMixin } from '../mixins';
 import { composeState } from '../utils';
-import type { FocusableMixinProps, PressableMixinProps, SemanticMixinProps } from '../mixins';
+import type { FocusableMixinProps, SemanticMixinProps } from '../mixins';
 
 export interface UseAlertDialogProps extends
   FocusableMixinProps,
@@ -161,18 +161,21 @@ export const useAlertDialog = (props: UseAlertDialogProps) => {
         }
       };
 
-      // Delay focus to ensure DOM is ready
-      setTimeout(focusElement, 50);
+      // Delay focus to ensure DOM is ready. Clear the timer on cleanup so a
+      // fast unmount or open/initialFocus change can't focus a detached ref.
+      const focusTimer = setTimeout(focusElement, 50);
+      return () => clearTimeout(focusTimer);
     }
   }, [open, initialFocus]);
 
   // Focus restoration
   useEffect(() => {
     if (!open && lastActiveElementRef.current) {
-      setTimeout(() => {
+      const restoreTimer = setTimeout(() => {
         lastActiveElementRef.current?.focus();
         lastActiveElementRef.current = null;
       }, 0);
+      return () => clearTimeout(restoreTimer);
     }
   }, [open]);
 

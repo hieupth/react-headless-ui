@@ -50,7 +50,7 @@ describe('useSelect hook — uncontrolled open & value', () => {
     expect(r.searchable).toBe(false);
     expect(r.allowClear).toBe(false);
     expect(r.maxDropdownHeight).toBe(300);
-    expect(r.placeholder).toBeUndefined(); // not returned, but default handled internally
+    expect((r as { placeholder?: string }).placeholder).toBeUndefined(); // not returned, but default handled internally
   });
 
   it('openSelect/closeSelect/toggleSelect flip open state', () => {

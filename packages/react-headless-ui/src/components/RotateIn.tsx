@@ -7,7 +7,6 @@
 import React, { forwardRef } from 'react';
 import { motion } from 'framer-motion';
 import { useRotateIn, type UseRotateInProps } from '../hooks';
-import { useTheme } from '../providers/ThemeProvider';
 
 export interface RotateInProps extends UseRotateInProps {
   /** Additional CSS class names */
@@ -40,7 +39,6 @@ export const RotateIn = forwardRef<HTMLDivElement, RotateInProps>(({
   transition,
   ...rotateInProps
 }, ref) => {
-  const theme = useTheme();
   const {
     state,
     actions,

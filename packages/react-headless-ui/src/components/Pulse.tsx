@@ -7,7 +7,6 @@
 import React, { forwardRef } from 'react';
 import { motion } from 'framer-motion';
 import { usePulse, type UsePulseProps } from '../hooks';
-import { useTheme } from '../providers/ThemeProvider';
 
 export interface PulseProps extends UsePulseProps {
   /** Additional CSS class names */
@@ -39,7 +38,6 @@ export const Pulse = forwardRef<HTMLDivElement, PulseProps>(({
   transition,
   ...pulseProps
 }, ref) => {
-  const theme = useTheme();
   const {
     state,
     actions,

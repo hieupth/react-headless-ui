@@ -6,7 +6,7 @@
 
 import React, { forwardRef } from 'react';
 import { useProgress } from '../hooks';
-import type { UseProgressProps, ProgressValue } from '../hooks';
+import type { UseProgressProps } from '../hooks';
 
 export interface ProgressProps extends UseProgressProps, React.AriaAttributes {
   /** Additional CSS class names */
@@ -77,17 +77,17 @@ export const Progress = forwardRef<HTMLDivElement, ProgressProps>(({
   return (
     <div
       ref={ref}
-      className={`  ${sizeClasses} ${variantClasses}  ${className || ''}`}
+      className={`${sizeClasses} ${variantClasses} ${className || ''}`}
       style={style}
       {...progressHook.progressAttributes}
       {...ariaProps}
     >
       <div
-        className={`    ${colorClasses}   `}
+        className={colorClasses}
         style={{ width: `${progressHook.state.percentage}%` }}
       />
       {showPercentage && (
-        <div className="      ">
+        <div className="progress">
           {Math.round(progressHook.state.percentage)}%
         </div>
       )}
@@ -129,11 +129,11 @@ export const SimpleProgress = forwardRef<HTMLDivElement, ProgressProps>(({
   return (
     <div
       ref={ref}
-      className={`   ${sizeClasses}  ${className || ''}`}
+      className={`${sizeClasses}  ${className || ''}`}
       {...progressHook.progressAttributes}
     >
       <div
-        className={`    ${colorClasses}   `}
+        className={colorClasses}
         style={{ width: `${progressHook.state.percentage}%` }}
       />
     </div>
@@ -182,7 +182,7 @@ export const CircularProgress = forwardRef<HTMLDivElement, ProgressProps>(({
   return (
     <div
       ref={ref}
-      className={`    ${className || ''}`}
+      className={`${className || ''}`}
       style={{ width, height, ...style }}
       {...progressHook.progressAttributes}
     >
@@ -198,7 +198,7 @@ export const CircularProgress = forwardRef<HTMLDivElement, ProgressProps>(({
           stroke="currentColor"
           strokeWidth={strokeWidth}
           fill="none"
-          className=""
+          className="progress"
         />
         <circle
           cx={center}
@@ -209,12 +209,12 @@ export const CircularProgress = forwardRef<HTMLDivElement, ProgressProps>(({
           fill="none"
           strokeDasharray={circumference}
           strokeDashoffset={strokeDashoffset}
-          className="  "
+          className="progress"
           strokeLinecap="round"
         />
       </svg>
       {showPercentage && (
-        <div className="      ">
+        <div className="progress">
           {Math.round(progressHook.state.percentage)}%
         </div>
       )}
@@ -256,17 +256,17 @@ export const LoadingProgress = forwardRef<HTMLDivElement, ProgressProps>(({
   return (
     <div
       ref={ref}
-      className={`   ${sizeClasses}  ${className || ''}`}
+      className={`${sizeClasses}  ${className || ''}`}
       {...progressHook.progressAttributes}
     >
       <div
-        className={`    ${colorClasses}    `}
+        className={`${colorClasses}    `}
         style={{ width: `${progressHook.state.percentage}%` }}
       >
-        <div className="    " />
+        <div className="progress" />
       </div>
       <div
-        className="         "
+        className="progress"
         style={{
           width: '100%',
           animation: 'shimmer 2s infinite'

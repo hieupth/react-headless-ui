@@ -1,0 +1,16 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "types": ["vitest/globals", "node"]
+  },
+  "include": ["src/**/*", "tests/**/*"],
+  "//": "The base ./tsconfig.json excludes 'tests', so this child config MUST override 'exclude' (dropping 'tests' from it) to re-include the test tree. Removing this override would silently drop tests/ from typecheck:tests. The .extra/.deep globs mirror the vitest gate (vitest.config.ts) so this script type-checks exactly the suites that CI runs.",
+  "exclude": [
+    "node_modules",
+    "dist",
+    "tests/**/*.extra.test.ts",
+    "tests/**/*.extra.test.tsx",
+    "tests/**/*.deep.test.ts",
+    "tests/**/*.deep.test.tsx"
+  ]
+}

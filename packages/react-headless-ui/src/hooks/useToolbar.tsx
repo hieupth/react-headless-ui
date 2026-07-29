@@ -1,6 +1,6 @@
 "use client";
 /**
- * Toolbar headless hook for React UI Forge components.
+ * Toolbar headless hook for @hieupth/react-headless-ui components.
  * Provides behavior-only hooks following Flutter patterns.
  * Manages toolbar actions and state.
  */
@@ -54,8 +54,6 @@ export interface ToolbarState {
   size: 'sm' | 'md' | 'lg';
   /** Whether toolbar is collapsed */
   collapsed: boolean;
-  /** Current navigation index */
-  navigationIndex: number;
   /** Whether to show labels */
   showLabels: boolean;
   /** Whether toolbar is sticky */
@@ -205,7 +203,6 @@ export function useToolbar(props: UseToolbarProps): UseToolbarReturns {
   const [internalCollapsed, setInternalCollapsed] = useState<boolean>(defaultCollapsed);
   const [focused, setFocused] = useState<boolean>(false);
   const [activeItem, setActiveItemState] = useState<string | number | null>(null);
-  const [navigationIndex, setNavigationIndex] = useState<number>(-1);
 
   // Refs
   const internalRef = useRef<HTMLElement>(null);
@@ -241,19 +238,29 @@ export function useToolbar(props: UseToolbarProps): UseToolbarReturns {
   }, [disabled, currentItems, onItemActivate]);
 
   /**
-   * Focus item
+   * Focus item — looks up the rendered item element (matched by the
+   * `data-item-id` attribute the Toolbar component sets) within the toolbar
+   * element and focuses it.
    */
   const focusItemAction = useCallback((id: string | number) => {
     if (disabled) return;
-    // Focus implementation would need to find the DOM element
+    const root = elementRef.current;
+    if (!root) return;
+    const el = root.querySelector<HTMLElement>(`[data-item-id="${CSS.escape(String(id))}"]`);
+    el?.focus();
   }, [disabled]);
 
   /**
-   * Blur item
+   * Blur item — looks up the rendered item element (matched by the
+   * `data-item-id` attribute the Toolbar component sets) within the toolbar
+   * element and blurs it.
    */
   const blurItemAction = useCallback((id: string | number) => {
     if (disabled) return;
-    // Blur implementation would need to find the DOM element
+    const root = elementRef.current;
+    if (!root) return;
+    const el = root.querySelector<HTMLElement>(`[data-item-id="${CSS.escape(String(id))}"]`);
+    el?.blur();
   }, [disabled]);
 
   /**
@@ -405,7 +412,6 @@ export function useToolbar(props: UseToolbarProps): UseToolbarReturns {
     orientation,
     size,
     collapsed: currentCollapsed,
-    navigationIndex,
     showLabels,
     sticky
   };

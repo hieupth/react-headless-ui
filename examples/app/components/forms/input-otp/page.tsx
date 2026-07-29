@@ -102,7 +102,7 @@ export default function InputOTPPage() {
         >
           <InputOTP
             length={4}
-            renderSlot={(slot: any, i: number) => (
+            renderSlot={(slot, i) => (
               <input
                 key={i}
                 type="text"

@@ -5,8 +5,8 @@
  */
 
 import { useState, useCallback, useRef, useEffect, useMemo } from 'react';
-import { useSemanticMixin, useFocusableMixin } from '../mixins';
-import { composeState, composeHandlers } from '../utils';
+import { useSemanticMixin } from '../mixins';
+import { composeState } from '../utils';
 import type { SemanticMixinProps, FocusableMixinProps } from '../mixins';
 
 export interface UseCarouselProps extends
@@ -119,6 +119,13 @@ export const useCarousel = (props: UseCarouselProps & { totalItems: number }) =>
   // Refs
   const trackRef = useRef<HTMLDivElement>(null);
   const autoPlayIntervalRef = useRef<NodeJS.Timeout | null>(null);
+  // Holds the latest `next` so the auto-play interval always advances from the
+  // current slide. The interval effect (below) intentionally does NOT list
+  // `next`/`currentSlide` as deps — re-subscribing on every slide change would
+  // reset the timer cadence. Instead it reads through this ref, which is
+  // refreshed every render, so each tick invokes the freshest navigation logic
+  // instead of the stale closure captured when the effect first ran.
+  const nextRef = useRef<() => void>(() => {});
 
   // Calculate total slides based on items per view
   const totalSlides = Math.max(1, Math.ceil(totalItems / itemsPerView));
@@ -133,11 +140,12 @@ export const useCarousel = (props: UseCarouselProps & { totalItems: number }) =>
   const isAtStart = currentSlide === 0;
   const isAtEnd = currentSlide >= totalSlides - 1;
 
-  // Auto-play functionality
+  // Auto-play functionality. Reads through nextRef so each tick advances from
+  // the current slide rather than the stale `next` captured at first run.
   useEffect(() => {
     if (isPlaying && autoPlay > 0) {
       autoPlayIntervalRef.current = setInterval(() => {
-        next();
+        nextRef.current();
       }, autoPlay);
     } else {
       if (autoPlayIntervalRef.current) {
@@ -198,6 +206,10 @@ export const useCarousel = (props: UseCarouselProps & { totalItems: number }) =>
       goToSlide(currentSlide + 1);
     }
   }, [currentSlide, totalSlides, loop, goToSlide]);
+
+  // Keep the auto-play ref pointing at the freshest navigation logic so the
+  // interval (subscribed once per isPlaying/autoPlay change) always advances.
+  nextRef.current = next;
 
   const previous = useCallback(() => {
     if (loop && currentSlide <= 0) {

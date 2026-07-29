@@ -151,7 +151,6 @@ export function useField(props: UseFieldProps = {}) {
   } = props;
 
   // State management
-  const [focused, setFocused] = useState(defaultFocused);
   const [internalValue, setInternalValue] = useState(defaultValue);
 
   // Determine if component is controlled or uncontrolled
@@ -237,13 +236,11 @@ export function useField(props: UseFieldProps = {}) {
   const handleFocus = useCallback((event: React.FocusEvent) => {
     if (disabled || readOnly) return;
 
-    setFocused(true);
     focusableMixin.handleFocus(event.nativeEvent);
     onFocus?.(event);
   }, [disabled, readOnly, focusableMixin.handleFocus, onFocus]);
 
   const handleBlur = useCallback((event: React.FocusEvent) => {
-    setFocused(false);
     focusableMixin.handleBlur(event.nativeEvent);
     onBlur?.(event);
 

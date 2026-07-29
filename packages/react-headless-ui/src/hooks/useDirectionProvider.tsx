@@ -1,6 +1,6 @@
 "use client";
 /**
- * DirectionProvider headless hook for React UI Forge components.
+ * DirectionProvider headless hook for @hieupth/react-headless-ui components.
  * Provides behavior-only hooks following Flutter patterns.
  * Manages text direction (LTR/RTL) and layout direction for internationalization.
  */

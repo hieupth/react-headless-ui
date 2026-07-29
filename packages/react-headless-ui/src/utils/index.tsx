@@ -1,6 +1,6 @@
 "use client";
 /**
- * Core utilities for React UI Forge components.
+ * Core utilities for @hieupth/react-headless-ui components.
  * Provides composition helpers and utility functions.
  */
 
@@ -8,5 +8,6 @@ export {
   composeState,
   composeHandlers,
   composeClasses,
-  composeStyles
+  composeStyles,
+  mergeRefs
 } from './Composition';

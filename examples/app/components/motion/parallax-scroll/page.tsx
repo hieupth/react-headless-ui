@@ -20,13 +20,16 @@ export default function ParallaxScrollPage() {
           A scroll-driven parallax effect backed by the headless{' '}
           <code className="font-mono text-sm">useParallaxScroll</code> hook. As
           the element scrolls through the viewport, it translates by up to{' '}
-          <code>speed</code> × its own height along a <code>direction</code> (up
-          / down / left / right). The hook tracks scroll and intersection via
-          <code> IntersectionObserver</code> + <code>requestAnimationFrame</code>,
+          <code className="font-mono text-sm">speed</code> × its own height along a{' '}
+          <code className="font-mono text-sm">direction</code> (up / down / left /
+          right). The hook tracks scroll and intersection via{' '}
+          <code className="font-mono text-sm">IntersectionObserver</code> +{' '}
+          <code className="font-mono text-sm">requestAnimationFrame</code>,
           optionally reacts to device orientation, and respects{' '}
-          <code>prefers-reduced-motion</code>. <strong>Scroll this page</strong>{' '}
-          to see the demo below drift relative to its neighbors. Note:
-          framer-motion is a peer dependency for the Motion category.
+          <code className="font-mono text-sm">prefers-reduced-motion</code>.{' '}
+          <strong>Scroll this page</strong> to see the demo below drift relative to
+          its neighbors. Note: framer-motion is a peer dependency for the Motion
+          category.
         </p>
       </header>
 

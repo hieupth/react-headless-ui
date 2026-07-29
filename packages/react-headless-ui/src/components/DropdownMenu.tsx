@@ -138,10 +138,7 @@ export const DropdownMenu = forwardRef<HTMLDivElement, DropdownMenuProps>((props
       <div
         key={item.id}
         {...itemProps}
-        className={`
-                
-            
-          ${sizeClasses[size]}
+        className={`${sizeClasses[size]}
           ${item.disabled
             ? ' '
             : ' '
@@ -152,11 +149,11 @@ export const DropdownMenu = forwardRef<HTMLDivElement, DropdownMenuProps>((props
       >
         {/* Checkbox/Radio indicator */}
         {item.checked !== undefined && (
-          <span className="   ">
+          <span className="dropdown-menu">
             {item.role === 'menuitemradio' ? (
               // Radio button
               <svg
-                className=" "
+                className="dropdown-menu"
                 fill="currentColor"
                 viewBox="0 0 20 20"
               >
@@ -165,7 +162,7 @@ export const DropdownMenu = forwardRef<HTMLDivElement, DropdownMenuProps>((props
             ) : (
               // Checkbox
               <svg
-                className=" "
+                className="dropdown-menu"
                 fill="none"
                 stroke="currentColor"
                 strokeWidth="2"
@@ -183,35 +180,35 @@ export const DropdownMenu = forwardRef<HTMLDivElement, DropdownMenuProps>((props
 
         {/* Icon */}
         {showIcons && item.icon && !item.checked && (
-          <span className="    ">
+          <span className="dropdown-menu">
             {item.icon}
           </span>
         )}
 
         {/* Label */}
-        <span {...labelProps} className="  ">
+        <span {...labelProps} className="dropdown-menu">
           {item.label}
         </span>
 
         {/* Right side content */}
-        <div className="   ">
+        <div className="dropdown-menu">
           {/* Shortcut */}
           {showShortcuts && item.shortcut && (
-            <span className="  ">
+            <span className="dropdown-menu">
               {item.shortcut}
             </span>
           )}
 
           {/* Badge */}
           {showBadges && item.badge && (
-            <span className="        ">
+            <span className="dropdown-menu">
               {item.badge}
             </span>
           )}
 
           {/* Submenu indicator */}
           {item.hasSubmenu && (
-            <span className="   ">
+            <span className="dropdown-menu">
               <svg
                 fill="none"
                 stroke="currentColor"
@@ -249,7 +246,7 @@ export const DropdownMenu = forwardRef<HTMLDivElement, DropdownMenuProps>((props
   ].filter(Boolean).join(' ');
 
   return (
-    <div className={`  ${className}`} {...triggerAttributes}>
+    <div className={`${className}`} {...triggerAttributes}>
       {/* Trigger */}
       <button
         {...(triggerRest as React.ButtonHTMLAttributes<HTMLButtonElement>)}
@@ -259,7 +256,7 @@ export const DropdownMenu = forwardRef<HTMLDivElement, DropdownMenuProps>((props
       >
         Menu
         <svg
-          className={`     ${
+          className={`${
             state.open ? '' : ''
           }`}
           fill="none"
@@ -304,7 +301,7 @@ export const DropdownMenuTrigger: React.FC<{
 }> = ({ children, className = '', onClick }) => {
   return (
     <button
-      className={`  ${className}`}
+      className={`${className}`}
       onClick={onClick}
       aria-haspopup="menu"
     >
@@ -325,7 +322,7 @@ export const DropdownMenuItem: React.FC<{
 }> = ({ item, className = '', onClick }) => {
   return (
     <div
-      className={`          ${className}`}
+      className={`${className}`}
       role="menuitem"
       tabIndex={-1}
       onClick={onClick}
@@ -348,7 +345,7 @@ export const DropdownMenuSeparator: React.FC<{
 }> = ({ className = '' }) => {
   return (
     <div
-      className={`   ${className}`}
+      className={`${className}`}
       role="separator"
       aria-orientation="horizontal"
     />
@@ -366,7 +363,7 @@ export const DropdownMenuLabel: React.FC<{
 }> = ({ children, className = '' }) => {
   return (
     <div
-      className={`     ${className}`}
+      className={`${className}`}
       role="none"
     >
       {children}

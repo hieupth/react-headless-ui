@@ -331,8 +331,8 @@ describe('useCombobox (hook handlers)', () => {
 
   it('handleOptionFocus flattens grouped options by index', () => {
     const groups = [
-      { label: 'G1', options: [options[0], options[1]] },
-      { label: 'G2', options: [options[2]] },
+      { id: 'g1', heading: 'G1', options: [options[0], options[1]] },
+      { id: 'g2', heading: 'G2', options: [options[2]] },
     ];
     const res = setup({ groups });
     act(() => res.current.handleOptionFocus(2));
@@ -495,7 +495,7 @@ describe('useCombobox (hook handlers)', () => {
     let api: ReturnType<typeof useCombobox> | null = null;
     function Probe() {
       api = useCombobox({ options });
-      return <input ref={api!.inputAttributes.ref as any} data-testid="cb-input" />;
+      return <input ref={(api!.inputAttributes as any).ref} data-testid="cb-input" />;
     }
     render(<Probe />);
     await act(async () => { await api!.handleOpen(); });
@@ -634,7 +634,7 @@ describe('useCombobox (hook handlers)', () => {
     const res = setup({ options, filterFunction, defaultInputValue: 'a' });
     expect(filterFunction).toHaveBeenCalled();
     // groups path
-    const groups = [{ label: 'G', options: [options[0]] }];
+    const groups = [{ id: 'g', heading: 'G', options: [options[0]] }];
     const res2 = setup({ groups, filterFunction, defaultInputValue: 'a' });
     expect(res2.current.open).toBe(false);
   });

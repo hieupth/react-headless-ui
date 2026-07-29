@@ -1,6 +1,6 @@
 "use client";
 /**
- * Switch headless hook for React UI Forge.
+ * Switch headless hook for @hieupth/react-headless-ui.
  * Provides toggle switch behavior with accessibility support.
  *
  * Features:
@@ -20,7 +20,7 @@
  * - Immutable state updates
  */
 
-import { useState, useRef, useCallback, useEffect, useMemo } from 'react';
+import { useState, useRef, useCallback, useMemo } from 'react';
 import { useFocusableMixin, FocusableMixinProps } from '../mixins';
 import { usePressableMixin, PressableMixinProps } from '../mixins';
 import { useSemanticMixin, SemanticMixinProps } from '../mixins';
@@ -289,16 +289,14 @@ export const useSwitch = (props: UseSwitchProps): SwitchReturns => {
    */
   const handleFocus = useCallback((event: React.FocusEvent) => {
     focusable.handleFocus(event as unknown as FocusEvent);
-    semantic.handlers?.onFocus?.(event);
-  }, [focusable.handleFocus, semantic.handlers]);
+  }, [focusable.handleFocus]);
 
   /**
    * Handle blur events
    */
   const handleBlur = useCallback((event: React.FocusEvent) => {
     focusable.handleBlur(event as unknown as FocusEvent);
-    semantic.handlers?.onBlur?.(event);
-  }, [focusable.handleBlur, semantic.handlers]);
+  }, [focusable.handleBlur]);
 
   /**
    * Handle mouse enter events
