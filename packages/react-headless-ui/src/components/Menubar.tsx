@@ -5,7 +5,7 @@
  */
 
 import React, { forwardRef } from 'react';
-import { useMenubar, type UseMenubarProps } from '../hooks';
+import { useMenubar, type UseMenubarProps, type MenuItem } from '../hooks';
 
 export interface MenubarProps extends Omit<UseMenubarProps, 'menubarRef'> {
   /** Additional CSS class names */
@@ -13,9 +13,9 @@ export interface MenubarProps extends Omit<UseMenubarProps, 'menubarRef'> {
   /** Custom style object */
   style?: React.CSSProperties;
   /** Custom menu item renderer */
-  renderItem?: (item: any, level: number, isFocused: boolean, isActive: boolean) => React.ReactNode;
+  renderItem?: (item: MenuItem, level: number, isFocused: boolean, isActive: boolean) => React.ReactNode;
   /** Custom submenu renderer */
-  renderSubmenu?: (items: any[], level: number) => React.ReactNode;
+  renderSubmenu?: (items: MenuItem[] | undefined, level: number) => React.ReactNode;
   /** Height of the menubar container */
   height?: number | string;
   /** Whether to show separators between items */
@@ -68,7 +68,7 @@ export const Menubar = forwardRef<HTMLDivElement, MenubarProps>(({
   `.trim().replace(/\s+/g, ' ');
 
   // Default menu item renderer
-  const defaultRenderItem = (item: any, level: number, isFocused: boolean, isActive: boolean) => {
+  const defaultRenderItem = (item: MenuItem, level: number, isFocused: boolean, isActive: boolean) => {
     if (item.separator) {
       return (
         <div
@@ -93,14 +93,14 @@ export const Menubar = forwardRef<HTMLDivElement, MenubarProps>(({
         `}
         onClick={() => {
           if (!item.disabled) {
-            actions.activateItem(item.id);
+            actions.activateItem(item.id ?? '');
           }
         }}
         onMouseEnter={() => {
           if (!item.disabled) {
             actions.focusItem(item.id);
             if (item.children && item.children.length > 0) {
-              actions.openSubmenu(item.id);
+              actions.openSubmenu(item.id ?? '');
             }
           }
         }}
@@ -153,7 +153,7 @@ export const Menubar = forwardRef<HTMLDivElement, MenubarProps>(({
   };
 
   // Default submenu renderer
-  const defaultRenderSubmenu = (items: any[], level: number) => {
+  const defaultRenderSubmenu = (items: MenuItem[] | undefined, level: number) => {
     const submenuClasses = `
       submenu
         
@@ -165,17 +165,17 @@ export const Menubar = forwardRef<HTMLDivElement, MenubarProps>(({
 
     return (
       <div className={submenuClasses} role="menu">
-        {items.map((item) => <div key={item.id}>{defaultRenderItem(item, level, false, false)}</div>)}
+        {(items ?? []).map((item) => <div key={item.id ?? item.key}>{defaultRenderItem(item, level, false, false)}</div>)}
       </div>
     );
   };
 
   // Render menu items recursively
-  const renderItems = (items: any[], level = 0) => {
+  const renderItems = (items: MenuItem[], level = 0) => {
     return items.map((item) => {
       const isFocused = state.focusedItemId === item.id;
-      const isActive = actions.isItemActive(item.id);
-      const hasSubmenu = actions.hasSubmenu(item.id);
+      const isActive = actions.isItemActive(item.id ?? '');
+      const hasSubmenu = actions.hasSubmenu(item.id ?? '');
       const isSubmenuOpen = state.openSubmenuId === item.id;
 
       return (
@@ -267,7 +267,7 @@ export interface MenubarItemProps {
   /** Custom style object */
   style?: React.CSSProperties;
   /** Menu item data */
-  item: any;
+  item: MenuItem;
   /** Current level */
   level: number;
   /** Whether item is focused */

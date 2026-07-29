@@ -71,7 +71,7 @@ export interface UseCheckboxActions {
 
 export interface UseCheckboxReturns extends UseCheckboxState, UseCheckboxActions {
   /** Semantic attributes for accessibility */
-  semanticAttributes: Record<string, any>;
+  semanticAttributes: Record<string, unknown>;
   /** Computed class names */
   className: string;
   /** Tab index for keyboard navigation */

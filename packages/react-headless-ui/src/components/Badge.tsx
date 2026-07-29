@@ -37,7 +37,7 @@ export interface BadgeRenderProps {
   handleClick: (event: React.MouseEvent) => void;
   handleKeyDown: (event: React.KeyboardEvent) => void;
   /** Semantic attributes */
-  semanticAttributes: Record<string, any>;
+  semanticAttributes: Record<string, unknown>;
   /** Reference to badge element */
   badgeRef: React.RefObject<HTMLSpanElement | null>;
   /** Children content */

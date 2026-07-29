@@ -51,7 +51,7 @@ export interface MenubarState {
  */
 export interface MenubarActions {
   /** Focus a menu item */
-  focusItem: (itemId: string) => void;
+  focusItem: (itemId: string | undefined) => void;
   /** Activate a menu item */
   activateItem: (itemId: string) => void;
   /** Open submenu */
@@ -136,11 +136,11 @@ export interface UseMenubarReturns {
     'tabIndex': number;
   };
   /** Focusable mixin returns */
-  focusable: any;
+  focusable: ReturnType<typeof useFocusableMixin>;
   /** Pressable mixin returns */
-  pressable: any;
+  pressable: ReturnType<typeof usePressableMixin>;
   /** Semantic mixin returns */
-  semantic: any;
+  semantic: ReturnType<typeof useSemanticMixin>;
 }
 
 /**

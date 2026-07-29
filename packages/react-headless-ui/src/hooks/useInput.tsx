@@ -121,7 +121,7 @@ export interface UseInputActions {
 
 export interface UseInputReturns extends UseInputState, UseInputActions {
   /** Semantic attributes for accessibility */
-  semanticAttributes: Record<string, any>;
+  semanticAttributes: React.InputHTMLAttributes<HTMLInputElement>;
   /** Computed class names */
   className: string;
   /** Tab index for keyboard navigation */

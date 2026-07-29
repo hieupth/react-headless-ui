@@ -74,17 +74,17 @@ export interface UseCarouselReturns {
   /** Component actions */
   actions: UseCarouselActions;
   /** Semantic attributes for carousel */
-  semanticAttributes: Record<string, any>;
+  semanticAttributes: Record<string, unknown>;
   /** Track props for sliding container */
-  trackProps: Record<string, any>;
+  trackProps: Record<string, unknown>;
   /** Slide props for individual slides */
-  getSlideProps: (index: number) => Record<string, any>;
+  getSlideProps: (index: number) => Record<string, unknown>;
   /** Dot navigation props */
-  getDotProps: (index: number) => Record<string, any>;
+  getDotProps: (index: number) => Record<string, unknown>;
   /** Arrow navigation props */
   arrowProps: {
-    previous: Record<string, any>;
-    next: Record<string, any>;
+    previous: Record<string, unknown>;
+    next: Record<string, unknown>;
   };
   /** Ref for track container */
   trackRef: React.RefObject<HTMLDivElement | null>;

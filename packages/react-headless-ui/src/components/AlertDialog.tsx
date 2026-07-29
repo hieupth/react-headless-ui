@@ -37,12 +37,12 @@ export interface AlertDialogProps extends
     props: {
       state: UseAlertDialogState;
       actions: UseAlertDialogActions;
-      overlayProps: Record<string, any>;
-      contentProps: Record<string, any>;
-      titleProps: Record<string, any>;
-      descriptionProps: Record<string, any>;
-      cancelButtonProps: Record<string, any>;
-      confirmButtonProps: Record<string, any>;
+      overlayProps: Record<string, unknown>;
+      contentProps: Record<string, unknown>;
+      titleProps: Record<string, unknown>;
+      descriptionProps: Record<string, unknown>;
+      cancelButtonProps: Record<string, unknown>;
+      confirmButtonProps: Record<string, unknown>;
     }
   ) => React.ReactNode;
   /** Whether to show as a sheet on mobile */

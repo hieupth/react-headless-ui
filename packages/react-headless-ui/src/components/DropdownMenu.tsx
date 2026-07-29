@@ -16,8 +16,8 @@ export interface DropdownMenuProps extends UseDropdownMenuProps {
   /** Children render function for custom item rendering */
   children?: (
     item: DropdownMenuItemData,
-    itemProps: Record<string, any>,
-    labelProps: Record<string, any>,
+    itemProps: Record<string, unknown>,
+    labelProps: Record<string, unknown>,
     index: number
   ) => React.ReactNode;
   /** Whether to show icons */

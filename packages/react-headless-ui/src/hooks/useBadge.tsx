@@ -61,7 +61,7 @@ export interface UseBadgeActions {
 
 export interface UseBadgeReturns extends UseBadgeState, UseBadgeActions {
   /** Semantic attributes for badge element */
-  semanticAttributes: Record<string, any>;
+  semanticAttributes: Record<string, unknown>;
   /** Reference to badge element */
   badgeRef: React.RefObject<HTMLSpanElement | null>;
   /** Computed variant classes */

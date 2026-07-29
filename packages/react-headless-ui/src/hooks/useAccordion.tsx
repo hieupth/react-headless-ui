@@ -79,11 +79,11 @@ export interface UseAccordionReturns extends UseAccordionState, UseAccordionActi
   /** Get item state */
   getItemState: (itemId: string) => { isOpen: boolean; disabled: boolean };
   /** Get item trigger props */
-  getItemTriggerProps: (itemId: string) => any;
+  getItemTriggerProps: (itemId: string) => React.HTMLAttributes<HTMLElement>;
   /** Get item content props */
-  getItemContentProps: (itemId: string) => any;
+  getItemContentProps: (itemId: string) => React.HTMLAttributes<HTMLElement>;
   /** Semantic attributes for container */
-  semanticAttributes: Record<string, any>;
+  semanticAttributes: Record<string, unknown>;
 }
 
 /**

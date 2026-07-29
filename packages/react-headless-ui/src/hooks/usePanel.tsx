@@ -179,11 +179,11 @@ export interface UsePanelReturns {
     [key: string]: string | boolean;
   };
   /** Focusable mixin returns */
-  focusable: any;
+  focusable: ReturnType<typeof useFocusableMixin>;
   /** Pressable mixin returns */
-  pressable: any;
+  pressable: ReturnType<typeof usePressableMixin>;
   /** Semantic mixin returns */
-  semantic: any;
+  semantic: ReturnType<typeof useSemanticMixin>;
 }
 
 /**
@@ -367,7 +367,7 @@ export function usePanel(props: UsePanelProps): UsePanelReturns {
    * Get accessibility attributes
    */
   const getAccessibilityPropsAction = useCallback(() => {
-    const props: any = {};
+    const props: Record<string, unknown> = {};
 
     if (collapsible || expandable) {
       props['aria-expanded'] = currentExpanded;

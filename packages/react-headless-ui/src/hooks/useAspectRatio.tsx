@@ -35,7 +35,7 @@ export interface UseAspectRatioReturns {
   /** Container ref for aspect ratio element */
   containerRef: React.RefObject<HTMLDivElement | null>;
   /** Composed props to pass to DOM element */
-  props: Record<string, any>;
+  props: React.HTMLAttributes<HTMLElement>;
 }
 
 /**

@@ -121,7 +121,7 @@ export interface SpinnerReturns {
     'aria-describedby'?: string;
   };
   /** Form attributes */
-  formAttributes: Record<string, any>;
+  formAttributes: Record<string, unknown>;
   /** Ref to the spinner element */
   spinnerRef: React.RefObject<HTMLDivElement | null>;
   /** Ref to the label element */

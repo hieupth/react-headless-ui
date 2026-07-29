@@ -228,8 +228,8 @@ function FormInner<TFieldValues extends Record<string, any> = Record<string, any
   // registered field id), so cast it at the RHF boundary — Path<TFieldValues>
   // cannot be statically derived for a dynamic name.
   const defaultRenderField = (fieldName: string, fieldProps: any) => {
-    const fieldError = (errors as Record<string, any>)[fieldName];
-    const isTouched = (touchedFields as Record<string, any>)[fieldName];
+    const fieldError = (errors as Record<string, { message?: string } | undefined>)[fieldName];
+    const isTouched = (touchedFields as Record<string, boolean | undefined>)[fieldName];
     const fieldId = `field-${fieldName}`;
     /* c8 ignore next -- reason: fieldError requires RHF validation errors, but
        the component registers default fields without rules, so errors stay

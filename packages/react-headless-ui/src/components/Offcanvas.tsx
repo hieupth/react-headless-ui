@@ -365,9 +365,6 @@ export const Offcanvas = forwardRef<HTMLElement, OffcanvasProps>(({
         className={elementClasses}
         style={offcanvasStyles}
         {...attributes}
-        {...focusable.attributes}
-        {...pressable.attributes}
-        {...semantic.attributes}
         onKeyDown={handleKeyDown}
         data-testid="offcanvas"
         data-position={state.position}

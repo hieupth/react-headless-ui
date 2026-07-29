@@ -56,8 +56,8 @@ export interface SpinnerRenderProps {
   setVariant: (variant: NonNullable<UseSpinnerProps['variant']>) => void;
   setSize: (size: NonNullable<UseSpinnerProps['size']>) => void;
   /** Semantic attributes */
-  spinnerAttributes: Record<string, any>;
-  formAttributes: Record<string, any>;
+  spinnerAttributes: Record<string, unknown>;
+  formAttributes: Record<string, unknown>;
   /** References */
   spinnerRef: React.RefObject<HTMLDivElement | null>;
   labelRef: React.RefObject<HTMLDivElement | null>;

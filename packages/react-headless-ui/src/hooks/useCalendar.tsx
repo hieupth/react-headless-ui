@@ -112,9 +112,9 @@ export interface UseCalendarReturns {
   /** Component actions */
   actions: UseCalendarActions;
   /** Semantic attributes for calendar */
-  semanticAttributes: Record<string, any>;
+  semanticAttributes: Record<string, unknown>;
   /** Grid navigation handlers */
-  gridHandlers: Record<string, any>;
+  gridHandlers: Record<string, unknown>;
 }
 
 /**

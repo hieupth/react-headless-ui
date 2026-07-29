@@ -71,7 +71,7 @@ export interface UseBreadcrumbReturns {
   /** Component actions */
   actions: UseBreadcrumbActions;
   /** Composed props to pass to breadcrumb container */
-  props: Record<string, any>;
+  props: React.HTMLAttributes<HTMLElement>;
   /** Separator rendered between items */
   separator: React.ReactNode;
 }

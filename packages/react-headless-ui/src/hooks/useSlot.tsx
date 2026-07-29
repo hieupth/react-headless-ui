@@ -93,7 +93,7 @@ export interface UseSlotProps {
   /** Whether to allow ref forwarding */
   allowRefForward?: boolean;
   /** Props to merge with children */
-  mergeProps?: Record<string, any>;
+  mergeProps?: Record<string, unknown>;
   /** Exclude these props from merging */
   excludeProps?: string[];
   /** Priority props (override children props) */
@@ -119,11 +119,11 @@ export interface UseSlotReturns {
     onBlur: (event: React.FocusEvent) => void;
   };
   /** Focusable mixin returns */
-  focusable: any;
+  focusable: ReturnType<typeof useFocusableMixin>;
   /** Pressable mixin returns */
-  pressable: any;
+  pressable: ReturnType<typeof usePressableMixin>;
   /** Semantic mixin returns */
-  semantic: any;
+  semantic: ReturnType<typeof useSemanticMixin>;
 }
 
 /**

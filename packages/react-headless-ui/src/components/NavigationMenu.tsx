@@ -5,7 +5,7 @@
  */
 
 import React, { forwardRef } from 'react';
-import { useNavigationMenu, type UseNavigationMenuProps } from '../hooks';
+import { useNavigationMenu, type UseNavigationMenuProps, type NavigationMenuItem } from '../hooks';
 
 export interface NavigationMenuProps extends Omit<UseNavigationMenuProps, 'navigationMenuRef'> {
   /** Additional CSS class names */
@@ -13,9 +13,9 @@ export interface NavigationMenuProps extends Omit<UseNavigationMenuProps, 'navig
   /** Custom style object */
   style?: React.CSSProperties;
   /** Custom menu item renderer */
-  renderItem?: (item: any, level: number, isFocused: boolean, isActive: boolean) => React.ReactNode;
+  renderItem?: (item: NavigationMenuItem, level: number, isFocused: boolean, isActive: boolean) => React.ReactNode;
   /** Custom submenu renderer */
-  renderSubmenu?: (items: any[], level: number) => React.ReactNode;
+  renderSubmenu?: (items: NavigationMenuItem[] | undefined, level: number) => React.ReactNode;
   /** Height of the navigation menu container */
   height?: number | string;
   /** Whether to show separators between items */
@@ -75,7 +75,7 @@ export const NavigationMenu = forwardRef<HTMLDivElement, NavigationMenuProps>(({
   `.trim().replace(/\s+/g, ' ');
 
   // Default menu item renderer
-  const defaultRenderItem = (item: any, level: number, isFocused: boolean, isActive: boolean) => {
+  const defaultRenderItem = (item: NavigationMenuItem, level: number, isFocused: boolean, isActive: boolean) => {
     if (item.type === 'separator') {
       return (
         <div
@@ -196,7 +196,7 @@ export const NavigationMenu = forwardRef<HTMLDivElement, NavigationMenuProps>(({
   // supplies `renderItem` (replacing that surface) no submenu can open and this
   // path is never reached with renderItem set. `renderSubmenu` (checked at the
   // call sites) is the supported way to customise submenu contents.
-  const defaultRenderSubmenu = (items: any[], level: number) => {
+  const defaultRenderSubmenu = (items: NavigationMenuItem[] | undefined, level: number) => {
     const submenuClasses = `
       navigation-submenu
         
@@ -210,20 +210,20 @@ export const NavigationMenu = forwardRef<HTMLDivElement, NavigationMenuProps>(({
     if (state.variant === 'mega') {
       return (
         <div className={submenuClasses} role="menu">
-          {items.map((item) => defaultRenderItem(item, level, false, false))}
+          {(items ?? []).map((item) => defaultRenderItem(item, level, false, false))}
         </div>
       );
     }
 
     return (
       <div className={submenuClasses} role="menu">
-        {items.map((item) => defaultRenderItem(item, level, false, false))}
+        {(items ?? []).map((item) => defaultRenderItem(item, level, false, false))}
       </div>
     );
   };
 
   // Render menu items recursively
-  const renderItems = (items: any[], level = 0) => {
+  const renderItems = (items: NavigationMenuItem[], level = 0) => {
     return items.map((item) => {
       const isFocused = state.focusedItemId === item.id;
       const isActive = actions.isItemActive(item.id);

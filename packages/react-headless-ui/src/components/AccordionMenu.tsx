@@ -18,9 +18,9 @@ export interface AccordionMenuProps extends
   /** Children render function for custom item rendering */
   children?: (
     item: AccordionMenuItemData,
-    itemProps: Record<string, any>,
-    headerProps: Record<string, any>,
-    contentProps: Record<string, any>,
+    itemProps: React.HTMLAttributes<HTMLElement>,
+    headerProps: React.HTMLAttributes<HTMLElement>,
+    contentProps: React.HTMLAttributes<HTMLElement>,
     depth: number,
     isOpen: boolean
   ) => React.ReactNode;
@@ -50,9 +50,9 @@ type AccordionMenuResolvedProps = {
   className?: string;
   children?: (
     item: AccordionMenuItemData,
-    itemProps: Record<string, any>,
-    headerProps: Record<string, any>,
-    contentProps: Record<string, any>,
+    itemProps: React.HTMLAttributes<HTMLElement>,
+    headerProps: React.HTMLAttributes<HTMLElement>,
+    contentProps: React.HTMLAttributes<HTMLElement>,
     depth: number,
     isOpen: boolean
   ) => React.ReactNode;

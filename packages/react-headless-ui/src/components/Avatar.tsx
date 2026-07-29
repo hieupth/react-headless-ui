@@ -40,7 +40,7 @@ export interface AvatarRenderProps {
   handleClick: (event: React.MouseEvent) => void;
   handleKeyDown: (event: React.KeyboardEvent) => void;
   /** Semantic attributes */
-  semanticAttributes: Record<string, any>;
+  semanticAttributes: Record<string, unknown>;
   /** Reference to avatar container */
   avatarRef: React.RefObject<HTMLDivElement | null>;
   /** Reference to image element */

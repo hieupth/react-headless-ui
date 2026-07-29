@@ -38,7 +38,7 @@ export interface AlertRenderProps {
   dismiss: () => void;
   handleKeyDown: (event: React.KeyboardEvent) => void;
   /** Semantic attributes */
-  semanticAttributes: Record<string, any>;
+  semanticAttributes: Record<string, unknown>;
   /** Reference to DOM element */
   ref: React.RefObject<HTMLDivElement | null>;
   /** Children content */

@@ -127,8 +127,6 @@ export const VisuallyHidden = forwardRef<HTMLElement, VisuallyHiddenProps>(({
       className={elementClasses}
       style={combinedStyles}
       {...attributes}
-      {...focusable.attributes}
-      {...semantic.attributes}
       data-testid="visually-hidden"
       data-visible={state.visible}
       data-focusable={state.focusable}

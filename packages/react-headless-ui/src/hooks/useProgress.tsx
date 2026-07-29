@@ -162,10 +162,10 @@ export interface ProgressReturns {
   progressRef: React.RefObject<HTMLDivElement | null>;
 
   /** Computed attributes for rendering */
-  progressAttributes: Record<string, any>;
+  progressAttributes: Record<string, unknown>;
 
   /** Form attributes for accessibility */
-  formAttributes: Record<string, any>;
+  formAttributes: Record<string, unknown>;
 }
 
 /**

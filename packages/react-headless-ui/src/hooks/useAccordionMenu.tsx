@@ -87,15 +87,15 @@ export interface UseAccordionMenuReturns {
   /** Component actions */
   actions: UseAccordionMenuActions;
   /** Semantic attributes for the menu container */
-  semanticAttributes: Record<string, any>;
+  semanticAttributes: Record<string, unknown>;
   /** Props for the menu container */
-  menuProps: Record<string, any>;
+  menuProps: Record<string, unknown>;
   /** Props generator for menu items */
-  getItemProps: (item: AccordionMenuItem, depth?: number) => Record<string, any>;
+  getItemProps: (item: AccordionMenuItem, depth?: number) => Record<string, unknown>;
   /** Props generator for item headers (clickable area) */
-  getItemHeaderProps: (item: AccordionMenuItem, depth?: number) => Record<string, any>;
+  getItemHeaderProps: (item: AccordionMenuItem, depth?: number) => Record<string, unknown>;
   /** Props generator for item content */
-  getItemContentProps: (item: AccordionMenuItem, depth?: number) => Record<string, any>;
+  getItemContentProps: (item: AccordionMenuItem, depth?: number) => Record<string, unknown>;
   /** Ref for the menu container */
   menuRef: React.RefObject<HTMLDivElement | null>;
 }

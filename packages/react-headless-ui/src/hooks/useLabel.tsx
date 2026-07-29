@@ -46,7 +46,7 @@ export interface UseLabelReturns {
   /** Component actions */
   actions: UseLabelActions;
   /** Composed props to pass to label element */
-  props: Record<string, any>;
+  props: React.HTMLAttributes<HTMLElement>;
   /** Indicator shown for required fields */
   requiredIndicator: React.ReactNode;
 }

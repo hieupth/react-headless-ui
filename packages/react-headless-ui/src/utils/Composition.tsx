@@ -8,7 +8,7 @@
  * Composes multiple objects into single state object.
  * Follows Flutter widget composition pattern for state management.
  */
-export const composeState = <T extends Record<string, any>>(
+export const composeState = <T extends object>(
   ...states: (Partial<T> | undefined)[]
 ): T => {
   return states.reduce((composed: any, state) => {
@@ -40,6 +40,9 @@ export const composeHandlers = <T = any>(
     return handlers[0] as T;
   }
 
+  // `any[]` is intentional: handlers are of generic type T (an unknown function
+  // shape), so there is no single argument tuple to capture. We deliberately
+  // forward opaque args to each handler and rely on the `as T` cast at the end.
   return ((...args: any[]) => {
     const promises: Promise<any>[] = [];
 

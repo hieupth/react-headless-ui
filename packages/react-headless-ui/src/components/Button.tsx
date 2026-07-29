@@ -29,7 +29,7 @@ export interface ButtonRenderProps {
   /** Computed class names */
   className: string;
   /** Semantic attributes */
-  semanticAttributes: Record<string, any>;
+  semanticAttributes: Record<string, unknown>;
   /** Event handlers */
   handleClick: (event: React.MouseEvent) => void;
   handleKeyDown: (event: React.KeyboardEvent) => void;

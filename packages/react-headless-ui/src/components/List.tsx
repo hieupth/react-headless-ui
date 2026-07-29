@@ -378,9 +378,6 @@ export const List = forwardRef<HTMLElement, ListProps>(({
         className={elementClasses}
         style={baseStyles}
         {...attributes}
-        {...focusable.attributes}
-        {...pressable.attributes}
-        {...semantic.attributes}
         onKeyDown={handleKeyDown}
         data-testid="list"
         data-orientation={orientation}
@@ -430,9 +427,6 @@ export const List = forwardRef<HTMLElement, ListProps>(({
       className={elementClasses}
       style={baseStyles}
       {...attributes}
-      {...focusable.attributes}
-      {...pressable.attributes}
-      {...semantic.attributes}
       onKeyDown={handleKeyDown}
       data-testid="list"
       data-orientation={orientation}

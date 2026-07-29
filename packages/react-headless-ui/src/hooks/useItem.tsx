@@ -173,11 +173,11 @@ export interface UseItemReturns {
     highlighted: string;
   };
   /** Focusable mixin returns */
-  focusable: any;
+  focusable: ReturnType<typeof useFocusableMixin>;
   /** Pressable mixin returns */
-  pressable: any;
+  pressable: ReturnType<typeof usePressableMixin>;
   /** Semantic mixin returns */
-  semantic: any;
+  semantic: ReturnType<typeof useSemanticMixin>;
 }
 
 /**
@@ -366,7 +366,7 @@ export function useItem(props: UseItemProps): UseItemReturns {
    * Get accessibility attributes
    */
   const getAccessibilityPropsAction = useCallback(() => {
-    const props: any = {};
+    const props: Record<string, unknown> = {};
 
     if (disabled) {
       props['aria-disabled'] = true;

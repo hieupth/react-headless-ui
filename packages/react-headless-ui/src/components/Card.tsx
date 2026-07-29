@@ -44,7 +44,7 @@ export interface CardRenderProps {
   handleMouseEnter: (event: React.MouseEvent) => void;
   handleMouseLeave: (event: React.MouseEvent) => void;
   /** Semantic attributes */
-  semanticAttributes: Record<string, any>;
+  semanticAttributes: Record<string, unknown>;
   /** References to card sections */
   cardRef: React.Ref<HTMLDivElement>;
   headerRef: React.RefObject<HTMLDivElement | null>;

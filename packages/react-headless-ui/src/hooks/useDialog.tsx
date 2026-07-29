@@ -66,13 +66,13 @@ export interface UseDialogActions {
 
 export interface UseDialogReturns extends UseDialogState, UseDialogActions {
   /** Semantic attributes for dialog container */
-  semanticAttributes: Record<string, any>;
+  semanticAttributes: Record<string, unknown>;
   /** Semantic attributes for overlay */
-  overlayAttributes: Record<string, any>;
+  overlayAttributes: Record<string, unknown>;
   /** Semantic attributes for title */
-  titleAttributes: Record<string, any>;
+  titleAttributes: Record<string, unknown>;
   /** Semantic attributes for description */
-  descriptionAttributes: Record<string, any>;
+  descriptionAttributes: Record<string, unknown>;
   /** Reference to dialog container */
   dialogRef: React.RefObject<HTMLDivElement | null>;
   /** Reference to overlay */

@@ -35,7 +35,7 @@ export interface InputRenderProps {
   /** Computed class names */
   className: string;
   /** Semantic attributes */
-  semanticAttributes: Record<string, any>;
+  semanticAttributes: React.InputHTMLAttributes<HTMLInputElement>;
   /** Event handlers */
   handleChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   handleInput: (event: React.FormEvent<HTMLInputElement>) => void;

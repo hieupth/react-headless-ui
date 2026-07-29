@@ -12,6 +12,12 @@ import type { FocusableProps } from '../contracts/ComponentContract';
 
 /**
  * Grid column configuration
+ *
+ * Note on `any` value/row types: cell values, filter values, and the raw row
+ * payload (`data` prop) are consumer-defined and vary per column `type`
+ * (text/number/date/boolean/custom). They stay `any` rather than imposing a
+ * fixed union, since column-level `cellRenderer`/`accessor`/`format` decide the
+ * concrete shape at runtime.
  */
 export interface GridColumn {
   /** Column identifier */
@@ -55,7 +61,7 @@ export interface GridRow {
   /** Row identifier */
   id: string;
   /** Row data */
-  data: Record<string, any>;
+  data: Record<string, unknown>;
   /** Whether row is selected */
   selected?: boolean;
   /** Whether row is disabled */

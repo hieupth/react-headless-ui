@@ -332,9 +332,6 @@ export const Item = forwardRef<HTMLElement, ItemProps>(({
       className={elementClasses}
       style={combinedStyles}
       {...attributes}
-      {...focusable.attributes}
-      {...pressable.attributes}
-      {...semantic.attributes}
       onClick={handleClick}
       onKeyDown={handleKeyDown}
       onMouseEnter={handleMouseEnter}

@@ -131,9 +131,9 @@ export interface UseChartProps extends
   /** Dataset click handler */
   onDatasetClick?: (dataset: ChartDataset) => void;
   /** Chart click handler */
-  onChartClick?: (event: any) => void;
+  onChartClick?: (event: React.MouseEvent) => void;
   /** Mouse move handler */
-  onMouseMove?: (event: any) => void;
+  onMouseMove?: (event: React.MouseEvent) => void;
   /** Mouse leave handler */
   onMouseLeave?: () => void;
   /** Custom colors */

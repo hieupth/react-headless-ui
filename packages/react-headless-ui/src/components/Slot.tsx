@@ -85,9 +85,6 @@ export const Slot = forwardRef<HTMLElement, SlotProps>(({
     `.trim().replace(/\s+/g, ' ');
     const mergedProps = actions.mergeProps(childProps, {
       ...attributes,
-      ...focusable.attributes,
-      ...pressable.attributes,
-      ...semantic.attributes,
       className: builtClassName,
       style: {
         ...(typeof childProps.style === 'object' && childProps.style ? childProps.style : {}),
@@ -141,9 +138,6 @@ export const Slot = forwardRef<HTMLElement, SlotProps>(({
     if (renderChildren) {
       return renderChildren(children, {
         ...attributes,
-        ...focusable.attributes,
-        ...pressable.attributes,
-        ...semantic.attributes,
         className,
         style
       });
@@ -216,9 +210,6 @@ export const Slot = forwardRef<HTMLElement, SlotProps>(({
         className={wrapperClasses}
         style={wrapperStyles}
         {...attributes}
-        {...focusable.attributes}
-        {...pressable.attributes}
-        {...semantic.attributes}
         {...wrapperProps}
         data-testid="slot-wrapper"
       >

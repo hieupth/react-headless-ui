@@ -410,9 +410,6 @@ export const Kbd = forwardRef<HTMLElement, KbdProps>(({
         className={elementClasses}
         style={combinedStyles}
         {...attributes}
-        {...focusable.attributes}
-        {...pressable.attributes}
-        {...semantic.attributes}
         onClick={handleClick}
         onKeyDown={handleKeyDown}
         onKeyUp={handleKeyUp}
@@ -453,9 +450,6 @@ export const Kbd = forwardRef<HTMLElement, KbdProps>(({
       className={elementClasses}
       style={showTooltip ? tooltipStyles : combinedStyles}
       {...attributes}
-      {...focusable.attributes}
-      {...pressable.attributes}
-      {...semantic.attributes}
       onClick={handleClick}
       onKeyDown={handleKeyDown}
       onKeyUp={handleKeyUp}

@@ -93,9 +93,9 @@ export interface TabsRenderProps {
   highlightTab: (index: number) => void;
   activateTab: (key: string) => void;
   /** Semantic attributes */
-  tablistAttributes: Record<string, any>;
-  getTabAttributes: (tab: TabItem, index: number) => Record<string, any>;
-  getTabPanelAttributes: (tab: TabItem) => Record<string, any>;
+  tablistAttributes: Record<string, unknown>;
+  getTabAttributes: (tab: TabItem, index: number) => Record<string, unknown>;
+  getTabPanelAttributes: (tab: TabItem) => Record<string, unknown>;
   /** References */
   tablistRef: React.RefObject<HTMLDivElement | null>;
   /** Tabs data */
@@ -129,7 +129,7 @@ export interface TabPanelRenderProps {
   /** Whether panel is selected */
   selected: boolean;
   /** Panel attributes */
-  attributes: Record<string, any>;
+  attributes: Record<string, unknown>;
 }
 
 /**

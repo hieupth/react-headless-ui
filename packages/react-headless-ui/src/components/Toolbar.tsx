@@ -225,9 +225,6 @@ export const Toolbar = forwardRef<HTMLElement, ToolbarProps>(({
         className={elementClasses}
         style={baseStyles}
         {...attributes}
-        {...focusable.attributes}
-        {...pressable.attributes}
-        {...semantic.attributes}
         onKeyDown={handleKeyDown}
         data-testid="toolbar"
         data-orientation={state.orientation}
@@ -255,9 +252,6 @@ export const Toolbar = forwardRef<HTMLElement, ToolbarProps>(({
       className={elementClasses}
       style={baseStyles}
       {...attributes}
-      {...focusable.attributes}
-      {...pressable.attributes}
-      {...semantic.attributes}
       onKeyDown={handleKeyDown}
       data-testid="toolbar"
       data-orientation={state.orientation}

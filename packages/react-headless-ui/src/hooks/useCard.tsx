@@ -74,7 +74,7 @@ export interface UseCardActions {
 
 export interface UseCardReturns extends UseCardState, UseCardActions {
   /** Semantic attributes for card container */
-  semanticAttributes: Record<string, any>;
+  semanticAttributes: Record<string, unknown>;
   /** Reference to card container */
   cardRef: React.RefObject<HTMLDivElement | null>;
   /** Reference to header element */

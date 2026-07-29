@@ -458,9 +458,6 @@ export const Panel = forwardRef<HTMLElement, PanelProps>(({
       className={elementClasses}
       style={{ ...baseStyles, ...variantStyles, ...stateStyles }}
       {...attributes}
-      {...focusable.attributes}
-      {...pressable.attributes}
-      {...semantic.attributes}
       onClick={handleClick}
       onKeyDown={handleKeyDown}
       onMouseEnter={handleMouseEnter}

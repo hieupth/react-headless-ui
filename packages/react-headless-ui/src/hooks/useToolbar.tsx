@@ -33,7 +33,7 @@ export interface ToolbarItem {
   /** Item variant */
   variant?: 'default' | 'primary' | 'secondary';
   /** Custom data */
-  data?: Record<string, any>;
+  data?: Record<string, unknown>;
 }
 
 /**
@@ -166,11 +166,11 @@ export interface UseToolbarReturns {
     [key: string]: string | boolean;
   };
   /** Focusable mixin returns */
-  focusable: any;
+  focusable: ReturnType<typeof useFocusableMixin>;
   /** Pressable mixin returns */
-  pressable: any;
+  pressable: ReturnType<typeof usePressableMixin>;
   /** Semantic mixin returns */
-  semantic: any;
+  semantic: ReturnType<typeof useSemanticMixin>;
 }
 
 /**

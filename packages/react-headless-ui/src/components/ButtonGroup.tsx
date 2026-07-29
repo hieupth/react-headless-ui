@@ -19,7 +19,7 @@ export interface ButtonGroupProps extends
     /** Whether the button is disabled */
     disabled?: boolean;
     /** Additional button props */
-    buttonProps?: Record<string, any>;
+    buttonProps?: Record<string, unknown>;
     /** Click handler for this specific button */
     onClick?: (event: React.MouseEvent) => void;
   }>;
@@ -28,7 +28,7 @@ export interface ButtonGroupProps extends
   /** Children render function for custom button rendering */
   children?: (
     button: any,
-    buttonProps: Record<string, any>,
+    buttonProps: Record<string, unknown>,
     index: number,
     isSelected: boolean
   ) => React.ReactNode;

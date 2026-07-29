@@ -67,7 +67,7 @@ export interface UseButtonActions {
 
 export interface UseButtonReturns extends UseButtonState, UseButtonActions {
   /** Semantic attributes for accessibility */
-  semanticAttributes: Record<string, any>;
+  semanticAttributes: Record<string, unknown>;
   /** Computed class names */
   className: string;
   /** Tab index for keyboard navigation */

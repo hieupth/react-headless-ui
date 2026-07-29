@@ -25,7 +25,7 @@ export interface SortableItem {
   /** Whether item is disabled */
   disabled?: boolean;
   /** Custom data */
-  data?: Record<string, any>;
+  data?: Record<string, unknown>;
 }
 
 /**
@@ -162,11 +162,11 @@ export interface UseSortableReturns {
     [key: string]: string | boolean;
   };
   /** Focusable mixin returns */
-  focusable: any;
+  focusable: ReturnType<typeof useFocusableMixin>;
   /** Pressable mixin returns */
-  pressable: any;
+  pressable: ReturnType<typeof usePressableMixin>;
   /** Semantic mixin returns */
-  semantic: any;
+  semantic: ReturnType<typeof useSemanticMixin>;
 }
 
 /**

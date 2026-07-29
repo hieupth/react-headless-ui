@@ -118,11 +118,11 @@ export interface UseSelectActions {
 
 export interface UseSelectReturns extends UseSelectState, UseSelectActions {
   /** Semantic attributes for select trigger */
-  triggerAttributes: Record<string, any>;
+  triggerAttributes: Record<string, unknown>;
   /** Semantic attributes for select listbox */
-  listboxAttributes: Record<string, any>;
+  listboxAttributes: Record<string, unknown>;
   /** Semantic attributes for options */
-  getOptionAttributes: (option: SelectOption, index: number) => Record<string, any>;
+  getOptionAttributes: (option: SelectOption, index: number) => Record<string, unknown>;
   /** Reference to trigger element */
   triggerRef: React.RefObject<HTMLButtonElement | null>;
   /** Reference to listbox element */

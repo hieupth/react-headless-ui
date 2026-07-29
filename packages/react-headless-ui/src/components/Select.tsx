@@ -53,9 +53,9 @@ export interface SelectRenderProps {
   clearSelection: () => void;
   highlightOption: (index: number) => void;
   /** Semantic attributes */
-  triggerAttributes: Record<string, any>;
-  listboxAttributes: Record<string, any>;
-  getOptionAttributes: (option: SelectOption, index: number) => Record<string, any>;
+  triggerAttributes: Record<string, unknown>;
+  listboxAttributes: Record<string, unknown>;
+  getOptionAttributes: (option: SelectOption, index: number) => Record<string, unknown>;
   /** References */
   triggerRef: React.RefObject<HTMLButtonElement | null>;
   listboxRef: React.RefObject<HTMLUListElement | null>;

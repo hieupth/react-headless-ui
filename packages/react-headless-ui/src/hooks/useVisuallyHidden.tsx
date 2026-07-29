@@ -105,9 +105,9 @@ export interface UseVisuallyHiddenReturns {
   /** CSS styles for visually hidden */
   styles: React.CSSProperties;
   /** Focusable mixin returns */
-  focusable: any;
+  focusable: ReturnType<typeof useFocusableMixin>;
   /** Semantic mixin returns */
-  semantic: any;
+  semantic: ReturnType<typeof useSemanticMixin>;
 }
 
 /**

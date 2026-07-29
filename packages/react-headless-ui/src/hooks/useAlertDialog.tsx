@@ -68,19 +68,19 @@ export interface UseAlertDialogReturns {
   /** Component actions */
   actions: UseAlertDialogActions;
   /** Semantic attributes for the dialog container */
-  semanticAttributes: Record<string, any>;
+  semanticAttributes: Record<string, unknown>;
   /** Props for the dialog overlay */
-  overlayProps: Record<string, any>;
+  overlayProps: Record<string, unknown>;
   /** Props for the dialog content */
-  contentProps: Record<string, any>;
+  contentProps: Record<string, unknown>;
   /** Props for the dialog title */
-  titleProps: Record<string, any>;
+  titleProps: Record<string, unknown>;
   /** Props for the dialog description */
-  descriptionProps: Record<string, any>;
+  descriptionProps: Record<string, unknown>;
   /** Props for the cancel button */
-  cancelButtonProps: Record<string, any>;
+  cancelButtonProps: Record<string, unknown>;
   /** Props for the confirm button */
-  confirmButtonProps: Record<string, any>;
+  confirmButtonProps: Record<string, unknown>;
   /** Ref for the dialog container */
   dialogRef: React.RefObject<HTMLDivElement | null>;
   /** Ref for the initial focus element */

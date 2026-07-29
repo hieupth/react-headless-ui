@@ -182,9 +182,6 @@ export const Sortable = forwardRef<HTMLElement, SortableProps>(({
         className={elementClasses}
         style={baseStyles}
         {...attributes}
-        {...focusable.attributes}
-        {...pressable.attributes}
-        {...semantic.attributes}
         data-testid="sortable"
         data-direction={state.direction}
         data-disabled={state.disabled}
@@ -218,9 +215,6 @@ export const Sortable = forwardRef<HTMLElement, SortableProps>(({
       className={elementClasses}
       style={baseStyles}
       {...attributes}
-      {...focusable.attributes}
-      {...pressable.attributes}
-      {...semantic.attributes}
       data-testid="sortable"
       data-direction={state.direction}
       data-disabled={state.disabled}

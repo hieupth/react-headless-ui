@@ -21,7 +21,7 @@ export interface ListItem {
   /** Item description */
   description?: string;
   /** Item metadata */
-  metadata?: Record<string, any>;
+  metadata?: Record<string, unknown>;
   /** Whether item is disabled */
   disabled?: boolean;
   /** Whether item is selectable */
@@ -238,11 +238,11 @@ export interface UseListReturns {
     paginated: string;
   };
   /** Focusable mixin returns */
-  focusable: any;
+  focusable: ReturnType<typeof useFocusableMixin>;
   /** Pressable mixin returns */
-  pressable: any;
+  pressable: ReturnType<typeof usePressableMixin>;
   /** Semantic mixin returns */
-  semantic: any;
+  semantic: ReturnType<typeof useSemanticMixin>;
 }
 
 /**
@@ -646,7 +646,12 @@ export function useList(props: UseListProps): UseListReturns {
    * Get accessibility attributes
    */
   const getAccessibilityPropsAction = useCallback(() => {
-    const props: any = {
+    const props: {
+      role: string;
+      'aria-multiselectable'?: boolean;
+      'aria-orientation'?: 'vertical' | 'horizontal';
+      'aria-busy'?: boolean;
+    } = {
       role: 'listbox',
       'aria-multiselectable': multiSelect,
       'aria-orientation': 'vertical' as const

@@ -252,7 +252,7 @@ export function useMegaMenu(props: UseMegaMenuProps): UseMegaMenuReturns {
   });
   const focusableState = _focusable;
   const focusableActions = _focusable;
-  const focusableStyle: Record<string, any> = {};
+  const focusableStyle: Record<string, unknown> = {};
   const focusableRef = (node: any) => {
     _focusable.focusRef.current = node;
   };
@@ -266,7 +266,7 @@ export function useMegaMenu(props: UseMegaMenuProps): UseMegaMenuReturns {
   });
   const pressableState = _pressable;
   const pressableActions = _pressable;
-  const pressableStyle: Record<string, any> = {};
+  const pressableStyle: Record<string, unknown> = {};
 
   const {
     style: semanticStyle

@@ -32,7 +32,7 @@ export interface UseSeparatorReturns {
   /** Component actions */
   actions: UseSeparatorActions;
   /** Composed props to pass to separator element */
-  props: Record<string, any>;
+  props: React.HTMLAttributes<HTMLElement> & { as?: React.ElementType };
 }
 
 /**

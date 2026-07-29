@@ -58,7 +58,7 @@ export interface UseAlertActions {
 
 export interface UseAlertReturns extends UseAlertState, UseAlertActions {
   /** Semantic attributes for alert container */
-  semanticAttributes: Record<string, any>;
+  semanticAttributes: Record<string, unknown>;
   /** Reference to alert container */
   alertRef: React.RefObject<HTMLDivElement | null>;
   /** Computed variant for styling */

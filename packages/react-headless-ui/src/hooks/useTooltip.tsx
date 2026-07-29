@@ -80,9 +80,9 @@ export interface UseTooltipActions {
 
 export interface UseTooltipReturns extends UseTooltipState, UseTooltipActions {
   /** Semantic attributes for trigger element */
-  triggerAttributes: Record<string, any>;
+  triggerAttributes: Record<string, unknown>;
   /** Semantic attributes for tooltip element */
-  tooltipAttributes: Record<string, any>;
+  tooltipAttributes: Record<string, unknown>;
   /** Reference to trigger element */
   triggerRef: React.RefObject<HTMLElement | null>;
   /** Reference to tooltip element */

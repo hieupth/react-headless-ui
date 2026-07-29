@@ -44,9 +44,9 @@ export interface UseCollapsibleReturns {
   /** Component actions */
   actions: UseCollapsibleActions;
   /** Composed props for trigger element */
-  triggerProps: Record<string, any>;
+  triggerProps: React.HTMLAttributes<HTMLElement>;
   /** Composed props for content element */
-  contentProps: Record<string, any>;
+  contentProps: React.HTMLAttributes<HTMLElement>;
 }
 
 /**

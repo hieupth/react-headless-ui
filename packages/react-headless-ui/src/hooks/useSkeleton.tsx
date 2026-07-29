@@ -49,7 +49,7 @@ export interface UseSkeletonReturns {
   /** Component actions */
   actions: UseSkeletonActions;
   /** Composed props to pass to skeleton element */
-  props: Record<string, any>;
+  props: React.HTMLAttributes<HTMLElement>;
 }
 
 /**

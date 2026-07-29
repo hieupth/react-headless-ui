@@ -63,7 +63,7 @@ export interface UseTextareaReturns {
   /** Component actions */
   actions: UseTextareaActions;
   /** Composed props to pass to textarea element */
-  props: Record<string, any>;
+  props: React.HTMLAttributes<HTMLElement>;
   /** Ref for textarea element */
   ref: React.RefObject<HTMLTextAreaElement | null>;
 }

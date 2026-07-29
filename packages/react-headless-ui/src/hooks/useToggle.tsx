@@ -40,7 +40,7 @@ export interface UseToggleReturns {
   /** Component actions */
   actions: UseToggleActions;
   /** Composed props to pass to toggle element */
-  props: Record<string, any>;
+  props: React.HTMLAttributes<HTMLElement>;
 }
 
 /**

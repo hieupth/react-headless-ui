@@ -127,11 +127,11 @@ export interface UseAccessibleIconReturns {
     opacity: number;
   };
   /** Focusable mixin returns */
-  focusable: any;
+  focusable: ReturnType<typeof useFocusableMixin>;
   /** Pressable mixin returns */
-  pressable: any;
+  pressable: ReturnType<typeof usePressableMixin>;
   /** Semantic mixin returns */
-  semantic: any;
+  semantic: ReturnType<typeof useSemanticMixin>;
 }
 
 /**
@@ -260,7 +260,7 @@ export function useAccessibleIcon(props: UseAccessibleIconProps): UseAccessibleI
    * Get accessibility attributes
    */
   const getAccessibilityPropsAction = useCallback(() => {
-    const props: any = {};
+    const props: Record<string, unknown> = {};
 
     if (decorative || hidden) {
       props['aria-hidden'] = true;

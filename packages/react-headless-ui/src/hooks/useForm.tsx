@@ -153,11 +153,11 @@ export interface UseFormReturns<TFieldValues extends FieldValues = FieldValues>
   /** Get attributes for a specific field */
   getFieldAttributes: (fieldName: string) => React.HTMLAttributes<HTMLElement>;
   /** Focusable mixin returns */
-  focusable: any;
+  focusable: ReturnType<typeof useFocusableMixin>;
   /** Pressable mixin returns */
-  pressable: any;
+  pressable: ReturnType<typeof usePressableMixin>;
   /** Semantic mixin returns */
-  semantic: any;
+  semantic: ReturnType<typeof useSemanticMixin>;
 }
 
 /**

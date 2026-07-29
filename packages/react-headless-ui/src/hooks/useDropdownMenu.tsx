@@ -98,19 +98,19 @@ export interface UseDropdownMenuReturns {
   /** Component actions */
   actions: UseDropdownMenuActions;
   /** Semantic attributes for the trigger */
-  triggerAttributes: Record<string, any>;
+  triggerAttributes: Record<string, unknown>;
   /** Semantic attributes for the menu */
-  menuAttributes: Record<string, any>;
+  menuAttributes: Record<string, unknown>;
   /** Props for the trigger element */
-  triggerProps: Record<string, any>;
+  triggerProps: Record<string, unknown>;
   /** Props for the menu container */
-  menuProps: Record<string, any>;
+  menuProps: Record<string, unknown>;
   /** Props generator for menu items */
-  getItemProps: (item: DropdownMenuItem, index: number) => Record<string, any>;
+  getItemProps: (item: DropdownMenuItem, index: number) => Record<string, unknown>;
   /** Props generator for item labels */
-  getItemLabelProps: (item: DropdownMenuItem, index: number) => Record<string, any>;
+  getItemLabelProps: (item: DropdownMenuItem, index: number) => Record<string, unknown>;
   /** Props for the arrow element */
-  arrowProps: Record<string, any>;
+  arrowProps: Record<string, unknown>;
   /** Ref for the trigger element */
   triggerRef: React.RefObject<HTMLElement | null>;
   /** Ref for the menu element */

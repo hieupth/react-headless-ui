@@ -94,11 +94,11 @@ export interface UseTabsActions {
 
 export interface UseTabsReturns extends UseTabsState, UseTabsActions {
   /** Semantic attributes for tab list */
-  tablistAttributes: Record<string, any>;
+  tablistAttributes: Record<string, unknown>;
   /** Semantic attributes for tabs */
-  getTabAttributes: (tab: TabItem, index: number) => Record<string, any>;
+  getTabAttributes: (tab: TabItem, index: number) => Record<string, unknown>;
   /** Semantic attributes for tab panels */
-  getTabPanelAttributes: (tab: TabItem) => Record<string, any>;
+  getTabPanelAttributes: (tab: TabItem) => Record<string, unknown>;
   /** Reference to tab list element */
   tablistRef: React.RefObject<HTMLDivElement | null>;
   /** Computed selected index */

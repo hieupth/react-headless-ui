@@ -58,9 +58,9 @@ export interface SwitchRenderProps {
   toggle: () => void;
   setChecked: (checked: boolean) => void;
   /** Semantic attributes */
-  switchAttributes: Record<string, any>;
+  switchAttributes: Record<string, unknown>;
   /** Form attributes */
-  formAttributes: Record<string, any>;
+  formAttributes: Record<string, unknown>;
   /** Consumer DOM pass-through (aria-label, etc.) forwarded onto the button */
   ariaProps: React.AriaAttributes;
   /** References */

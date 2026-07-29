@@ -63,10 +63,10 @@ export interface DialogRenderProps {
   handleOverlayClick: (event: React.MouseEvent) => void;
   handleKeyDown: (event: React.KeyboardEvent) => void;
   /** Semantic attributes */
-  semanticAttributes: Record<string, any>;
-  overlayAttributes: Record<string, any>;
-  titleAttributes: Record<string, any>;
-  descriptionAttributes: Record<string, any>;
+  semanticAttributes: Record<string, unknown>;
+  overlayAttributes: Record<string, unknown>;
+  titleAttributes: Record<string, unknown>;
+  descriptionAttributes: Record<string, unknown>;
   /** References */
   dialogRef: React.RefObject<HTMLDivElement | null>;
   overlayRef: React.RefObject<HTMLDivElement | null>;
@@ -76,7 +76,7 @@ export interface DialogRenderProps {
 
 export interface DialogOverlayRenderProps {
   /** Overlay attributes */
-  attributes: Record<string, any>;
+  attributes: Record<string, unknown>;
   /** Reference */
   ref: React.RefObject<HTMLDivElement | null>;
   /** Click handler */
@@ -85,7 +85,7 @@ export interface DialogOverlayRenderProps {
 
 export interface DialogContentRenderProps {
   /** Content attributes */
-  attributes: Record<string, any>;
+  attributes: Record<string, unknown>;
   /** Reference */
   ref: React.RefObject<HTMLDivElement | null>;
   /** Children content */

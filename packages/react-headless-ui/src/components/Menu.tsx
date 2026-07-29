@@ -52,8 +52,8 @@ export interface MenuRenderProps {
   handleTriggerEnter: () => void;
   handleTriggerLeave: () => void;
   /** Semantic attributes */
-  triggerAttributes: Record<string, any>;
-  menuAttributes: Record<string, any>;
+  triggerAttributes: Record<string, unknown>;
+  menuAttributes: Record<string, unknown>;
   /** References */
   triggerRef: React.RefObject<HTMLElement | null>;
   menuRef: React.RefObject<HTMLUListElement | null>;

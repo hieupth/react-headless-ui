@@ -58,7 +58,7 @@ export interface UseAvatarActions {
 
 export interface UseAvatarReturns extends UseAvatarState, UseAvatarActions {
   /** Semantic attributes for avatar container */
-  semanticAttributes: Record<string, any>;
+  semanticAttributes: Record<string, unknown>;
   /** Reference to avatar container */
   avatarRef: React.RefObject<HTMLDivElement | null>;
   /** Reference to image element */

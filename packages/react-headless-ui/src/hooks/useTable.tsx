@@ -9,6 +9,11 @@ import { useState, useMemo } from 'react';
 
 /**
  * Table column definition
+ *
+ * Note on `any` row types: this hook is row-shape agnostic — consumers own the
+ * row structure and access arbitrary fields (e.g. `row.id`, `row.label`) inside
+ * `render`/`getRowKey`. Row data therefore stays `any`/`any[]` throughout the
+ * data, renderers, and attribute getters rather than imposing a fixed shape.
  */
 export interface TableColumn {
   /** Unique column key */

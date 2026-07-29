@@ -67,7 +67,7 @@ export interface AccordionRenderProps {
   /** Computed class names */
   className: string;
   /** Semantic attributes */
-  semanticAttributes: Record<string, any>;
+  semanticAttributes: Record<string, unknown>;
   /** Accordion state */
   openItems: string[];
   focused: boolean;

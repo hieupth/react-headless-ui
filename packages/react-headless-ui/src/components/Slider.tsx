@@ -62,10 +62,10 @@ export interface SliderRenderProps {
   setToMin: () => void;
   setToMax: () => void;
   /** Semantic attributes */
-  sliderAttributes: Record<string, any>;
-  getThumbAttributes: (index: number) => Record<string, any>;
+  sliderAttributes: Record<string, unknown>;
+  getThumbAttributes: (index: number) => Record<string, unknown>;
   /** Form attributes */
-  formAttributes: Record<string, any>;
+  formAttributes: Record<string, unknown>;
   /** References */
   sliderRef: React.RefObject<HTMLDivElement | null>;
   thumbRefs: [React.RefObject<HTMLDivElement | null>, React.RefObject<HTMLDivElement | null>?];
@@ -108,7 +108,7 @@ export interface SliderThumbRenderProps {
   /** Styles */
   style?: React.CSSProperties;
   /** Attributes */
-  attributes: Record<string, any>;
+  attributes: Record<string, unknown>;
 }
 
 export interface SliderRangeRenderProps {

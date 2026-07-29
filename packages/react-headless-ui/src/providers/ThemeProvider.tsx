@@ -12,7 +12,7 @@ import React, { createContext, useContext } from 'react';
  * or pass an empty section (`{ colors: {} }`) without supplying the full map.
  */
 export type DeepPartial<T> = {
-  [P in keyof T]?: T[P] extends Record<string, any> ? DeepPartial<T[P]> : T[P];
+  [P in keyof T]?: T[P] extends Record<string, unknown> ? DeepPartial<T[P]> : T[P];
 };
 
 export interface Theme {

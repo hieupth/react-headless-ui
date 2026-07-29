@@ -5,7 +5,7 @@
  */
 
 import React, { forwardRef } from 'react';
-import { useTreeView, type UseTreeViewProps } from '../hooks';
+import { useTreeView, type UseTreeViewProps, type TreeNode } from '../hooks';
 
 export interface TreeViewProps extends Omit<UseTreeViewProps, 'treeRef'> {
   /** Additional CSS class names */
@@ -13,7 +13,7 @@ export interface TreeViewProps extends Omit<UseTreeViewProps, 'treeRef'> {
   /** Custom style object */
   style?: React.CSSProperties;
   /** Custom node renderer */
-  renderNode?: (node: any, level: number, isExpanded: boolean, isSelected: boolean) => React.ReactNode;
+  renderNode?: (node: TreeNode, level: number, isExpanded: boolean, isSelected: boolean) => React.ReactNode;
   /** Custom icon for expand/collapse */
   expandIcon?: React.ReactNode;
   /** Custom icon for collapse */
@@ -101,7 +101,7 @@ export const TreeView = forwardRef<HTMLDivElement, TreeViewProps>(({
   );
 
   // Default node renderer
-  const defaultRenderNode = (node: any, level: number, isExpanded: boolean, isSelected: boolean) => (
+  const defaultRenderNode = (node: TreeNode, level: number, isExpanded: boolean, isSelected: boolean) => (
     <div
       className={`${isSelected
           ? ' '
@@ -143,8 +143,8 @@ export const TreeView = forwardRef<HTMLDivElement, TreeViewProps>(({
   );
 
   // Recursively render tree nodes
-  const renderNodes = (nodes: any[], level = 0) => {
-    return nodes.map((node) => {
+  const renderNodes = (nodes: TreeNode[] | undefined, level = 0) => {
+    return (nodes ?? []).map((node) => {
       const isExpanded = actions.isNodeExpanded(node.id);
       const isSelected = actions.isNodeSelected(node.id);
       const hasChildren = node.children && node.children.length > 0;
@@ -282,7 +282,7 @@ export interface TreeViewNodeProps {
   /** Custom style object */
   style?: React.CSSProperties;
   /** Node data */
-  node: any;
+  node: TreeNode;
   /** Current level in tree */
   level: number;
   /** Whether node is expanded */
