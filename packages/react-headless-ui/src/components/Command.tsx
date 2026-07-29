@@ -89,7 +89,7 @@ export interface CommandItemProps {
   /** Item content */
   children: React.ReactNode;
   /** Item value */
-  value?: any;
+  value?: string;
   /** Whether item is disabled */
   disabled?: boolean;
   /** Optional icon */

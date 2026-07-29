@@ -49,7 +49,7 @@ export interface SelectRenderProps {
   openSelect: () => void;
   closeSelect: () => void;
   toggleSelect: () => void;
-  selectOption: (value: any) => void;
+  selectOption: (value: string | undefined) => void;
   clearSelection: () => void;
   highlightOption: (index: number) => void;
   /** Semantic attributes */
@@ -386,11 +386,11 @@ export interface SimpleSelectProps {
   /** Select options */
   options: SelectOption[];
   /** Selected value */
-  value?: any;
+  value?: string;
   /** Default selected value */
-  defaultValue?: any;
+  defaultValue?: string;
   /** Value change handler (standard selection API) */
-  onValueChange?: (value: any) => void;
+  onValueChange?: (value: string | undefined) => void;
   /** Placeholder text */
   placeholder?: string;
   /** Whether select is disabled */

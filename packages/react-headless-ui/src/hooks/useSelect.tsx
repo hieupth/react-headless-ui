@@ -15,7 +15,7 @@ export interface SelectOption {
   /** Option label */
   label: string;
   /** Option value */
-  value?: any;
+  value?: string;
   /** Whether option is disabled */
   disabled?: boolean;
   /** Option group */
@@ -38,16 +38,16 @@ export interface UseSelectProps extends
    */
   focusStrategy?: 'auto' | 'manual' | 'programmatic' | 'first' | 'selected';
   /** Selected value */
-  value?: any;
+  value?: string;
   /** Default selected value */
-  defaultValue?: any;
+  defaultValue?: string;
   /** Value change handler (standard selection API) */
-  onValueChange?: (value: any) => void;
+  onValueChange?: (value: string | undefined) => void;
   /**
    * @deprecated Use `onValueChange`. Alias retained for backward compatibility;
    * routed to `onValueChange`.
    */
-  onSelectionChange?: (value: any) => void;
+  onSelectionChange?: (value: string | undefined) => void;
   /** Whether select is open */
   open?: boolean;
   /** Default open state */
@@ -84,7 +84,7 @@ export interface UseSelectState {
   /** Current highlighted index */
   highlightedIndex: number;
   /** Current selected value */
-  selectedValue: any;
+  selectedValue: string | undefined;
   /** Current input value for search */
   inputValue: string;
 }
@@ -99,7 +99,7 @@ export interface UseSelectActions {
   /** Highlight option */
   highlightOption: (index: number) => void;
   /** Select option */
-  selectOption: (value: any) => void;
+  selectOption: (value: string | undefined) => void;
   /** Clear selection */
   clearSelection: () => void;
   /** Handle keyboard navigation */
@@ -227,7 +227,7 @@ export const useSelect = (props: UseSelectProps): UseSelectReturns => {
 
   // Standard selection callback. `onValueChange` is the unified API; the legacy
   // `onSelectionChange` is kept as a deprecated alias that routes here.
-  const handleChange = useCallback((value: any) => {
+  const handleChange = useCallback((value: string | undefined) => {
     onValueChange?.(value);
     onSelectionChange?.(value);
   }, [onValueChange, onSelectionChange]);
@@ -315,7 +315,7 @@ export const useSelect = (props: UseSelectProps): UseSelectReturns => {
   }, [getFilteredOptions]);
 
   // Select option
-  const selectOption = useCallback((value: any) => {
+  const selectOption = useCallback((value: string | undefined) => {
     const option = options.find(opt => opt.value === value);
     if (!option || option.disabled) return;
 

@@ -24,7 +24,7 @@ export interface ComboboxOption {
   /** Display label */
   label: string;
   /** Option value */
-  value: any;
+  value: string;
   /** Whether option is disabled */
   disabled?: boolean;
   /** Optional description */
@@ -58,11 +58,11 @@ export interface UseComboboxProps extends
   /** Combobox groups */
   groups?: ComboboxGroup[];
   /** Selected value */
-  value?: any;
+  value?: string | null;
   /** Default selected value */
-  defaultValue?: any;
+  defaultValue?: string | null;
   /** Value change handler */
-  onValueChange?: (value: any) => void;
+  onValueChange?: (value: string | null) => void;
   /** Input value */
   inputValue?: string;
   /** Default input value */
@@ -134,7 +134,7 @@ export interface ComboboxState {
   /** Current input value */
   inputValue: string;
   /** Selected value */
-  value: any;
+  value: string | null;
   /** Filtered options */
   filteredOptions: ComboboxOption[];
   /** Filtered groups */

@@ -91,7 +91,7 @@ export interface UseChipProps {
   /** Whether chip can be deleted */
   deletable?: boolean;
   /** Chip value */
-  value?: any;
+  value?: string;
   /** Callback when selection changes */
   onSelectionChange?: (selected: boolean) => void;
   /** Callback when chip is deleted */

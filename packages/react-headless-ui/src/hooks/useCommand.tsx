@@ -27,7 +27,7 @@ export interface CommandItem {
   /** Whether item is disabled */
   disabled?: boolean;
   /** Item value */
-  value?: any;
+  value?: string;
   /** Item group/category */
   group?: string;
   /** Action handler */

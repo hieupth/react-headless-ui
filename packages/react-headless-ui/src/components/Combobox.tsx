@@ -75,7 +75,7 @@ export interface ComboboxOptionProps {
   /** Option content */
   children: React.ReactNode;
   /** Option value */
-  value: any;
+  value: string;
   /** Whether option is disabled */
   disabled?: boolean;
   /** Whether option is selected */
