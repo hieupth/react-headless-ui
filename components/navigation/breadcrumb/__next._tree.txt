@@ -1,0 +1,2 @@
+:HL["/react-headless-ui/_next/static/css/f577bbd93a85c6b1.css","style"]
+0:{"tree":{"name":"","param":null,"prefetchHints":16,"slots":{"children":{"name":"components","param":null,"prefetchHints":0,"slots":{"children":{"name":"navigation","param":null,"prefetchHints":0,"slots":{"children":{"name":"breadcrumb","param":null,"prefetchHints":0,"slots":{"children":{"name":"__PAGE__","param":null,"prefetchHints":0,"slots":null}}}}}}}}},"staleTime":300,"buildId":"SF4vR8T3KAI4RiDxRfdgv"}

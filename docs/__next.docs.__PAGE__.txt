@@ -1,0 +1,6 @@
+1:"$Sreact.fragment"
+2:I[11937,["4318","static/chunks/4318-af9924d313c2a3dc.js","9040","static/chunks/app/docs/page-5648624d5a7f6337.js"],""]
+3:I[3805,[],"OutletBoundary"]
+4:"$Sreact.suspense"
+0:{"rsc":["$","$1","c",{"children":[["$","article",null,{"className":"prose dark:prose-invert max-w-3xl mx-auto px-6 py-10","children":[["$","h1",null,{"children":"Docs"}],["$","p",null,{"children":["Guides for ",["$","code",null,{"children":"@hieupth/react-headless-ui"}],"."]}],["$","ul",null,{"children":[["$","li","getting-started",{"children":["$","$L2",null,{"href":"/docs/getting-started/","children":"Getting Started"}]}],["$","li","theming",{"children":["$","$L2",null,{"href":"/docs/theming/","children":"Theming"}]}]]}]]}],null,["$","$L3",null,{"children":["$","$4",null,{"name":"Next.MetadataOutlet","children":"$@5"}]}]]}],"isPartial":false,"staleTime":300,"varyParams":null,"buildId":"SF4vR8T3KAI4RiDxRfdgv"}
+5:null
