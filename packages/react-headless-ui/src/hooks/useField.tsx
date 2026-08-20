@@ -4,11 +4,11 @@
  * Provides composable behavior for form field components.
  */
 
-import { useState, useCallback, useMemo } from 'react';
-import { useSemanticMixin } from '../mixins/SemanticMixin';
-import { useFocusableMixin } from '../mixins/FocusableMixin';
-import type { SemanticProps } from '../contracts/SemanticContract';
-import type { FocusableProps } from '../contracts/ComponentContract';
+import { useState, useCallback, useId, useMemo } from 'react';
+import { useSemanticMixin } from '../mixins/SemanticMixin.js';
+import { useFocusableMixin } from '../mixins/FocusableMixin.js';
+import type { SemanticProps } from '../contracts/SemanticContract.js';
+import type { FocusableProps } from '../contracts/ComponentContract.js';
 
 /**
  * Props for useField hook
@@ -164,10 +164,15 @@ export function useField(props: UseFieldProps = {}) {
     focusStrategy
   });
 
+  // Instance-scoped id for the rendered helper/error/description text, so
+  // aria-describedby points at a real element id instead of the literal text.
+  const descriptionId = useId();
+  const describedByText = description || helperText || error;
+
   const semantic = useSemanticMixin({
     role,
     label,
-    describedBy: description || helperText || error,
+    describedBy: describedByText ? descriptionId : undefined,
     ...semanticProps
   });
 
@@ -326,6 +331,7 @@ export function useField(props: UseFieldProps = {}) {
   return useMemo(() => ({
     state,
     handlers,
-    attributes: semanticAttributes
-  }), [state, handlers, semanticAttributes]);
+    attributes: semanticAttributes,
+    descriptionId
+  }), [state, handlers, semanticAttributes, descriptionId]);
 }

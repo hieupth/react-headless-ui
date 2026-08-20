@@ -6,8 +6,8 @@
 
 import React, { forwardRef } from 'react';
 import { createPortal } from 'react-dom';
-import { useSelect } from '../hooks';
-import type { UseSelectProps, SelectOption } from '../hooks';
+import { useSelect } from '../hooks/index.js';
+import type { UseSelectProps, SelectOption } from '../hooks/index.js';
 
 export interface SelectProps extends UseSelectProps {
   /** Additional CSS class names */

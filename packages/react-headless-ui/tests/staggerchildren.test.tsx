@@ -1,5 +1,6 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import { render, act, renderHook } from '@testing-library/react';
+import { renderToString } from 'react-dom/server';
 import { axe } from 'jest-axe';
 import { StaggerChildren } from '../src/components/StaggerChildren';
 import { useStaggerChildren } from '../src/hooks/useStaggerChildren';
@@ -88,6 +89,33 @@ describe('StaggerChildren', () => {
     } finally {
       spy.mockRestore();
     }
+  });
+
+  // Round-2 fix: the default motion path used to gate children on
+  // state.isActive (false until mounted), shipping an empty container in
+  // static-export HTML and never showing children at all.
+  it('renders children in server HTML for the default motion path', () => {
+    const html = renderToString(
+      <StaggerChildren>
+        <div>StaggerTxt</div>
+      </StaggerChildren>
+    );
+    expect(html).toContain('StaggerTxt');
+    // hidden via the inline "hidden" variant is fine — the child must exist
+    expect(html).toContain('opacity:0');
+  });
+
+  it('renders and activates children on mount with default props', () => {
+    const { container } = render(
+      <StaggerChildren>
+        <div>StaggerTxt</div>
+      </StaggerChildren>
+    );
+    expect(container.textContent).toContain('StaggerTxt');
+    const root = container.querySelector('[data-testid="stagger-children-motion"]') as HTMLElement;
+    // start() ran on mount, so the stagger is active
+    expect(root.className).toContain('stagger-active');
+    expect(root.getAttribute('aria-live')).toBe('polite');
   });
 });
 

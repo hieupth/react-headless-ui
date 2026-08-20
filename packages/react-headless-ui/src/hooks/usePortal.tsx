@@ -6,7 +6,7 @@
  */
 
 import { useMemo, useState, useCallback, useRef, useEffect } from 'react';
-import { useFocusableMixin, usePressableMixin, useSemanticMixin } from '../mixins';
+import { useFocusableMixin, usePressableMixin, useSemanticMixin } from '../mixins/index.js';
 
 /**
  * Portal state interface

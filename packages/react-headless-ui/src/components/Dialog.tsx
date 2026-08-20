@@ -6,9 +6,9 @@
 
 import React, { forwardRef } from 'react';
 import { createPortal } from 'react-dom';
-import { useDialog } from '../hooks';
-import { Button } from './Button';
-import type { UseDialogProps } from '../hooks';
+import { useDialog } from '../hooks/index.js';
+import { Button } from './Button.js';
+import type { UseDialogProps } from '../hooks/index.js';
 
 /**
  * Strips a `[key: string]: unknown` index signature from `T`, keeping only its

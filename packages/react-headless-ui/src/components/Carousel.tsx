@@ -5,7 +5,7 @@
  */
 
 import React from 'react';
-import { useCarousel, type UseCarouselProps } from '../hooks';
+import { useCarousel, type UseCarouselProps } from '../hooks/index.js';
 
 export interface CarouselProps extends UseCarouselProps {
   /** Carousel items */
@@ -56,6 +56,11 @@ export const Carousel: React.FC<CarouselProps> = ({
   onStart,
   ...semanticProps
 }) => {
+  // `children` is typed as an array, but a dynamically built single child (or a
+  // prop spread that omits it) arrives at runtime as a bare element / undefined;
+  // coerce once so the length read and map() below never throw.
+  const items = React.Children.toArray(children);
+
   const [isHovered, setIsHovered] = React.useState(false);
 
   const {
@@ -77,7 +82,7 @@ export const Carousel: React.FC<CarouselProps> = ({
     onSlideChange,
     onEnd,
     onStart,
-    totalItems: children.length,
+    totalItems: items.length,
     showArrows,
     showDots
   });
@@ -126,7 +131,7 @@ export const Carousel: React.FC<CarouselProps> = ({
       className="carousel-arrow carousel-arrow-previous"
       type="button"
     >
-      <svg className="carousel" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <svg className="carousel" fill="none" stroke="currentColor" viewBox="0 0 24 24" width={24} height={24}>
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
       </svg>
     </button>
@@ -140,19 +145,37 @@ export const Carousel: React.FC<CarouselProps> = ({
       className="carousel-arrow carousel-arrow-next"
       type="button"
     >
-      <svg className="carousel" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <svg className="carousel" fill="none" stroke="currentColor" viewBox="0 0 24 24" width={24} height={24}>
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
       </svg>
     </button>
   );
 
-  // Default dot indicator
+  // Default dot indicator. The lib ships no CSS, so the default must be
+  // intrinsically usable: a visible 8px dot (border-radius 50%, currentColor)
+  // on a 24px minimum hit area, overridable by a consumer DotIndicator.
+  // Dots are plain buttons in a labelled role="group" (not tabs): the hook's
+  // role="button"/aria-selected are dropped — aria-selected is invalid on
+  // button — and the active state is exposed via aria-current instead.
   const DefaultDotIndicator = ({ index, isActive, onClick }: { index: number; isActive: boolean; onClick: () => void }) => (
     <button
       {...getDotProps(index)}
+      role={undefined}
+      aria-selected={undefined}
+      aria-current={isActive ? 'true' : undefined}
       onClick={onClick}
       className={`carousel-dot ${isActive ? 'carousel-dot-active' : ''}`}
       type="button"
+      style={{
+        width: 8,
+        height: 8,
+        minWidth: 24,
+        minHeight: 24,
+        padding: 0,
+        border: 'none',
+        borderRadius: '50%',
+        background: 'currentColor',
+      }}
     />
   );
 
@@ -170,7 +193,7 @@ export const Carousel: React.FC<CarouselProps> = ({
       {/* Main carousel track */}
       <div className="carousel-viewport" role="presentation">
         <div {...trackProps} className={trackClassName}>
-          {children.map((child, index) => (
+          {items.map((child, index) => (
             <div key={index} {...getSlideProps(index)} className="carousel-slide">
               {child}
             </div>
@@ -194,7 +217,7 @@ export const Carousel: React.FC<CarouselProps> = ({
 
       {/* Dot indicators */}
       {showDots && (
-        <div className={dotsClassName} role="tablist" aria-label="Carousel navigation">
+        <div className={dotsClassName} role="group" aria-label="Carousel navigation">
           {Array.from({ length: state.totalSlides }, (_, index) => (
             <Dot
               key={index}

@@ -6,7 +6,7 @@
 
 import React, { forwardRef } from 'react';
 import { motion } from 'framer-motion';
-import { useShake, type UseShakeProps } from '../hooks';
+import { useShake, type UseShakeProps } from '../hooks/index.js';
 
 export interface ShakeProps extends UseShakeProps {
   /** Additional CSS class names */

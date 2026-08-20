@@ -5,9 +5,9 @@
  */
 
 import React, { forwardRef } from 'react';
-import { useAlert } from '../hooks';
-import { Button } from './Button';
-import type { UseAlertProps } from '../hooks';
+import { useAlert } from '../hooks/index.js';
+import { Button } from './Button.js';
+import type { UseAlertProps } from '../hooks/index.js';
 
 export interface AlertProps extends UseAlertProps {
   /** Additional CSS class names */
@@ -16,6 +16,9 @@ export interface AlertProps extends UseAlertProps {
   style?: React.CSSProperties;
   /** Alert children content */
   children?: React.ReactNode;
+  /** Heading element rendered for the title; override to keep the page's
+   *  heading outline continuous (default h4) */
+  titleAs?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
   /** Custom render function */
   render?: (props: AlertRenderProps) => React.ReactElement;
   /** Custom icon render function */
@@ -53,6 +56,7 @@ export const Alert = forwardRef<HTMLDivElement, AlertProps>(({
   className,
   style,
   title,
+  titleAs: Title = 'h4',
   description,
   dismissible,
   children,
@@ -128,9 +132,9 @@ export const Alert = forwardRef<HTMLDivElement, AlertProps>(({
         {/* Content */}
         <div className="alert">
           {title && (
-            <h4 className="alert" id={`${props.semanticAttributes.id || 'alert'}-title`}>
+            <Title className="alert" id={`${props.semanticAttributes.id || 'alert'}-title`}>
               {title}
-            </h4>
+            </Title>
           )}
 
           {description && (
@@ -156,7 +160,7 @@ export const Alert = forwardRef<HTMLDivElement, AlertProps>(({
               aria-label="Dismiss alert"
               className="alert"
             >
-              <svg className="alert" fill="currentColor" viewBox="0 0 20 20">
+              <svg className="alert" fill="currentColor" viewBox="0 0 20 20" width={20} height={20}>
                 <path fillRule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clipRule="evenodd" />
               </svg>
             </Button>

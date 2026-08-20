@@ -5,7 +5,7 @@
  */
 
 import React, { forwardRef, useRef } from 'react';
-import { usePopover, type UsePopoverProps } from '../hooks';
+import { usePopover, type UsePopoverProps } from '../hooks/index.js';
 
 export interface PopoverProps extends Omit<UsePopoverProps, 'triggerRef' | 'contentRef' | 'trigger'> {
   /** Additional CSS class names */

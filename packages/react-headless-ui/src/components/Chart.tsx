@@ -5,8 +5,8 @@
  */
 
 import React, { forwardRef, useMemo } from 'react';
-import { useChart } from '../hooks';
-import type { UseChartProps, ChartDataset, ChartDataPoint } from '../hooks';
+import { useChart, CHART_PADDING_DEFAULT } from '../hooks/index.js';
+import type { UseChartProps, ChartDataset, ChartDataPoint } from '../hooks/index.js';
 
 /**
  * Chart component props
@@ -22,8 +22,8 @@ export interface ChartProps extends UseChartProps {
   lineRenderer?: (points: Array<{x: number; y: number}>, color: string) => React.ReactNode;
   /** Custom renderer for bars */
   barRenderer?: (bar: {x: number; y: number; width: number; height: number}, color: string) => React.ReactNode;
-  /** Custom renderer for tooltip */
-  tooltipRenderer?: (point: ChartDataPoint, dataset: ChartDataset) => React.ReactNode;
+  /** Custom renderer for tooltip; receives the hovered point's pixel coordinates */
+  tooltipRenderer?: (point: ChartDataPoint, dataset: ChartDataset, x: number, y: number) => React.ReactNode;
 }
 
 /**
@@ -125,9 +125,13 @@ export const Chart = forwardRef<SVGSVGElement, ChartProps>(
       handleDataPointClick,
       handleDataPointHover,
       handleDataPointLeave,
+      handleMouseMove,
+      handleMouseLeave,
+      handleChartClick,
       attributes,
       dimensions,
       scales,
+      categories,
       colors
     } = useChart(props);
 
@@ -140,7 +144,7 @@ export const Chart = forwardRef<SVGSVGElement, ChartProps>(
       { top: 20, right: 20, bottom: 40, left: 40 };
     const marginLeft = margin.left ?? 0;
     const marginTop = margin.top ?? 0;
-    const padding = (props.padding as number | undefined) ?? 0;
+    const padding = (props.padding as number | undefined) ?? CHART_PADDING_DEFAULT;
 
     // `attributes` carries the hook's chart `ref` plus role/tabIndex/onKeyDown,
     // which are valid on the <svg> but must not be spread onto inner shapes
@@ -160,47 +164,55 @@ export const Chart = forwardRef<SVGSVGElement, ChartProps>(
       else if (ref) (ref as React.MutableRefObject<SVGSVGElement | null>).current = node;
     };
 
+    // Convert a raw x value to its numeric domain value (category band index
+    // for categorical charts, the value itself for numeric charts) — the same
+    // conversion useChart applies for its ranges and hit-test.
+    const toDomainX = (x: string | number): number =>
+      categories.length > 0 ? categories.indexOf(String(x)) : (typeof x === 'number' ? x : 0);
+
     // Generate chart data with scales applied
     const chartData = useMemo(() => {
       return datasets.map((dataset) => ({
         dataset,
         points: dataset.data.map((point) => {
-          const xValue = typeof point.x === 'number' ? point.x : 0;
+          const xValue = toDomainX(point.x);
           const yValue = typeof point.y === 'number' ? point.y : 0;
 
           return {
             ...point,
             x: scales.x.scale * xValue + scales.x.offset + marginLeft + padding,
             y: scales.y.scale * yValue + scales.y.offset + marginTop + padding,
+            rawX: point.x,
             originalX: xValue,
             originalY: yValue
           };
         })
       }));
-    }, [datasets, scales, marginLeft, marginTop, padding]);
+    }, [datasets, scales, marginLeft, marginTop, padding, categories]);
 
     // Render chart point
     const renderPoint = (point: ChartDataPoint, dataset: ChartDataset, datasetIndex: number) => {
-      // reason: chartData (and the scatter path) only ever pass points whose
-      // x/y were already coerced to numbers above, so the typeof fallback arms
-      // are unreachable from any render path.
+      // The incoming coordinates are already in pixel space (scaled by the
+      // chartData builder above) — applying the scale again here would push
+      // the circle far off-canvas. Only the non-numeric typeof fallback arms
+      // remain defensive.
       /* c8 ignore next */
-      const x = scales.x.scale * (typeof point.x === 'number' ? point.x : 0) + scales.x.offset;
+      const x = typeof point.x === 'number' ? point.x : 0;
       /* c8 ignore next */
-      const y = scales.y.scale * (typeof point.y === 'number' ? point.y : 0) + scales.y.offset;
+      const y = typeof point.y === 'number' ? point.y : 0;
       const radius = 4;
       const color = point.color || colors[datasetIndex % colors.length] || '#000000';
 
       // Compare by value against the retained raw coords: chartData spreads
       // each point into a new object every render, so a reference compare would
-      // never match. originalX/originalY are the pre-scale numeric values stored
-      // on the chartData point (see chartData builder above).
+      // never match. rawX/originalY are the pre-scale values stored on the
+      // chartData point (see chartData builder above).
       const isSelected = !!selectedPoint
-        && selectedPoint.point.x === point.originalX
+        && selectedPoint.point.x === point.rawX
         && selectedPoint.point.y === point.originalY
         && selectedPoint.dataset === dataset;
       const isHovered = !!hoveredPoint
-        && hoveredPoint.point.x === point.originalX
+        && hoveredPoint.point.x === point.rawX
         && hoveredPoint.point.y === point.originalY
         && hoveredPoint.dataset === dataset;
 
@@ -222,8 +234,8 @@ export const Chart = forwardRef<SVGSVGElement, ChartProps>(
           stroke={stroke}
           strokeWidth={strokeWidth}
           className={pointClassName}
-          onClick={(e) => handleDataPointClick(dataset, { x: point.originalX ?? point.x, y: point.originalY ?? point.y }, e)}
-          onMouseEnter={() => handleDataPointHover(dataset, { x: point.originalX ?? point.x, y: point.originalY ?? point.y })}
+          onClick={(e) => handleDataPointClick(dataset, { x: point.rawX ?? point.originalX ?? point.x, y: point.originalY ?? point.y }, e)}
+          onMouseEnter={() => handleDataPointHover(dataset, { x: point.rawX ?? point.originalX ?? point.x, y: point.originalY ?? point.y })}
           onMouseLeave={() => handleDataPointLeave()}
           {...shapeAttributes}
         />
@@ -237,10 +249,13 @@ export const Chart = forwardRef<SVGSVGElement, ChartProps>(
       // fallback arms are unreachable.
       /* c8 ignore next */
       const points = chartData[datasetIndex]?.points || [];
-      if (points.length < 2) return null;
+      if (points.length === 0) return null;
 
       const color = dataset.color || colors[datasetIndex % colors.length] || '#000000';
-      const pathData = points.map((p, i) => `${i === 0 ? 'M' : 'L'} ${p.x} ${p.y}`).join(' ');
+      // A single point has no line to draw, but its marker still renders.
+      const pathData = points.length >= 2
+        ? points.map((p, i) => `${i === 0 ? 'M' : 'L'} ${p.x} ${p.y}`).join(' ')
+        : '';
 
       if (lineRenderer) {
         return lineRenderer(points, color);
@@ -248,30 +263,34 @@ export const Chart = forwardRef<SVGSVGElement, ChartProps>(
 
       return (
         <g key={`line-${datasetIndex}`}>
-          {/* Fill area under line */}
-          {dataset.fill && (
-            <path
-              d={`${pathData} L ${points[points.length - 1].x} ${height + marginTop + padding} L ${points[0].x} ${height + marginTop + padding} Z`}
-              fill={dataset.backgroundColor || color}
-              fillOpacity={0.1}
-              className="chart-area"
-            />
+          {points.length >= 2 && (
+            <>
+              {/* Fill area under line */}
+              {dataset.fill && (
+                <path
+                  d={`${pathData} L ${points[points.length - 1].x} ${height + marginTop + padding} L ${points[0].x} ${height + marginTop + padding} Z`}
+                  fill={dataset.backgroundColor || color}
+                  fillOpacity={0.1}
+                  className="chart-area"
+                />
+              )}
+              {/* Line */}
+              <path
+                d={pathData}
+                fill="none"
+                stroke={dataset.borderColor || color}
+                strokeWidth={dataset.borderWidth || 2}
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                className="chart-line"
+                strokeDasharray={animationProgress < 1 ? `${chartData[datasetIndex].points.length * 2}` : 'none'}
+                strokeDashoffset={animationProgress < 1 ? `${chartData[datasetIndex].points.length * 2 * (1 - animationProgress)}` : '0'}
+                style={{
+                  transition: animationProgress >= 1 ? 'none' : 'stroke-dashoffset 1s ease-in-out'
+                }}
+              />
+            </>
           )}
-          {/* Line */}
-          <path
-            d={pathData}
-            fill="none"
-            stroke={dataset.borderColor || color}
-            strokeWidth={dataset.borderWidth || 2}
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            className="chart-line"
-            strokeDasharray={animationProgress < 1 ? `${chartData[datasetIndex].points.length * 2}` : 'none'}
-            strokeDashoffset={animationProgress < 1 ? `${chartData[datasetIndex].points.length * 2 * (1 - animationProgress)}` : '0'}
-            style={{
-              transition: animationProgress >= 1 ? 'none' : 'stroke-dashoffset 1s ease-in-out'
-            }}
-          />
           {/* Points */}
           {points.map((point, pointIndex) => renderPoint(point, dataset, datasetIndex))}
         </g>
@@ -304,11 +323,11 @@ export const Chart = forwardRef<SVGSVGElement, ChartProps>(
             const barHeight = height - point.y + marginTop + padding;
             // By-value compare against retained raw coords (see renderPoint).
             const isSelected = !!selectedPoint
-              && selectedPoint.point.x === point.originalX
+              && selectedPoint.point.x === point.rawX
               && selectedPoint.point.y === point.originalY
               && selectedPoint.dataset === dataset;
             const isHovered = !!hoveredPoint
-              && hoveredPoint.point.x === point.originalX
+              && hoveredPoint.point.x === point.rawX
               && hoveredPoint.point.y === point.originalY
               && hoveredPoint.dataset === dataset;
             const barClassName = `chart-bar cursor-pointer transition-all duration-150 ${isSelected ? 'chart-bar-selected' : ''} ${isHovered ? 'chart-bar-hovered' : ''}`;
@@ -324,8 +343,8 @@ export const Chart = forwardRef<SVGSVGElement, ChartProps>(
                 stroke={dataset.borderColor || color}
                 strokeWidth={dataset.borderWidth || 1}
                 className={barClassName}
-                onClick={(e) => handleDataPointClick(dataset, { x: point.originalX ?? point.x, y: point.originalY ?? point.y }, e)}
-                onMouseEnter={() => handleDataPointHover(dataset, { x: point.originalX ?? point.x, y: point.originalY ?? point.y })}
+                onClick={(e) => handleDataPointClick(dataset, { x: point.rawX ?? point.originalX ?? point.x, y: point.originalY ?? point.y }, e)}
+                onMouseEnter={() => handleDataPointHover(dataset, { x: point.rawX ?? point.originalX ?? point.x, y: point.originalY ?? point.y })}
                 onMouseLeave={() => handleDataPointLeave()}
                 {...shapeAttributes}
                 style={{
@@ -355,15 +374,22 @@ export const Chart = forwardRef<SVGSVGElement, ChartProps>(
             data.points.map((point) => renderPoint(point, data.dataset, index))
           );
 
-        case 'pie':
+        case 'pie': {
           // Simple pie chart implementation
-          const total = dataPoints.reduce((sum, p) => sum + (typeof p.y === 'number' ? p.y : 0), 0);
+          // Negative values are clamped to 0: a negative slice angle would
+          // sweep backwards (negative angle with sweep-flag 1), overlapping
+          // neighboring slices and running currentAngle in reverse.
+          const values = dataPoints.map((p) => Math.max(0, typeof p.y === 'number' ? p.y : 0));
+          const total = values.reduce((sum, v) => sum + v, 0);
+          // Derive the radius from the smaller chart dimension so the pie
+          // always fits inside the viewport instead of a hardcoded 100.
+          const radius = Math.min(width, height) / 2;
           let currentAngle = -90; // Start from top
 
           return (
             <g transform={`translate(${width / 2}, ${height / 2})`}>
               {dataPoints.map((point, index) => {
-                const value = typeof point.y === 'number' ? point.y : 0;
+                const value = values[index];
                 const percentage = total > 0 ? (value / total) * 100 : 0;
                 const angle = (percentage / 100) * 360;
                 // reason: useChart pre-assigns a color to every flattened
@@ -372,13 +398,13 @@ export const Chart = forwardRef<SVGSVGElement, ChartProps>(
                 /* c8 ignore next */
                 const color = point.color || colors[index % colors.length] || '#000000';
 
-                const x1 = Math.cos((currentAngle * Math.PI) / 180) * 100;
-                const y1 = Math.sin((currentAngle * Math.PI) / 180) * 100;
-                const x2 = Math.cos(((currentAngle + angle) * Math.PI) / 180) * 100;
-                const y2 = Math.sin(((currentAngle + angle) * Math.PI) / 180) * 100;
+                const x1 = Math.cos((currentAngle * Math.PI) / 180) * radius;
+                const y1 = Math.sin((currentAngle * Math.PI) / 180) * radius;
+                const x2 = Math.cos(((currentAngle + angle) * Math.PI) / 180) * radius;
+                const y2 = Math.sin(((currentAngle + angle) * Math.PI) / 180) * radius;
 
                 const largeArcFlag = angle > 180 ? 1 : 0;
-                const pathData = `M 0 0 L ${x1} ${y1} A 100 100 0 ${largeArcFlag} 1 ${x2} ${y2} Z`;
+                const pathData = `M 0 0 L ${x1} ${y1} A ${radius} ${radius} 0 ${largeArcFlag} 1 ${x2} ${y2} Z`;
 
                 const slice = {
                   ...point,
@@ -409,20 +435,37 @@ export const Chart = forwardRef<SVGSVGElement, ChartProps>(
               })}
             </g>
           );
+        }
 
         default:
           return null;
       }
     };
 
-    // Render axes
+    // Render axes (uses the same component-level margin/padding as the chart
+    // body and the hook's hit-test, so axes and data share one layout)
     const renderAxes = () => {
       const { x: xRange, y: yRange } = ranges;
-      const margin = (props.margin as { top?: number; right?: number; bottom?: number; left?: number } | undefined) ??
-        { top: 20, right: 20, bottom: 40, left: 40 };
-      const padding = (props.padding as number | undefined) ?? 20;
-      const left = margin.left ?? 0;
-      const top = margin.top ?? 0;
+      const left = marginLeft;
+      const top = marginTop;
+
+      // Tick labels need enough decimals to stay distinct: a zero-span range
+      // widened to ±0.5 yields steps of 0.25, and toFixed(0) would collapse
+      // all five ticks to duplicates ("1,1,1,1,2"). Pick the smallest digit
+      // count that renders every tick of the axis uniquely.
+      const tickLabeler = (min: number, max: number) => {
+        const ticks = Array.from({ length: 5 }, (_, i) => min + (max - min) * (i / 4));
+        return (v: number) => {
+          for (let d = 0; d <= 4; d++) {
+            if (new Set(ticks.map((t) => t.toFixed(d))).size === ticks.length) {
+              return v.toFixed(d);
+            }
+          }
+          return String(+v.toFixed(4));
+        };
+      };
+      const yLabel = tickLabeler(yRange.min, yRange.max);
+      const xLabel = tickLabeler(xRange.min, xRange.max);
 
       return (
         <g className="chart-axes">
@@ -459,7 +502,7 @@ export const Chart = forwardRef<SVGSVGElement, ChartProps>(
                   fontSize={12}
                   fill="#6b7280"
                 >
-                  {y.toFixed(0)}
+                  {yLabel(y)}
                 </text>
               </g>
             );
@@ -475,33 +518,60 @@ export const Chart = forwardRef<SVGSVGElement, ChartProps>(
             strokeWidth={1}
           />
 
-          {/* X-axis ticks */}
-          {Array.from({ length: 5 }, (_, i) => {
-            const x = xRange.min + (xRange.max - xRange.min) * (i / 4);
-            const scaledX = scales.x.scale * x + scales.x.offset + left + padding;
+          {/* X-axis ticks: one per category label for categorical charts,
+              otherwise 5 evenly spaced numeric ticks */}
+          {categories.length > 0
+            ? categories.map((label, i) => {
+                const scaledX = scales.x.scale * i + scales.x.offset + left + padding;
 
-            return (
-              <g key={`x-tick-${i}`}>
-                <line
-                  x1={scaledX}
-                  y1={height + top + padding}
-                  x2={scaledX}
-                  y2={height + top + padding + 5}
-                  stroke="#e5e7eb"
-                  strokeWidth={1}
-                />
-                <text
-                  x={scaledX}
-                  y={height + top + padding + 20}
-                  textAnchor="middle"
-                  fontSize={12}
-                  fill="#6b7280"
-                >
-                  {x.toFixed(0)}
-                </text>
-              </g>
-            );
-          })}
+                return (
+                  <g key={`x-tick-${i}`}>
+                    <line
+                      x1={scaledX}
+                      y1={height + top + padding}
+                      x2={scaledX}
+                      y2={height + top + padding + 5}
+                      stroke="#e5e7eb"
+                      strokeWidth={1}
+                    />
+                    <text
+                      x={scaledX}
+                      y={height + top + padding + 20}
+                      textAnchor="middle"
+                      fontSize={12}
+                      fill="#6b7280"
+                    >
+                      {label}
+                    </text>
+                  </g>
+                );
+              })
+            : Array.from({ length: 5 }, (_, i) => {
+              const x = xRange.min + (xRange.max - xRange.min) * (i / 4);
+              const scaledX = scales.x.scale * x + scales.x.offset + left + padding;
+
+              return (
+                <g key={`x-tick-${i}`}>
+                  <line
+                    x1={scaledX}
+                    y1={height + top + padding}
+                    x2={scaledX}
+                    y2={height + top + padding + 5}
+                    stroke="#e5e7eb"
+                    strokeWidth={1}
+                  />
+                  <text
+                    x={scaledX}
+                    y={height + top + padding + 20}
+                    textAnchor="middle"
+                    fontSize={12}
+                    fill="#6b7280"
+                  >
+                    {xLabel(x)}
+                  </text>
+                </g>
+              );
+            })}
         </g>
       );
     };
@@ -509,7 +579,21 @@ export const Chart = forwardRef<SVGSVGElement, ChartProps>(
     const backgroundColor = (props.backgroundColor as string | undefined) ?? '#ffffff';
     const borderColor = (props.borderColor as string | undefined) ?? '#e5e7eb';
     const borderWidth = (props.borderWidth as number | undefined) ?? 1;
-    const showTooltips = props.showTooltips as boolean | undefined;
+    // Match the hook's showTooltips default (true) so tooltips work without
+    // an explicit prop.
+    const showTooltips = props.showTooltips ?? true;
+
+    // Scale the hovered point's raw coords into pixel space (same math as the
+    // chartData builder) so the tooltip can be positioned near the point.
+    /* c8 ignore next */
+    const tooltipX = hoveredPoint
+      ? scales.x.scale * toDomainX(hoveredPoint.point.x) + scales.x.offset + marginLeft + padding
+      : 0;
+    /* c8 ignore next */
+    const tooltipY = hoveredPoint
+      ? scales.y.scale * (typeof hoveredPoint.point.y === 'number' ? hoveredPoint.point.y : 0)
+        + scales.y.offset + marginTop + padding
+      : 0;
 
     // reason: the tooltip renders only when a consumer passes tooltipRenderer
     // AND showTooltips is truthy AND a point is hovered; the null arm of the
@@ -517,8 +601,8 @@ export const Chart = forwardRef<SVGSVGElement, ChartProps>(
     // every non-tooltip render and the truthy arm needs explicit coverage.
     /* c8 ignore next */
     const tooltipNode = (showTooltips && hoveredPoint && tooltipRenderer) ? (
-      <g className="chart-tooltip">
-        {tooltipRenderer(hoveredPoint.point, hoveredPoint.dataset)}
+      <g className="chart-tooltip" transform={`translate(${tooltipX}, ${tooltipY})`}>
+        {tooltipRenderer(hoveredPoint.point, hoveredPoint.dataset, tooltipX, tooltipY)}
       </g>
     ) : null;
 
@@ -534,6 +618,14 @@ export const Chart = forwardRef<SVGSVGElement, ChartProps>(
           {...attributes}
           ref={svgRef}
           className="chart-svg"
+          onMouseMove={handleMouseMove}
+          onMouseLeave={handleMouseLeave}
+          // Only treat clicks on the svg itself as chart-background clicks so
+          // the bubble from a shape's own onClick does not clear the selection
+          // that shape just recorded.
+          onClick={(e) => {
+            if (e.target === e.currentTarget) handleChartClick(e);
+          }}
         >
           {/* Background */}
           <rect

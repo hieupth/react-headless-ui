@@ -1,8 +1,8 @@
 "use client";
 import { useState, useEffect, useRef, useCallback, useMemo } from 'react';
-import { useSemanticMixin } from '../mixins';
-import { composeState, composeHandlers } from '../utils';
-import type { SemanticMixinProps } from '../mixins';
+import { useSemanticMixin } from '../mixins/index.js';
+import { composeState, composeHandlers } from '../utils/index.js';
+import type { SemanticMixinProps } from '../mixins/index.js';
 
 export interface UseAspectRatioProps extends SemanticMixinProps {
   /** Aspect ratio (width/height). Default: 16/9 */
@@ -44,11 +44,16 @@ export interface UseAspectRatioReturns {
  */
 export const useAspectRatio = (props: UseAspectRatioProps): UseAspectRatioReturns => {
   const {
-    ratio = 16 / 9,
+    ratio: rawRatio = 16 / 9,
     disabled = false,
     label,
     ...restSemantic
   } = props;
+
+  // Sanitize degenerate ratios at the boundary: non-finite or non-positive
+  // values would leak NaN/Infinity into the aria label and padding-bottom —
+  // fall back to the 16/9 default.
+  const ratio = Number.isFinite(rawRatio) && rawRatio > 0 ? rawRatio : 16 / 9;
 
   const containerRef = useRef<HTMLDivElement>(null);
   const [dimensions, setDimensions] = useState({ width: 0, height: 0 });

@@ -6,7 +6,7 @@
 
 import React, { forwardRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { useFadeInOut, type UseFadeInOutProps } from '../hooks';
+import { useFadeInOut, type UseFadeInOutProps } from '../hooks/index.js';
 
 export interface FadeInOutProps extends UseFadeInOutProps {
   /** Additional CSS class names */

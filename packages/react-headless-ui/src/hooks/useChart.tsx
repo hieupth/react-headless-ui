@@ -5,10 +5,16 @@
  */
 
 import { useState, useCallback, useMemo, useRef, useEffect } from 'react';
-import { useSemanticMixin } from '../mixins/SemanticMixin';
-import { useFocusableMixin } from '../mixins/FocusableMixin';
-import type { SemanticProps } from '../contracts/SemanticContract';
-import type { FocusableProps } from '../contracts/ComponentContract';
+import { useSemanticMixin } from '../mixins/SemanticMixin.js';
+import { useFocusableMixin } from '../mixins/FocusableMixin.js';
+import type { SemanticProps } from '../contracts/SemanticContract.js';
+import type { FocusableProps } from '../contracts/ComponentContract.js';
+
+/**
+ * Single padding default shared by the hook (dimensions + hit-test) and the
+ * Chart component (body layout + axes). Exported so both derive from ONE value.
+ */
+export const CHART_PADDING_DEFAULT = 20;
 
 /**
  * Chart data point interface
@@ -24,6 +30,8 @@ export interface ChartDataPoint {
   color?: string;
   /** Pre-scale numeric x, augmented on flattened render points (Chart.tsx) */
   originalX?: number;
+  /** Raw pre-scale x (original label or number), augmented on flattened render points (Chart.tsx) */
+  rawX?: string | number;
   /** Pre-scale numeric y, augmented on flattened render points (Chart.tsx) */
   originalY?: number;
   /** Source dataset index, augmented on flattened points by useChart */
@@ -216,7 +224,7 @@ export function useChart(props: UseChartProps = {}) {
     backgroundColor = '#ffffff',
     borderColor = '#e5e7eb',
     borderWidth = 1,
-    padding = 20,
+    padding = CHART_PADDING_DEFAULT,
     margin = { top: 20, right: 20, bottom: 40, left: 40 },
     onDataPointClick,
     onDatasetClick,
@@ -273,8 +281,35 @@ export function useChart(props: UseChartProps = {}) {
     return points;
   }, [propDatasets, propColors]);
 
+  // Categorical x support: when any x value is non-numeric, collect the
+  // distinct labels in first-seen order. Each label maps to an evenly spaced
+  // band position (its index in this array), which the linear scale below
+  // consumes exactly like a numeric x value. Empty array = numeric x axis.
+  const categories = useMemo(() => {
+    let categorical = false;
+    const labels: string[] = [];
+    for (const p of allDataPoints) {
+      if (typeof p.x !== 'number') categorical = true;
+      const label = String(p.x);
+      if (!labels.includes(label)) labels.push(label);
+    }
+    return categorical ? labels : [];
+  }, [allDataPoints]);
+
+  // Convert a raw x value to its numeric domain value: the band index for
+  // categorical charts, the value itself for numeric charts.
+  const toDomainX = useCallback((x: string | number): number =>
+    categories.length > 0 ? categories.indexOf(String(x)) : (typeof x === 'number' ? x : 0)
+  , [categories]);
+
   // Calculate data ranges
   const ranges = useMemo(() => {
+    // Widen a zero-span range (single point, all-equal values, or a single
+    // category) deterministically so scale/offset are always finite instead
+    // of dividing by zero downstream.
+    const widen = (r: { min: number; max: number }) =>
+      r.min === r.max ? { min: r.min - 0.5, max: r.max + 0.5 } : r;
+
     if (allDataPoints.length === 0) {
       return {
         x: { min: 0, max: 100 },
@@ -283,7 +318,7 @@ export function useChart(props: UseChartProps = {}) {
     }
 
     const yValues = allDataPoints.map(p => typeof p.y === 'number' ? p.y : 0);
-    const xValues = allDataPoints.map(p => typeof p.x === 'number' ? p.x : 0);
+    const xValues = allDataPoints.map(p => toDomainX(p.x));
 
     const yMin = Math.min(...yValues);
     const yMax = Math.max(...yValues);
@@ -291,16 +326,16 @@ export function useChart(props: UseChartProps = {}) {
     const xMax = Math.max(...xValues);
 
     return {
-      x: {
+      x: widen({
         min: xAxis?.min ?? Math.floor(xMin - (xMax - xMin) * 0.1),
         max: xAxis?.max ?? Math.ceil(xMax + (xMax - xMin) * 0.1)
-      },
-      y: {
+      }),
+      y: widen({
         min: yAxis?.min ?? Math.floor(yMin - (yMax - yMin) * 0.1),
         max: yAxis?.max ?? Math.ceil(yMax + (yMax - yMin) * 0.1)
-      }
+      })
     };
-  }, [allDataPoints, xAxis, yAxis]);
+  }, [allDataPoints, xAxis, yAxis, toDomainX]);
 
   // Animation
   useEffect(() => {
@@ -513,7 +548,7 @@ export function useChart(props: UseChartProps = {}) {
 
     for (const dataset of propDatasets) {
       for (const point of dataset.data) {
-        const xValue = typeof point.x === 'number' ? point.x : 0;
+        const xValue = toDomainX(point.x);
         const yValue = typeof point.y === 'number' ? point.y : 0;
         const px = scales.x.scale * xValue + scales.x.offset + marginLeft + padding;
         const py = scales.y.scale * yValue + scales.y.offset + marginTop + padding;
@@ -531,7 +566,7 @@ export function useChart(props: UseChartProps = {}) {
     if (bestDataset && bestPoint) {
       setHoveredPoint({ dataset: bestDataset, point: bestPoint });
     }
-  }, [disabled, onMouseMove, allDataPoints, propDatasets, scales, margin, padding]);
+  }, [disabled, onMouseMove, allDataPoints, propDatasets, scales, margin, padding, toDomainX]);
 
   // Generate semantic attributes
   const semanticAttributes = useMemo(() => ({
@@ -565,6 +600,9 @@ export function useChart(props: UseChartProps = {}) {
     attributes: semanticAttributes,
     dimensions: chartDimensions,
     scales,
+    // Distinct categorical x labels in first-seen order (empty when numeric),
+    // so renderers can label the x axis with the original strings.
+    categories,
     colors: propColors
-  }), [state, handlers, semanticAttributes, chartDimensions, scales, propColors]);
+  }), [state, handlers, semanticAttributes, chartDimensions, scales, categories, propColors]);
 }

@@ -5,8 +5,8 @@
  */
 
 import React, { forwardRef } from 'react';
-import { useResizable, type UseResizableProps, type HandlePosition } from '../hooks';
-import { useTheme } from '../providers/ThemeProvider';
+import { useResizable, type UseResizableProps, type HandlePosition } from '../hooks/index.js';
+import { useTheme } from '../providers/ThemeProvider.js';
 
 export interface ResizableProps extends UseResizableProps {
   /** Additional CSS class names */

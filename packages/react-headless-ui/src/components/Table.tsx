@@ -5,7 +5,7 @@
  */
 
 import React, { forwardRef } from 'react';
-import { useTable, type UseTableProps } from '../hooks';
+import { useTable, type UseTableProps } from '../hooks/index.js';
 
 export interface TableProps extends UseTableProps {
   /** Additional CSS class names */

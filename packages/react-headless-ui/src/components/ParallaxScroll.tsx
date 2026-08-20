@@ -6,7 +6,7 @@
 
 import React, { forwardRef } from 'react';
 import { motion } from 'framer-motion';
-import { useParallaxScroll, type UseParallaxScrollProps } from '../hooks';
+import { useParallaxScroll, type UseParallaxScrollProps } from '../hooks/index.js';
 
 export interface ParallaxScrollProps extends UseParallaxScrollProps {
   /** Additional CSS class names */

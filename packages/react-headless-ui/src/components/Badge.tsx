@@ -5,9 +5,9 @@
  */
 
 import React, { forwardRef } from 'react';
-import { useBadge } from '../hooks';
-import { mergeRefs } from '../utils';
-import type { UseBadgeProps } from '../hooks';
+import { useBadge } from '../hooks/index.js';
+import { mergeRefs } from '../utils/index.js';
+import type { UseBadgeProps } from '../hooks/index.js';
 
 export interface BadgeProps extends UseBadgeProps {
   /** Additional CSS class names */

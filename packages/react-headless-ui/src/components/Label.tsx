@@ -1,7 +1,7 @@
 "use client";
 import React from 'react';
-import { useLabel, type UseLabelProps } from '../hooks';
-import { useTheme } from '../providers/ThemeProvider';
+import { useLabel, type UseLabelProps } from '../hooks/index.js';
+import { useTheme } from '../providers/ThemeProvider.js';
 
 export interface LabelProps extends UseLabelProps {
   /** Label text content */

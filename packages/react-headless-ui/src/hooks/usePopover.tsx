@@ -6,7 +6,7 @@
  */
 
 import { useState, useCallback, useRef, useEffect, useMemo } from 'react';
-import { useFocusableMixin, usePressableMixin, useSemanticMixin } from '../mixins';
+import { useFocusableMixin, usePressableMixin, useSemanticMixin } from '../mixins/index.js';
 
 /**
  * Popover position options

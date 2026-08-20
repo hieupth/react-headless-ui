@@ -59,7 +59,8 @@ describe('useFocusableMixin', () => {
     const r = get();
     expect(r.focused).toBe(false);
     expect(r.disabled).toBe(false);
-    expect(r.tabIndex).toBe(-1);
+    // Default 'auto' strategy keeps the element keyboard-reachable.
+    expect(r.tabIndex).toBe(0);
     expect(r.focusRef).toBeDefined();
     expect(typeof r.focus).toBe('function');
     expect(typeof r.blur).toBe('function');
@@ -98,9 +99,9 @@ describe('useFocusableMixin', () => {
     expect(focused().tabIndex).toBe(0);
   });
 
-  it('auto strategy yields tabIndex 0 when focused, -1 when not', () => {
+  it('auto strategy keeps tabIndex 0 whether focused or not (keyboard reachable)', () => {
     const { get: notFocused } = mount({ focusStrategy: 'auto' });
-    expect(notFocused().tabIndex).toBe(-1);
+    expect(notFocused().tabIndex).toBe(0);
     const { get: focused } = mount({ focusStrategy: 'auto', defaultFocused: true });
     expect(focused().tabIndex).toBe(0);
   });

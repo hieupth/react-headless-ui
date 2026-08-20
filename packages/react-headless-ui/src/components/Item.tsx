@@ -5,8 +5,8 @@
  */
 
 import React, { forwardRef } from 'react';
-import { useItem, type UseItemProps } from '../hooks';
-import { useTheme } from '../providers/ThemeProvider';
+import { useItem, type UseItemProps } from '../hooks/index.js';
+import { useTheme } from '../providers/ThemeProvider.js';
 
 export interface ItemProps extends Omit<UseItemProps, 'itemRef'> {
   /** Additional CSS class names */

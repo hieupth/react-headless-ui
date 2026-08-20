@@ -5,8 +5,8 @@
  */
 
 import React, { forwardRef } from 'react';
-import { useInput } from '../hooks';
-import type { UseInputProps } from '../hooks';
+import { useInput } from '../hooks/index.js';
+import type { UseInputProps } from '../hooks/index.js';
 
 export interface InputProps extends UseInputProps {
   /** Additional CSS class names */

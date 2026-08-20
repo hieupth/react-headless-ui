@@ -139,4 +139,4 @@ export type NavigationKey =
  * Alias for the semantic behavior props. Hooks that compose semantics
  * extend this interface (kept here for backward-compatible imports).
  */
-export type { SemanticMixinProps as SemanticProps } from '../mixins/SemanticMixin';
+export type { SemanticMixinProps as SemanticProps } from '../mixins/SemanticMixin.js';

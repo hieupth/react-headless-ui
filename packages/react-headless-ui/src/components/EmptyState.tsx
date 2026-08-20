@@ -5,8 +5,8 @@
  */
 
 import React, { forwardRef } from 'react';
-import { useEmptyState } from '../hooks';
-import type { UseEmptyStateProps } from '../hooks';
+import { useEmptyState } from '../hooks/index.js';
+import type { UseEmptyStateProps } from '../hooks/index.js';
 
 /**
  * Empty State component props

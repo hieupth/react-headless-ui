@@ -5,9 +5,9 @@
  */
 
 import { useState, useCallback, useMemo, useRef } from 'react';
-import { useSemanticMixin } from '../mixins';
-import { composeState } from '../utils';
-import type { SemanticMixinProps, FocusableMixinProps, PressableMixinProps } from '../mixins';
+import { useSemanticMixin } from '../mixins/index.js';
+import { composeState } from '../utils/index.js';
+import type { SemanticMixinProps, FocusableMixinProps, PressableMixinProps } from '../mixins/index.js';
 
 export type CalendarMode = 'single' | 'multiple' | 'range';
 
@@ -151,6 +151,9 @@ export const useCalendar = (props: UseCalendarProps = {}): UseCalendarReturns =>
     if (defaultValue) {
       if (mode === 'multiple' && Array.isArray(defaultValue)) {
         return [...defaultValue];
+      } else if (mode === 'range' && Array.isArray(defaultValue)) {
+        // CalendarValue admits Date[] in range mode — normalize it to a range
+        return { from: defaultValue[0] ?? null, to: defaultValue[1] ?? null };
       } else if (mode === 'range' && typeof defaultValue === 'object' && 'from' in defaultValue) {
         return defaultValue as CalendarRange;
       } else if (mode === 'single' && defaultValue instanceof Date) {
@@ -162,9 +165,15 @@ export const useCalendar = (props: UseCalendarProps = {}): UseCalendarReturns =>
 
   const [internalMonth, setInternalMonth] = useState(defaultMonth);
 
-  // Determine controlled/uncontrolled state
+  // Determine controlled/uncontrolled state. CalendarValue admits Date[]
+  // (and [Date, Date]) in range mode, so normalize array values at this
+  // boundary instead of letting range predicates read `from`/`to` off an
+  // array (undefined) and crash inside isSameDay.
   const isValueControlled = controlledValue !== undefined;
-  const value = isValueControlled ? controlledValue : internalValue;
+  const rawValue = isValueControlled ? controlledValue : internalValue;
+  const value: CalendarValue = mode === 'range' && Array.isArray(rawValue)
+    ? { from: rawValue[0] ?? null, to: rawValue[1] ?? null }
+    : rawValue;
 
   // Keep the latest value in a ref so predicate/action callbacks (isSelected,
   // isInRange, selectDate, ...) always observe the most recent selection
@@ -328,7 +337,7 @@ export const useCalendar = (props: UseCalendarProps = {}): UseCalendarReturns =>
     }
 
     const range = currentValue as CalendarRange;
-    return range.from !== null && isSameDay(range.from, date);
+    return Boolean(range.from && isSameDay(range.from, date));
   }, [mode, isSameDay, getValue]);
 
   const isRangeEnd = useCallback((date: Date) => {
@@ -338,7 +347,7 @@ export const useCalendar = (props: UseCalendarProps = {}): UseCalendarReturns =>
     }
 
     const range = currentValue as CalendarRange;
-    return range.to !== null && isSameDay(range.to, date);
+    return Boolean(range.to && isSameDay(range.to, date));
   }, [mode, isSameDay, getValue]);
 
   const isDateToday = useCallback((date: Date) => {

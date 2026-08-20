@@ -5,9 +5,9 @@
  */
 
 import React, { forwardRef } from 'react';
-import { useAvatar } from '../hooks';
-import { mergeRefs } from '../utils';
-import type { UseAvatarProps } from '../hooks';
+import { useAvatar } from '../hooks/index.js';
+import { mergeRefs } from '../utils/index.js';
+import type { UseAvatarProps } from '../hooks/index.js';
 
 export interface AvatarProps extends UseAvatarProps {
   /** Additional CSS class names */

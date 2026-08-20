@@ -1,7 +1,7 @@
 "use client";
 import React from 'react';
-import { useBreadcrumb, type UseBreadcrumbProps } from '../hooks';
-import { useTheme } from '../providers/ThemeProvider';
+import { useBreadcrumb, type UseBreadcrumbProps } from '../hooks/index.js';
+import { useTheme } from '../providers/ThemeProvider.js';
 
 export interface BreadcrumbProps extends UseBreadcrumbProps {
   /** Additional CSS classes */

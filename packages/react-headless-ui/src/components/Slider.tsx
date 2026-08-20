@@ -5,8 +5,8 @@
  */
 
 import React, { forwardRef } from 'react';
-import { useSlider } from '../hooks';
-import type { UseSliderProps, SliderValue } from '../hooks';
+import { useSlider } from '../hooks/index.js';
+import type { UseSliderProps, SliderValue } from '../hooks/index.js';
 
 export interface SliderProps extends UseSliderProps {
   /** Additional CSS class names */

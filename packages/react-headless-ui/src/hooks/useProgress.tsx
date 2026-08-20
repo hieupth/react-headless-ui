@@ -6,8 +6,8 @@
  */
 
 import { useMemo, useState, useEffect, useRef, useCallback } from 'react';
-import { useFocusableMixin } from '../mixins/FocusableMixin';
-import { useSemanticMixin } from '../mixins/SemanticMixin';
+import { useFocusableMixin } from '../mixins/FocusableMixin.js';
+import { useSemanticMixin } from '../mixins/SemanticMixin.js';
 
 /**
  * Progress value type - can be determinate (number) or indeterminate (null)
@@ -207,9 +207,13 @@ export const useProgress = (props: UseProgressProps = {}): ProgressReturns => {
   const progressRef = externalRef || internalRef;
   const animationRef = useRef<number | null>(null);
 
-  // Determine if component is controlled
+  // Determine if component is controlled. A non-finite determinate value
+  // (NaN, ±Infinity) is clamped to `min` at this boundary so it never leaks
+  // into aria attributes, CSS custom properties, or the bar width.
   const isControlled = controlledValue !== undefined;
-  const currentValue = isControlled ? controlledValue : internalValue;
+  const rawValue = isControlled ? controlledValue : internalValue;
+  const currentValue: ProgressValue =
+    rawValue !== null && !Number.isFinite(rawValue) ? min : rawValue;
 
   // Determine mode based on value
   const mode = propMode || (currentValue === null ? 'indeterminate' : 'determinate');

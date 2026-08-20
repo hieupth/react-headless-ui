@@ -5,7 +5,7 @@
  */
 
 import React, { forwardRef, useRef } from 'react';
-import { useInputOTP, type UseInputOTPProps } from '../hooks';
+import { useInputOTP, type UseInputOTPProps } from '../hooks/index.js';
 
 export interface InputOTPProps extends Omit<UseInputOTPProps, 'otpRef'> {
   /** Additional CSS class names */
@@ -44,6 +44,12 @@ export const InputOTP = forwardRef<HTMLDivElement, InputOTPProps>(({
   showCompleteIndicator = true,
   ...inputOTPProps
 }, ref) => {
+  // Effective slot count: rest-spread props leave `inputOTPProps.length`
+  // undefined when defaulted (the hook defaults it to 6), and a degenerate
+  // length <= 0 divides by zero in the progress bar — clamp both at the
+  // boundary so slot/progress math is always finite.
+  const slotCount = Math.max(1, inputOTPProps.length ?? 6);
+
   const {
     state,
     actions,
@@ -53,6 +59,7 @@ export const InputOTP = forwardRef<HTMLDivElement, InputOTPProps>(({
     semantic
   } = useInputOTP({
     ...inputOTPProps,
+      length: slotCount,
       otpRef: ref as React.RefObject<HTMLDivElement>
   });
 
@@ -259,7 +266,7 @@ export const InputOTP = forwardRef<HTMLDivElement, InputOTPProps>(({
 
   // Progress indicator
   const renderProgress = () => {
-    const progress = (state.value.length / inputOTPProps.length!) * 100;
+    const progress = (state.value.length / slotCount) * 100;
 
     return (
       <div className="progress-container ">
@@ -270,7 +277,7 @@ export const InputOTP = forwardRef<HTMLDivElement, InputOTPProps>(({
           />
         </div>
         <div className="input-otp">
-          <span>{state.value.length}/{inputOTPProps.length}</span>
+          <span>{state.value.length}/{slotCount}</span>
           <span>{Math.round(progress)}%</span>
         </div>
       </div>

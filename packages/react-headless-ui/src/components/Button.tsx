@@ -5,16 +5,16 @@
  */
 
 import React, { forwardRef, useEffect } from 'react';
-import { useButton } from '../hooks';
-import type { UseButtonProps } from '../hooks';
+import { useButton } from '../hooks/index.js';
+import type { UseButtonProps } from '../hooks/index.js';
 
 export interface ButtonProps extends UseButtonProps, Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, keyof UseButtonProps | 'children'> {
   /** Additional CSS class names */
   className?: string;
   /** Custom style object */
   style?: React.CSSProperties;
-  /** Button children content */
-  children: React.ReactNode;
+  /** Button children content (optional — icon-only buttons are legitimate) */
+  children?: React.ReactNode;
   /** Leading icon */
   leadingIcon?: React.ReactNode;
   /** Trailing icon */

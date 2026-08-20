@@ -1,4 +1,5 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
+import { useState } from 'react';
 import { render, screen, act, renderHook } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { axe } from 'jest-axe';
@@ -52,6 +53,49 @@ describe('DirectionProvider', () => {
     const { container } = render(<DirectionProvider>x</DirectionProvider>);
     const results = await axe(container);
     expect(results.violations).toHaveLength(0);
+  });
+
+  // Round-2 fix: the showcase demo wired reset buttons through the mount-once
+  // defaultTextDirection (inert) and let the provider write <html dir/lang>.
+  // Controlled text+layout direction with updateHTML* disabled makes the
+  // resets flip the provider container and leaves the document alone.
+  it('controlled direction resets flip the container dir without touching <html>', async () => {
+    const user = userEvent.setup();
+    document.documentElement.dir = '';
+    document.documentElement.lang = 'en';
+
+    function Demo() {
+      const [dir, setDir] = useState<'ltr' | 'rtl'>('ltr');
+      return (
+        <>
+          <DirectionProvider
+            textDirection={dir}
+            layoutDirection={dir}
+            onDirectionChange={(next) => setDir(next === 'rtl' ? 'rtl' : 'ltr')}
+            updateHTMLDir={false}
+            updateHTMLLang={false}
+          >
+            <DirectionToggle />
+          </DirectionProvider>
+          <button type="button" onClick={() => setDir('ltr')}>
+            reset to LTR
+          </button>
+        </>
+      );
+    }
+
+    const { container } = render(<Demo />);
+    const provider = container.querySelector('[data-testid="direction-provider"]') as HTMLElement;
+    expect(provider).toHaveAttribute('dir', 'ltr');
+
+    await user.click(screen.getByTestId('direction-toggle'));
+    expect(provider).toHaveAttribute('dir', 'rtl');
+
+    await user.click(screen.getByRole('button', { name: 'reset to LTR' }));
+    expect(provider).toHaveAttribute('dir', 'ltr');
+
+    expect(document.documentElement.dir).toBe('');
+    expect(document.documentElement.lang).toBe('en');
   });
 });
 

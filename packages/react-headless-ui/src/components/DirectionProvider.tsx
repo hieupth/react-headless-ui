@@ -5,7 +5,7 @@
  */
 
 import React, { forwardRef, createContext, useContext } from 'react';
-import { useDirectionProvider, type UseDirectionProviderProps, type DirectionProviderState, type DirectionProviderActions } from '../hooks';
+import { useDirectionProvider, type UseDirectionProviderProps, type DirectionProviderState, type DirectionProviderActions } from '../hooks/index.js';
 
 export interface DirectionProviderProps extends UseDirectionProviderProps {
   /** Additional CSS class names */

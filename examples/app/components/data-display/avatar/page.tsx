@@ -7,6 +7,15 @@ import { PropsTable } from '@/components/props-table';
 // Avatar renders a container <div> with an <img> and a fallback. It tracks
 // loading / error states internally and swaps to initials when the image fails.
 // Headless on CSS — theme it through className.
+
+// Solid-color placeholder avatar as a data URI (no network request).
+const AVATAR_SRC =
+  'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAIAAADYYG7QAAAAQklEQVR4nO3OUQkAIBBAsesq2N8GtvD5MViAzdrnK5MPhISEhOqBkJCQUD0QEhISqgdCQkJC9UBISEioHggJCT12AW4diuIc7ZnTAAAAAElFTkSuQmCC';
+
+// Truncated PNG data URI: fails to decode, so the error-fallback demo below
+// works without a network 404.
+const BROKEN_SRC = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUg';
+
 export default function AvatarPage() {
   return (
     <div className="mx-auto max-w-3xl px-6 py-12 space-y-8">
@@ -30,19 +39,21 @@ export default function AvatarPage() {
         </p>
         <Demo
           code={`<Avatar
-  src="https://i.pravatar.cc/96?img=12"
+  src={AVATAR_SRC}
+  alt="Ada Lovelace"
   fallback="Ada Lovelace"
   className="h-12 w-12 rounded-full bg-gray-200 overflow-hidden dark:bg-gray-700 flex items-center justify-center text-sm font-semibold"
 />
 <Avatar
-  src="/broken.png"
+  src={BROKEN_SRC}
+  alt="Grace Hopper"
   fallback="Grace Hopper"
   className="h-12 w-12 rounded-full bg-gray-200 overflow-hidden dark:bg-gray-700 flex items-center justify-center text-sm font-semibold"
 />`}
         >
           <div className="flex items-center gap-3">
-            <Avatar src="https://i.pravatar.cc/96?img=12" fallback="Ada Lovelace" className="w-12 h-12 rounded-full overflow-hidden bg-gray-200 dark:bg-gray-700 flex items-center justify-center text-sm font-semibold" />
-            <Avatar src="/definitely-broken.png" fallback="Grace Hopper" className="w-12 h-12 rounded-full overflow-hidden bg-gray-200 dark:bg-gray-700 flex items-center justify-center text-sm font-semibold" />
+            <Avatar src={AVATAR_SRC} alt="Ada Lovelace" fallback="Ada Lovelace" className="w-12 h-12 rounded-full overflow-hidden bg-gray-200 dark:bg-gray-700 flex items-center justify-center text-sm font-semibold" />
+            <Avatar src={BROKEN_SRC} alt="Grace Hopper" fallback="Grace Hopper" className="w-12 h-12 rounded-full overflow-hidden bg-gray-200 dark:bg-gray-700 flex items-center justify-center text-sm font-semibold" />
           </div>
         </Demo>
       </section>

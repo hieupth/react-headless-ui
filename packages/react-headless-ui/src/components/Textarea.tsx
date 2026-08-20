@@ -5,8 +5,8 @@
  */
 
 import React from 'react';
-import { useTextarea, type UseTextareaProps } from '../hooks';
-import { useTheme } from '../providers/ThemeProvider';
+import { useTextarea, type UseTextareaProps } from '../hooks/index.js';
+import { useTheme } from '../providers/ThemeProvider.js';
 
 export interface TextareaProps extends Omit<UseTextareaProps, 'label'> {
   /** Additional CSS classes */

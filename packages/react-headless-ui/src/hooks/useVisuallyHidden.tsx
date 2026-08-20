@@ -6,7 +6,7 @@
  */
 
 import { useState, useCallback, useRef, useEffect, useMemo } from 'react';
-import { useFocusableMixin, useSemanticMixin } from '../mixins';
+import { useFocusableMixin, useSemanticMixin } from '../mixins/index.js';
 
 /**
  * VisuallyHidden state interface

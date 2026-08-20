@@ -1,5 +1,6 @@
 'use client';
 
+import { useState } from 'react';
 import { Breadcrumb } from '@hieupth/react-headless-ui';
 import { Demo } from '@/components/demo';
 import { PropsTable } from '@/components/props-table';
@@ -12,19 +13,19 @@ const breadcrumbCls =
 
 const basicItems = [
   { id: 'home', label: 'Home', href: '/' },
-  { id: 'projects', label: 'Projects', href: '/projects' },
-  { id: 'react-headless-ui', label: 'react-headless-ui', href: '/projects/react-headless-ui' },
-  { id: 'tabs', label: 'Tabs', current: true },
+  { id: 'docs', label: 'Docs', href: '/docs' },
+  { id: 'tabs', label: 'Tabs', href: '/components/navigation/tabs' },
+  { id: 'breadcrumb', label: 'Breadcrumb', current: true },
 ];
 
 export default function BreadcrumbPage() {
-  const path = 'Home / Projects / react-headless-ui';
+  const [path, setPath] = useState('Home / Docs / Components / Breadcrumb');
 
   const clickableItems = [
-    { id: 'home', label: 'Home' },
-    { id: 'docs', label: 'Docs' },
-    { id: 'components', label: 'Components' },
-    { id: 'breadcrumb', label: 'Breadcrumb', current: true },
+    { id: 'home', label: 'Home', onClick: () => setPath('Home') },
+    { id: 'docs', label: 'Docs', onClick: () => setPath('Home / Docs') },
+    { id: 'components', label: 'Components', onClick: () => setPath('Home / Docs / Components') },
+    { id: 'breadcrumb', label: 'Breadcrumb', current: true, onClick: () => setPath('Home / Docs / Components / Breadcrumb') },
   ];
 
   return (
@@ -52,8 +53,9 @@ export default function BreadcrumbPage() {
   className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400"
   items={[
     { id: 'home', label: 'Home', href: '/' },
-    { id: 'projects', label: 'Projects', href: '/projects' },
-    { id: 'react-headless-ui', label: 'react-headless-ui', current: true }
+    { id: 'docs', label: 'Docs', href: '/docs' },
+    { id: 'tabs', label: 'Tabs', href: '/components/navigation/tabs' },
+    { id: 'breadcrumb', label: 'Breadcrumb', current: true }
   ]}
 />`}
         >
@@ -69,9 +71,15 @@ export default function BreadcrumbPage() {
           <code>aria-current</code>.
         </p>
         <Demo
-          code={`<Breadcrumb
+          code={`const [path, setPath] = useState('Home / Docs / Components / Breadcrumb');
+<Breadcrumb
   className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400"
-  items={clickableItems}
+  items={[
+    { id: 'home', label: 'Home', onClick: () => setPath('Home') },
+    { id: 'docs', label: 'Docs', onClick: () => setPath('Home / Docs') },
+    { id: 'components', label: 'Components', onClick: () => setPath('Home / Docs / Components') },
+    { id: 'breadcrumb', label: 'Breadcrumb', current: true, onClick: () => setPath('Home / Docs / Components / Breadcrumb') }
+  ]}
   separator={<span aria-hidden>›</span>}
 />`}
         >

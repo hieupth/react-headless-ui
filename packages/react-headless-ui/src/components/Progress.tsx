@@ -5,8 +5,8 @@
  */
 
 import React, { forwardRef } from 'react';
-import { useProgress } from '../hooks';
-import type { UseProgressProps } from '../hooks';
+import { useProgress } from '../hooks/index.js';
+import type { UseProgressProps } from '../hooks/index.js';
 
 export interface ProgressProps extends UseProgressProps, React.AriaAttributes {
   /** Additional CSS class names */

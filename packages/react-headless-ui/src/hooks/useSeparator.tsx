@@ -1,8 +1,8 @@
 "use client";
 import { useMemo } from 'react';
-import { useSemanticMixin } from '../mixins';
-import { composeState, composeHandlers } from '../utils';
-import type { SemanticMixinProps } from '../mixins';
+import { useSemanticMixin } from '../mixins/index.js';
+import { composeState, composeHandlers } from '../utils/index.js';
+import type { SemanticMixinProps } from '../mixins/index.js';
 
 export interface UseSeparatorProps extends SemanticMixinProps {
   /** Orientation of the separator */

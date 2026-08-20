@@ -5,7 +5,7 @@
  */
 
 import React, { forwardRef } from 'react';
-import { useSidebar, type UseSidebarProps } from '../hooks';
+import { useSidebar, type UseSidebarProps } from '../hooks/index.js';
 
 export interface SidebarProps extends Omit<UseSidebarProps, 'sidebarRef'> {
   /** Additional CSS class names */
@@ -130,6 +130,7 @@ export const Sidebar = forwardRef<HTMLDivElement, SidebarProps>(({
               <button
                 onClick={actions.toggleSidebar}
                 className={triggerButtonClasses}
+                style={{ minWidth: 24, minHeight: 24 }}
                 aria-label={state.open ? 'Close sidebar' : 'Open sidebar'}
                 aria-expanded={state.open}
                 disabled={state.disabled}
@@ -139,6 +140,8 @@ export const Sidebar = forwardRef<HTMLDivElement, SidebarProps>(({
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
+                  width={24}
+                  height={24}
                 >
                   <path
                     strokeLinecap="round"
@@ -196,6 +199,7 @@ export const Sidebar = forwardRef<HTMLDivElement, SidebarProps>(({
           <button
             onClick={actions.toggleCollapse}
             className="sidebar"
+            style={{ minWidth: 24, minHeight: 24 }}
             aria-label={state.collapsed ? 'Expand sidebar' : 'Collapse sidebar'}
             aria-expanded={!state.collapsed}
           >
@@ -204,6 +208,8 @@ export const Sidebar = forwardRef<HTMLDivElement, SidebarProps>(({
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
+              width={24}
+              height={24}
             >
               <path
                 strokeLinecap="round"

@@ -5,9 +5,9 @@
  */
 
 import { useState, useCallback, useRef, useEffect, useMemo } from 'react';
-import { useSemanticMixin } from '../mixins';
-import { composeState } from '../utils';
-import type { SemanticMixinProps } from '../mixins';
+import { useSemanticMixin } from '../mixins/index.js';
+import { composeState } from '../utils/index.js';
+import type { SemanticMixinProps } from '../mixins/index.js';
 
 export interface UseHoverCardProps extends
   SemanticMixinProps {

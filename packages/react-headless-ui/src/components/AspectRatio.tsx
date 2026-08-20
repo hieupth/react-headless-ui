@@ -1,7 +1,7 @@
 "use client";
 import React from 'react';
-import { useAspectRatio, type UseAspectRatioProps } from '../hooks';
-import { useTheme } from '../providers/ThemeProvider';
+import { useAspectRatio, type UseAspectRatioProps } from '../hooks/index.js';
+import { useTheme } from '../providers/ThemeProvider.js';
 
 export interface AspectRatioProps extends UseAspectRatioProps {
   /** Content to display within aspect ratio container */

@@ -6,7 +6,7 @@
 
 import React, { forwardRef } from 'react';
 import { motion } from 'framer-motion';
-import { usePulse, type UsePulseProps } from '../hooks';
+import { usePulse, type UsePulseProps } from '../hooks/index.js';
 
 export interface PulseProps extends UsePulseProps {
   /** Additional CSS class names */

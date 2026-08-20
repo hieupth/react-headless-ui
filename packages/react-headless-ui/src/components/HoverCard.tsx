@@ -5,7 +5,7 @@
  */
 
 import React, { forwardRef } from 'react';
-import { useHoverCard, type UseHoverCardProps } from '../hooks';
+import { useHoverCard, type UseHoverCardProps } from '../hooks/index.js';
 
 export interface HoverCardProps extends Omit<UseHoverCardProps, 'triggerRef' | 'cardRef'> {
   /** Additional CSS class names */

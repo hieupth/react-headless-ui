@@ -6,8 +6,8 @@
 
 import React, { forwardRef, useRef, useEffect } from 'react';
 import { createPortal } from 'react-dom';
-import { useDrawer } from '../hooks';
-import type { UseDrawerProps } from '../hooks';
+import { useDrawer } from '../hooks/index.js';
+import type { UseDrawerProps } from '../hooks/index.js';
 
 /**
  * Drawer component props

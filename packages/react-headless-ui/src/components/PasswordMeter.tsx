@@ -5,7 +5,7 @@
  */
 
 import React, { forwardRef, useRef } from 'react';
-import { usePasswordMeter, type UsePasswordMeterProps } from '../hooks';
+import { usePasswordMeter, type UsePasswordMeterProps } from '../hooks/index.js';
 
 export interface PasswordMeterProps extends Omit<UsePasswordMeterProps, 'meterRef'> {
   /** Additional CSS class names */
@@ -459,7 +459,7 @@ export const PasswordMeter = forwardRef<HTMLDivElement, PasswordMeterProps>(({
         disabled={state.disabled}
       >
         {state.visible ? (
-          <svg className="password-meter" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <svg className="password-meter" fill="none" stroke="currentColor" viewBox="0 0 24 24" width={24} height={24}>
             <path
               strokeLinecap="round"
               strokeLinejoin="round"
@@ -468,7 +468,7 @@ export const PasswordMeter = forwardRef<HTMLDivElement, PasswordMeterProps>(({
             />
           </svg>
         ) : (
-          <svg className="password-meter" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <svg className="password-meter" fill="none" stroke="currentColor" viewBox="0 0 24 24" width={24} height={24}>
             <path
               strokeLinecap="round"
               strokeLinejoin="round"

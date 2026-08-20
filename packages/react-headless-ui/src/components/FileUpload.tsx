@@ -5,8 +5,8 @@
  */
 
 import React, { forwardRef, useRef } from 'react';
-import { useFileUpload } from '../hooks';
-import type { UseFileUploadProps } from '../hooks';
+import { useFileUpload } from '../hooks/index.js';
+import type { UseFileUploadProps } from '../hooks/index.js';
 
 /**
  * File Upload component props
@@ -140,6 +140,7 @@ export const FileUpload = forwardRef<HTMLDivElement, FileUploadProps>(
           accept={acceptTypes}
           disabled={disabledFlag}
           required={requiredFlag}
+          aria-label={uploadLabel}
           className="file-upload"
           onChange={(e) => handlers.handleFileSelect(e.target.files)}
           onFocus={handlers.handleFocus}

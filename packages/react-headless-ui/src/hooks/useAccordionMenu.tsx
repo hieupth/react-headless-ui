@@ -4,10 +4,10 @@
  * Provides menu behavior with accordion-style expandable sections.
  */
 
-import { useState, useCallback, useRef, useMemo } from 'react';
-import { useSemanticMixin } from '../mixins';
-import { composeState } from '../utils';
-import type { SemanticMixinProps, FocusableMixinProps } from '../mixins';
+import { useState, useCallback, useId, useRef, useMemo, useEffect } from 'react';
+import { useSemanticMixin } from '../mixins/index.js';
+import { composeState } from '../utils/index.js';
+import type { SemanticMixinProps, FocusableMixinProps } from '../mixins/index.js';
 
 export interface AccordionMenuItem {
   /** Unique identifier for the item */
@@ -126,6 +126,10 @@ export const useAccordionMenu = (props: UseAccordionMenuProps) => {
   // Refs
   const menuRef = useRef<HTMLDivElement>(null);
 
+  // Instance-scoped id prefix so multiple menus rendering the same item ids
+  // never produce duplicate DOM ids.
+  const instanceId = useId();
+
   // Determine if component is controlled or uncontrolled
   const isControlled = controlledOpenItems !== undefined;
   const openItemsSet = isControlled
@@ -219,6 +223,22 @@ export const useAccordionMenu = (props: UseAccordionMenuProps) => {
   const closeAll = useCallback(() => {
     handleOpenItemsChange(new Set());
   }, [handleOpenItemsChange]);
+
+  // Escape collapses the open section(s) at the document level so the menu is
+  // dismissable wherever focus sits — the container keydown in menuProps only
+  // covers focus inside the menu element itself.
+  useEffect(() => {
+    if (openItemsSet.size === 0) return;
+
+    const handleEscape = (event: KeyboardEvent) => {
+      if (event.key !== 'Escape') return;
+      event.preventDefault();
+      closeAll();
+    };
+
+    document.addEventListener('keydown', handleEscape);
+    return () => document.removeEventListener('keydown', handleEscape);
+  }, [openItemsSet, closeAll]);
 
   // Focus item
   const focusItem = useCallback((itemId: string) => {
@@ -316,7 +336,7 @@ export const useAccordionMenu = (props: UseAccordionMenuProps) => {
     const isFocused = focusedItemId === item.id;
 
     return {
-      id: item.id,
+      id: `${instanceId}-${item.id}`,
       role: 'menuitem',
       'aria-expanded': hasChildItems ? isOpen : undefined,
       'aria-haspopup': hasChildItems ? 'menu' : undefined,
@@ -328,7 +348,7 @@ export const useAccordionMenu = (props: UseAccordionMenuProps) => {
       'data-has-children': hasChildItems,
       tabIndex: isFocused ? 0 : -1
     };
-  }, [isItemOpen, hasChildren, focusedItemId]);
+  }, [instanceId, isItemOpen, hasChildren, focusedItemId]);
 
   // Item header props generator
   const getItemHeaderProps = useCallback((item: AccordionMenuItem, depth = 0) => {
@@ -336,9 +356,10 @@ export const useAccordionMenu = (props: UseAccordionMenuProps) => {
     const isOpen = isItemOpen(item.id);
 
     return {
+      id: `${instanceId}-header-${item.id}`,
       role: 'button',
       'aria-expanded': hasChildItems ? isOpen : undefined,
-      'aria-controls': hasChildItems ? `accordion-content-${item.id}` : undefined,
+      'aria-controls': hasChildItems ? `${instanceId}-content-${item.id}` : undefined,
       'data-header': true,
       'data-depth': depth,
       'data-has-children': hasChildItems,
@@ -365,16 +386,16 @@ export const useAccordionMenu = (props: UseAccordionMenuProps) => {
         }
       }
     };
-  }, [hasChildren, isItemOpen, toggleItem]);
+  }, [instanceId, hasChildren, isItemOpen, toggleItem]);
 
   // Item content props generator
   const getItemContentProps = useCallback((item: AccordionMenuItem, depth = 0) => {
     const isOpen = isItemOpen(item.id);
 
     return {
-      id: `accordion-content-${item.id}`,
+      id: `${instanceId}-content-${item.id}`,
       role: 'region',
-      'aria-labelledby': `accordion-header-${item.id}`,
+      'aria-labelledby': `${instanceId}-header-${item.id}`,
       'data-content': true,
       'data-depth': depth,
       'data-open': isOpen,
@@ -384,7 +405,7 @@ export const useAccordionMenu = (props: UseAccordionMenuProps) => {
         transition: `all ${animationDuration}ms ease-in-out`
       }
     };
-  }, [isItemOpen, animationDuration]);
+  }, [instanceId, isItemOpen, animationDuration]);
 
   // Composed state
   const state = useMemo(() => composeState<UseAccordionMenuState>({

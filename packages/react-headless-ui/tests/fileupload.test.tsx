@@ -43,6 +43,13 @@ describe('FileUpload', () => {
     expect(fileInput(container)).toBeInTheDocument();
   });
 
+  // Round-2 fix: the hidden file input had no accessible name — the visible
+  // upload text is a sibling <p>, not an associated label.
+  it('labels the hidden file input with the upload text', () => {
+    const { container } = render(<FileUpload uploadText="Upload a file" />);
+    expect(fileInput(container)).toHaveAttribute('aria-label', 'Upload a file');
+  });
+
   it('selects a file via the file input and lists it', async () => {
     const user = userEvent.setup();
     const { container } = render(<FileUpload multiple />);

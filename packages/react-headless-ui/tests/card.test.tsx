@@ -182,12 +182,28 @@ describe('useCard', () => {
     expect(ref.current?.tagName).toBe('DIV');
   });
 
-  it('falls back to the "card" id prefix when role is generic/absent', () => {
+  it('generates unique title/description ids per instance and wires aria to them', () => {
     const { container } = render(
-      <Card role="generic" title="T" description="D">x</Card>
+      <div>
+        <Card title="T1" description="D1">x</Card>
+        <Card title="T2" description="D2">y</Card>
+      </div>
     );
-    expect(container.querySelector('#card-title')).not.toBeNull();
-    expect(container.querySelector('#card-description')).not.toBeNull();
+    const titles = Array.from(container.querySelectorAll('h3[id]'));
+    const descriptions = Array.from(container.querySelectorAll('p[id]'));
+    expect(titles).toHaveLength(2);
+    expect(descriptions).toHaveLength(2);
+    // No duplicate ids across instances.
+    expect(new Set(titles.map((el) => el.id)).size).toBe(2);
+    expect(new Set(descriptions.map((el) => el.id)).size).toBe(2);
+    // Each card's aria references resolve to its own title/description nodes.
+    const roots = Array.from(container.querySelectorAll('[aria-labelledby]'));
+    expect(roots).toHaveLength(2);
+    roots.forEach((root, i) => {
+      expect(root.getAttribute('aria-labelledby')).toBe(titles[i].id);
+      expect(root.getAttribute('aria-describedby')).toBe(descriptions[i].id);
+      expect(document.getElementById(root.getAttribute('aria-labelledby')!)).toBe(titles[i]);
+    });
   });
 
   it('flips the hovered state when a hoverable card is mouse-entered', () => {

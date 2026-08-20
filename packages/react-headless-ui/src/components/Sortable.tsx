@@ -5,8 +5,8 @@
  */
 
 import React, { forwardRef } from 'react';
-import { useSortable, type UseSortableProps, type SortableItem } from '../hooks';
-import { useTheme } from '../providers/ThemeProvider';
+import { useSortable, type UseSortableProps, type SortableItem } from '../hooks/index.js';
+import { useTheme } from '../providers/ThemeProvider.js';
 
 export interface SortableProps extends Omit<UseSortableProps, 'sortableRef'> {
   /** Additional CSS class names */
@@ -188,7 +188,7 @@ export const Sortable = forwardRef<HTMLElement, SortableProps>(({
         data-locked={state.locked}
       >
         {state.items.map((item, index) => (
-          <div key={item.id}>
+          <div key={item.id} role="listitem">
             {renderItem({
               item,
               index,
@@ -224,6 +224,7 @@ export const Sortable = forwardRef<HTMLElement, SortableProps>(({
         <div
           key={item.id}
           style={getItemStyles(item, index)}
+          role="listitem"
           draggable={!item.disabled && !state.disabled && !state.locked}
           onDragStart={(e) => handleDragStart(item, e)}
           onDragEnd={handleDragEnd}

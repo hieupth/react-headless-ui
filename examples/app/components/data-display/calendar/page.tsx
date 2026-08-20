@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Calendar } from '@hieupth/react-headless-ui';
 import { Demo } from '@/components/demo';
 import { PropsTable } from '@/components/props-table';
@@ -9,8 +9,23 @@ import { PropsTable } from '@/components/props-table';
 // selection modes. The hook computes the month grid, disabled ranges, and
 // today; the component wires a grid role with full arrow-key navigation.
 // Headless on CSS — theme the day cells through className.
+
+// The page is statically exported, so seeding render state with `new Date()`
+// makes the prerendered HTML (build date) diverge from the first client
+// render (visit date) — a text mismatch that trips React hydration error
+// #418. Render a fixed month deterministically, then switch to the live
+// month in an effect after hydration.
+const INITIAL_MONTH = new Date(2026, 7, 1);
+
 export default function CalendarPage() {
-  const [value, setValue] = useState<Date | null>(new Date());
+  const [month, setMonth] = useState(INITIAL_MONTH);
+  const [value, setValue] = useState<Date | null>(null);
+
+  useEffect(() => {
+    const now = new Date();
+    setMonth(new Date(now.getFullYear(), now.getMonth(), 1));
+    setValue(now);
+  }, []);
 
   return (
     <div className="mx-auto max-w-3xl px-6 py-12 space-y-8">
@@ -34,11 +49,23 @@ export default function CalendarPage() {
           <code>onSelect</code>.
         </p>
         <Demo
-          code={`const [value, setValue] = useState(new Date());
+          code={`// Fixed initial month renders deterministically at build; switching to
+// the live month in an effect avoids the build-date vs visit-date text
+// mismatch behind React hydration error #418.
+const [month, setMonth] = useState(new Date(2026, 7, 1));
+const [value, setValue] = useState<Date | null>(null);
+
+useEffect(() => {
+  const now = new Date();
+  setMonth(new Date(now.getFullYear(), now.getMonth(), 1));
+  setValue(now);
+}, []);
 
 <Calendar
   mode="single"
   value={value}
+  month={month}
+  onMonthChange={setMonth}
   onSelect={setValue}
   className="rounded-lg border border-gray-200 p-4 text-sm dark:border-gray-700 [&_.calendar-day]:h-8 [&_.calendar-day]:w-8 [&_.calendar-day]:flex [&_.calendar-day]:items-center [&_.calendar-day]:justify-center [&_.calendar-day]:rounded [&_.calendar-grid]:grid [&_.calendar-grid]:grid-cols-7 [&_.calendar-grid]:gap-1 [&_.calendar-weekday]:text-xs [&_.calendar-weekday]:text-gray-500"
 />`}
@@ -47,10 +74,12 @@ export default function CalendarPage() {
             <Calendar
               mode="single"
               value={value}
+              month={month}
+              onMonthChange={setMonth}
               onSelect={(v) => setValue(v as Date)}
               className="rounded-lg border border-gray-200 p-4 text-sm dark:border-gray-700 [&_.calendar-day]:h-8 [&_.calendar-day]:w-8 [&_.calendar-day]:flex [&_.calendar-day]:items-center [&_.calendar-day]:justify-center [&_.calendar-day]:rounded [&_.calendar-grid]:grid [&_.calendar-grid]:grid-cols-7 [&_.calendar-grid]:gap-1 [&_.calendar-weekday]:text-xs [&_.calendar-weekday]:text-gray-500"
             />
-            <span className="text-xs text-gray-500">{value?.toDateString()}</span>
+            <span className="text-xs text-gray-500">{value?.toDateString() ?? '—'}</span>
           </div>
         </Demo>
       </section>
@@ -64,12 +93,14 @@ export default function CalendarPage() {
         <Demo
           code={`<Calendar
   mode="range"
+  defaultMonth={new Date(2026, 6, 1)}
   defaultValue={{ from: new Date(2026, 6, 5), to: new Date(2026, 6, 12) }}
   className="rounded-lg border border-gray-200 p-4 text-sm dark:border-gray-700 [&_.calendar-day]:h-8 [&_.calendar-day]:w-8 [&_.calendar-day]:flex [&_.calendar-day]:items-center [&_.calendar-day]:justify-center [&_.calendar-day]:rounded [&_.calendar-grid]:grid [&_.calendar-grid]:grid-cols-7 [&_.calendar-grid]:gap-1 [&_.calendar-weekday]:text-xs [&_.calendar-weekday]:text-gray-500"
 />`}
         >
           <Calendar
             mode="range"
+            defaultMonth={new Date(2026, 6, 1)}
             defaultValue={{ from: new Date(2026, 6, 5), to: new Date(2026, 6, 12) }}
             className="rounded-lg border border-gray-200 p-4 text-sm dark:border-gray-700 [&_.calendar-day]:h-8 [&_.calendar-day]:w-8 [&_.calendar-day]:flex [&_.calendar-day]:items-center [&_.calendar-day]:justify-center [&_.calendar-day]:rounded [&_.calendar-grid]:grid [&_.calendar-grid]:grid-cols-7 [&_.calendar-grid]:gap-1 [&_.calendar-weekday]:text-xs [&_.calendar-weekday]:text-gray-500"
           />
@@ -86,6 +117,7 @@ export default function CalendarPage() {
           code={`<Calendar
   mode="single"
   weekStartsOn={1}
+  defaultMonth={new Date(2026, 6, 1)}
   fromDate={new Date(2026, 6, 1)}
   toDate={new Date(2026, 6, 20)}
   className="rounded-lg border border-gray-200 p-4 text-sm dark:border-gray-700 [&_.calendar-day]:h-8 [&_.calendar-day]:w-8 [&_.calendar-day]:flex [&_.calendar-day]:items-center [&_.calendar-day]:justify-center [&_.calendar-day]:rounded [&_.calendar-grid]:grid [&_.calendar-grid]:grid-cols-7 [&_.calendar-grid]:gap-1 [&_.calendar-weekday]:text-xs [&_.calendar-weekday]:text-gray-500"
@@ -94,6 +126,7 @@ export default function CalendarPage() {
           <Calendar
             mode="single"
             weekStartsOn={1}
+            defaultMonth={new Date(2026, 6, 1)}
             fromDate={new Date(2026, 6, 1)}
             toDate={new Date(2026, 6, 20)}
             className="rounded-lg border border-gray-200 p-4 text-sm dark:border-gray-700 [&_.calendar-day]:h-8 [&_.calendar-day]:w-8 [&_.calendar-day]:flex [&_.calendar-day]:items-center [&_.calendar-day]:justify-center [&_.calendar-day]:rounded [&_.calendar-grid]:grid [&_.calendar-grid]:grid-cols-7 [&_.calendar-grid]:gap-1 [&_.calendar-weekday]:text-xs [&_.calendar-weekday]:text-gray-500"

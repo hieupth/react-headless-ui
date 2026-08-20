@@ -57,12 +57,24 @@ describe('Avatar', () => {
     expect(onImageError).toHaveBeenCalled();
   });
 
-  it('does not fire onClick when not clickable', async () => {
+  it('auto-enables clickable when onClick is provided', async () => {
     const user = userEvent.setup();
     const onClick = vi.fn();
     render(<Avatar fallback="X" alt="X" onClick={onClick} />);
-    // No button role when not clickable.
+    // Providing onClick implies an activatable avatar: button role + tab stop.
+    const avatar = screen.getByRole('button');
+    expect(avatar).toHaveAttribute('tabindex', '0');
+    await user.click(avatar);
+    expect(onClick).toHaveBeenCalledTimes(1);
+  });
+
+  it('does not fire onClick when explicitly not clickable', async () => {
+    const user = userEvent.setup();
+    const onClick = vi.fn();
+    render(<Avatar fallback="X" alt="X" clickable={false} onClick={onClick} />);
+    // Explicit clickable={false} opts out: no button role, inert handler.
     expect(screen.queryByRole('button')).toBeNull();
+    await user.click(screen.getByText('X'));
     expect(onClick).not.toHaveBeenCalled();
   });
 

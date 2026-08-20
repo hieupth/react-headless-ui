@@ -1,16 +1,17 @@
 'use client';
 
-import { useState } from 'react';
+import { Tooltip, SimpleTooltip } from '@hieupth/react-headless-ui';
 import { Demo } from '@/components/demo';
 import { PropsTable } from '@/components/props-table';
 
 // Tooltip portals a small label near its trigger via createPortal. The
-// SimpleTooltip companion is the zero-config variant. Snippets show the API;
-// the live preview below uses a styled inline note since the portal target is
-// document.body.
-export default function TooltipPage() {
-  const [open, setOpen] = useState(false);
+// SimpleTooltip companion is the zero-config variant. The component is
+// headless on CSS — the tooltip body is themed via the className prop, which
+// lands on the portaled container (the arrow inherits currentColor).
+const tooltipClassName =
+  'whitespace-nowrap rounded bg-gray-900 px-2 py-1 text-xs text-white shadow dark:bg-gray-700';
 
+export default function TooltipPage() {
   return (
     <div className="mx-auto max-w-3xl px-6 py-12 space-y-8">
       <header className="space-y-3">
@@ -35,9 +36,10 @@ export default function TooltipPage() {
           <code>delayShow</code> / <code>delayHide</code> prevent flicker.
         </p>
         <Demo
-          code={`{/* Tooltip portals to document.body. Theme the emitted tooltip class hook:
-      .tooltip { @apply pointer-events-none whitespace-nowrap rounded bg-gray-900 px-2 py-1 text-xs text-white shadow dark:bg-gray-700; } */}
-<div className="relative inline-flex">
+          code={`<SimpleTooltip
+  content="Copy to clipboard"
+  className="whitespace-nowrap rounded bg-gray-900 px-2 py-1 text-xs text-white shadow dark:bg-gray-700"
+>
   <button
     type="button"
     aria-label="Copy"
@@ -45,37 +47,17 @@ export default function TooltipPage() {
   >
     ⧉
   </button>
-  {open && (
-    <span
-      role="tooltip"
-      className="pointer-events-none absolute -top-9 left-1/2 -translate-x-1/2 whitespace-nowrap rounded bg-gray-900 px-2 py-1 text-xs text-white shadow"
-    >
-      Copy to clipboard
-    </span>
-  )}
-</div>`}
+</SimpleTooltip>`}
         >
-          <div className="relative inline-flex">
+          <SimpleTooltip content="Copy to clipboard" className={tooltipClassName}>
             <button
               type="button"
-              onMouseEnter={() => setOpen(true)}
-              onMouseLeave={() => setOpen(false)}
-              onFocus={() => setOpen(true)}
-              onBlur={() => setOpen(false)}
               aria-label="Copy"
               className="rounded-md border border-gray-300 px-3 py-2 text-sm dark:border-gray-600"
             >
               ⧉
             </button>
-            {open && (
-              <span
-                role="tooltip"
-                className="pointer-events-none absolute -top-9 left-1/2 -translate-x-1/2 whitespace-nowrap rounded bg-gray-900 px-2 py-1 text-xs text-white shadow"
-              >
-                Copy to clipboard
-              </span>
-            )}
-          </div>
+          </SimpleTooltip>
         </Demo>
       </section>
 
@@ -94,14 +76,34 @@ export default function TooltipPage() {
   offset={8}
   flip
   shift
+  className="whitespace-nowrap rounded bg-gray-900 px-2 py-1 text-xs text-white shadow dark:bg-gray-700"
 >
-  <button aria-label="Delete">🗑</button>
+  <button
+    type="button"
+    aria-label="Delete"
+    className="rounded-md border border-gray-300 px-3 py-2 text-sm dark:border-gray-600"
+  >
+    🗑
+  </button>
 </Tooltip>`}
         >
-          <p className="text-sm text-gray-500">
-            The full <code>Tooltip</code> exposes positioning, delays, and
-            interactivity (<code>interactive</code>) — see snippet.
-          </p>
+          <Tooltip
+            content="Delete row"
+            position="right"
+            arrow
+            offset={8}
+            flip
+            shift
+            className={tooltipClassName}
+          >
+            <button
+              type="button"
+              aria-label="Delete"
+              className="rounded-md border border-gray-300 px-3 py-2 text-sm dark:border-gray-600"
+            >
+              🗑
+            </button>
+          </Tooltip>
         </Demo>
       </section>
 

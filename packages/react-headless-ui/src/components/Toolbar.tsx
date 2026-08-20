@@ -5,8 +5,8 @@
  */
 
 import React, { forwardRef } from 'react';
-import { useToolbar, type UseToolbarProps, type ToolbarItem } from '../hooks';
-import { useTheme } from '../providers/ThemeProvider';
+import { useToolbar, type UseToolbarProps, type ToolbarItem } from '../hooks/index.js';
+import { useTheme } from '../providers/ThemeProvider.js';
 
 export interface ToolbarProps extends Omit<UseToolbarProps, 'toolbarRef'> {
   /** Additional CSS class names */
@@ -273,12 +273,16 @@ export const Toolbar = forwardRef<HTMLElement, ToolbarProps>(({
             );
           case 'button':
           default:
+            // Icon-only buttons (labels hidden) still need an accessible name;
+            // a button with no icon falls back to the label text so it is never empty
+            const showLabel = !!item.label && (state.showLabels || !item.icon);
             return (
               <button
                 key={item.id}
                 style={getButtonStyles(item, isActive)}
                 onClick={() => actions.activateItem(item.id)}
                 disabled={item.disabled}
+                aria-label={item.label || undefined}
                 data-testid="toolbar-button"
                 data-item-id={item.id}
                 data-active={isActive}
@@ -288,7 +292,7 @@ export const Toolbar = forwardRef<HTMLElement, ToolbarProps>(({
                 {item.icon && (
                   <span style={getIconStyles()}>{item.icon}</span>
                 )}
-                {state.showLabels && item.label && (
+                {showLabel && (
                   <span>{item.label}</span>
                 )}
               </button>

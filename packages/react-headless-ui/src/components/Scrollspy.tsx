@@ -5,7 +5,7 @@
  */
 
 import React, { forwardRef, useEffect } from 'react';
-import { useScrollspy, type UseScrollspyProps } from '../hooks';
+import { useScrollspy, type UseScrollspyProps } from '../hooks/index.js';
 
 export interface ScrollspyProps extends Omit<UseScrollspyProps, 'scrollspyRef'> {
   /** Additional CSS class names */

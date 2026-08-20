@@ -7,7 +7,7 @@
 
 import { useForm as useReactHookForm, UseFormProps as RHFUseFormProps, UseFormReturn, FieldValues, SubmitHandler, SubmitErrorHandler, DefaultValues, Resolver } from 'react-hook-form';
 import { useState, useCallback, useRef, useEffect, useMemo } from 'react';
-import { useFocusableMixin, usePressableMixin, useSemanticMixin } from '../mixins';
+import { useFocusableMixin, usePressableMixin, useSemanticMixin } from '../mixins/index.js';
 
 /**
  * Form state interface extending React Hook Form state

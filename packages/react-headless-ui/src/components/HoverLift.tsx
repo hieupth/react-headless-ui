@@ -6,7 +6,7 @@
 
 import React, { forwardRef } from 'react';
 import { motion } from 'framer-motion';
-import { useHoverLift, type UseHoverLiftProps } from '../hooks';
+import { useHoverLift, type UseHoverLiftProps } from '../hooks/index.js';
 
 export interface HoverLiftProps extends UseHoverLiftProps {
   /** Additional CSS class names */

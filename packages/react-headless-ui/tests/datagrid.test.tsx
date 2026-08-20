@@ -816,4 +816,21 @@ describe('DataGrid component rendering', () => {
     expect(container.querySelector('#wrap')).not.toBeNull();
     expect(container.querySelector('table')!.className).toContain('my-table');
   });
+
+  // Round-2 fix: the default header renderer used the optional `title` and
+  // ignored the required `header`, leaving minimally declared columns blank.
+  it('renders the required header text (falling back to title only when header is absent)', () => {
+    const { getByTestId } = render(
+      <DataGrid
+        data={[{ g1: 'CellVal' }]}
+        columns={[
+          { id: 'g1', header: 'GridHead' },
+          { id: 'g2', header: 'GridHead2', title: 'FallbackTitle' }
+        ]}
+      />
+    );
+    expect(getByTestId('data-grid-header-g1').textContent).toBe('GridHead');
+    // header wins over title
+    expect(getByTestId('data-grid-header-g2').textContent).toBe('GridHead2');
+  });
 });

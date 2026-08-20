@@ -6,7 +6,7 @@
 
 import React, { forwardRef } from 'react';
 import { motion } from 'framer-motion';
-import { useRevealOnScroll, type UseRevealOnScrollProps } from '../hooks';
+import { useRevealOnScroll, type UseRevealOnScrollProps } from '../hooks/index.js';
 
 export interface RevealOnScrollProps extends UseRevealOnScrollProps {
   /** Additional CSS class names */

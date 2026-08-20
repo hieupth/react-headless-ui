@@ -5,7 +5,7 @@
  */
 
 import { useState, useCallback, useRef, useMemo } from 'react';
-import type { SemanticMixinDomProps } from './SemanticMixin';
+import type { SemanticMixinDomProps } from './SemanticMixin.js';
 
 export interface PressableMixinProps extends SemanticMixinDomProps {
   /** Initial pressed state */

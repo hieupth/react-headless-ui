@@ -1,8 +1,8 @@
 "use client";
 import { useState, useCallback, useRef, useEffect, useMemo } from 'react';
-import { useSemanticMixin } from '../mixins';
-import { composeState, composeHandlers } from '../utils';
-import type { SemanticMixinProps, FocusableMixinProps } from '../mixins';
+import { useSemanticMixin } from '../mixins/index.js';
+import { composeState, composeHandlers } from '../utils/index.js';
+import type { SemanticMixinProps, FocusableMixinProps } from '../mixins/index.js';
 
 export interface UseTextareaProps extends
   SemanticMixinProps,

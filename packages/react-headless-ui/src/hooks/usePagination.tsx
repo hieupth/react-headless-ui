@@ -5,10 +5,10 @@
  */
 
 import { useState, useCallback, useMemo } from 'react';
-import { useSemanticMixin } from '../mixins/SemanticMixin';
-import { useFocusableMixin } from '../mixins/FocusableMixin';
-import type { SemanticProps } from '../contracts/SemanticContract';
-import type { FocusableProps } from '../contracts/ComponentContract';
+import { useSemanticMixin } from '../mixins/SemanticMixin.js';
+import { useFocusableMixin } from '../mixins/FocusableMixin.js';
+import type { SemanticProps } from '../contracts/SemanticContract.js';
+import type { FocusableProps } from '../contracts/ComponentContract.js';
 
 /**
  * Props for usePagination hook
@@ -89,7 +89,7 @@ export function usePagination(props: UsePaginationProps) {
   const {
     page: controlledPage,
     defaultPage = 1,
-    totalPages,
+    totalPages: rawTotalPages,
     itemsPerPage = 10,
     showFirstLast = true,
     showPrevNext = true,
@@ -106,6 +106,11 @@ export function usePagination(props: UsePaginationProps) {
     describedBy,
     ...semanticProps
   } = props;
+
+  // Sanitize degenerate page counts at the boundary: non-finite or sub-one
+  // totalPages would leak NaN into data attributes and "Page X of Y" text and
+  // empty the page range — fall back to a single page.
+  const totalPages = Number.isFinite(rawTotalPages) ? Math.max(1, rawTotalPages) : 1;
 
   // State management
   const [focused, setFocused] = useState(defaultFocused);

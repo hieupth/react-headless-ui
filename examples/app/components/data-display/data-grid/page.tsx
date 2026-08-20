@@ -10,14 +10,16 @@ import { PropsTable } from '@/components/props-table';
 // className.
 const columns = [
   { id: 'name', header: 'Name', sortable: true },
-  { id: 'role', header: 'Role', filterable: true },
+  // `title` feeds the column filter placeholder ("Filter Role...")
+  { id: 'role', header: 'Role', title: 'Role', filterable: true },
   { id: 'age', header: 'Age', sortable: true, type: 'number' as const },
 ];
 
+// Rows are flat records with a unique `id`; column ids map to record keys.
 const data = [
-  { id: '1', data: { name: 'Ada Lovelace', role: 'Engineer', age: 36 } },
-  { id: '2', data: { name: 'Alan Turing', role: 'Researcher', age: 41 } },
-  { id: '3', data: { name: 'Grace Hopper', role: 'Manager', age: 85 } },
+  { id: '1', name: 'Ada Lovelace', role: 'Engineer', age: 36 },
+  { id: '2', name: 'Alan Turing', role: 'Researcher', age: 41 },
+  { id: '3', name: 'Grace Hopper', role: 'Manager', age: 85 },
 ];
 
 export default function DataGridPage() {
@@ -41,14 +43,14 @@ export default function DataGridPage() {
       <section className="space-y-4">
         <h2 className="text-xl font-semibold">Basic grid</h2>
         <p className="text-sm text-gray-600 dark:text-gray-400">
-          Rows are <code>{'{ id, data }'}</code> records; columns map to{' '}
-          <code>data</code> keys.
+          Rows are flat records with a unique <code>id</code>; column ids map
+          to record keys.
         </p>
         <Demo
           code={`<DataGrid
   columns={[
     { id: 'name', header: 'Name', sortable: true },
-    { id: 'role', header: 'Role', filterable: true },
+    { id: 'role', header: 'Role', title: 'Role', filterable: true },
     { id: 'age', header: 'Age', sortable: true, type: 'number' }
   ]}
   data={data}
@@ -122,7 +124,7 @@ export default function DataGridPage() {
         <PropsTable
           props={[
             { name: 'columns', type: 'GridColumn[]', default: '—', description: 'Column config: { id, header, sortable?, filterable?, resizable?, accessor?, cellRenderer? }.' },
-            { name: 'data', type: 'GridRow[]', default: '—', description: 'Rows: { id, data, selected?, disabled? }.' },
+            { name: 'data', type: 'Record<string, unknown>[]', default: '—', description: 'Rows: flat records with a unique id; column ids map to record keys.' },
             { name: 'sort / defaultSort', type: '{ key, direction }', default: '—', description: 'Controlled / initial sort.' },
             { name: 'filter / defaultFilter', type: 'GridFilter', default: '—', description: 'Controlled / initial filter.' },
             { name: 'pagination / defaultPagination', type: 'GridPagination', default: '—', description: 'Controlled / initial paging.' },

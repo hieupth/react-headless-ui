@@ -6,8 +6,8 @@
 
 import React, { forwardRef } from 'react';
 import { createPortal } from 'react-dom';
-import { useTooltip } from '../hooks';
-import type { UseTooltipProps, TooltipPosition } from '../hooks';
+import { useTooltip } from '../hooks/index.js';
+import type { UseTooltipProps, TooltipPosition } from '../hooks/index.js';
 
 /** Props the trigger child element is expected to accept. */
 type TriggerElementProps = React.HTMLAttributes<HTMLElement> &

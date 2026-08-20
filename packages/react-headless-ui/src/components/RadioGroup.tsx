@@ -4,8 +4,8 @@
  * Provides styled radio group with comprehensive accessibility support and keyboard navigation.
  */
 
-import React, { forwardRef } from 'react';
-import { useRadioGroup, type UseRadioGroupProps } from '../hooks';
+import React, { forwardRef, useId } from 'react';
+import { useRadioGroup, type UseRadioGroupProps } from '../hooks/index.js';
 
 export interface RadioGroupProps extends Omit<UseRadioGroupProps, 'radioGroupRef' | 'options'>, React.AriaAttributes {
   /**
@@ -73,6 +73,10 @@ const RadioGroupBase = forwardRef<HTMLDivElement, RadioGroupProps>(({
   children,
   ...radioGroupProps
 }, ref) => {
+
+  // Per-instance id so groups sharing option values on one page don't emit
+  // colliding label ids (aria-labelledby resolves to the first match).
+  const instanceId = useId();
 
   // Compound children API: derive options + labels from <RadioGroup.Item>.
   const childOptions = React.Children.toArray(children) as React.ReactElement<RadioGroupItemProps>[];
@@ -150,7 +154,7 @@ const RadioGroupBase = forwardRef<HTMLDivElement, RadioGroupProps>(({
     const optionAttributes = getOptionAttributes(value);
     // Associate the radio control with its visible label text so each radio
     // exposes an accessible name (axe: radio controls must be labeled).
-    const labelId = `radio-${value}-label`;
+    const labelId = `radio-${instanceId}-${value}-label`;
     // The hook tracks focus only via a native keydown listener on the group
     // element; driving that through the component render in jsdom is unreliable,
     // so the focused ring branch is covered by the deep hook tests instead.

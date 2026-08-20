@@ -5,7 +5,7 @@
  */
 
 import React, { forwardRef } from 'react';
-import { useNavigationMenu, type UseNavigationMenuProps, type NavigationMenuItem } from '../hooks';
+import { useNavigationMenu, type UseNavigationMenuProps, type NavigationMenuItem } from '../hooks/index.js';
 
 export interface NavigationMenuProps extends Omit<UseNavigationMenuProps, 'navigationMenuRef'> {
   /** Additional CSS class names */

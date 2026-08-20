@@ -6,9 +6,9 @@
 
 import React, { forwardRef, useRef, useEffect, useMemo } from 'react';
 import { createPortal } from 'react-dom';
-import { useCommand } from '../hooks';
-import { useVirtualList } from '../hooks';
-import type { UseCommandProps, CommandItem as CommandItemData, CommandGroup as CommandGroupData } from '../hooks';
+import { useCommand } from '../hooks/index.js';
+import { useVirtualList } from '../hooks/index.js';
+import type { UseCommandProps, CommandItem as CommandItemData, CommandGroup as CommandGroupData } from '../hooks/index.js';
 
 /**
  * Default item count above which the Command list virtualizes. Below this,

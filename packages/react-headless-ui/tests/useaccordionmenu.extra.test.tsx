@@ -293,7 +293,8 @@ describe('useAccordionMenu (extra)', () => {
     }
     render(<P />);
     const openContent = acc.getItemContentProps(items[0], 0);
-    expect(openContent.id).toBe('accordion-content-file');
+    expect(openContent.id).toMatch(/-content-file$/);
+    expect(openContent['aria-labelledby']).toBe(acc.getItemHeaderProps(items[0], 0).id);
     expect(openContent.role).toBe('region');
     expect(openContent['data-open']).toBe(true);
     expect(openContent.hidden).toBe(false);

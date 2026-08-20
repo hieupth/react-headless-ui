@@ -5,8 +5,8 @@
  */
 
 import React from 'react';
-import { useCalendar, type UseCalendarProps, type CalendarDate } from '../hooks';
-import { useTheme } from '../providers/ThemeProvider';
+import { useCalendar, type UseCalendarProps, type CalendarDate } from '../hooks/index.js';
+import { useTheme } from '../providers/ThemeProvider.js';
 
 export interface CalendarProps extends UseCalendarProps {
   /** Additional CSS classes */
@@ -93,7 +93,7 @@ export const Calendar: React.FC<CalendarProps> = ({
         aria-label="Previous month"
         type="button"
       >
-        <svg className="calendar" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <svg className="calendar" fill="none" stroke="currentColor" viewBox="0 0 24 24" width={24} height={24}>
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
         </svg>
       </button>
@@ -108,7 +108,7 @@ export const Calendar: React.FC<CalendarProps> = ({
         aria-label="Next month"
         type="button"
       >
-        <svg className="calendar" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <svg className="calendar" fill="none" stroke="currentColor" viewBox="0 0 24 24" width={24} height={24}>
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
         </svg>
       </button>
@@ -159,23 +159,29 @@ export const Calendar: React.FC<CalendarProps> = ({
       }
     };
 
+    // The grid container carries role="grid" and each week role="row", so day
+    // cells must be gridcells. ARIA in HTML forbids role="gridcell" directly on
+    // <button>, so the cell is a wrapper div and the button keeps its native
+    // semantics (including aria-pressed, which is invalid on gridcell).
     return (
-      <button
-        className={dayClassName}
-        onClick={handleClick}
-        disabled={isDisabled}
-        type="button"
-        aria-pressed={isSelected}
-        aria-label={`${date.date.toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}${isToday ? ' (Today)' : ''}`}
-      >
-        {props.format?.(date.date) || date.day}
-      </button>
+      <div className="calendar-day-cell" role="gridcell">
+        <button
+          className={dayClassName}
+          onClick={handleClick}
+          disabled={isDisabled}
+          type="button"
+          aria-pressed={isSelected}
+          aria-label={`${date.date.toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}${isToday ? ' (Today)' : ''}`}
+        >
+          {props.format?.(date.date) || date.day}
+        </button>
+      </div>
     );
   };
 
   // Default Weekday component
   const DefaultWeekday = ({ weekday }: { weekday: string; index: number }) => (
-    <div className={weekdayClassName} aria-hidden={true}>
+    <div className={weekdayClassName} role="columnheader">
       {weekday}
     </div>
   );

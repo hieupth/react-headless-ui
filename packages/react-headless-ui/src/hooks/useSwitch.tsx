@@ -21,10 +21,10 @@
  */
 
 import { useState, useRef, useCallback, useMemo } from 'react';
-import { useFocusableMixin, FocusableMixinProps } from '../mixins';
-import { usePressableMixin, PressableMixinProps } from '../mixins';
-import { useSemanticMixin, SemanticMixinProps } from '../mixins';
-import { composeState, composeHandlers, composeClasses, composeStyles } from '../utils';
+import { useFocusableMixin, FocusableMixinProps } from '../mixins/index.js';
+import { usePressableMixin, PressableMixinProps } from '../mixins/index.js';
+import { useSemanticMixin, SemanticMixinProps } from '../mixins/index.js';
+import { composeState, composeHandlers, composeClasses, composeStyles } from '../utils/index.js';
 
 /**
  * Switch component properties
@@ -360,11 +360,13 @@ export const useSwitch = (props: UseSwitchProps): SwitchReturns => {
     tabIndex: disabled ? -1 : 0
   };
 
-  // Create form attributes
+  // Create form attributes. The switch renders as a <button>, so type must be
+  // a valid button type — 'checkbox' would produce <button type="checkbox">,
+  // which browsers treat as submit.
   const formAttributes = {
     name,
     value,
-    type: 'checkbox'
+    type: 'button'
   };
 
   return useMemo(() => ({

@@ -4,9 +4,9 @@
  * Provides styled toggle switch with accessibility support.
  */
 
-import React, { forwardRef } from 'react';
-import { useSwitch } from '../hooks';
-import type { UseSwitchProps } from '../hooks';
+import React, { forwardRef, useId } from 'react';
+import { useSwitch } from '../hooks/index.js';
+import type { UseSwitchProps } from '../hooks/index.js';
 
 export interface SwitchProps extends UseSwitchProps {
   /** Additional CSS class names */
@@ -89,6 +89,8 @@ export interface SwitchLabelRenderProps {
   disabled: boolean;
   /** Label text */
   text?: string;
+  /** Element id — referenced by the switch's aria-labelledby */
+  id?: string;
   /** CSS classes */
   className: string;
   /** Styles */
@@ -122,6 +124,10 @@ export const Switch = forwardRef<HTMLButtonElement, SwitchProps>(({
     // Merge external ref with internal ref
     switchRef: ref as React.RefObject<HTMLButtonElement>
   });
+
+  // Stable id for the label element so the switch button can name itself via
+  // aria-labelledby (the label would otherwise be purely visual).
+  const labelId = useId();
 
   // Consumer DOM pass-through (aria-label, aria-labelledby, aria-describedby,
   // title, id, …). The hook computes its own switchAttributes/formAttributes
@@ -206,6 +212,7 @@ export const Switch = forwardRef<HTMLButtonElement, SwitchProps>(({
 
     return (
       <span
+        id={props.id}
         className={baseLabelClasses}
         style={props.style}
       >
@@ -261,6 +268,7 @@ export const Switch = forwardRef<HTMLButtonElement, SwitchProps>(({
             checked: props.checked,
             disabled: props.disabled,
             text: label,
+            id: labelId,
             className: '',
             style: {}
           })
@@ -268,10 +276,16 @@ export const Switch = forwardRef<HTMLButtonElement, SwitchProps>(({
             checked: props.checked,
             disabled: props.disabled,
             text: label,
+            id: labelId,
             className: '',
             style: {}
           });
     }
+
+    // Name the switch from its rendered label unless the consumer supplied an
+    // accessible name (ariaProps spread last, so a consumer name wins).
+    const consumerName =
+      props.ariaProps['aria-label'] ?? props.ariaProps['aria-labelledby'];
 
     // Layout based on label position
     const switchContent = (
@@ -288,6 +302,7 @@ export const Switch = forwardRef<HTMLButtonElement, SwitchProps>(({
         onMouseLeave={props.onMouseLeave}
         {...props.switchAttributes}
         {...props.formAttributes}
+        aria-labelledby={!consumerName && labelElement ? labelId : undefined}
         {...props.ariaProps}
       >
         {thumbElement}

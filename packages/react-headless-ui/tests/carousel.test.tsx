@@ -24,7 +24,7 @@ describe('Carousel', () => {
     );
     expect(screen.getByText('Slide one')).toBeInTheDocument();
     expect(screen.getByText('Slide two')).toBeInTheDocument();
-    expect(screen.getByRole('tablist')).toBeInTheDocument();
+    expect(screen.getByRole('group', { name: 'Carousel navigation' })).toBeInTheDocument();
   });
 
   it('advances to the next slide via the next arrow', () => {
@@ -72,7 +72,7 @@ describe('Carousel', () => {
   it('hides arrows and dots when disabled', () => {
     render(<Carousel showArrows={false} showDots={false}>{slides}</Carousel>);
     expect(screen.queryByRole('button', { name: 'Next slide' })).toBeNull();
-    expect(screen.queryByRole('tablist')).toBeNull();
+    expect(screen.queryByRole('group', { name: 'Carousel navigation' })).toBeNull();
   });
 
   it('keeps arrows enabled at boundaries when loop is on', () => {

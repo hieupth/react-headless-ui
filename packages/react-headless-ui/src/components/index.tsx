@@ -4,277 +4,277 @@
  * Provides styled components using headless hooks.
  */
 
-export { Button } from './Button';
-export type { ButtonProps, ButtonRenderProps } from './Button';
+export { Button } from './Button.js';
+export type { ButtonProps, ButtonRenderProps } from './Button.js';
 
-export { ButtonGroup } from './ButtonGroup';
-export type { ButtonGroupProps } from './ButtonGroup';
+export { ButtonGroup } from './ButtonGroup.js';
+export type { ButtonGroupProps } from './ButtonGroup.js';
 
-export { Input } from './Input';
-export type { InputProps, InputRenderProps } from './Input';
+export { Input } from './Input.js';
+export type { InputProps, InputRenderProps } from './Input.js';
 
-export { Accordion } from './Accordion';
-export type { AccordionProps, AccordionRenderProps, AccordionItemRenderProps, AccordionItemProps, AccordionTriggerProps, AccordionContentProps } from './Accordion';
+export { Accordion } from './Accordion.js';
+export type { AccordionProps, AccordionRenderProps, AccordionItemRenderProps, AccordionItemProps, AccordionTriggerProps, AccordionContentProps } from './Accordion.js';
 
-export { Dialog } from './Dialog';
-export type { DialogProps, DialogRenderProps, DialogOverlayRenderProps, DialogContentRenderProps } from './Dialog';
+export { Dialog } from './Dialog.js';
+export type { DialogProps, DialogRenderProps, DialogOverlayRenderProps, DialogContentRenderProps } from './Dialog.js';
 
-export { AlertDialog, AlertDialogTrigger } from './AlertDialog';
-export type { AlertDialogProps } from './AlertDialog';
+export { AlertDialog, AlertDialogTrigger } from './AlertDialog.js';
+export type { AlertDialogProps } from './AlertDialog.js';
 
-export { AccordionMenu, AccordionMenuItem } from './AccordionMenu';
-export type { AccordionMenuProps } from './AccordionMenu';
+export { AccordionMenu, AccordionMenuItem } from './AccordionMenu.js';
+export type { AccordionMenuProps } from './AccordionMenu.js';
 
-export { Select, SearchableSelect, SelectGroup, SimpleSelect } from './Select';
-export type { SelectProps, SelectRenderProps, SelectOptionRenderProps, SelectGroupProps, SimpleSelectProps } from './Select';
+export { Select, SearchableSelect, SelectGroup, SimpleSelect } from './Select.js';
+export type { SelectProps, SelectRenderProps, SelectOptionRenderProps, SelectGroupProps, SimpleSelectProps } from './Select.js';
 
-export { Tabs, SimpleTabs, VerticalTabs, Tab, TabPanel } from './Tabs';
-export type { TabsProps, TabsRenderProps, TabRenderProps, TabPanelRenderProps, TabProps, TabPanelProps, SimpleTabsProps, TabsListProps, TabsTriggerProps, TabsContentProps } from './Tabs';
+export { Tabs, SimpleTabs, VerticalTabs, Tab, TabPanel } from './Tabs.js';
+export type { TabsProps, TabsRenderProps, TabRenderProps, TabPanelRenderProps, TabProps, TabPanelProps, SimpleTabsProps, TabsListProps, TabsTriggerProps, TabsContentProps } from './Tabs.js';
 
-export { Switch, LabeledSwitch, SimpleSwitch } from './Switch';
-export type { SwitchProps, SwitchRenderProps, SwitchThumbRenderProps, SwitchLabelRenderProps, SimpleSwitchProps } from './Switch';
+export { Switch, LabeledSwitch, SimpleSwitch } from './Switch.js';
+export type { SwitchProps, SwitchRenderProps, SwitchThumbRenderProps, SwitchLabelRenderProps, SimpleSwitchProps } from './Switch.js';
 
-export { Slider, RangeSlider, SimpleSlider } from './Slider';
-export type { SliderProps, SliderRenderProps, SliderTrackRenderProps, SliderThumbRenderProps, SliderRangeRenderProps, RangeSliderProps, SimpleSliderProps } from './Slider';
+export { Slider, RangeSlider, SimpleSlider } from './Slider.js';
+export type { SliderProps, SliderRenderProps, SliderTrackRenderProps, SliderThumbRenderProps, SliderRangeRenderProps, RangeSliderProps, SimpleSliderProps } from './Slider.js';
 
-export { Progress, SimpleProgress, CircularProgress, LoadingProgress } from './Progress';
+export { Progress, SimpleProgress, CircularProgress, LoadingProgress } from './Progress.js';
 export type {
   ProgressProps
-} from './Progress';
+} from './Progress.js';
 
-export { Spinner, SimpleSpinner, DotsSpinner, BarsSpinner } from './Spinner';
+export { Spinner, SimpleSpinner, DotsSpinner, BarsSpinner } from './Spinner.js';
 export type {
   SpinnerProps,
   SpinnerRenderProps,
   SpinnerElementRenderProps,
   SpinnerLabelRenderProps,
   SimpleSpinnerProps
-} from './Spinner';
+} from './Spinner.js';
 
-export { AspectRatio } from './AspectRatio';
-export type { AspectRatioProps } from './AspectRatio';
+export { AspectRatio } from './AspectRatio.js';
+export type { AspectRatioProps } from './AspectRatio.js';
 
-export { Breadcrumb } from './Breadcrumb';
-export type { BreadcrumbProps } from './Breadcrumb';
+export { Breadcrumb } from './Breadcrumb.js';
+export type { BreadcrumbProps } from './Breadcrumb.js';
 
-export { Label } from './Label';
-export type { LabelProps } from './Label';
+export { Label } from './Label.js';
+export type { LabelProps } from './Label.js';
 
-export { Separator } from './Separator';
-export type { SeparatorProps } from './Separator';
+export { Separator } from './Separator.js';
+export type { SeparatorProps } from './Separator.js';
 
-export { Skeleton } from './Skeleton';
-export type { SkeletonProps } from './Skeleton';
+export { Skeleton } from './Skeleton.js';
+export type { SkeletonProps } from './Skeleton.js';
 
 // Interactive components
-export { Checkbox } from './Checkbox';
-export type { CheckboxProps } from './Checkbox';
+export { Checkbox } from './Checkbox.js';
+export type { CheckboxProps } from './Checkbox.js';
 
-export { Collapsible, CollapsibleTrigger, CollapsibleContent } from './Collapsible';
-export type { CollapsibleProps } from './Collapsible';
+export { Collapsible, CollapsibleTrigger, CollapsibleContent } from './Collapsible.js';
+export type { CollapsibleProps } from './Collapsible.js';
 
-export { Textarea, AutoResizeTextarea, LimitedTextarea, ControlledTextarea } from './Textarea';
-export type { TextareaProps } from './Textarea';
+export { Textarea, AutoResizeTextarea, LimitedTextarea, ControlledTextarea } from './Textarea.js';
+export type { TextareaProps } from './Textarea.js';
 
-export { Toggle, ToggleIcon, FormatToggle, ViewModeToggle } from './Toggle';
-export type { ToggleProps } from './Toggle';
+export { Toggle, ToggleIcon, FormatToggle, ViewModeToggle } from './Toggle.js';
+export type { ToggleProps } from './Toggle.js';
 
 // Complex components
-export { Calendar, SingleDateCalendar, MultiDateCalendar, RangeCalendar, DatePickerCalendar } from './Calendar';
-export type { CalendarProps } from './Calendar';
+export { Calendar, SingleDateCalendar, MultiDateCalendar, RangeCalendar, DatePickerCalendar } from './Calendar.js';
+export type { CalendarProps } from './Calendar.js';
 
-export { Carousel, ImageCarousel, CardCarousel, TestimonialCarousel, HeroCarousel } from './Carousel';
-export type { CarouselProps } from './Carousel';
+export { Carousel, ImageCarousel, CardCarousel, TestimonialCarousel, HeroCarousel } from './Carousel.js';
+export type { CarouselProps } from './Carousel.js';
 
-export { DropdownMenu, DropdownMenuTrigger, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuLabel } from './DropdownMenu';
-export type { DropdownMenuProps } from './DropdownMenu';
+export { DropdownMenu, DropdownMenuTrigger, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuLabel } from './DropdownMenu.js';
+export type { DropdownMenuProps } from './DropdownMenu.js';
 
-export { EmptyState } from './EmptyState';
-export type { EmptyStateProps } from './EmptyState';
+export { EmptyState } from './EmptyState.js';
+export type { EmptyStateProps } from './EmptyState.js';
 
-export { Field } from './Field';
-export type { FieldProps } from './Field';
+export { Field } from './Field.js';
+export type { FieldProps } from './Field.js';
 
-export { FileUpload } from './FileUpload';
-export type { FileUploadProps } from './FileUpload';
+export { FileUpload } from './FileUpload.js';
+export type { FileUploadProps } from './FileUpload.js';
 
-export { ContextMenu, ContextMenuTrigger } from './ContextMenu';
-export type { ContextMenuProps, ContextMenuTriggerProps } from './ContextMenu';
+export { ContextMenu, ContextMenuTrigger } from './ContextMenu.js';
+export type { ContextMenuProps, ContextMenuTriggerProps } from './ContextMenu.js';
 
-export { Drawer, DrawerTrigger, DrawerContent, DrawerHeader, DrawerFooter } from './Drawer';
-export type { DrawerProps, DrawerTriggerProps, DrawerContentProps, DrawerHeaderProps, DrawerFooterProps } from './Drawer';
+export { Drawer, DrawerTrigger, DrawerContent, DrawerHeader, DrawerFooter } from './Drawer.js';
+export type { DrawerProps, DrawerTriggerProps, DrawerContentProps, DrawerHeaderProps, DrawerFooterProps } from './Drawer.js';
 
-export { Command, CommandTrigger, CommandInput, CommandList, CommandItem, CommandGroup, CommandSeparator, CommandEmpty } from './Command';
-export type { CommandProps, CommandTriggerProps, CommandInputProps, CommandListProps, CommandItemProps, CommandGroupProps, CommandSeparatorProps, CommandEmptyProps } from './Command';
+export { Command, CommandTrigger, CommandInput, CommandList, CommandItem, CommandGroup, CommandSeparator, CommandEmpty } from './Command.js';
+export type { CommandProps, CommandTriggerProps, CommandInputProps, CommandListProps, CommandItemProps, CommandGroupProps, CommandSeparatorProps, CommandEmptyProps } from './Command.js';
 
-export { Combobox, ComboboxInput, ComboboxList, ComboboxOption, ComboboxGroup, ComboboxEmpty } from './Combobox';
-export type { ComboboxProps, ComboboxInputProps, ComboboxListProps, ComboboxOptionProps, ComboboxGroupProps, ComboboxEmptyProps } from './Combobox';
+export { Combobox, ComboboxInput, ComboboxList, ComboboxOption, ComboboxGroup, ComboboxEmpty } from './Combobox.js';
+export type { ComboboxProps, ComboboxInputProps, ComboboxListProps, ComboboxOptionProps, ComboboxGroupProps, ComboboxEmptyProps } from './Combobox.js';
 
-export { Chart, ChartPoint, ChartLine, ChartBar } from './Chart';
-export type { ChartProps, ChartPointProps, ChartLineProps, ChartBarProps } from './Chart';
+export { Chart, ChartPoint, ChartLine, ChartBar } from './Chart.js';
+export type { ChartProps, ChartPointProps, ChartLineProps, ChartBarProps } from './Chart.js';
 
-export { DataGrid } from './DataGrid';
-export type { DataGridProps } from './DataGrid';
+export { DataGrid } from './DataGrid.js';
+export type { DataGridProps } from './DataGrid.js';
 
-export { Table } from './Table';
-export type { TableProps } from './Table';
+export { Table } from './Table.js';
+export type { TableProps } from './Table.js';
 
-export { Stepper } from './Stepper';
-export type { StepperProps } from './Stepper';
+export { Stepper } from './Stepper.js';
+export type { StepperProps } from './Stepper.js';
 
-export { Rating } from './Rating';
-export type { RatingProps } from './Rating';
+export { Rating } from './Rating.js';
+export type { RatingProps } from './Rating.js';
 
-export { Resizable } from './Resizable';
-export type { ResizableProps } from './Resizable';
+export { Resizable } from './Resizable.js';
+export type { ResizableProps } from './Resizable.js';
 
-export { Chip } from './Chip';
-export type { ChipProps } from './Chip';
+export { Chip } from './Chip.js';
+export type { ChipProps } from './Chip.js';
 
 // Additional components
-export { Alert } from './Alert';
-export type { AlertProps } from './Alert';
+export { Alert } from './Alert.js';
+export type { AlertProps } from './Alert.js';
 
-export { Avatar } from './Avatar';
-export type { AvatarProps } from './Avatar';
+export { Avatar } from './Avatar.js';
+export type { AvatarProps } from './Avatar.js';
 
-export { Badge, BadgeWrapper } from './Badge';
-export type { BadgeProps, BadgeWrapperProps } from './Badge';
+export { Badge, BadgeWrapper } from './Badge.js';
+export type { BadgeProps, BadgeWrapperProps } from './Badge.js';
 
-export { Card, CardHeader, CardBody, CardFooter, CardTitle, CardSubtitle, CardDescription } from './Card';
-export type { CardProps, CardSectionProps, CardTitleProps } from './Card';
+export { Card, CardHeader, CardBody, CardFooter, CardTitle, CardSubtitle, CardDescription } from './Card.js';
+export type { CardProps, CardSectionProps, CardTitleProps } from './Card.js';
 
-export { Menu, MenuGroup, MenuSeparator } from './Menu';
-export type { MenuProps, MenuGroupProps, MenuSeparatorProps } from './Menu';
+export { Menu, MenuGroup, MenuSeparator } from './Menu.js';
+export type { MenuProps, MenuGroupProps, MenuSeparatorProps } from './Menu.js';
 
-export { Tooltip, SimpleTooltip, RichTooltip } from './Tooltip';
-export type { TooltipProps, SimpleTooltipProps, RichTooltipProps } from './Tooltip';
+export { Tooltip, SimpleTooltip, RichTooltip } from './Tooltip.js';
+export type { TooltipProps, SimpleTooltipProps, RichTooltipProps } from './Tooltip.js';
 
-export { HoverCard } from './HoverCard';
-export type { HoverCardProps } from './HoverCard';
+export { HoverCard } from './HoverCard.js';
+export type { HoverCardProps } from './HoverCard.js';
 
-export { Item, ItemCheckbox, ItemRadio } from './Item';
-export type { ItemProps } from './Item';
+export { Item, ItemCheckbox, ItemRadio } from './Item.js';
+export type { ItemProps } from './Item.js';
 
-export { Kbd, KbdShortcut, KbdModifier } from './Kbd';
-export type { KbdProps } from './Kbd';
+export { Kbd, KbdShortcut, KbdModifier } from './Kbd.js';
+export type { KbdProps } from './Kbd.js';
 
-export { List, ListTimeline, ListCompact } from './List';
-export type { ListProps } from './List';
+export { List, ListTimeline, ListCompact } from './List.js';
+export type { ListProps } from './List.js';
 
-export { Offcanvas, OffcanvasTrigger } from './Offcanvas';
-export type { OffcanvasProps } from './Offcanvas';
+export { Offcanvas, OffcanvasTrigger } from './Offcanvas.js';
+export type { OffcanvasProps } from './Offcanvas.js';
 
-export { Panel, PanelCard, PanelGroup } from './Panel';
-export type { PanelProps } from './Panel';
+export { Panel, PanelCard, PanelGroup } from './Panel.js';
+export type { PanelProps } from './Panel.js';
 
-export { InputOTP, OTPSlot } from './InputOTP';
-export type { InputOTPProps, OTPSlotProps } from './InputOTP';
+export { InputOTP, OTPSlot } from './InputOTP.js';
+export type { InputOTPProps, OTPSlotProps } from './InputOTP.js';
 
-export { PasswordMeter } from './PasswordMeter';
-export type { PasswordMeterProps } from './PasswordMeter';
+export { PasswordMeter } from './PasswordMeter.js';
+export type { PasswordMeterProps } from './PasswordMeter.js';
 
-export { InputGroup } from './InputGroup';
-export type { InputGroupProps } from './InputGroup';
+export { InputGroup } from './InputGroup.js';
+export type { InputGroupProps } from './InputGroup.js';
 
-export { Form } from './Form';
-export type { FormProps } from './Form';
+export { Form } from './Form.js';
+export type { FormProps } from './Form.js';
 
-export { Popover } from './Popover';
-export type { PopoverProps } from './Popover';
+export { Popover } from './Popover.js';
+export type { PopoverProps } from './Popover.js';
 
-export { RadioGroup } from './RadioGroup';
-export type { RadioGroupProps, RadioGroupItemProps } from './RadioGroup';
+export { RadioGroup } from './RadioGroup.js';
+export type { RadioGroupProps, RadioGroupItemProps } from './RadioGroup.js';
 
-export { Toast, ToastProvider } from './Toast';
-export type { ToastProps } from './Toast';
+export { Toast, ToastProvider } from './Toast.js';
+export type { ToastProps } from './Toast.js';
 
 // Navigation components
-export { Pagination, CompactPagination, JumpPagination } from './Pagination';
-export type { PaginationProps } from './Pagination';
+export { Pagination, CompactPagination, JumpPagination } from './Pagination.js';
+export type { PaginationProps } from './Pagination.js';
 
-export { Sidebar, SidebarItem, SidebarGroup, SidebarDivider } from './Sidebar';
-export type { SidebarProps, SidebarItemProps, SidebarGroupProps, SidebarDividerProps } from './Sidebar';
+export { Sidebar, SidebarItem, SidebarGroup, SidebarDivider } from './Sidebar.js';
+export type { SidebarProps, SidebarItemProps, SidebarGroupProps, SidebarDividerProps } from './Sidebar.js';
 
-export { TreeView, TreeViewNode } from './TreeView';
-export type { TreeViewProps, TreeViewNodeProps } from './TreeView';
+export { TreeView, TreeViewNode } from './TreeView.js';
+export type { TreeViewProps, TreeViewNodeProps } from './TreeView.js';
 
-export { Menubar, MenubarItem } from './Menubar';
-export type { MenubarProps, MenubarItemProps } from './Menubar';
+export { Menubar, MenubarItem } from './Menubar.js';
+export type { MenubarProps, MenubarItemProps } from './Menubar.js';
 
-export { NavigationMenu } from './NavigationMenu';
-export { Scrollspy, ScrollspySection } from './Scrollspy';
-export type { NavigationMenuProps } from './NavigationMenu';
-export type { ScrollspyProps, ScrollspySectionProps } from './Scrollspy';
+export { NavigationMenu } from './NavigationMenu.js';
+export { Scrollspy, ScrollspySection } from './Scrollspy.js';
+export type { NavigationMenuProps } from './NavigationMenu.js';
+export type { ScrollspyProps, ScrollspySectionProps } from './Scrollspy.js';
 
 // Motion components
-export { FadeInOut } from './FadeInOut';
-export type { FadeInOutProps } from './FadeInOut';
+export { FadeInOut } from './FadeInOut.js';
+export type { FadeInOutProps } from './FadeInOut.js';
 
-export { SlideIn } from './SlideIn';
-export type { SlideInProps } from './SlideIn';
+export { SlideIn } from './SlideIn.js';
+export type { SlideInProps } from './SlideIn.js';
 
-export { Pulse } from './Pulse';
-export type { PulseProps } from './Pulse';
+export { Pulse } from './Pulse.js';
+export type { PulseProps } from './Pulse.js';
 
-export { ScaleInOut } from './ScaleInOut';
-export type { ScaleInOutProps } from './ScaleInOut';
+export { ScaleInOut } from './ScaleInOut.js';
+export type { ScaleInOutProps } from './ScaleInOut.js';
 
-export { RotateIn } from './RotateIn';
-export type { RotateInProps } from './RotateIn';
+export { RotateIn } from './RotateIn.js';
+export type { RotateInProps } from './RotateIn.js';
 
-export { Bounce } from './Bounce';
-export type { BounceProps } from './Bounce';
+export { Bounce } from './Bounce.js';
+export type { BounceProps } from './Bounce.js';
 
-export { Shake } from './Shake';
-export type { ShakeProps } from './Shake';
+export { Shake } from './Shake.js';
+export type { ShakeProps } from './Shake.js';
 
-export { Flip } from './Flip';
-export type { FlipProps } from './Flip';
+export { Flip } from './Flip.js';
+export type { FlipProps } from './Flip.js';
 
-export { BlurInOut } from './BlurInOut';
-export type { BlurInOutProps } from './BlurInOut';
+export { BlurInOut } from './BlurInOut.js';
+export type { BlurInOutProps } from './BlurInOut.js';
 
-export { StaggerChildren } from './StaggerChildren';
-export type { StaggerChildrenProps } from './StaggerChildren';
+export { StaggerChildren } from './StaggerChildren.js';
+export type { StaggerChildrenProps } from './StaggerChildren.js';
 
-export { ParallaxScroll } from './ParallaxScroll';
-export type { ParallaxScrollProps } from './ParallaxScroll';
+export { ParallaxScroll } from './ParallaxScroll.js';
+export type { ParallaxScrollProps } from './ParallaxScroll.js';
 
-export { RevealOnScroll } from './RevealOnScroll';
-export type { RevealOnScrollProps } from './RevealOnScroll';
+export { RevealOnScroll } from './RevealOnScroll.js';
+export type { RevealOnScrollProps } from './RevealOnScroll.js';
 
-export { HoverLift } from './HoverLift';
-export type { HoverLiftProps } from './HoverLift';
+export { HoverLift } from './HoverLift.js';
+export type { HoverLiftProps } from './HoverLift.js';
 
-export { MagneticHover } from './MagneticHover';
-export type { MagneticHoverProps } from './MagneticHover';
+export { MagneticHover } from './MagneticHover.js';
+export type { MagneticHoverProps } from './MagneticHover.js';
 
 // Advanced Navigation components
-export { MegaMenu } from './MegaMenu';
-export type { MegaMenuProps } from './MegaMenu';
+export { MegaMenu } from './MegaMenu.js';
+export type { MegaMenuProps } from './MegaMenu.js';
 
 // Utility components
-export { Slot, SlotClone, SlotWrapper, SlotPortal, SlotRadioGroup } from './Slot';
-export type { SlotProps } from './Slot';
+export { Slot, SlotClone, SlotWrapper, SlotPortal, SlotRadioGroup } from './Slot.js';
+export type { SlotProps } from './Slot.js';
 
-export { AccessibleIcon } from './AccessibleIcon';
-export type { AccessibleIconProps } from './AccessibleIcon';
+export { AccessibleIcon } from './AccessibleIcon.js';
+export type { AccessibleIconProps } from './AccessibleIcon.js';
 
-export { Portal, PortalBackdrop, PortalOverlay } from './Portal';
-export type { PortalProps } from './Portal';
+export { Portal, PortalBackdrop, PortalOverlay } from './Portal.js';
+export type { PortalProps } from './Portal.js';
 
-export { VisuallyHidden, VisuallyHiddenFocusable, VisuallyHiddenLiveRegion, VisuallyHiddenSkipLink, VisuallyHiddenAnnouncer } from './VisuallyHidden';
-export type { VisuallyHiddenProps } from './VisuallyHidden';
+export { VisuallyHidden, VisuallyHiddenFocusable, VisuallyHiddenLiveRegion, VisuallyHiddenSkipLink, VisuallyHiddenAnnouncer } from './VisuallyHidden.js';
+export type { VisuallyHiddenProps } from './VisuallyHidden.js';
 
-export { DirectionProvider, DirectionalText, DirectionalFlex, DirectionalSpacer, DirectionToggle, useDirection } from './DirectionProvider';
-export type { DirectionProviderProps } from './DirectionProvider';
+export { DirectionProvider, DirectionalText, DirectionalFlex, DirectionalSpacer, DirectionToggle, useDirection } from './DirectionProvider.js';
+export type { DirectionProviderProps } from './DirectionProvider.js';
 
-export { Sortable } from './Sortable';
-export type { SortableProps } from './Sortable';
+export { Sortable } from './Sortable.js';
+export type { SortableProps } from './Sortable.js';
 
-export { Toolbar } from './Toolbar';
-export type { ToolbarProps } from './Toolbar';
+export { Toolbar } from './Toolbar.js';
+export type { ToolbarProps } from './Toolbar.js';
 
 // All 86 components implemented and exported
 // @hieupth/react-headless-ui component library complete

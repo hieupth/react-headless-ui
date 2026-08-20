@@ -6,7 +6,7 @@
 
 import React, { forwardRef, useEffect } from 'react';
 import { createPortal } from 'react-dom';
-import { usePortal, type UsePortalProps } from '../hooks';
+import { usePortal, type UsePortalProps } from '../hooks/index.js';
 
 export interface PortalProps extends UsePortalProps {
   /** Portal content */

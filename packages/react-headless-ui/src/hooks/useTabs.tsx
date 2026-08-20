@@ -5,9 +5,9 @@
  */
 
 import React, { useState, useCallback, useEffect, useMemo, useRef } from 'react';
-import { useFocusableMixin, usePressableMixin, useSemanticMixin } from '../mixins';
-import { composeState } from '../utils';
-import type { FocusableMixinProps, PressableMixinProps, SemanticMixinProps } from '../mixins';
+import { useFocusableMixin, usePressableMixin, useSemanticMixin } from '../mixins/index.js';
+import { composeState } from '../utils/index.js';
+import type { FocusableMixinProps, PressableMixinProps, SemanticMixinProps } from '../mixins/index.js';
 
 export interface TabItem {
   /** Tab key */

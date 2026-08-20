@@ -5,7 +5,7 @@
  */
 
 import React, { forwardRef, useRef } from 'react';
-import { useInputGroup, type UseInputGroupProps } from '../hooks';
+import { useInputGroup, type UseInputGroupProps } from '../hooks/index.js';
 
 export interface InputGroupProps extends Omit<UseInputGroupProps, 'groupRef'> {
   /** Additional CSS class names */

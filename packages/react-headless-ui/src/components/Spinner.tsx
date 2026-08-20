@@ -5,8 +5,8 @@
  */
 
 import React, { forwardRef } from 'react';
-import { useSpinner } from '../hooks';
-import type { UseSpinnerProps, SpinnerValue } from '../hooks';
+import { useSpinner } from '../hooks/index.js';
+import type { UseSpinnerProps, SpinnerValue } from '../hooks/index.js';
 
 export interface SpinnerProps extends UseSpinnerProps {
   /** Additional CSS class names */

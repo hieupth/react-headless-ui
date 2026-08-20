@@ -6,7 +6,7 @@
 
 import React, { forwardRef } from 'react';
 import { motion } from 'framer-motion';
-import { useBlurInOut, type UseBlurInOutProps } from '../hooks';
+import { useBlurInOut, type UseBlurInOutProps } from '../hooks/index.js';
 
 export interface BlurInOutProps extends UseBlurInOutProps {
   /** Additional CSS class names */

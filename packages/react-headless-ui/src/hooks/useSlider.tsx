@@ -25,10 +25,10 @@
  */
 
 import { useState, useRef, useCallback, useEffect, useMemo } from 'react';
-import { useFocusableMixin, FocusableMixinProps } from '../mixins';
-import { usePressableMixin, PressableMixinProps } from '../mixins';
-import { useSemanticMixin, SemanticMixinProps } from '../mixins';
-import { composeState, composeHandlers, composeClasses, composeStyles } from '../utils';
+import { useFocusableMixin, FocusableMixinProps } from '../mixins/index.js';
+import { usePressableMixin, PressableMixinProps } from '../mixins/index.js';
+import { useSemanticMixin, SemanticMixinProps } from '../mixins/index.js';
+import { composeState, composeHandlers, composeClasses, composeStyles } from '../utils/index.js';
 
 /**
  * Slider value types
@@ -189,8 +189,8 @@ export const useSlider = (props: UseSliderProps): SliderReturns => {
     defaultValue,
     onValueChange,
     onValueCommit,
-    min = 0,
-    max = 100,
+    min: rawMin = 0,
+    max: rawMax = 100,
     step = 1,
     disabled = false,
     readOnly = false,
@@ -203,6 +203,15 @@ export const useSlider = (props: UseSliderProps): SliderReturns => {
     ...mixinProps
   } = props as UseSliderProps & { className?: string; style?: React.CSSProperties };
 
+  // Sanitize bounds at the boundary: non-finite min/max fall back to their
+  // defaults, and a zero-span range (min === max) is widened by 0.5 on each
+  // side (same approach as useChart's widen) so every downstream division by
+  // (max - min) — geometry, aria text, stepping — stays finite.
+  const sanitizedMin = Number.isFinite(rawMin) ? rawMin : 0;
+  const sanitizedMax = Number.isFinite(rawMax) ? rawMax : 100;
+  const min = sanitizedMin === sanitizedMax ? sanitizedMin - 0.5 : sanitizedMin;
+  const max = sanitizedMin === sanitizedMax ? sanitizedMax + 0.5 : sanitizedMax;
+
   // Internal state for uncontrolled mode
   const defaultRangeValue: [number, number] = [min, min + (max - min) / 2];
   const defaultSingleValue = min + (max - min) / 2;
@@ -211,9 +220,19 @@ export const useSlider = (props: UseSliderProps): SliderReturns => {
     defaultValue ?? (isRange ? defaultRangeValue : defaultSingleValue)
   );
 
-  // Determine if component is controlled or uncontrolled
+  // Determine if component is controlled or uncontrolled. Non-finite numbers
+  // (NaN, ±Infinity, including undefined array slots) are sanitized to `min`
+  // at the same boundary so state.value never carries NaN into geometry or
+  // aria attributes. Identity is preserved for already-valid values.
   const isControlled = controlledValue !== undefined;
-  const value = isControlled ? controlledValue : internalValue;
+  const rawValue = isControlled ? controlledValue : internalValue;
+  const sanitizeValue = (candidate: number): number =>
+    typeof candidate === 'number' && Number.isFinite(candidate) ? candidate : min;
+  const value: SliderValue = Array.isArray(rawValue)
+    ? (sanitizeValue(rawValue[0]) === rawValue[0] && sanitizeValue(rawValue[1]) === rawValue[1]
+        ? rawValue
+        : [sanitizeValue(rawValue[0]), sanitizeValue(rawValue[1])])
+    : sanitizeValue(rawValue);
 
   // Latest committed value, read by onValueCommit callers. The keyboard and
   // drag-end commit handlers run in the same tick as setValue, which schedules

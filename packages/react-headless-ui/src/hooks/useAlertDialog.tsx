@@ -5,9 +5,9 @@
  */
 
 import { useState, useCallback, useEffect, useMemo, useRef } from 'react';
-import { useSemanticMixin } from '../mixins';
-import { composeState } from '../utils';
-import type { FocusableMixinProps, SemanticMixinProps } from '../mixins';
+import { useSemanticMixin } from '../mixins/index.js';
+import { composeState } from '../utils/index.js';
+import type { FocusableMixinProps, SemanticMixinProps } from '../mixins/index.js';
 
 export interface UseAlertDialogProps extends
   FocusableMixinProps,

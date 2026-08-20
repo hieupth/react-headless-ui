@@ -6,7 +6,6 @@ import {
   DirectionalText,
   DirectionalFlex,
   DirectionToggle,
-  type DirectionProviderProps,
 } from '@hieupth/react-headless-ui';
 import { Demo } from '@/components/demo';
 import { PropsTable } from '@/components/props-table';
@@ -19,8 +18,10 @@ import { PropsTable } from '@/components/props-table';
 // `lang` attributes onto <html> and auto-detect direction from a locale or text.
 
 export default function DirectionProviderPage() {
-  const [dir, setDir] =
-    useState<DirectionProviderProps['defaultTextDirection']>('ltr');
+  // Controlled text/layout direction so the demo's reset buttons (and the
+  // built-in DirectionToggle, via onDirectionChange) actually drive the
+  // provider — defaultTextDirection is a mount-once default.
+  const [dir, setDir] = useState<'ltr' | 'rtl'>('ltr');
 
   return (
     <div className="mx-auto max-w-3xl px-6 py-12 space-y-8">
@@ -51,7 +52,15 @@ export default function DirectionProviderPage() {
           layout mirror.
         </p>
         <Demo
-          code={`<DirectionProvider defaultTextDirection="ltr">
+          code={`const [dir, setDir] = useState<'ltr' | 'rtl'>('ltr');
+
+<DirectionProvider
+  textDirection={dir}
+  layoutDirection={dir}
+  onDirectionChange={(next) => setDir(next === 'rtl' ? 'rtl' : 'ltr')}
+  updateHTMLDir={false}
+  updateHTMLLang={false}
+>
   <div className="w-full space-y-4">
     <DirectionToggle className="px-3 py-1.5 rounded-md border border-gray-300 text-sm text-gray-700 dark:border-gray-600 dark:text-gray-200" />
     <DirectionalFlex gap="12px" className="rounded-md border border-gray-200 p-4 dark:border-gray-700">
@@ -68,7 +77,13 @@ export default function DirectionProviderPage() {
   </div>
 </DirectionProvider>`}
         >
-          <DirectionProvider defaultTextDirection={dir}>
+          <DirectionProvider
+            textDirection={dir}
+            layoutDirection={dir}
+            onDirectionChange={(next) => setDir(next === 'rtl' ? 'rtl' : 'ltr')}
+            updateHTMLDir={false}
+            updateHTMLLang={false}
+          >
             <div className="w-full space-y-4">
               <DirectionToggle className="px-3 py-1.5 rounded-md border border-gray-300 text-sm text-gray-700 transition-colors hover:bg-gray-50 dark:border-gray-600 dark:text-gray-200 dark:hover:bg-gray-800" />
               <DirectionalFlex
@@ -113,9 +128,19 @@ export default function DirectionProviderPage() {
           <code>autoDetectFromLocale</code>, the provider picks the direction
           from the locale — Arabic (<code>ar</code>), Hebrew (<code>he</code>),
           Persian (<code>fa</code>), and Urdu (<code>ur</code>) resolve to RTL.
+          This demo keeps <code>updateHTMLDir</code> /{' '}
+          <code>updateHTMLLang</code> off so the surrounding English docs page
+          keeps its own <code>&lt;html lang="en"&gt;</code>; the RTL scope is
+          the provider container&apos;s <code>dir</code> attribute.
         </p>
         <Demo
-          code={`<DirectionProvider textDirection="auto" locale="ar" autoDetectFromLocale>
+          code={`<DirectionProvider
+  textDirection="auto"
+  defaultLocale="ar"
+  autoDetectFromLocale
+  updateHTMLDir={false}
+  updateHTMLLang={false}
+>
   <div className="rounded-md border border-gray-200 bg-white p-4 text-lg text-gray-900 shadow-sm dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100">
     <DirectionalText>مرحبا بالعالم — Hello world</DirectionalText>
   </div>
@@ -125,6 +150,8 @@ export default function DirectionProviderPage() {
             textDirection="auto"
             defaultLocale="ar"
             autoDetectFromLocale
+            updateHTMLDir={false}
+            updateHTMLLang={false}
           >
             <div className="rounded-md border border-gray-200 bg-white p-4 text-lg text-gray-900 shadow-sm dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100">
               <DirectionalText>مرحبا بالعالم — Hello world</DirectionalText>

@@ -5,8 +5,8 @@
  */
 
 import React, { forwardRef } from 'react';
-import { useAccordion } from '../hooks';
-import type { UseAccordionProps, AccordionItem } from '../hooks';
+import { useAccordion } from '../hooks/index.js';
+import type { UseAccordionProps, AccordionItem } from '../hooks/index.js';
 
 export interface AccordionProps extends Omit<UseAccordionProps, 'items'>, React.AriaAttributes {
   /**

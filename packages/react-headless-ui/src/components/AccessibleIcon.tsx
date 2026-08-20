@@ -5,7 +5,7 @@
  */
 
 import React, { forwardRef } from 'react';
-import { useAccessibleIcon, type UseAccessibleIconProps } from '../hooks';
+import { useAccessibleIcon, type UseAccessibleIconProps } from '../hooks/index.js';
 
 export interface AccessibleIconProps extends Omit<UseAccessibleIconProps, 'iconRef'> {
   /** Additional CSS class names */

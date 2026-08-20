@@ -6,7 +6,7 @@
  */
 
 import { useMemo, useState, useCallback, useRef, useEffect } from 'react';
-import { useFocusableMixin, usePressableMixin, useSemanticMixin } from '../mixins';
+import { useFocusableMixin, usePressableMixin, useSemanticMixin } from '../mixins/index.js';
 
 /**
  * Navigation menu item interface
@@ -606,6 +606,28 @@ export function useNavigationMenu(props: UseNavigationMenuProps): UseNavigationM
       return () => element.removeEventListener('keydown', handleKeyDown);
     }
   }, [disabled, focusedItemId, openDropdownId, isMobileMenuOpen, navigateNext, navigatePrevious, activateItem, openDropdown, closeDropdown, closeMobileMenu, hasSubmenu]);
+
+  // Escape closes the open dropdown / mobile menu at the document level. The
+  // element-scoped listener above only fires when the container ref is
+  // attached and holds focus — a dropdown opened by pointer (focus stays on
+  // the trigger) never reaches it. Skips events already handled closer to the
+  // target (defaultPrevented).
+  useEffect(() => {
+    if (disabled || (!openDropdownId && !isMobileMenuOpen)) return;
+
+    const handleEscape = (event: KeyboardEvent) => {
+      if (event.key !== 'Escape' || event.defaultPrevented) return;
+      event.preventDefault();
+      if (openDropdownId) {
+        closeDropdown();
+      } else {
+        closeMobileMenu();
+      }
+    };
+
+    document.addEventListener('keydown', handleEscape);
+    return () => document.removeEventListener('keydown', handleEscape);
+  }, [disabled, openDropdownId, isMobileMenuOpen, closeDropdown, closeMobileMenu]);
 
   return useMemo(() => ({
     state,

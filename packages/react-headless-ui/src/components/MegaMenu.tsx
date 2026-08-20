@@ -6,8 +6,8 @@
  */
 
 import React, { forwardRef } from 'react';
-import { useMegaMenu, type UseMegaMenuProps, type MegaMenuItem } from '../hooks';
-import { useTheme } from '../providers/ThemeProvider';
+import { useMegaMenu, type UseMegaMenuProps, type MegaMenuItem } from '../hooks/index.js';
+import { useTheme } from '../providers/ThemeProvider.js';
 
 export interface MegaMenuProps extends UseMegaMenuProps {
   /** Additional CSS class names */

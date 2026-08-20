@@ -5,8 +5,8 @@
  */
 
 import React from 'react';
-import { useCollapsible, type UseCollapsibleProps } from '../hooks';
-import { useTheme } from '../providers/ThemeProvider';
+import { useCollapsible, type UseCollapsibleProps } from '../hooks/index.js';
+import { useTheme } from '../providers/ThemeProvider.js';
 
 export interface CollapsibleProps extends UseCollapsibleProps {
   /** Collapsible trigger content */

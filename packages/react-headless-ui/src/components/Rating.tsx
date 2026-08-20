@@ -4,9 +4,14 @@
  * Provides styled rating with comprehensive accessibility support.
  */
 
-import React, { forwardRef } from 'react';
-import { useRating, type UseRatingProps } from '../hooks';
-import { useTheme } from '../providers/ThemeProvider';
+import React, { forwardRef, useId } from 'react';
+import { useRating, type UseRatingProps } from '../hooks/index.js';
+import { useTheme } from '../providers/ThemeProvider.js';
+
+// Intrinsic svg size (px) for the default icon renderers per rating size.
+// The lib ships no CSS, so default icons need explicit width/height or they
+// collapse to 0x0; lg matches the icons' 24x24 viewBox.
+const defaultIconSizes: Record<string, number> = { sm: 16, md: 20, lg: 24 };
 
 export interface RatingProps extends UseRatingProps {
   /** Additional CSS class names */
@@ -64,6 +69,9 @@ export const Rating = forwardRef<HTMLDivElement, RatingProps>(({
   ...ratingProps
 }, ref) => {
   const theme = useTheme();
+  // Per-instance id so same-size Ratings on one page don't emit colliding
+  // SVG gradient ids (url(#) resolves to the first match in the document).
+  const gradientId = useId();
   const {
     state,
     actions,
@@ -124,19 +132,13 @@ export const Rating = forwardRef<HTMLDivElement, RatingProps>(({
           ${hover ? 'rating-star-hover' : ''}
           ${focused ? 'rating-star-focused' : ''}
         `}
+        width={defaultIconSizes[size] ?? 24}
+        height={defaultIconSizes[size] ?? 24}
         viewBox="0 0 24 24"
         fill="currentColor"
       >
-        {half ? (
-          <defs>
-            <linearGradient id={`half-gradient-${size}`}>
-              <stop offset="50%" stopColor="currentColor" />
-              <stop offset="50%" stopColor="currentColor" stopOpacity="0.3" />
-            </linearGradient>
-          </defs>
-        ) : null}
         <path
-          fill={half ? `url(#half-gradient-${size})` : filled ? 'currentColor' : 'none'}
+          fill={half ? `url(#half-gradient-${gradientId})` : filled ? 'currentColor' : 'none'}
           stroke="currentColor"
           strokeWidth={filled ? 0 : 2}
           d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"
@@ -163,19 +165,13 @@ export const Rating = forwardRef<HTMLDivElement, RatingProps>(({
           ${hover ? 'rating-heart-hover' : ''}
           ${focused ? 'rating-heart-focused' : ''}
         `}
+        width={defaultIconSizes[size] ?? 24}
+        height={defaultIconSizes[size] ?? 24}
         viewBox="0 0 24 24"
         fill="currentColor"
       >
-        {half ? (
-          <defs>
-            <linearGradient id={`heart-half-gradient-${size}`}>
-              <stop offset="50%" stopColor="currentColor" />
-              <stop offset="50%" stopColor="currentColor" stopOpacity="0.3" />
-            </linearGradient>
-          </defs>
-        ) : null}
         <path
-          fill={half ? `url(#heart-half-gradient-${size})` : filled ? 'currentColor' : 'none'}
+          fill={half ? `url(#heart-half-gradient-${gradientId})` : filled ? 'currentColor' : 'none'}
           stroke="currentColor"
           strokeWidth={filled ? 0 : 2}
           d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"
@@ -192,7 +188,7 @@ export const Rating = forwardRef<HTMLDivElement, RatingProps>(({
     focused: boolean;
     size: string;
   }) => {
-    const { filled, hover, focused } = props;
+    const { filled, hover, focused, size } = props;
 
     return (
       <svg
@@ -201,6 +197,8 @@ export const Rating = forwardRef<HTMLDivElement, RatingProps>(({
           ${hover ? 'rating-thumbs-hover' : ''}
           ${focused ? 'rating-thumbs-focused' : ''}
         `}
+        width={defaultIconSizes[size] ?? 24}
+        height={defaultIconSizes[size] ?? 24}
         viewBox="0 0 24 24"
         fill="currentColor"
       >
@@ -230,6 +228,11 @@ export const Rating = forwardRef<HTMLDivElement, RatingProps>(({
 
   const renderer = getRenderer();
 
+  // reason: the hook clamps with Math.min/Math.max, which lets NaN through
+  // (e.g. a value derived from parseFloat('')). Announcing "NaN" in the live
+  // region or value displays is never useful, so render it as "no rating".
+  const displayValue = Number.isNaN(computed.displayValue) ? 0 : computed.displayValue;
+
   return (
     <div
       ref={ref}
@@ -243,7 +246,7 @@ export const Rating = forwardRef<HTMLDivElement, RatingProps>(({
           <span className="rating-label-text">{label}</span>
           {showValue && (
             <span className="rating-value">
-              {computed.displayValue}/{state.max}
+              {displayValue}/{state.max}
             </span>
           )}
         </div>
@@ -354,14 +357,38 @@ export const Rating = forwardRef<HTMLDivElement, RatingProps>(({
       {showValue && !label && (
         <div className="rating-value-display">
           <span className="rating-value-text">
-            {computed.displayValue}/{state.max}
+            {displayValue}/{state.max}
           </span>
         </div>
       )}
 
+      {/* Half-fill gradients, defined once per instance: default renderers
+          reference them via fill url(#...), and defining them per rendered
+          item would emit duplicate ids for every half star (url(#) resolves
+          document-wide, so only the first def would ever be used). */}
+      <svg
+        className="rating-defs"
+        width="0"
+        height="0"
+        aria-hidden="true"
+        focusable="false"
+        style={{ position: 'absolute' }}
+      >
+        <defs>
+          <linearGradient id={`half-gradient-${gradientId}`}>
+            <stop offset="50%" stopColor="currentColor" />
+            <stop offset="50%" stopColor="currentColor" stopOpacity="0.3" />
+          </linearGradient>
+          <linearGradient id={`heart-half-gradient-${gradientId}`}>
+            <stop offset="50%" stopColor="currentColor" />
+            <stop offset="50%" stopColor="currentColor" stopOpacity="0.3" />
+          </linearGradient>
+        </defs>
+      </svg>
+
       {/* Keyboard instructions for screen readers */}
       <div className="sr-only" aria-live="polite">
-        Current rating: {computed.displayValue} out of {state.max}
+        Current rating: {displayValue} out of {state.max}
         {computed.isEmpty && ' - No rating'}
         {computed.isFull && ' - Maximum rating'}
       </div>

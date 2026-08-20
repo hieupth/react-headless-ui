@@ -5,7 +5,12 @@
  */
 
 import React, { forwardRef } from 'react';
-import { usePagination, type UsePaginationProps } from '../hooks';
+import { usePagination, type UsePaginationProps } from '../hooks/index.js';
+
+// Intrinsic svg size (px) for the default chevron renderers per pagination
+// size. The lib ships no CSS, so default icons need explicit width/height or
+// they collapse to 0x0; lg matches the chevrons' 24x24 viewBox.
+const defaultIconSizes: Record<string, number> = { sm: 16, md: 20, lg: 24 };
 
 // `UsePaginationProps` inherits `[key: string]: unknown` index signatures from
 // the Semantic/Focusable mixins. Extending `Omit<UsePaginationProps, ...>`
@@ -94,6 +99,9 @@ export const Pagination = forwardRef<HTMLDivElement, PaginationProps>(({
     lg: ''
   }[size];
 
+  // Intrinsic chevron size for this pagination's size variant
+  const iconSize = defaultIconSizes[size] ?? 24;
+
   // Variant classes
   const variantClasses = {
     default: '',
@@ -112,6 +120,10 @@ export const Pagination = forwardRef<HTMLDivElement, PaginationProps>(({
 
   // Button base classes
   const buttonBaseClasses = '';
+
+  // Minimal hit area for the default page-number buttons: the lib ships no
+  // CSS, so a bare single-digit button collapses to ~7px wide.
+  const pageButtonStyle: React.CSSProperties = { minWidth: 24, minHeight: 24 };
 
   // Page number button classes
   const pageButtonClasses = `${buttonBaseClasses} ${sizeClasses} ${variantClasses}`;
@@ -146,6 +158,8 @@ export const Pagination = forwardRef<HTMLDivElement, PaginationProps>(({
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"
+            width={iconSize}
+            height={iconSize}
           >
             <path
               strokeLinecap="round"
@@ -171,6 +185,8 @@ export const Pagination = forwardRef<HTMLDivElement, PaginationProps>(({
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"
+            width={iconSize}
+            height={iconSize}
           >
             <path
               strokeLinecap="round"
@@ -211,6 +227,7 @@ export const Pagination = forwardRef<HTMLDivElement, PaginationProps>(({
             key={`page-${pageNum}`}
             onClick={() => handlers.handlePageChange(pageNum as number)}
             className={pageClasses}
+            style={pageButtonStyle}
             aria-current={isActive ? 'page' : undefined}
             aria-label={`Go to page ${pageNum}`}
             disabled={state.disabled}
@@ -234,6 +251,8 @@ export const Pagination = forwardRef<HTMLDivElement, PaginationProps>(({
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"
+            width={iconSize}
+            height={iconSize}
           >
             <path
               strokeLinecap="round"
@@ -259,6 +278,8 @@ export const Pagination = forwardRef<HTMLDivElement, PaginationProps>(({
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"
+            width={iconSize}
+            height={iconSize}
           >
             <path
               strokeLinecap="round"

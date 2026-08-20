@@ -4,9 +4,9 @@
  * Provides tri-state checkbox with visual feedback and accessibility.
  */
 
-import React from 'react';
-import { useCheckbox, type UseCheckboxProps } from '../hooks';
-import { useTheme } from '../providers/ThemeProvider';
+import React, { useId } from 'react';
+import { useCheckbox, type UseCheckboxProps } from '../hooks/index.js';
+import { useTheme } from '../providers/ThemeProvider.js';
 
 export interface CheckboxProps extends UseCheckboxProps {
   /** Checkbox label text */
@@ -34,6 +34,9 @@ export const Checkbox: React.FC<CheckboxProps> = ({
   ...props
 }: CheckboxProps) => {
   const theme = useTheme();
+  // Associates the visible <label> with the (visually hidden) native input so
+  // the input gets an accessible name.
+  const inputId = useId();
   const {
     checked,
     indeterminate,
@@ -99,6 +102,7 @@ export const Checkbox: React.FC<CheckboxProps> = ({
     <div className={`checkbox-wrapper ${combinedClassName}`} style={themeStyle}>
       <input
         ref={ref}
+        id={inputId}
         type="checkbox"
         className="checkbox-input"
         tabIndex={tabIndex}
@@ -132,6 +136,7 @@ export const Checkbox: React.FC<CheckboxProps> = ({
 
       {children && (
         <label
+          htmlFor={inputId}
           className={`checkbox-label
             ${disabled ? 'checkbox-label-disabled' : ''}
             ${focused ? 'checkbox-label-focused' : ''}

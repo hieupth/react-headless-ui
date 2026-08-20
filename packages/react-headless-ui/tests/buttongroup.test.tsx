@@ -88,8 +88,12 @@ describe('ButtonGroup', () => {
   it('uses a custom children renderer with selected state', async () => {
     const user = userEvent.setup();
     const onSelectionChange = vi.fn();
+    // The render prop spreads the provided buttonProps onto its own
+    // interactive element — the group's wrapper span stays structural.
     const renderSpy = vi.fn(
-      (_button: any, _props: any, _index: number, _isSelected: boolean) => null
+      (_button: any, props: any, _index: number, _isSelected: boolean) => (
+        <button {...props} />
+      )
     );
     render(
       <ButtonGroup buttons={buttons} exclusive onSelectionChange={onSelectionChange}>

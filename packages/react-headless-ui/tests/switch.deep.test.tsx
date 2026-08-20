@@ -132,7 +132,9 @@ describe('useSwitch hook', () => {
 
   it('exposes formAttributes (name/value/type)', () => {
     const { api } = setup({ name: 'notify', value: 'yes' });
-    expect(api.formAttributes).toEqual({ name: 'notify', value: 'yes', type: 'checkbox' });
+    // type must be a valid button type — 'checkbox' on a <button> falls back
+    // to submit behavior in browsers.
+    expect(api.formAttributes).toEqual({ name: 'notify', value: 'yes', type: 'button' });
   });
 });
 

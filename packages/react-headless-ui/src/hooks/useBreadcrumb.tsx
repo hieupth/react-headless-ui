@@ -1,8 +1,8 @@
 "use client";
 import { useCallback, useMemo } from 'react';
-import { useSemanticMixin } from '../mixins';
-import { composeState, composeHandlers } from '../utils';
-import type { SemanticMixinProps, FocusableMixinProps, PressableMixinProps } from '../mixins';
+import { useSemanticMixin } from '../mixins/index.js';
+import { composeState, composeHandlers } from '../utils/index.js';
+import type { SemanticMixinProps, FocusableMixinProps, PressableMixinProps } from '../mixins/index.js';
 
 export interface BreadcrumbItem {
   /** Unique identifier for the breadcrumb item */

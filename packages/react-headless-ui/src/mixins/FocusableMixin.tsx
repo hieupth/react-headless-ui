@@ -5,15 +5,20 @@
  */
 
 import { useState, useRef, useCallback, useEffect, useMemo } from 'react';
-import type { KeyboardNavigation, NavigationKey } from '../contracts';
-import type { SemanticMixinDomProps } from './SemanticMixin';
+import type { KeyboardNavigation, NavigationKey } from '../contracts/index.js';
+import type { SemanticMixinDomProps } from './SemanticMixin.js';
 
 export interface FocusableMixinProps extends SemanticMixinDomProps {
   /** Initial focus state */
   defaultFocused?: boolean;
   /** Whether element can receive focus */
   focusable?: boolean;
-  /** Focus management strategy ('first' focuses the first focusable descendant) */
+  /**
+   * Focus management strategy. Also drives the computed tabIndex: 'auto'
+   * (default) and 'manual' keep the element tabbable (tabindex 0);
+   * 'programmatic' and 'first' opt into the roving pattern (tabindex -1 until
+   * focused). 'first' focuses the first focusable descendant.
+   */
   focusStrategy?: 'auto' | 'manual' | 'programmatic' | 'first';
   /** Custom focus handler */
   onFocus?: (event: FocusEvent) => void;
@@ -79,8 +84,16 @@ export const useFocusableMixin = (props: FocusableMixinProps = {}): FocusableSta
   // Determine tab index based on focusability and strategy
   const tabIndex = useCallback(() => {
     if (!focusable) return -1;
-    if (focusStrategy === 'manual') return 0;
-    return focused ? 0 : -1;
+    // 'programmatic' and 'first' opt into the roving-tabindex pattern: the
+    // element stays out of the tab order (-1) until it is focused, which only
+    // works for composite containers that manage focus themselves. Every other
+    // strategy — including the default 'auto' — must keep the element keyboard
+    // reachable, so it gets tabindex 0 (an unfocusable -1 element can never
+    // gain focus to flip itself to 0).
+    if (focusStrategy === 'programmatic' || focusStrategy === 'first') {
+      return focused ? 0 : -1;
+    }
+    return 0;
   }, [focusable, focusStrategy, focused]);
 
   // Handle focus events

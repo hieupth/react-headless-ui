@@ -8,12 +8,12 @@
  * single package.
  */
 
-export * from './contracts';
-export * from './mixins';
-export * from './utils';
-export * from './hooks';
-export * from './components';
-export * from './providers';
+export * from './contracts/index.js';
+export * from './mixins/index.js';
+export * from './utils/index.js';
+export * from './hooks/index.js';
+export * from './components/index.js';
+export * from './providers/index.js';
 
 // Resolve name collisions between the hooks barrel (which re-exports internal
 // data-shape interfaces) and the components barrel (which exports the matching
@@ -27,4 +27,4 @@ export {
   ComboboxOption,
   ComboboxGroup,
   ScrollspySection
-} from './components';
+} from './components/index.js';

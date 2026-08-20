@@ -70,11 +70,12 @@ describe('useAvatar (extra coverage)', () => {
     expect(ref.current.fallbackText).toBe('AD');
   });
 
-  it('handleClick is a no-op when not clickable', () => {
+  it('handleClick is a no-op when explicitly not clickable', () => {
     const onClick = vi.fn();
     const ref: any = { current: null };
     const P = () => {
-      ref.current = useAvatar({ onClick });
+      // clickable={false} opts out of the onClick auto-enable behavior.
+      ref.current = useAvatar({ onClick, clickable: false });
       return null;
     };
     render(<P />);

@@ -5,8 +5,8 @@
  */
 
 import React, { forwardRef } from 'react';
-import { useList, type UseListProps, type ListItem } from '../hooks';
-import { useTheme } from '../providers/ThemeProvider';
+import { useList, type UseListProps, type ListItem } from '../hooks/index.js';
+import { useTheme } from '../providers/ThemeProvider.js';
 
 export interface ListProps extends Omit<UseListProps, 'listRef'> {
   /** Additional CSS class names */

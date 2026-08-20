@@ -129,6 +129,99 @@ describe('Chart', () => {
   });
 });
 
+// Categorical x support, zero-span guards, and scatter on-canvas geometry.
+describe('Chart coordinate math', () => {
+  const categoricalDatasets: ChartDataset[] = [
+    {
+      label: 'Revenue',
+      data: [
+        { x: 'Jan', y: 12 },
+        { x: 'Feb', y: 18 },
+        { x: 'Mar', y: 9 },
+      ],
+    },
+  ];
+
+  const parsePathCoords = (d: string) =>
+    d.split(/ [ML] /).flatMap((token) => token.replace(/^M /, '').split(' ').map(Number));
+
+  it('renders a categorical line chart with finite coordinates and label ticks', () => {
+    const { container } = render(
+      <Chart type="line" datasets={categoricalDatasets} width={400} height={200} animated={false} />
+    );
+
+    const path = container.querySelector('path.chart-line');
+    expect(path).not.toBeNull();
+    const coords = parsePathCoords(path!.getAttribute('d')!);
+    expect(coords).toHaveLength(6);
+    coords.forEach((c) => expect(Number.isFinite(c)).toBe(true));
+
+    const circles = container.querySelectorAll('circle.chart-point');
+    expect(circles).toHaveLength(3);
+    circles.forEach((c) => {
+      expect(Number.isFinite(Number(c.getAttribute('cx')))).toBe(true);
+      expect(Number.isFinite(Number(c.getAttribute('cy')))).toBe(true);
+    });
+
+    // X-axis ticks show the original category labels, not collapsed numbers.
+    const xTickTexts = Array.from(container.querySelectorAll('g.chart-axes text'))
+      .map((t) => t.textContent);
+    ['Jan', 'Feb', 'Mar'].forEach((label) => expect(xTickTexts).toContain(label));
+    expect(xTickTexts).not.toContain('0');
+  });
+
+  it('renders a single-point chart with finite coordinates', () => {
+    const one: ChartDataset[] = [{ label: 'One', data: [{ x: 1, y: 12 }] }];
+    const { container } = render(
+      <Chart type="line" datasets={one} width={400} height={200} animated={false} />
+    );
+
+    // No line path for a single point, but the marker must render finite coords.
+    expect(container.querySelectorAll('path.chart-line')).toHaveLength(0);
+    const circles = container.querySelectorAll('circle.chart-point');
+    expect(circles).toHaveLength(1);
+    const cx = Number(circles[0].getAttribute('cx'));
+    const cy = Number(circles[0].getAttribute('cy'));
+    expect(Number.isFinite(cx)).toBe(true);
+    expect(Number.isFinite(cy)).toBe(true);
+
+    // Axis ticks also stay finite (no NaN attributes anywhere).
+    container.querySelectorAll('g.chart-axes line').forEach((line) => {
+      ['x1', 'x2', 'y1', 'y2'].forEach((attr) => {
+        expect(line.getAttribute(attr)).not.toContain('NaN');
+      });
+    });
+  });
+
+  it('renders scatter points on-canvas for numeric data', () => {
+    const scatter: ChartDataset[] = [
+      {
+        label: 'Points',
+        data: [
+          { x: 1, y: 5 },
+          { x: 2, y: 15 },
+          { x: 3, y: 8 },
+          { x: 4, y: 20 },
+        ],
+      },
+    ];
+    const { container } = render(
+      <Chart type="scatter" datasets={scatter} width={400} height={300} animated={false} />
+    );
+
+    const circles = container.querySelectorAll('circle.chart-point');
+    expect(circles).toHaveLength(4);
+    circles.forEach((c) => {
+      const cx = Number(c.getAttribute('cx'));
+      const cy = Number(c.getAttribute('cy'));
+      expect(cx).toBeGreaterThanOrEqual(0);
+      expect(cx).toBeLessThanOrEqual(400);
+      expect(cy).toBeGreaterThanOrEqual(0);
+      expect(cy).toBeLessThanOrEqual(300);
+    });
+  });
+});
+
 // Exercises the component-internal render branches: explicit margin/padding,
 // non-numeric points, empty/short datasets, selection/hover styling, the
 // animation < 1 vs >= 1 arms, the pie largeArc branch, and the tooltip render.
@@ -369,5 +462,22 @@ describe('ChartBar', () => {
     // without onClick the prop is absent (no crash)
     const { container: noClick } = render(<svg><ChartBar x={1} y={2} width={3} height={4} /></svg>);
     expect(noClick.querySelector('rect.chart-bar')).not.toBeNull();
+  });
+});
+
+describe('Chart tick labels', () => {
+  it('renders five distinct numeric ticks for a single-point (zero-span) range', () => {
+    const { container } = render(
+      <Chart
+        type="line"
+        width={400}
+        height={200}
+        datasets={[{ label: 'Solo', color: '#000', data: [{ x: 1, y: 12 }] }]}
+      />
+    );
+    const texts = [...container.querySelectorAll('svg.chart-svg text')].map((t) => t.textContent);
+    expect(texts.length).toBeGreaterThan(0);
+    const yTicks = texts.slice(0, 5);
+    expect(new Set(yTicks).size).toBe(5);
   });
 });

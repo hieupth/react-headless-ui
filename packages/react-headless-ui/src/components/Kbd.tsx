@@ -5,8 +5,8 @@
  */
 
 import React, { forwardRef } from 'react';
-import { useKbd, type UseKbdProps, formatKeyDisplay, parseKeyShortcut } from '../hooks';
-import { useTheme } from '../providers/ThemeProvider';
+import { useKbd, type UseKbdProps, formatKeyDisplay, parseKeyShortcut } from '../hooks/index.js';
+import { useTheme } from '../providers/ThemeProvider.js';
 
 export interface KbdProps extends Omit<UseKbdProps, 'keyRef'> {
   /** Additional CSS class names */

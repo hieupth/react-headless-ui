@@ -5,7 +5,7 @@
  */
 
 import React, { forwardRef } from 'react';
-import { useToast, type UseToastProps } from '../hooks';
+import { useToast, type UseToastProps } from '../hooks/index.js';
 
 export interface ToastProps extends UseToastProps {
   /** Additional CSS class names */

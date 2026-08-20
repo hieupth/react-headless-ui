@@ -5,9 +5,9 @@
  */
 
 import React, { forwardRef, useMemo, useRef } from 'react';
-import { useDataGrid } from '../hooks';
-import { useVirtualList } from '../hooks';
-import type { UseDataGridProps, GridColumn, GridRow, GridPagination } from '../hooks';
+import { useDataGrid } from '../hooks/index.js';
+import { useVirtualList } from '../hooks/index.js';
+import type { UseDataGridProps, GridColumn, GridRow, GridPagination } from '../hooks/index.js';
 
 /**
  * Default row count above which the DataGrid body virtualizes. Below this,
@@ -267,7 +267,7 @@ export const DataGrid = forwardRef<HTMLTableElement, DataGridProps>(
       return (
         <th key={column.id} {...headerProps}>
           <div className="data-grid">
-            <span className="data-grid">{column.title}</span>
+            <span className="data-grid">{column.header ?? column.title}</span>
             {column.sortable && (
               <div className="data-grid">
                 <svg

@@ -1,7 +1,7 @@
 "use client";
 import React from 'react';
-import { useSkeleton, type UseSkeletonProps } from '../hooks';
-import { useTheme } from '../providers/ThemeProvider';
+import { useSkeleton, type UseSkeletonProps } from '../hooks/index.js';
+import { useTheme } from '../providers/ThemeProvider.js';
 
 export interface SkeletonProps extends UseSkeletonProps {
   /** Additional CSS classes */

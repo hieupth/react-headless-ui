@@ -6,8 +6,8 @@
 
 import React, { forwardRef, useRef, useEffect } from 'react';
 import { createPortal } from 'react-dom';
-import { useContextMenu, type ContextMenuItem } from '../hooks';
-import type { UseContextMenuProps } from '../hooks';
+import { useContextMenu, type ContextMenuItem } from '../hooks/index.js';
+import type { UseContextMenuProps } from '../hooks/index.js';
 
 /**
  * Context Menu component props

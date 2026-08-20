@@ -10,4 +10,4 @@ export {
   composeClasses,
   composeStyles,
   mergeRefs
-} from './Composition';
+} from './Composition.js';

@@ -5,8 +5,8 @@
  */
 
 import React, { forwardRef } from 'react';
-import { usePanel, type UsePanelProps } from '../hooks';
-import { useTheme } from '../providers/ThemeProvider';
+import { usePanel, type UsePanelProps } from '../hooks/index.js';
+import { useTheme } from '../providers/ThemeProvider.js';
 
 export interface PanelProps extends Omit<UsePanelProps, 'panelRef'> {
   /** Additional CSS class names */

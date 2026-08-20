@@ -5,7 +5,7 @@
  */
 
 import React, { forwardRef } from 'react';
-import { useMenubar, type UseMenubarProps, type MenuItem } from '../hooks';
+import { useMenubar, type UseMenubarProps, type MenuItem } from '../hooks/index.js';
 
 export interface MenubarProps extends Omit<UseMenubarProps, 'menubarRef'> {
   /** Additional CSS class names */

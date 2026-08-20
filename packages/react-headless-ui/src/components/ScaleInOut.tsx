@@ -6,7 +6,7 @@
 
 import React, { forwardRef } from 'react';
 import { motion } from 'framer-motion';
-import { useScaleInOut, type UseScaleInOutProps } from '../hooks';
+import { useScaleInOut, type UseScaleInOutProps } from '../hooks/index.js';
 
 export interface ScaleInOutProps extends UseScaleInOutProps {
   /** Additional CSS class names */

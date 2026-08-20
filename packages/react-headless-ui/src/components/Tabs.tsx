@@ -5,8 +5,8 @@
  */
 
 import React, { forwardRef } from 'react';
-import { useTabs } from '../hooks';
-import type { UseTabsProps, TabItem } from '../hooks';
+import { useTabs } from '../hooks/index.js';
+import type { UseTabsProps, TabItem } from '../hooks/index.js';
 
 export interface TabsProps extends Omit<UseTabsProps, 'items'>, React.AriaAttributes {
   /**
@@ -151,10 +151,14 @@ const TabsBase = forwardRef<HTMLDivElement, TabsProps>(({
   ...tabsProps
 }: TabsProps, ref) => {
   // Compound children API: derive items from <Tabs.List><Tabs.Trigger/></Tabs.List>
-  // and content from <Tabs.Content/>, matched to triggers by value.
+  // and content from <Tabs.Content/>, matched to triggers by value. The
+  // exported <Tab>/<TabPanel> components compose too: a <Tab>'s label becomes
+  // its key/label and its children become its panel content; a <TabPanel> is
+  // matched to items positionally (it carries no value prop).
   const childItems: TabItem[] = [];
   const contentByKey: Record<string, React.ReactNode> = {};
   let hasCompoundChildren = false;
+  let panelIndex = 0;
   React.Children.forEach(children, (child) => {
     if (!React.isValidElement(child)) return;
     const dn = (child.type as { displayName?: string }).displayName;
@@ -170,6 +174,24 @@ const TabsBase = forwardRef<HTMLDivElement, TabsProps>(({
       hasCompoundChildren = true;
       const p = child.props as TabsContentProps;
       contentByKey[p.value] = p.children;
+    } else if (dn === 'Tab') {
+      hasCompoundChildren = true;
+      const p = child.props as TabProps & { children?: React.ReactNode };
+      childItems.push({
+        key: p.label,
+        label: p.label,
+        disabled: p.disabled,
+        icon: p.icon,
+        badge: p.badge,
+        content: p.children
+      });
+    } else if (dn === 'TabPanel') {
+      hasCompoundChildren = true;
+      const p = child.props as TabPanelProps;
+      const target = childItems[panelIndex++];
+      if (target && target.content === undefined) {
+        target.content = p.children;
+      }
     }
   });
   if (hasCompoundChildren) {

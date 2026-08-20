@@ -22,16 +22,16 @@ export function PropsTable({ props }: PropsTableProps) {
       <table className="w-full text-sm border-collapse border border-gray-200 dark:border-gray-700">
         <thead>
           <tr className="bg-gray-50 dark:bg-gray-900/40 text-left">
-            <th className="border border-gray-200 dark:border-gray-700 px-3 py-2 font-semibold">
+            <th scope="col" className="border border-gray-200 dark:border-gray-700 px-3 py-2 font-semibold">
               Name
             </th>
-            <th className="border border-gray-200 dark:border-gray-700 px-3 py-2 font-semibold">
+            <th scope="col" className="border border-gray-200 dark:border-gray-700 px-3 py-2 font-semibold">
               Type
             </th>
-            <th className="border border-gray-200 dark:border-gray-700 px-3 py-2 font-semibold">
+            <th scope="col" className="border border-gray-200 dark:border-gray-700 px-3 py-2 font-semibold">
               Default
             </th>
-            <th className="border border-gray-200 dark:border-gray-700 px-3 py-2 font-semibold">
+            <th scope="col" className="border border-gray-200 dark:border-gray-700 px-3 py-2 font-semibold">
               Description
             </th>
           </tr>

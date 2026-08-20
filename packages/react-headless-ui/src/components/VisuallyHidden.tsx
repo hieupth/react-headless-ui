@@ -5,8 +5,8 @@
  */
 
 import React, { forwardRef } from 'react';
-import { useVisuallyHidden, type UseVisuallyHiddenProps } from '../hooks';
-import { useTheme } from '../providers/ThemeProvider';
+import { useVisuallyHidden, type UseVisuallyHiddenProps } from '../hooks/index.js';
+import { useTheme } from '../providers/ThemeProvider.js';
 
 export interface VisuallyHiddenProps extends Omit<UseVisuallyHiddenProps, 'elementRef' | 'liveRegion'>, React.AriaAttributes {
   /** ARIA role for the element */
@@ -42,6 +42,8 @@ export const VisuallyHidden = forwardRef<HTMLElement, VisuallyHiddenProps>(({
   liveRegionType = 'polite',
   autoAnnounce = false,
   announceDelay = 100,
+  onFocus,
+  onBlur,
   ...visuallyHiddenProps
 }, ref) => {
   const theme = useTheme();
@@ -59,6 +61,19 @@ export const VisuallyHidden = forwardRef<HTMLElement, VisuallyHiddenProps>(({
     liveRegion: liveRegionType
   });
 
+  // Inline styles cannot express :focus, so the focusable variant reveals
+  // itself by toggling local state on DOM focus/blur (React's onFocus/onBlur
+  // bubble, so focus landing on children is covered as well).
+  const [focused, setFocused] = React.useState(false);
+  const handleFocus = (event: React.FocusEvent) => {
+    setFocused(true);
+    onFocus?.(event);
+  };
+  const handleBlur = (event: React.FocusEvent) => {
+    setFocused(false);
+    onBlur?.(event);
+  };
+
   // Auto-announce children changes
   React.useEffect(() => {
     if (autoAnnounce && children && typeof children === 'string') {
@@ -71,8 +86,7 @@ export const VisuallyHidden = forwardRef<HTMLElement, VisuallyHiddenProps>(({
   }, [children, autoAnnounce, announceDelay, actions, liveRegionType]);
 
   // Build CSS classes
-  /* c8 ignore next -- reason: state.focused is always false; useVisuallyHidden never calls setFocused (handleFocus/handleBlur were removed), so the focused class is structurally unreachable from the component. */
-  const focusedClass = state.focused ? 'visually-hidden-focused' : '';
+  const focusedClass = focused ? 'visually-hidden-focused' : '';
   const elementClasses = `
     visually-hidden
     ${state.visible ? 'visually-hidden-visible' : 'visually-hidden-hidden'}
@@ -87,8 +101,7 @@ export const VisuallyHidden = forwardRef<HTMLElement, VisuallyHiddenProps>(({
     ...styles,
     ...style,
     // Override styles when focused for better accessibility
-    /* c8 ignore start -- reason: state.focused is always false (see above); the focused style block — including the theme `||` fallback arms — is structurally unreachable from the component. */
-    ...(state.focused && state.focusable ? {
+    ...(focused ? {
       position: 'static',
       width: 'auto',
       height: 'auto',
@@ -107,7 +120,6 @@ export const VisuallyHidden = forwardRef<HTMLElement, VisuallyHiddenProps>(({
       borderRadius: '4px',
       zIndex: 999999
     } : {})
-    /* c8 ignore end */
   };
 
   // Build content
@@ -126,6 +138,8 @@ export const VisuallyHidden = forwardRef<HTMLElement, VisuallyHiddenProps>(({
       ref={ref}
       className={elementClasses}
       style={combinedStyles}
+      onFocus={handleFocus}
+      onBlur={handleBlur}
       {...attributes}
       data-testid="visually-hidden"
       data-visible={state.visible}

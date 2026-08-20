@@ -19,10 +19,14 @@ function TailwindSwitch({
   size = 'md',
   label,
   labelPosition = 'right',
+  defaultChecked = false,
+  disabled = false,
 }: {
   size?: keyof typeof sizeMap;
   label?: string;
   labelPosition?: 'left' | 'right';
+  defaultChecked?: boolean;
+  disabled?: boolean;
 }) {
   return (
     <Switch
@@ -30,6 +34,8 @@ function TailwindSwitch({
       showLabel={!!label}
       label={label}
       labelPosition={labelPosition}
+      defaultChecked={defaultChecked}
+      disabled={disabled}
       render={(p) => {
         const s = sizeMap[p.disabled ? 'md' : size];
         const track = (
@@ -107,9 +113,9 @@ export default function SwitchPage() {
 )} />`}
         >
           <div className="flex flex-wrap items-center justify-center gap-4">
-            <TailwindSwitch size="sm" />
-            <TailwindSwitch size="md" />
-            <TailwindSwitch size="lg" />
+            <TailwindSwitch size="sm" defaultChecked />
+            <TailwindSwitch size="md" defaultChecked />
+            <TailwindSwitch size="lg" disabled />
             <TailwindSwitch size="md" />
           </div>
         </Demo>

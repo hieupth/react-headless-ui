@@ -5,8 +5,8 @@
  */
 
 import React, { forwardRef, useMemo } from 'react';
-import { useDropdownMenu } from '../hooks';
-import type { UseDropdownMenuProps, DropdownMenuItem as DropdownMenuItemData } from '../hooks';
+import { useDropdownMenu } from '../hooks/index.js';
+import type { UseDropdownMenuProps, DropdownMenuItem as DropdownMenuItemData } from '../hooks/index.js';
 
 export interface DropdownMenuProps extends UseDropdownMenuProps {
   /** Menu items */

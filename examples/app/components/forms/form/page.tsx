@@ -77,11 +77,15 @@ function ControlledSubmitForm() {
     >
       {(_rhf: UseFormReturns['rhf'], state, actions) => (
         <div className="w-full max-w-sm space-y-3">
-          <input
-            className={`${inputCls} ${state.submissionError ? 'border-red-500' : ''}`}
-            placeholder="username"
-            {..._rhf.register('username', { required: 'Username is required' })}
-          />
+          <div>
+            <label className={labelCls} htmlFor="username">Username</label>
+            <input
+              id="username"
+              className={`${inputCls} ${state.submissionError ? 'border-red-500' : ''}`}
+              placeholder="username"
+              {..._rhf.register('username', { required: 'Username is required' })}
+            />
+          </div>
           <div className="flex gap-2">
             <button
               type="button"
@@ -185,10 +189,14 @@ export default function FormPage() {
           code={`<Form onSubmit={async (data) => { await api.signIn(data); }}>
   {(rhf, state, actions) => (
     <div className="w-full max-w-sm space-y-3">
-      <input
-        className="w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:border-gray-600 dark:bg-gray-900 dark:text-gray-100"
-        {...rhf.register('username')}
-      />
+      <div>
+        <label className="block text-sm font-medium text-gray-700 dark:text-gray-200" htmlFor="username">Username</label>
+        <input
+          id="username"
+          className="w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:border-gray-600 dark:bg-gray-900 dark:text-gray-100"
+          {...rhf.register('username')}
+        />
+      </div>
       <button
         disabled={state.isSubmitting}
         className="w-full rounded-md bg-gray-900 px-4 py-2 text-sm font-medium text-white hover:bg-gray-700 disabled:opacity-50 dark:bg-white dark:text-gray-900 dark:hover:bg-gray-200"

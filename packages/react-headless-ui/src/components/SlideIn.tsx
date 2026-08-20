@@ -6,7 +6,7 @@
 
 import React, { forwardRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { useSlideIn, type UseSlideInProps } from '../hooks';
+import { useSlideIn, type UseSlideInProps } from '../hooks/index.js';
 
 export interface SlideInProps extends UseSlideInProps {
   /** Additional CSS class names */

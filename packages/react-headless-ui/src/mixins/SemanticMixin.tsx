@@ -5,7 +5,7 @@
  */
 
 import { useMemo, useRef } from 'react';
-import type { AriaRole } from '../contracts';
+import type { AriaRole } from '../contracts/index.js';
 
 /**
  * DOM pass-through attributes the mixin forwards untouched. Constrained

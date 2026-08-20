@@ -164,7 +164,8 @@ export default function SortablePage() {
             { name: 'disabled', type: 'boolean', default: 'false', description: 'Disable dragging for the entire list.' },
             { name: 'locked', type: 'boolean', default: 'false', description: 'Temporarily lock reordering while keeping items visible.' },
             { name: 'animated', type: 'boolean', default: 'true', description: 'Animate item transitions and the dragging transform.' },
-            { name: 'dragThreshold', type: 'number', default: '—', description: 'Pixels of movement before a drag starts.' },
+            { name: 'autoScroll', type: 'boolean', default: 'true', description: 'Auto-scroll the container when dragging near its edge.' },
+            { name: 'autoScrollSpeed', type: 'number', default: '5', description: 'Pixels scrolled per tick while auto-scrolling.' },
             { name: 'onReorder', type: '(items, oldIndex, newIndex) => void', default: '—', description: 'Fires after a successful drop with the new ordering.' },
             { name: 'renderItem', type: '(props) => ReactNode', default: '—', description: 'Custom renderer receiving item, index, flags, and dragProps.' },
           ]}

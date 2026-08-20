@@ -6,7 +6,7 @@
 
 import React, { forwardRef } from 'react';
 import { motion } from 'framer-motion';
-import { useRotateIn, type UseRotateInProps } from '../hooks';
+import { useRotateIn, type UseRotateInProps } from '../hooks/index.js';
 
 export interface RotateInProps extends UseRotateInProps {
   /** Additional CSS class names */

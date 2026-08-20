@@ -5,9 +5,9 @@
  */
 
 import React, { useState, useCallback, useEffect, useMemo } from 'react';
-import { useFocusableMixin, useSemanticMixin } from '../mixins';
-import { composeState } from '../utils';
-import type { FocusableMixinProps, SemanticMixinProps } from '../mixins';
+import { useFocusableMixin, useSemanticMixin } from '../mixins/index.js';
+import { composeState } from '../utils/index.js';
+import type { FocusableMixinProps, SemanticMixinProps } from '../mixins/index.js';
 
 export type BadgeVariant = 'default' | 'secondary' | 'destructive' | 'outline';
 export type BadgeSize = 'sm' | 'md' | 'lg';

@@ -1,7 +1,7 @@
 "use client";
 import React from 'react';
-import { useSeparator, type UseSeparatorProps } from '../hooks';
-import { useTheme } from '../providers/ThemeProvider';
+import { useSeparator, type UseSeparatorProps } from '../hooks/index.js';
+import { useTheme } from '../providers/ThemeProvider.js';
 
 export interface SeparatorProps extends UseSeparatorProps {
   /** Additional CSS classes */

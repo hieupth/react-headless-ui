@@ -5,9 +5,9 @@
  */
 
 import React, { useState, useCallback, useEffect, useMemo } from 'react';
-import { useFocusableMixin, useSemanticMixin } from '../mixins';
-import { composeState } from '../utils';
-import type { FocusableMixinProps, SemanticMixinProps } from '../mixins';
+import { useFocusableMixin, useSemanticMixin } from '../mixins/index.js';
+import { composeState } from '../utils/index.js';
+import type { FocusableMixinProps, SemanticMixinProps } from '../mixins/index.js';
 
 export interface UseAvatarProps extends
   FocusableMixinProps,
@@ -79,10 +79,14 @@ export const useAvatar = (props: UseAvatarProps): UseAvatarReturns => {
     alt,
     fallback,
     size = 'md',
-    clickable = false,
     onImageError,
     onImageLoad,
+    // Providing onClick implies the avatar is activatable, so `clickable`
+    // auto-enables (role=button + tabindex + Enter/Space activation) instead
+    // of rendering an inert element with a dead handler. Pass an explicit
+    // `clickable={false}` to keep the avatar non-interactive.
     onClick,
+    clickable = !!onClick,
     defaultFocused = false,
     focusable = clickable,
     focusStrategy = 'auto',

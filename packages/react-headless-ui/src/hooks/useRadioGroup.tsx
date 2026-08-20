@@ -6,7 +6,7 @@
  */
 
 import { useState, useCallback, useRef, useEffect, useMemo } from 'react';
-import { useFocusableMixin, usePressableMixin, useSemanticMixin } from '../mixins';
+import { useFocusableMixin, usePressableMixin, useSemanticMixin } from '../mixins/index.js';
 
 /**
  * Radio group orientation options
@@ -204,15 +204,23 @@ export function useRadioGroup(props: UseRadioGroupProps): UseRadioGroupReturns {
     const isFocused = isOptionFocused(value);
     const optionIndex = getOptionIndex(value);
 
+    // Roving tabindex: exactly one option is the keyboard entry point — the
+    // focused option while navigating, else the selected option, else the
+    // first option when nothing is selected or focused yet (mirrors the Tabs
+    // pattern; previously every option rendered -1 so the group was
+    // unreachable via Tab).
+    const isTabStop = isFocused || isSelected ||
+      (!focusedOption && !currentValue && optionIndex === 0);
+
     return {
       'role': 'radio',
       'aria-checked': isSelected,
       'aria-disabled': disabled,
-      'tabIndex': isFocused ? 0 : -1,
+      'tabIndex': isTabStop ? 0 : -1,
       'data-value': value,
       'data-index': optionIndex
     };
-  }, [isOptionSelected, isOptionFocused, getOptionIndex, disabled]);
+  }, [isOptionSelected, isOptionFocused, getOptionIndex, disabled, focusedOption, currentValue]);
 
   // Keyboard navigation
   useEffect(() => {

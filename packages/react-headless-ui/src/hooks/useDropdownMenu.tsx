@@ -5,9 +5,9 @@
  */
 
 import { useState, useCallback, useRef, useEffect, useMemo } from 'react';
-import { useSemanticMixin, usePressableMixin } from '../mixins';
-import { composeState } from '../utils';
-import type { SemanticMixinProps, FocusableMixinProps, PressableMixinProps } from '../mixins';
+import { useSemanticMixin, usePressableMixin } from '../mixins/index.js';
+import { composeState } from '../utils/index.js';
+import type { SemanticMixinProps, FocusableMixinProps, PressableMixinProps } from '../mixins/index.js';
 
 export interface DropdownMenuItem {
   /** Unique identifier for the item */

@@ -5,7 +5,7 @@
  */
 
 import React, { forwardRef } from 'react';
-import { useStepper, type UseStepperProps, type StepperStep } from '../hooks';
+import { useStepper, type UseStepperProps, type StepperStep } from '../hooks/index.js';
 
 export interface StepperProps extends UseStepperProps {
   /** Additional CSS class names */
@@ -125,6 +125,8 @@ export const Stepper = forwardRef<HTMLDivElement, StepperProps>(({
             ${hasError ? 'step-dot-error' : ''}
           `}
         >
+          {/* Minimal hit area: the lib ships no CSS, so a bare dot-number
+              button collapses to the single digit's ~7px width. */}
           <button
             {...buttonAttributes}
             className={`step-dot-button
@@ -132,6 +134,7 @@ export const Stepper = forwardRef<HTMLDivElement, StepperProps>(({
               ${isCompleted ? 'step-dot-button-completed' : ''}
               ${hasError ? 'step-dot-button-error' : ''}
             `}
+            style={{ minWidth: 24, minHeight: 24 }}
           >
             {step.icon || (
               <span className="step-dot-number">{index + 1}</span>

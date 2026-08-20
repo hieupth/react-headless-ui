@@ -5,8 +5,8 @@
  */
 
 import React, { forwardRef } from 'react';
-import { useButtonGroup } from '../hooks';
-import type { UseButtonGroupProps } from '../hooks';
+import { useButtonGroup } from '../hooks/index.js';
+import type { UseButtonGroupProps } from '../hooks/index.js';
 
 export interface ButtonGroupProps extends
   Omit<UseButtonGroupProps, 'totalItems'> {
@@ -152,11 +152,22 @@ export const ButtonGroup = forwardRef<HTMLDivElement, ButtonGroupProps>(({
       ].filter(Boolean).join(' ') : ''
     ].filter(Boolean).join(' ');
 
-    // Use custom render function if provided
+    // Use custom render function if provided. The wrapper span is purely
+    // structural: the interactive semantics (role, tabIndex, handlers) live in
+    // `buttonProps`, which the consumer spreads onto their own interactive
+    // element — duplicating them on the span would nest interactive controls
+    // inside an unnamed role=button/role=radio span. Surface a string label as
+    // aria-label so consumer-rendered controls keep an accessible name.
     if (children) {
+      const labelledButtonProps = typeof button.label === 'string'
+        ? {
+            ...buttonProps,
+            'aria-label': (buttonProps as Record<string, unknown>)['aria-label'] ?? button.label
+          }
+        : buttonProps;
       return (
-        <span key={index} {...buttonProps}>
-          {children(button, buttonProps, index, isSelected)}
+        <span key={index}>
+          {children(button, labelledButtonProps, index, isSelected)}
         </span>
       );
     }

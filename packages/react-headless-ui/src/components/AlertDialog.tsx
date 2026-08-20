@@ -5,12 +5,12 @@
  */
 
 import React, { forwardRef } from 'react';
-import { useAlertDialog } from '../hooks';
+import { useAlertDialog } from '../hooks/index.js';
 import type {
   UseAlertDialogProps,
   UseAlertDialogState,
   UseAlertDialogActions,
-} from '../hooks';
+} from '../hooks/index.js';
 
 /**
  * Strips a `[key: string]: unknown` index signature from `T`, keeping only its

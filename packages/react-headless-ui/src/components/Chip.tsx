@@ -5,7 +5,7 @@
  */
 
 import React, { forwardRef } from 'react';
-import { useChip, type UseChipProps } from '../hooks';
+import { useChip, type UseChipProps } from '../hooks/index.js';
 
 export interface ChipProps extends UseChipProps {
   /** Additional CSS class names */

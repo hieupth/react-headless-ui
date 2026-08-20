@@ -6,7 +6,7 @@
  */
 
 import { useState, useCallback, useMemo, useRef } from 'react';
-import { useFocusableMixin, usePressableMixin, useSemanticMixin } from '../mixins';
+import { useFocusableMixin, usePressableMixin, useSemanticMixin } from '../mixins/index.js';
 
 /**
  * Item state interface

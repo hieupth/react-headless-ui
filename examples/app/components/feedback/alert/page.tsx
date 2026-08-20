@@ -106,6 +106,7 @@ export default function AlertPage() {
   open
   dismissible
   title="Session expiring"
+  titleAs="h3"
   description="You'll be signed out in 5 minutes."
   className="flex items-start gap-3 rounded-lg border p-4 text-sm w-full max-w-md shadow-sm bg-amber-50 border-amber-200 text-amber-800 dark:bg-amber-950 dark:border-amber-900 dark:text-amber-200"
   onDismiss={() => setOpen(false)}
@@ -116,6 +117,7 @@ export default function AlertPage() {
             open
             dismissible
             title="Session expiring"
+            titleAs="h3"
             description="You'll be signed out in 5 minutes."
             className={`${alertBase} ${variantClasses.warning}`}
           />
@@ -143,6 +145,12 @@ export default function AlertPage() {
               type: 'string',
               default: '—',
               description: 'Heading shown in the alert (also used for aria-label).',
+            },
+            {
+              name: 'titleAs',
+              type: "'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6'",
+              default: "'h4'",
+              description: 'Heading element for the title; override to keep the page heading outline continuous.',
             },
             {
               name: 'description',

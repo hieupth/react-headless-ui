@@ -5,8 +5,8 @@
  */
 
 import React, { forwardRef } from 'react';
-import { useField } from '../hooks';
-import type { UseFieldProps } from '../hooks';
+import { useField } from '../hooks/index.js';
+import type { UseFieldProps } from '../hooks/index.js';
 
 /**
  * Field component props
@@ -64,7 +64,8 @@ export const Field = forwardRef<HTMLInputElement, FieldProps>(
     const {
       state,
       handlers,
-      attributes
+      attributes,
+      descriptionId
     } = useField(props);
 
     const {
@@ -194,14 +195,14 @@ export const Field = forwardRef<HTMLInputElement, FieldProps>(
             <div className="field">
               {/* Error Message */}
               {state.error && (
-                <p className="field" role="alert">
+                <p id={!description ? descriptionId : undefined} className="field" role="alert">
                   {state.error}
                 </p>
               )}
 
               {/* Helper Text */}
               {!state.error && helperText && (
-                <p className="field">
+                <p id={!description ? descriptionId : undefined} className="field">
                   {helperText}
                 </p>
               )}
@@ -220,7 +221,7 @@ export const Field = forwardRef<HTMLInputElement, FieldProps>(
 
         {/* Description */}
         {description && (
-          <p className="field">
+          <p id={descriptionId} className="field">
             {description}
           </p>
         )}

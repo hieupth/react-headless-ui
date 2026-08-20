@@ -5,7 +5,7 @@
  */
 
 import React, { forwardRef } from 'react';
-import { useTreeView, type UseTreeViewProps, type TreeNode } from '../hooks';
+import { useTreeView, type UseTreeViewProps, type TreeNode } from '../hooks/index.js';
 
 export interface TreeViewProps extends Omit<UseTreeViewProps, 'treeRef'> {
   /** Additional CSS class names */
@@ -53,13 +53,16 @@ export const TreeView = forwardRef<HTMLDivElement, TreeViewProps>(({
     treeRef: ref as React.RefObject<HTMLDivElement>
   });
 
-  // Default icons
+  // Default icons. The lib ships no CSS, so they carry explicit width/height
+  // (16px, mirroring Chip/Field row icons) or they collapse to 0x0.
   const defaultExpandIcon = (
     <svg
       className="tree-view"
       fill="none"
       stroke="currentColor"
       viewBox="0 0 24 24"
+      width={16}
+      height={16}
     >
       <path
         strokeLinecap="round"
@@ -76,6 +79,8 @@ export const TreeView = forwardRef<HTMLDivElement, TreeViewProps>(({
       fill="none"
       stroke="currentColor"
       viewBox="0 0 24 24"
+      width={16}
+      height={16}
     >
       <path
         strokeLinecap="round"
@@ -116,6 +121,7 @@ export const TreeView = forwardRef<HTMLDivElement, TreeViewProps>(({
         <button
           onClick={(e) => { e.stopPropagation(); actions.toggleNodeExpansion(node.id); }}
           className="tree-view"
+          style={{ minWidth: 24, minHeight: 24 }}
           aria-label={isExpanded ? 'Collapse' : 'Expand'}
           aria-expanded={isExpanded}
         >

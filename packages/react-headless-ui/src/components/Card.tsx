@@ -4,9 +4,9 @@
  * Provides styled card with sections and interactive states.
  */
 
-import React, { forwardRef, useCallback } from 'react';
-import { useCard } from '../hooks';
-import type { UseCardProps } from '../hooks';
+import React, { forwardRef, useCallback, useId } from 'react';
+import { useCard } from '../hooks/index.js';
+import type { UseCardProps } from '../hooks/index.js';
 
 export interface CardProps extends UseCardProps {
   /** Additional CSS class names */
@@ -73,13 +73,19 @@ export const Card = forwardRef<HTMLDivElement, CardProps>(({
   renderFooter,
   ...cardProps
 }: CardProps, ref) => {
+  // Per-instance id so multiple titled cards on one page keep unique
+  // title/description ids (and valid aria-labelledby/aria-describedby targets).
+  const instanceId = useId();
+
   const card = useCard({
     ...cardProps,
     title,
     subtitle,
     description,
     footer,
-    actions
+    actions,
+    labelledBy: cardProps.labelledBy || (title ? `${instanceId}-title` : undefined),
+    describedBy: cardProps.describedBy || (description ? `${instanceId}-description` : undefined)
   });
 
   // The hook owns `cardRef` for its render-prop contract; merge it with the
@@ -106,7 +112,7 @@ export const Card = forwardRef<HTMLDivElement, CardProps>(({
         <div className="card">
           {title && (
             <h3
-              id={`${props.semanticAttributes.role || 'card'}-title`}
+              id={`${instanceId}-title`}
               className="card"
             >
               {title}
@@ -134,7 +140,7 @@ export const Card = forwardRef<HTMLDivElement, CardProps>(({
       >
         {description && (
           <p
-            id={`${props.semanticAttributes.role || 'card'}-description`}
+            id={`${instanceId}-description`}
             className="card"
           >
             {description}

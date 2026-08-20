@@ -5,7 +5,7 @@
  */
 
 import React, { forwardRef } from 'react';
-import { useForm, type UseFormProps, type FormState, type FormActions } from '../hooks';
+import { useForm, type UseFormProps, type FormState, type FormActions } from '../hooks/index.js';
 
 export interface FormProps<TFieldValues extends Record<string, any> = Record<string, any>>
   extends Omit<UseFormProps<TFieldValues>, 'formRef'> {
@@ -43,7 +43,7 @@ export interface FormProps<TFieldValues extends Record<string, any> = Record<str
   borderRadius?: 'none' | 'sm' | 'md' | 'lg' | 'full';
   /** Form content (fields, actions), or a render function receiving the form API */
   children?: React.ReactNode | ((
-    rhf: import('../hooks').UseFormReturns<TFieldValues>['rhf'],
+    rhf: import('../hooks/index.js').UseFormReturns<TFieldValues>['rhf'],
     state: FormState<TFieldValues>,
     actions: FormActions<TFieldValues>
   ) => React.ReactNode);

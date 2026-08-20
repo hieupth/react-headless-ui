@@ -6,7 +6,7 @@
 
 import React, { forwardRef } from 'react';
 import { motion } from 'framer-motion';
-import { useMagneticHover, type UseMagneticHoverProps } from '../hooks';
+import { useMagneticHover, type UseMagneticHoverProps } from '../hooks/index.js';
 
 export interface MagneticHoverProps extends UseMagneticHoverProps {
   /** Additional CSS class names */

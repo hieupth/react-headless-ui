@@ -5,10 +5,10 @@
  */
 
 import { useState, useCallback, useMemo, useRef, useEffect } from 'react';
-import { useSemanticMixin } from '../mixins/SemanticMixin';
-import { useFocusableMixin } from '../mixins/FocusableMixin';
-import type { SemanticProps } from '../contracts/SemanticContract';
-import type { FocusableProps } from '../contracts/ComponentContract';
+import { useSemanticMixin } from '../mixins/SemanticMixin.js';
+import { useFocusableMixin } from '../mixins/FocusableMixin.js';
+import type { SemanticProps } from '../contracts/SemanticContract.js';
+import type { FocusableProps } from '../contracts/ComponentContract.js';
 
 // Stable defaults for optional props whose default values would otherwise get a
 // fresh identity each render and invalidate downstream useMemo/useCallback deps.
@@ -682,6 +682,10 @@ export function useCombobox(props: UseComboboxProps = {}) {
     value: currentInputValue,
     onChange: (e: React.ChangeEvent<HTMLInputElement>) => handleInputChange(e.target.value),
     ref: inputRef,
+    // Pointer activation opens the listbox, matching the typing behavior
+    // (handleInputChange opens on first keystroke). handleOpen is a no-op when
+    // already open, so clicking the input never closes the dropdown.
+    onClick: () => handleOpen(),
     'aria-label': label || 'Select an option',
     'aria-labelledby': label ? undefined : labelledBy,
     'aria-describedby': describedBy,
@@ -695,7 +699,7 @@ export function useCombobox(props: UseComboboxProps = {}) {
     autoComplete: 'off',
     spellCheck: false,
     disabled
-  }), [placeholder, currentInputValue, handleInputChange, label, labelledBy, describedBy, isOpen, selectedIndex, disabled]);
+  }), [placeholder, currentInputValue, handleInputChange, handleOpen, label, labelledBy, describedBy, isOpen, selectedIndex, disabled]);
 
   // Generate list attributes
   const listAttributes = useMemo<React.HTMLAttributes<HTMLElement>>(() => ({

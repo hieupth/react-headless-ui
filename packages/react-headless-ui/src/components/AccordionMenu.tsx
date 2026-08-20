@@ -5,9 +5,9 @@
  */
 
 import React, { forwardRef } from 'react';
-import { useAccordionMenu } from '../hooks';
-import type { UseAccordionMenuProps, AccordionMenuItem as AccordionMenuItemData } from '../hooks';
-import type { SemanticMixinProps } from '../mixins';
+import { useAccordionMenu } from '../hooks/index.js';
+import type { UseAccordionMenuProps, AccordionMenuItem as AccordionMenuItemData } from '../hooks/index.js';
+import type { SemanticMixinProps } from '../mixins/index.js';
 
 export interface AccordionMenuProps extends
   Omit<UseAccordionMenuProps, 'items'> {

@@ -6,7 +6,7 @@
 
 import React, { forwardRef } from 'react';
 import { motion } from 'framer-motion';
-import { useFlip, type UseFlipProps } from '../hooks';
+import { useFlip, type UseFlipProps } from '../hooks/index.js';
 
 export interface FlipProps extends UseFlipProps {
   /** Additional CSS class names */

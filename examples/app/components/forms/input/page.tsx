@@ -34,8 +34,9 @@ export default function InputPage() {
         <p className="text-sm text-gray-600 dark:text-gray-400">
           A controlled text input with a placeholder.
         </p>
-        <Demo code={`<Input placeholder="you@example.com" className="w-full rounded-md border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-900 px-3 py-2 text-sm text-gray-900 dark:text-gray-100 shadow-sm dark:shadow-none placeholder:text-gray-400 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 disabled:opacity-50 disabled:cursor-not-allowed" />`}>
+        <Demo code={`<Input aria-label="Email address" placeholder="you@example.com" className="w-full rounded-md border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-900 px-3 py-2 text-sm text-gray-900 dark:text-gray-100 shadow-sm dark:shadow-none placeholder:text-gray-400 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 disabled:opacity-50 disabled:cursor-not-allowed" />`}>
           <Input
+            aria-label="Email address"
             placeholder="you@example.com"
             className={fieldBase}
           />
@@ -49,16 +50,18 @@ export default function InputPage() {
           <code>aria-invalid</code> automatically.
         </p>
         <Demo
-          code={`<Input disabled placeholder="Disabled" className="w-full rounded-md border border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-900 px-3 py-2 text-sm text-gray-900 dark:text-gray-100 shadow-sm dark:shadow-none placeholder:text-gray-400 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 disabled:opacity-50 disabled:cursor-not-allowed" />
-<Input error="This field is required" className="w-full rounded-md border border-red-500 bg-white dark:bg-gray-900 px-3 py-2 text-sm text-gray-900 dark:text-gray-100 shadow-sm dark:shadow-none placeholder:text-gray-400 transition-colors focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500 disabled:opacity-50 disabled:cursor-not-allowed" />`}
+          code={`<Input disabled aria-label="Display name" placeholder="Disabled" className="w-full rounded-md border border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-900 px-3 py-2 text-sm text-gray-900 dark:text-gray-100 shadow-sm dark:shadow-none placeholder:text-gray-400 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 disabled:opacity-50 disabled:cursor-not-allowed" />
+<Input aria-label="Display name" error="This field is required" className="w-full rounded-md border border-red-500 bg-white dark:bg-gray-900 px-3 py-2 text-sm text-gray-900 dark:text-gray-100 shadow-sm dark:shadow-none placeholder:text-gray-400 transition-colors focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500 disabled:opacity-50 disabled:cursor-not-allowed" />`}
         >
           <div className="w-full max-w-sm space-y-3">
             <Input
               disabled
+              aria-label="Display name"
               placeholder="Disabled"
               className={`${fieldBase} bg-gray-50`}
             />
             <Input
+              aria-label="Display name"
               error="This field is required"
               className={`${fieldBase} border-red-500 focus:ring-red-500 focus:border-red-500`}
             />

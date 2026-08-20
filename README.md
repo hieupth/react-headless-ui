@@ -53,7 +53,7 @@ function App() {
 ## Styling
 
 Components are **headless** — they emit semantic class names (`button`,
-`button-primary`, `dialog-content`, `accordion-trigger`, …) but ship no CSS.
+`button-secondary`, `dialog-content`, `accordion-trigger`, …) but ship no CSS.
 You style them:
 
 ```tsx
@@ -62,8 +62,8 @@ You style them:
 
 // Option B: Plain CSS — define the semantic classes
 // .button { padding: 0.5rem 1rem; border-radius: 0.375rem; }
-// .button-primary { background: #2563eb; color: white; }
-<Button variant="primary">Click</Button>
+// .button-secondary { background: #2563eb; color: white; }
+<Button variant="secondary">Click</Button>
 ```
 
 See the [showcase](https://hieupth.github.io/react-headless-ui/) for live examples of every component styled with Tailwind.

@@ -50,13 +50,15 @@ dependencies you may need, depending on which components you import:
 | Feature                  | Peer dependency          | Optional? | Install                            |
 | ------------------------ | ------------------------ | --------- | ---------------------------------- |
 | Motion components        | `framer-motion`          | no        | `npm install framer-motion`        |
-| `Command` / `Combobox`   | `@tanstack/react-virtual` | no\*     | `npm install @tanstack/react-virtual` |
-| `Form` / `useForm`       | `react-hook-form`        | yes       | `npm install react-hook-form`      |
+| `Command` / `Combobox`   | `@tanstack/react-virtual` | no       | `npm install @tanstack/react-virtual` |
 
-\* `@tanstack/react-virtual` is declared an *optional* peer, but `Command` and
-`Combobox` statically `import` it at module top level (via `useVirtualList`), so
-if you import either component you **must** install it. It is only genuinely
-optional if you never import those two components.
+`@tanstack/react-virtual` is declared an *optional* peer in the manifest, but
+`useVirtualList` — used by `Command` and `Combobox` — statically `import`s it at
+module top level, and the hook is re-exported from the package barrel
+(`dist/index.js` → `dist/hooks/index.js` → `dist/hooks/useVirtualList.js`).
+Bundlers resolve every module in that re-export graph before tree-shaking, so
+**any** import from the package barrel — even just `<Button>` — fails to build
+unless `@tanstack/react-virtual` is installed. Treat it as required.
 
 `framer-motion` is a **required** peer: the motion components (`FadeInOut`,
 `SlideIn`, `RevealOnScroll`, …) statically `import { motion } from 'framer-motion'`,
@@ -64,8 +66,11 @@ and those components are re-exported from the package barrel, so the package
 resolves `framer-motion` at import time — you must install it. Tree-shaking
 keeps everything you don't use out of your bundle.
 
-`react-hook-form` is an **optional** peer: only `Form` / `useForm` consume it,
-so install it only if you use those.
+`react-hook-form` is **not** a peer dependency: it is a runtime dependency of
+the package (declared in `dependencies`), so it is installed automatically when
+you install `@hieupth/react-headless-ui` — you never need to install it
+yourself. Only `Form` / `useForm` consume it, and tree-shaking keeps it out of
+your bundle if you don't.
 
 ## Requirements
 

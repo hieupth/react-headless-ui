@@ -14,8 +14,8 @@ import type {
   PressableState,
   PressableActions,
   SemanticMixinProps
-} from '../mixins';
-import { useFocusableMixin, usePressableMixin, useSemanticMixin } from '../mixins';
+} from '../mixins/index.js';
+import { useFocusableMixin, usePressableMixin, useSemanticMixin } from '../mixins/index.js';
 
 /**
  * Properties for MegaMenu items

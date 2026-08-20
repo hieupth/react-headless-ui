@@ -6,7 +6,7 @@
  */
 
 import { useState, useCallback, useMemo, useEffect, useRef } from 'react';
-import { useFocusableMixin, usePressableMixin, useSemanticMixin } from '../mixins';
+import { useFocusableMixin, usePressableMixin, useSemanticMixin } from '../mixins/index.js';
 
 /**
  * Password strength levels

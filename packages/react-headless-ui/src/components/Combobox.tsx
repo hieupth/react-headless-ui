@@ -5,9 +5,9 @@
  */
 
 import React, { forwardRef, useRef, useEffect, useMemo } from 'react';
-import { useCombobox } from '../hooks';
-import { useVirtualList } from '../hooks';
-import type { UseComboboxProps, ComboboxOption as ComboboxOptionData, ComboboxGroup as ComboboxGroupData } from '../hooks';
+import { useCombobox } from '../hooks/index.js';
+import { useVirtualList } from '../hooks/index.js';
+import type { UseComboboxProps, ComboboxOption as ComboboxOptionData, ComboboxGroup as ComboboxGroupData } from '../hooks/index.js';
 
 /**
  * Default item count above which the Combobox list virtualizes. Below this,

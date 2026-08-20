@@ -6,7 +6,7 @@
 
 import React, { forwardRef, cloneElement, Children, isValidElement } from 'react';
 import ReactDOM from 'react-dom';
-import { useSlot, type UseSlotProps } from '../hooks';
+import { useSlot, type UseSlotProps } from '../hooks/index.js';
 
 export interface SlotProps extends Omit<UseSlotProps, 'slotRef' | 'forwardedRef'> {
   /** Additional CSS class names */

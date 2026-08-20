@@ -4,5 +4,5 @@
  * Provides fundamental interfaces following Flutter patterns.
  */
 
-export type { FocusableProps } from './ComponentContract';
-export type { SemanticContract, AriaRole, KeyboardNavigation, NavigationKey } from './SemanticContract';
+export type { FocusableProps } from './ComponentContract.js';
+export type { SemanticContract, AriaRole, KeyboardNavigation, NavigationKey } from './SemanticContract.js';

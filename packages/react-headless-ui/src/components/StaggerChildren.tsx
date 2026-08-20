@@ -4,9 +4,9 @@
  * Provides sequential animations for multiple children with comprehensive accessibility support.
  */
 
-import React, { forwardRef, Children } from 'react';
+import React, { forwardRef, Children, useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { useStaggerChildren, type UseStaggerChildrenProps } from '../hooks';
+import { useStaggerChildren, type UseStaggerChildrenProps } from '../hooks/index.js';
 
 export interface StaggerChildrenProps extends UseStaggerChildrenProps {
   /** Additional CSS class names */
@@ -52,6 +52,23 @@ export const StaggerChildren = forwardRef<HTMLDivElement, StaggerChildrenProps>(
     style: hookStyle,
     attributes
   } = useStaggerChildren(updatedProps);
+
+  // The motion path must render children during SSR (the initial "hidden"
+  // variant is applied as an inline style) so static-export HTML is not an
+  // empty container, then animate them in on mount. `mounted` flips once and
+  // gives the ref-only hook state the re-render it needs to become visible.
+  const [mounted, setMounted] = useState(false);
+  const startRef = useRef(actions.start);
+  startRef.current = actions.start;
+  useEffect(() => {
+    // start() is a no-op when the hook's own initialActive effect already
+    // began the animation; otherwise it activates the default stagger.
+    // Mount-only: re-running on later prop changes would restart a paused
+    // stagger, so the latest start() is read through a ref.
+    startRef.current();
+    setMounted(true);
+  }, []);
+  const isActive = state.isActive || mounted;
 
   // Base classes
   const baseClasses = [
@@ -109,7 +126,7 @@ export const StaggerChildren = forwardRef<HTMLDivElement, StaggerChildrenProps>(
         data-testid="stagger-children-motion"
       >
         <AnimatePresence>
-          {state.isActive && childrenArray.map((child, index) => {
+          {childrenArray.map((child, index) => {
             const childState = getChildState(index);
 
             return (
@@ -117,7 +134,7 @@ export const StaggerChildren = forwardRef<HTMLDivElement, StaggerChildrenProps>(
                 key={`stagger-child-${index}`}
                 custom={index}
                 initial="hidden"
-                animate="visible"
+                animate={isActive ? 'visible' : 'hidden'}
                 exit="hidden"
                 variants={motionChildVariants}
                 transition={{

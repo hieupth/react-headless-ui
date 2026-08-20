@@ -6,9 +6,9 @@
 
 import React, { forwardRef } from 'react';
 import { createPortal } from 'react-dom';
-import { useMenu } from '../hooks';
-import type { UseMenuProps } from '../hooks';
-import type { MenuItem } from '../hooks/useMenu';
+import { useMenu } from '../hooks/index.js';
+import type { UseMenuProps } from '../hooks/index.js';
+import type { MenuItem } from '../hooks/useMenu.js';
 
 /**
  * Props of the element passed as the Menu trigger. Used to type the trigger's

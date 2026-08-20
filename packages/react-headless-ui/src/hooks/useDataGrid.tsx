@@ -5,10 +5,10 @@
  */
 
 import { useState, useCallback, useMemo, useEffect } from 'react';
-import { useSemanticMixin } from '../mixins/SemanticMixin';
-import { useFocusableMixin } from '../mixins/FocusableMixin';
-import type { SemanticProps } from '../contracts/SemanticContract';
-import type { FocusableProps } from '../contracts/ComponentContract';
+import { useSemanticMixin } from '../mixins/SemanticMixin.js';
+import { useFocusableMixin } from '../mixins/FocusableMixin.js';
+import type { SemanticProps } from '../contracts/SemanticContract.js';
+import type { FocusableProps } from '../contracts/ComponentContract.js';
 
 /**
  * Grid column configuration

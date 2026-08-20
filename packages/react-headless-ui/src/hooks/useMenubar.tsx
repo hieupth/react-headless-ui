@@ -6,13 +6,13 @@
  */
 
 import { useState, useCallback, useMemo, useRef, useEffect } from 'react';
-import { useFocusableMixin, usePressableMixin, useSemanticMixin } from '../mixins';
+import { useFocusableMixin, usePressableMixin, useSemanticMixin } from '../mixins/index.js';
 // Re-export the single shared menu-item type so consumers (and the hooks barrel)
 // see one canonical `MenuItem` regardless of which menu hook they import from.
 // useMenubar identifies items by `id` and nests via `children`; useMenu uses
 // `key` and `submenu`. The unified type accepts both vocabularies.
-export type { MenuItem } from './useMenu';
-import type { MenuItem } from './useMenu';
+export type { MenuItem } from './useMenu.js';
+import type { MenuItem } from './useMenu.js';
 
 /**
  * Menu orientation options
@@ -570,6 +570,24 @@ export function useMenubar(props: UseMenubarProps): UseMenubarReturns {
       return () => element.removeEventListener('keydown', handleKeyDown);
     }
   }, [disabled, orientation, focusedItemId, openSubmenuId, navigateNext, navigatePrevious, navigateFirst, navigateLast, navigateInto, navigateOut, activateItem, closeSubmenu, closeMenubar]);
+
+  // Escape closes the open submenu at the document level. The element-scoped
+  // listener above only fires when the menubar element is mounted with the ref
+  // AND contains focus — a submenu opened by pointer (focus stays on the
+  // trigger) never reaches it. Skips events already handled closer to the
+  // target (defaultPrevented).
+  useEffect(() => {
+    if (disabled || !openSubmenuId) return;
+
+    const handleEscape = (event: KeyboardEvent) => {
+      if (event.key !== 'Escape' || event.defaultPrevented) return;
+      event.preventDefault();
+      closeSubmenu();
+    };
+
+    document.addEventListener('keydown', handleEscape);
+    return () => document.removeEventListener('keydown', handleEscape);
+  }, [disabled, openSubmenuId, closeSubmenu]);
 
   return useMemo(() => ({
     state,
