@@ -96,15 +96,55 @@ export default function SidebarPage() {
           code={`<Sidebar
   className="w-64 rounded-lg border border-gray-200 bg-white p-3 text-sm shadow-sm dark:border-gray-700 dark:bg-gray-900 dark:text-gray-200"
   variant="temporary"
+  position="left"
+  defaultOpen
   responsive
   breakpoint={768}
   showOverlay
   closeOnOverlayClick
-/>`}
+  trigger={<button className="rounded-md border border-gray-300 px-3 py-1.5 text-sm">Menu</button>}
+>
+  <SidebarGroup label="Components">
+    <SidebarItem>Tabs</SidebarItem>
+    <SidebarItem>Menu</SidebarItem>
+  </SidebarGroup>
+</Sidebar>`}
         >
-          <p className="text-sm text-gray-500">
-            Temporary/responsive behavior is hook-driven — see the snippet.
-          </p>
+          <div className="w-full">
+            <Sidebar
+              className={sidebarCls}
+              variant="temporary"
+              position="left"
+              defaultOpen
+              responsive
+              breakpoint={768}
+              showOverlay
+              closeOnOverlayClick
+              trigger={
+                <button
+                  type="button"
+                  className="inline-flex items-center gap-2 rounded-md border border-gray-300 bg-white px-3 py-1.5 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-200 dark:hover:bg-gray-800"
+                >
+                  Menu
+                </button>
+              }
+            >
+              <SidebarGroup label="Components">
+                <SidebarItem>Tabs</SidebarItem>
+                <SidebarItem>Menu</SidebarItem>
+              </SidebarGroup>
+              <SidebarDivider />
+              <SidebarGroup label="Docs">
+                <SidebarItem>Getting started</SidebarItem>
+              </SidebarGroup>
+            </Sidebar>
+            <p className="mt-3 text-xs text-gray-500">
+              A temporary rail starts open here so you can see it — toggle it
+              with the cloned <code>trigger</code> button; on narrow viewports{' '}
+              <code>responsive</code> + <code>breakpoint</code> switch to the
+              overlay behavior automatically.
+            </p>
+          </div>
         </Demo>
       </section>
 

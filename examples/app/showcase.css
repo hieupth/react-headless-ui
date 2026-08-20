@@ -1,0 +1,628 @@
+/*
+ * showcase.css — light design system for @hieupth/react-headless-ui's semantic
+ * class vocabulary. The lib ships no CSS; demos theme some surfaces with
+ * Tailwind utilities, but every component rendered with empty class hooks
+ * (stepper, menubar, pagination, badges, action buttons, ...) falls back to
+ * raw HTML. This sheet fills that gap with a neutral, professional look.
+ *
+ * All rules live in `@layer components` so demo/utility classes (Tailwind's
+ * `utilities` layer) always win — this sheet only supplies missing chrome.
+ * Rules that must beat inline styles baked by the lib's default theme (e.g.
+ * the muted #f3f4f6 text token) use !important.
+ */
+
+:root {
+  --rhui-primary: #3b82f6;
+  --rhui-primary-strong: #2563eb;
+  --rhui-primary-soft: #eff6ff;
+  --rhui-danger: #dc2626;
+  --rhui-text: #111827;
+  --rhui-muted-fg: #6b7280;
+  --rhui-border: #e5e7eb;
+  --rhui-border-strong: #d1d5db;
+  --rhui-surface: #ffffff;
+  --rhui-surface-subtle: #f9fafb;
+  --rhui-radius: 8px;
+  --rhui-radius-sm: 6px;
+}
+
+/* Minimal dark-mode token flip so the sheet does not wreck the theme toggle. */
+html.dark {
+  --rhui-primary-strong: #60a5fa;
+  --rhui-primary-soft: rgba(59, 130, 246, 0.16);
+  --rhui-danger: #f87171;
+  --rhui-text: #f3f4f6;
+  --rhui-muted-fg: #9ca3af;
+  --rhui-border: #374151;
+  --rhui-border-strong: #4b5563;
+  --rhui-surface: #111827;
+  --rhui-surface-subtle: #1f2937;
+}
+
+@layer components {
+
+  /* ----------------------------------------------------------------- *
+   * Global repair: the lib's default theme uses `muted` (#f3f4f6 — a
+   * light background gray) as a TEXT color in several renderers, giving
+   * white-on-white text (list/item descriptions, panel subtitle + chevron,
+   * sortable grips, ...). The value is inline, so override it where found.
+   * On dark backgrounds the light gray is correct — keep it there.
+   * ----------------------------------------------------------------- */
+  html:not(.dark) [style*="color:#f3f4f6"],
+  html:not(.dark) [style*="color: rgb(243, 244, 246)"] {
+    color: var(--rhui-muted-fg) !important;
+  }
+
+  /* Sortable drag grips need slightly more presence than secondary text. */
+  [data-testid="sortable-drag-handle"] { color: var(--rhui-border-strong) !important; }
+
+  /* ----------------------------------------------------------------- *
+   * Buttons — vocabulary from useButton (.button, .button-{variant/size}).
+   * ----------------------------------------------------------------- */
+  .button {
+    display: inline-flex; align-items: center; justify-content: center; gap: 0.375rem;
+    border: 1px solid transparent; border-radius: var(--rhui-radius-sm);
+    padding: 0.4375rem 0.875rem; font-size: 0.875rem; font-weight: 500;
+    line-height: 1.25rem; cursor: pointer; background: transparent; color: inherit;
+  }
+  .button:disabled, .button-disabled { opacity: 0.5; pointer-events: none; }
+  .button-default { background: #111827; color: #fff; }
+  .button-secondary { background: var(--rhui-surface-subtle); color: var(--rhui-text); }
+  .button-outline { border-color: var(--rhui-border-strong); color: var(--rhui-text); }
+  .button-destructive { background: var(--rhui-danger); color: #fff; }
+  .button-ghost { background: transparent; color: inherit; }
+  .button-link { color: var(--rhui-primary-strong); text-decoration: underline; padding: 0; }
+  .button-sm { padding: 0.25rem 0.625rem; font-size: 0.8125rem; }
+  .button-lg { padding: 0.5625rem 1.125rem; font-size: 0.9375rem; }
+  .button-icon { padding: 0.4375rem; width: 2rem; height: 2rem; }
+
+  /* Lib-rendered default form actions (were bare text buttons). */
+  .form-actions { display: flex; align-items: center; gap: 0.5rem; margin-top: 1rem; }
+  .form-actions button {
+    display: inline-flex; align-items: center; justify-content: center; gap: 0.375rem;
+    border: 1px solid var(--rhui-border-strong); border-radius: var(--rhui-radius-sm);
+    background: var(--rhui-surface); color: var(--rhui-text);
+    padding: 0.4375rem 0.875rem; font-size: 0.875rem; font-weight: 500; cursor: pointer;
+  }
+  .form-actions button[type="submit"] {
+    background: var(--rhui-primary-strong); border-color: var(--rhui-primary-strong); color: #fff;
+  }
+  .form-actions button:disabled { opacity: 0.5; pointer-events: none; }
+
+  /* ----------------------------------------------------------------- *
+   * Form controls.
+   * ----------------------------------------------------------------- */
+  .input-container { display: flex; flex-direction: column; gap: 0.375rem; }
+  .input-label { font-size: 0.875rem; font-weight: 500; color: var(--rhui-text); }
+  .input-required-indicator,
+  .textarea-required-indicator,
+  .label-required-indicator { color: var(--rhui-danger); margin-left: 2px; }
+  .input-wrapper { display: flex; align-items: center; gap: 0.5rem; width: 100%; }
+  .input-leading-element,
+  .input-trailing-element {
+    display: inline-flex; align-items: center; flex-shrink: 0;
+    color: var(--rhui-muted-fg); font-size: 0.875rem;
+  }
+  /* The real <input> fills the framed wrapper the demos put around it. */
+  .input-element {
+    flex: 1 1 auto; width: 100%; min-width: 0; border: none; background: transparent;
+    padding: 0; font: inherit; color: inherit; outline: none;
+  }
+  .input-support-text {
+    display: flex; align-items: baseline; gap: 0.5rem;
+    font-size: 0.75rem; color: var(--rhui-muted-fg);
+  }
+  .input-error { color: var(--rhui-danger); font-weight: 500; }
+  .input-character-count { margin-left: auto; }
+
+  .textarea-input {
+    width: 100%; min-height: 2.5rem; border: none; background: transparent;
+    padding: 0; font: inherit; color: inherit; outline: none; resize: vertical;
+  }
+  .textarea-helper-text, .textarea-char-count { font-size: 0.75rem; color: var(--rhui-muted-fg); }
+  .textarea-helper-error, .textarea-char-count-max { color: var(--rhui-danger); }
+
+  /* Invalid affordance: error fields were indistinguishable from valid ones. */
+  input[aria-invalid="true"],
+  textarea[aria-invalid="true"],
+  select[aria-invalid="true"] { border-color: var(--rhui-danger) !important; }
+  /* Field helper/error text: demos gray every <p>; errors must read red. */
+  .field-container p[role="alert"] { color: var(--rhui-danger) !important; font-weight: 500; }
+
+  /* Checkbox: keep the native input functional but visually hidden so it does
+   * not render as a second, OS-default checkbox next to the visual box. */
+  .checkbox-wrapper { position: relative; display: inline-flex; align-items: center; gap: 0.5rem; }
+  .checkbox-input {
+    position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0;
+    overflow: hidden; clip: rect(0 0 0 0); clip-path: inset(50%);
+    white-space: nowrap; border: 0;
+  }
+  /* Fallback chrome for .checkbox-visual when the consumer styles nothing. */
+  .checkbox-visual {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 1.25rem; height: 1.25rem; flex-shrink: 0;
+    border: 2px solid var(--rhui-border-strong); border-radius: 4px;
+    background: var(--rhui-surface); color: transparent;
+  }
+  .checkbox-checked, .checkbox-indeterminate {
+    background: var(--rhui-primary-strong); border-color: var(--rhui-primary-strong); color: #fff;
+  }
+  .checkbox-icon { display: inline-flex; width: 1rem; height: 1rem; }
+  .checkbox-icon svg { width: 100%; height: 100%; }
+  .checkbox-label { font-size: 0.875rem; }
+  .checkbox-label-disabled, .checkbox-disabled { opacity: 0.5; }
+  .checkbox-wrapper:focus-within .checkbox-visual {
+    box-shadow: 0 0 0 2px var(--rhui-primary-soft), 0 0 0 1px var(--rhui-primary-strong);
+  }
+
+  /* Radio — fallback chrome for the unclassed .radio-button circle. */
+  .radio-group { display: flex; flex-direction: column; gap: 0.75rem; }
+  .radio-option { display: flex; align-items: center; gap: 0.5rem; cursor: pointer; font-size: 0.875rem; }
+  .radio-option[aria-disabled="true"] { opacity: 0.5; pointer-events: none; }
+  .radio-button {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 1.25rem; height: 1.25rem; flex-shrink: 0;
+    border: 2px solid var(--rhui-border-strong); border-radius: 999px;
+    background: var(--rhui-surface);
+  }
+  .radio-button > div { width: 0.625rem; height: 0.625rem; border-radius: 999px; background: var(--rhui-primary-strong); }
+
+  /* Switch — track fallback only; consumers size the thumb. */
+  [role="switch"] {
+    position: relative; display: inline-flex; align-items: center;
+    width: 2.25rem; height: 1.25rem; border: none; border-radius: 999px;
+    background: var(--rhui-border-strong); cursor: pointer;
+  }
+  [role="switch"][aria-checked="true"] { background: var(--rhui-primary-strong); }
+  [role="switch"][aria-disabled="true"] { opacity: 0.5; cursor: not-allowed; }
+
+  /* FileUpload — the native input is triggered programmatically; hide it. */
+  .file-upload-container { position: relative; }
+  .file-upload-container > input[type="file"] {
+    position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0;
+    overflow: hidden; clip: rect(0 0 0 0); clip-path: inset(50%);
+    white-space: nowrap; border: 0;
+  }
+  .file-upload-container > [role="button"][aria-label="Upload files"] {
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    gap: 0.5rem; padding: 1.75rem; text-align: center; cursor: pointer;
+    border: 2px dashed var(--rhui-border-strong); border-radius: var(--rhui-radius);
+    background: var(--rhui-surface-subtle);
+  }
+  .file-upload-container svg { width: 1.75rem; height: 1.75rem; color: var(--rhui-muted-fg); }
+  .file-upload-container p { margin: 0; font-size: 0.875rem; color: var(--rhui-muted-fg); }
+  .file-upload-container p:first-of-type { font-weight: 500; color: var(--rhui-text); }
+  .file-upload-container [role="alert"] { color: var(--rhui-danger); font-size: 0.8125rem; }
+
+  /* ----------------------------------------------------------------- *
+   * Data display.
+   * ----------------------------------------------------------------- */
+  .card {
+    display: flex; flex-direction: column; overflow: hidden;
+    background: var(--rhui-surface); border: 1px solid var(--rhui-border);
+    border-radius: var(--rhui-radius); box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+  }
+  .card h3.card { margin: 0; font-size: 1rem; font-weight: 600; color: var(--rhui-text); }
+  .card p.card { margin: 0; font-size: 0.875rem; color: var(--rhui-muted-fg); }
+  .card-interactive { cursor: pointer; }
+  .card-selected { border-color: var(--rhui-primary-strong); box-shadow: 0 0 0 2px var(--rhui-primary-soft); }
+  .card-disabled { opacity: 0.55; }
+
+  /* Panel — non-collapsible panels ship data-expanded="false" with an inline
+   * max-height:0/opacity:0 body, hiding their content entirely. */
+  .panel[data-expanded="true"] > [data-testid="panel-body"],
+  .panel:not([data-collapsible="true"]):not([data-expandable="true"]) > [data-testid="panel-body"] {
+    max-height: none !important;
+    opacity: 1 !important;
+  }
+
+  /* Accordion */
+  .accordion-trigger {
+    display: flex; align-items: center; justify-content: space-between; gap: 0.5rem;
+    width: 100%; padding: 0.75rem 0.875rem; background: none; border: none;
+    font: inherit; font-weight: 500; color: inherit; text-align: left; cursor: pointer;
+  }
+  .accordion-trigger-icon { display: inline-flex; flex-shrink: 0; }
+  .accordion-trigger-icon svg { width: 1rem; height: 1rem; transition: transform 0.15s ease; }
+  .accordion-icon-open { transform: rotate(180deg); }
+  .accordion-content-inner { padding: 0 0.875rem 0.875rem; font-size: 0.875rem; }
+  .accordion-item-disabled .accordion-trigger { opacity: 0.5; cursor: not-allowed; }
+
+  .list [data-testid="list-item"] { border-radius: var(--rhui-radius-sm); }
+
+  /* Badge — ships as a bare <span class="badge">. */
+  .badge {
+    display: inline-flex; align-items: center; gap: 0.25rem;
+    border: 1px solid var(--rhui-border); border-radius: 999px;
+    background: var(--rhui-surface-subtle); color: var(--rhui-text);
+    font-size: 0.6875rem; font-weight: 600; line-height: 1; padding: 0.1875rem 0.5rem;
+  }
+  .badge > span.badge {
+    width: 0.5rem; height: 0.5rem; padding: 0; border: none;
+    border-radius: 999px; background: var(--rhui-danger);
+  }
+
+  /* Chip — fallback only; demos supply variant utilities. */
+  .chip {
+    display: inline-flex; align-items: center; gap: 0.25rem;
+    border: 1px solid var(--rhui-border-strong); border-radius: 999px;
+    padding: 0.125rem 0.5rem; font-size: 0.75rem;
+  }
+  .chip svg { width: 0.75rem; height: 0.75rem; }
+  .chip-delete-button {
+    display: inline-flex; align-items: center; border: none; background: none;
+    padding: 0; color: inherit; opacity: 0.6; cursor: pointer;
+  }
+
+  /* Separator — with-content separators already draw lines via consumer
+   * pseudo-elements; hide the lib's own line divs (they double the rule).
+   * Vertical separators collapse to 0 in auto-height parents — floor them. */
+  .separator-with-content > .separator-line { display: none; }
+  .separator-vertical { min-height: 1.5rem; }
+
+  /* AspectRatio — the component inlines background:#ffffff on the container,
+   * which defeats the consumer's dark surface class and leaves light labels
+   * on white. Let the class (or nothing) decide the surface. */
+
+  /* Empty state — title/description/actions/dismiss chrome. */
+  [data-testid^="empty-state"] { position: relative; }
+  [data-testid^="empty-state"] h3 { margin: 0; font-size: 1rem; font-weight: 600; }
+  [data-testid^="empty-state"] p { margin: 0; font-size: 0.875rem; color: var(--rhui-muted-fg); }
+  [data-testid^="empty-state"] button:not([aria-label]) {
+    display: inline-flex; align-items: center; justify-content: center; gap: 0.375rem;
+    border: 1px solid var(--rhui-primary-strong); border-radius: var(--rhui-radius-sm);
+    background: var(--rhui-primary-strong); color: #fff;
+    padding: 0.375rem 0.875rem; font-size: 0.8125rem; font-weight: 500; cursor: pointer;
+  }
+  [data-testid^="empty-state"] button:not([aria-label]):not(:first-of-type) {
+    background: var(--rhui-surface); border-color: var(--rhui-border-strong); color: var(--rhui-text);
+  }
+  [data-testid^="empty-state"] button[aria-label="Dismiss empty state"] {
+    position: absolute; top: 0.5rem; right: 0.5rem;
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 1.5rem; height: 1.5rem; border: none; border-radius: 999px;
+    background: transparent; color: var(--rhui-muted-fg); cursor: pointer;
+  }
+  [data-testid^="empty-state"] button[aria-label="Dismiss empty state"]:hover {
+    background: rgba(0, 0, 0, 0.06);
+  }
+
+  /* Alert — icon sizing + text rhythm (severity colors come from demos). */
+  .alert svg { width: 1.25rem; height: 1.25rem; flex-shrink: 0; }
+  .alert h4 { margin: 0 0 0.125rem; font-size: 0.875rem; font-weight: 600; }
+  .alert p { margin: 0; font-size: 0.8125rem; }
+
+  /* ----------------------------------------------------------------- *
+   * Stepper — full layout: indicators, connectors, active/completed
+   * states, progress bar and navigation buttons (ships zero CSS).
+   * ----------------------------------------------------------------- */
+  .stepper {
+    display: flex; flex-direction: column !important; align-items: stretch !important;
+    gap: 1rem; width: 100%;
+  }
+  .stepper-steps { display: flex; flex-direction: row; align-items: flex-start; width: 100%; }
+  .stepper-vertical .stepper-steps { flex-direction: column; align-items: flex-start; gap: 0.75rem; }
+  .step-wrapper { display: flex; align-items: center; flex: 1 1 0; min-width: 0; }
+  .stepper-vertical .step-wrapper { flex: 0 0 auto; }
+  .step-connector {
+    flex: 1 1 0; min-width: 1.25rem; height: 2px; margin: 0 0.75rem;
+    border-radius: 1px; background: var(--rhui-border-strong);
+  }
+  .step-connector-completed { background: var(--rhui-primary); }
+
+  .step-default-button,
+  .step-progress-button,
+  .step-dot-button {
+    display: flex; align-items: flex-start; gap: 0.625rem; border: none;
+    background: none; padding: 0; font: inherit; color: inherit;
+    text-align: left; cursor: pointer;
+  }
+  .step-default-indicator,
+  .step-progress-button {
+    display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0;
+    width: 1.75rem; height: 1.75rem; border: 2px solid var(--rhui-border-strong);
+    border-radius: 999px; font-size: 0.8125rem; font-weight: 600;
+    color: var(--rhui-muted-fg); background: var(--rhui-surface);
+  }
+  .step-default-indicator svg { width: 0.875rem; height: 0.875rem; }
+  .step-default-active .step-default-indicator,
+  .step-progress-active .step-progress-button {
+    border-color: var(--rhui-primary-strong); color: var(--rhui-primary-strong);
+    box-shadow: 0 0 0 3px var(--rhui-primary-soft);
+  }
+  .step-default-completed .step-default-indicator,
+  .step-progress-completed .step-progress-button {
+    background: var(--rhui-primary); border-color: var(--rhui-primary); color: #fff;
+  }
+  .step-default-error .step-default-indicator,
+  .step-progress-error .step-progress-button {
+    background: var(--rhui-danger); border-color: var(--rhui-danger); color: #fff;
+  }
+  .step-default-title, .step-progress-title { font-size: 0.875rem; font-weight: 600; }
+  .step-default-subtitle, .step-default-description,
+  .step-progress-description, .step-dot-description {
+    font-size: 0.75rem; color: var(--rhui-muted-fg); margin-top: 2px;
+  }
+  .step-default-optional, .step-progress-optional {
+    margin-left: 0.375rem; font-size: 0.6875rem; font-weight: 400; color: var(--rhui-muted-fg);
+  }
+
+  /* Dots variant */
+  .step-dot { display: flex; align-items: center; gap: 0.625rem; }
+  .step-dot-button {
+    align-items: center; justify-content: center; width: 1.5rem; height: 1.5rem;
+    border-radius: 999px; background: var(--rhui-border-strong);
+  }
+  .step-dot-number { font-size: 0.6875rem; font-weight: 600; color: #fff; }
+  .step-dot-button-active, .step-dot-button-completed { background: var(--rhui-primary); }
+  .step-dot-button-error { background: var(--rhui-danger); }
+  .step-dot-title { font-size: 0.875rem; font-weight: 500; }
+
+  /* Progress variant bar */
+  .step-progress-header { display: flex; align-items: flex-start; gap: 0.625rem; }
+  .stepper-progress-bar {
+    position: relative; height: 0.375rem; margin: 0.25rem 0 1.125rem;
+    border-radius: 999px; background: var(--rhui-border); overflow: hidden;
+  }
+  .stepper-progress-fill { height: 100%; border-radius: inherit; background: var(--rhui-primary); }
+  .stepper-progress-text {
+    position: absolute; right: 0; bottom: -1.125rem;
+    font-size: 0.6875rem; color: var(--rhui-muted-fg);
+  }
+
+  /* Step content + navigation */
+  .stepper-content { width: 100%; }
+  .step-content-title { margin: 0 0 0.25rem; font-size: 1rem; font-weight: 600; }
+  .step-content-description { margin: 0; font-size: 0.875rem; color: var(--rhui-muted-fg); }
+  .step-content-placeholder {
+    margin-top: 0.625rem; padding: 0.875rem; font-size: 0.875rem; color: var(--rhui-muted-fg);
+    border: 1px dashed var(--rhui-border-strong); border-radius: var(--rhui-radius-sm);
+  }
+  .step-content-placeholder p { margin: 0; }
+  .step-content-error { margin-top: 0.5rem; font-size: 0.8125rem; color: var(--rhui-danger); }
+  .stepper-navigation {
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 0.5rem; width: 100%;
+  }
+  .stepper-navigation-left,
+  .stepper-navigation-center,
+  .stepper-navigation-right { display: flex; align-items: center; gap: 0.5rem; }
+  .stepper-button {
+    display: inline-flex; align-items: center; justify-content: center; gap: 0.375rem;
+    border: 1px solid transparent; border-radius: var(--rhui-radius-sm);
+    padding: 0.375rem 0.875rem; font-size: 0.8125rem; font-weight: 500; cursor: pointer;
+  }
+  .stepper-button:disabled { opacity: 0.5; pointer-events: none; }
+  .stepper-button-primary { background: var(--rhui-primary-strong); color: #fff; }
+  .stepper-button-secondary {
+    background: var(--rhui-surface); border-color: var(--rhui-border-strong); color: var(--rhui-text);
+  }
+  .stepper-button-ghost { background: transparent; color: var(--rhui-muted-fg); }
+
+  /* ----------------------------------------------------------------- *
+   * Navigation — menubar / navigation-menu / sidebar / pagination.
+   * ----------------------------------------------------------------- */
+  .menubar-main,
+  .navigation-menu-main {
+    display: flex; flex-direction: row; align-items: center; gap: 0.125rem; flex-wrap: wrap;
+  }
+  .menubar-item-wrapper, .navigation-menu-item-wrapper { position: relative; }
+  .menubar-item,
+  .navigation-menu-item {
+    display: inline-flex; align-items: center; gap: 0.375rem;
+    padding: 0.3125rem 0.625rem; border-radius: var(--rhui-radius-sm);
+    font-size: 0.875rem; white-space: nowrap; cursor: default;
+  }
+  .menubar-item:hover, .navigation-menu-item:hover { background: rgba(0, 0, 0, 0.05); }
+  html.dark .menubar-item:hover,
+  html.dark .navigation-menu-item:hover { background: rgba(255, 255, 255, 0.08); }
+  .menubar-item[aria-disabled="true"],
+  .navigation-menu-item[aria-disabled="true"] { opacity: 0.45; pointer-events: none; }
+  .menubar svg, .navigation-menu svg { width: 0.875rem; height: 0.875rem; flex-shrink: 0; }
+  .menubar [role="separator"],
+  .navigation-menu [role="separator"] {
+    width: 1px; height: 1rem; margin: 0 0.25rem; align-self: center;
+    flex-shrink: 0; background: var(--rhui-border);
+  }
+  .menubar, .navigation-menu { position: relative; }
+
+  /* Dropdown panels — drop below the bar instead of stretching it. */
+  .menubar-submenu, .navigation-menu-submenu { position: absolute; top: 100%; left: 0; z-index: 30; }
+  .menubar-open-submenu, .navigation-menu-open-dropdown { position: absolute; top: 100%; left: 0; z-index: 30; }
+  .menubar-submenu, .menubar-open-submenu, .submenu,
+  .navigation-menu-submenu, .navigation-menu-open-dropdown, .navigation-submenu {
+    min-width: 11rem; margin-top: 0.375rem; padding: 0.375rem;
+    background: var(--rhui-surface); border: 1px solid var(--rhui-border);
+    border-radius: var(--rhui-radius); box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  }
+  .menubar-submenu .menubar-item, .submenu .menubar-item,
+  .navigation-submenu .navigation-menu-item { width: 100%; }
+
+  /* Sidebar — rows + disabled state (active state has no DOM hook in the lib). */
+  .sidebar-group + .sidebar-group { margin-top: 0.75rem; }
+  .sidebar-group-label {
+    padding: 0.25rem 0.5rem; font-size: 0.6875rem; font-weight: 600;
+    letter-spacing: 0.04em; text-transform: uppercase; color: var(--rhui-muted-fg);
+  }
+  [data-testid="sidebar-item"] {
+    display: flex; align-items: center; gap: 0.5rem; padding: 0.375rem 0.5rem;
+    border-radius: var(--rhui-radius-sm); font-size: 0.875rem; cursor: pointer;
+  }
+  [data-testid="sidebar-item"]:hover { background: rgba(0, 0, 0, 0.05); }
+  html.dark [data-testid="sidebar-item"]:hover { background: rgba(255, 255, 255, 0.08); }
+  [data-testid="sidebar-item"][aria-disabled="true"] { opacity: 0.45; pointer-events: none; }
+  .sidebar-item-active {
+    background: rgba(59, 130, 246, 0.12); font-weight: 600;
+    color: rgb(29, 78, 216);
+  }
+  html.dark .sidebar-item-active { background: rgba(96, 165, 250, 0.18); color: rgb(147, 197, 253); }
+  [data-testid="sidebar-item"] svg { width: 0.875rem; height: 0.875rem; flex-shrink: 0; }
+
+  /* Pagination — button affordance + current page. */
+  nav[aria-label$="pagination navigation" i] { display: flex; align-items: center; gap: 0.25rem; }
+  nav[aria-label$="pagination navigation" i] button {
+    display: inline-flex; align-items: center; justify-content: center;
+    min-width: 1.625rem; height: 1.625rem; padding: 0 0.375rem;
+    border: 1px solid transparent; border-radius: var(--rhui-radius-sm);
+    background: transparent; color: var(--rhui-text); font-size: 0.8125rem; cursor: pointer;
+  }
+  nav[aria-label$="pagination navigation" i] button:hover { background: rgba(0, 0, 0, 0.05); }
+  nav[aria-label$="pagination navigation" i] button[disabled] { opacity: 0.4; pointer-events: none; }
+  nav[aria-label$="pagination navigation" i] button[aria-current="page"] {
+    background: var(--rhui-primary-strong); color: #fff; font-weight: 600;
+  }
+  nav[aria-label$="pagination navigation" i] svg { width: 1rem; height: 1rem; }
+  nav[aria-label$="pagination navigation" i] span[aria-hidden="true"] {
+    padding: 0 0.125rem; color: var(--rhui-muted-fg);
+  }
+
+  /* ----------------------------------------------------------------- *
+   * Tables — sort icon sizing + custom checkbox treatment for selection
+   * columns (raw native checkboxes were visually inconsistent).
+   * ----------------------------------------------------------------- */
+  .table svg, .data-grid svg { width: 0.875rem; height: 0.875rem; flex-shrink: 0; }
+  .table input[type="checkbox"],
+  .data-grid input[type="checkbox"] {
+    appearance: none; -webkit-appearance: none; display: inline-block;
+    width: 0.9375rem; height: 0.9375rem; border: 1.5px solid var(--rhui-border-strong);
+    border-radius: 3px; background: var(--rhui-surface); cursor: pointer;
+    vertical-align: middle; flex-shrink: 0;
+  }
+  .table input[type="checkbox"]:checked,
+  .table input[type="checkbox"]:indeterminate,
+  .data-grid input[type="checkbox"]:checked,
+  .data-grid input[type="checkbox"]:indeterminate {
+    background-color: var(--rhui-primary-strong);
+    border-color: var(--rhui-primary-strong);
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='white'%3E%3Cpath fill-rule='evenodd' d='M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 111.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z' clip-rule='evenodd'/%3E%3C/svg%3E");
+    background-repeat: no-repeat; background-position: center; background-size: 0.6875rem;
+  }
+  .table input[type="checkbox"]:indeterminate,
+  .data-grid input[type="checkbox"]:indeterminate {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='white'%3E%3Crect x='4' y='9' width='12' height='2'/%3E%3C/svg%3E");
+  }
+
+  /* DataGrid column filters + pager buttons. */
+  [data-testid^="data-grid-filter-"] {
+    width: 100%; min-width: 5.5rem; padding: 0.25rem 0.5rem;
+    border: 1px solid var(--rhui-border); border-radius: var(--rhui-radius-sm);
+    background: var(--rhui-surface); color: var(--rhui-text); font-size: 0.8125rem;
+  }
+  [data-testid^="data-grid-filter-"]::placeholder { color: var(--rhui-muted-fg); }
+  [data-testid^="data-grid-filter-"]:focus { outline: 2px solid var(--rhui-primary); outline-offset: 1px; }
+  [data-testid="data-grid-prev-page"],
+  [data-testid="data-grid-next-page"] {
+    display: inline-flex; align-items: center; justify-content: center;
+    min-width: 1.625rem; height: 1.625rem; padding: 0 0.375rem;
+    border: 1px solid var(--rhui-border-strong); border-radius: var(--rhui-radius-sm);
+    background: var(--rhui-surface); color: var(--rhui-text); font-size: 0.8125rem; cursor: pointer;
+  }
+  [data-testid="data-grid-prev-page"]:disabled,
+  [data-testid="data-grid-next-page"]:disabled { opacity: 0.4; pointer-events: none; }
+
+  /* ----------------------------------------------------------------- *
+   * Layout system — toolbar defaults, resizable handles.
+   * ----------------------------------------------------------------- */
+  /* Toolbar default renderer bakes transparent/no-border inline styles, so
+   * buttons have no affordance. data-variant/data-active drive the variants. */
+  [data-testid="toolbar-button"] {
+    border: 1px solid var(--rhui-border-strong) !important;
+    background: var(--rhui-surface) !important;
+    border-radius: var(--rhui-radius-sm) !important;
+    color: var(--rhui-text);
+  }
+  [data-testid="toolbar-button"][data-variant="primary"] {
+    background: var(--rhui-primary-strong) !important;
+    border-color: var(--rhui-primary-strong) !important;
+    color: #fff !important;
+  }
+  [data-testid="toolbar-button"][data-variant="secondary"] { background: var(--rhui-surface-subtle) !important; }
+  [data-testid="toolbar-button"][data-active="true"] {
+    background: var(--rhui-primary-soft) !important;
+    border-color: var(--rhui-primary) !important;
+    color: var(--rhui-primary-strong) !important;
+  }
+  [data-testid="toolbar-button"]:disabled { opacity: 0.5; }
+
+  /* Resizable handles are transparent hit areas; show them when
+   * handlesVisible is set (or on hover/focus). */
+  .resizable [data-testid^="resize-handle-"] { touch-action: none; }
+  .resizable-handles-visible [data-testid^="resize-handle-"],
+  .resizable [data-testid^="resize-handle-"]:hover,
+  .resizable [data-testid^="resize-handle-"]:focus-visible {
+    background-color: rgba(59, 130, 246, 0.15);
+    box-shadow: inset 0 0 0 1px rgba(59, 130, 246, 0.5);
+  }
+  .resizable [data-testid^="resize-handle-"]:focus-visible {
+    outline: 2px solid var(--rhui-primary-strong);
+    outline-offset: 1px;
+  }
+  .resizable-indicator {
+    position: absolute; right: 0.375rem; bottom: 0.375rem;
+    padding: 0.125rem 0.375rem; border-radius: 4px;
+    background: rgba(17, 24, 39, 0.75); color: #fff; font-size: 0.625rem;
+  }
+
+  /* ----------------------------------------------------------------- *
+   * Overlays — Dialog / Drawer open states were unstyled (transparent,
+   * static, in-flow). Standard modal chrome.
+   * ----------------------------------------------------------------- */
+  .dialog-overlay, .drawer-overlay, .alert-dialog-overlay {
+    position: fixed; inset: 0; z-index: 50;
+    background: rgba(17, 24, 39, 0.5);
+    display: flex; align-items: center; justify-content: center;
+    padding: 1rem;
+  }
+  .dialog-content, .alert-dialog-content {
+    background: var(--rhui-surface); color: var(--rhui-text);
+    border-radius: var(--rhui-radius); box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+    width: 100%; max-width: 28rem; padding: 1.25rem;
+    display: flex; flex-direction: column; gap: 0.75rem;
+  }
+  .dialog-header, .drawer-header { display: flex; align-items: center; justify-content: space-between; gap: 0.75rem; }
+  .dialog-title, .drawer-title { font-size: 1.0625rem; font-weight: 600; }
+  .dialog-description { font-size: 0.875rem; color: var(--rhui-muted-fg); }
+  .dialog-footer, .dialog-actions, .drawer-footer {
+    display: flex; justify-content: flex-end; gap: 0.5rem; margin-top: 0.25rem;
+  }
+  .dialog-close-button {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 1.75rem; height: 1.75rem; border-radius: var(--rhui-radius-sm);
+    border: none; background: transparent; cursor: pointer; color: inherit;
+  }
+  .dialog-close-button:hover { background: rgba(0, 0, 0, 0.06); }
+
+  .drawer-overlay { align-items: stretch; justify-content: flex-end; padding: 0; }
+  .drawer-content {
+    background: var(--rhui-surface); color: var(--rhui-text);
+    height: 100%; width: 20rem; max-width: 85vw;
+    box-shadow: -12px 0 32px rgba(0, 0, 0, 0.18);
+    display: flex; flex-direction: column; gap: 0.75rem; padding: 1.25rem;
+  }
+  .drawer-content-area { flex: 1 1 auto; overflow-y: auto; font-size: 0.875rem; color: var(--rhui-muted-fg); }
+
+  /* ----------------------------------------------------------------- *
+   * Tabs — active state was indistinguishable (lib class hooks were
+   * whitespace). tab-selected + per-variant affordance.
+   * ----------------------------------------------------------------- */
+  .tabs-list { display: flex; align-items: center; gap: 0.25rem; }
+  .tabs-list[role="tablist"][aria-orientation="vertical"] { flex-direction: column; align-items: stretch; }
+  .tab {
+    display: inline-flex; align-items: center; gap: 0.375rem;
+    padding: 0.4375rem 0.875rem; font-size: 0.875rem;
+    border: 1px solid transparent; border-radius: var(--rhui-radius-sm);
+    background: transparent; color: var(--rhui-muted-fg); cursor: pointer;
+  }
+  .tab:hover:not(.tab-disabled) { color: var(--rhui-text); background: rgba(0, 0, 0, 0.04); }
+  .tab-disabled { opacity: 0.45; pointer-events: none; }
+  .tabs-underline .tab { border-radius: 0; border-bottom: 2px solid transparent; }
+  .tabs-underline .tab-selected { color: var(--rhui-primary-strong); border-bottom-color: var(--rhui-primary-strong); }
+  .tabs-pills .tab-selected { background: var(--rhui-primary-soft); color: var(--rhui-primary-strong); font-weight: 600; }
+  .tabs-default .tab-selected, .tabs-enclosed .tab-selected {
+    color: var(--rhui-primary-strong); font-weight: 600; border-color: var(--rhui-border);
+    border-bottom-color: transparent; background: var(--rhui-surface);
+  }
+  .tabs-enclosed .tab { border-color: transparent; }
+  .tabs-enclosed .tab-selected { border-color: var(--rhui-border); }
+  .tabs-content { border-color: var(--rhui-border); }
+}

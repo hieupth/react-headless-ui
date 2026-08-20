@@ -22,6 +22,7 @@ const items = [
 
 export default function DropdownMenuPage() {
   const [open, setOpen] = useState(false);
+  const [typesOpen, setTypesOpen] = useState(false);
 
   return (
     <div className="mx-auto max-w-3xl px-6 py-12 space-y-8">
@@ -93,6 +94,8 @@ export default function DropdownMenuPage() {
     { id: 'desc', label: 'Descending' },
     { id: 'count', label: 'Issues', badge: 12 }
   ]}
+  open={typesOpen}
+  onOpenChange={setTypesOpen}
   closeOnSelect={false}
 >
   {(item, itemProps) => (
@@ -100,11 +103,44 @@ export default function DropdownMenuPage() {
   )}
 </DropdownMenu>`}
         >
-          <p className="text-sm text-gray-500">
-            Icons, checkmarks, and badges are wired by the item data; the{' '}
-            <code>children</code> render-prop overrides the default row — see the
-            snippet.
-          </p>
+          <div className="flex flex-col items-center gap-3">
+            <DropdownMenu
+              className={dropdownCls}
+              items={[
+                { id: 'asc', label: 'Ascending', checked: true },
+                { id: 'desc', label: 'Descending' },
+                { id: 'count', label: 'Issues', badge: 12 },
+              ]}
+              open={typesOpen}
+              onOpenChange={setTypesOpen}
+              closeOnSelect={false}
+            >
+              {(item) => (
+                <span className="flex w-full items-center justify-between gap-4 px-3 py-1.5 text-sm">
+                  <span className="flex items-center gap-2">
+                    {item.checked !== undefined && (
+                      <span
+                        aria-hidden
+                        className={item.checked ? 'font-medium text-indigo-600 dark:text-indigo-400' : 'text-gray-300 dark:text-gray-600'}
+                      >
+                        ✓
+                      </span>
+                    )}
+                    {item.label}
+                  </span>
+                  {item.badge !== undefined && (
+                    <span className="rounded-full bg-gray-100 px-2 py-0.5 text-xs text-gray-600 dark:bg-gray-800 dark:text-gray-300">
+                      {item.badge}
+                    </span>
+                  )}
+                </span>
+              )}
+            </DropdownMenu>
+            <span className="text-xs text-gray-500">
+              Open the menu — checkmarks and badges come from the item data; the{' '}
+              <code>children</code> render-prop overrides each row.
+            </span>
+          </div>
         </Demo>
       </section>
 

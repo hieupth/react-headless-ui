@@ -36,6 +36,7 @@ const items = [
 
 export default function MenubarPage() {
   const [active, setActive] = useState<string | null>(null);
+  const [submenuEvent, setSubmenuEvent] = useState<string | null>(null);
 
   return (
     <div className="mx-auto max-w-3xl px-6 py-12 space-y-8">
@@ -99,9 +100,22 @@ export default function MenubarPage() {
   onSubmenuClose={() => console.log('close')}
 />`}
         >
-          <p className="text-sm text-gray-500">
-            Affordance toggles + submenu lifecycle callbacks — see the snippet.
-          </p>
+          <div className="flex flex-col items-center gap-3 w-full">
+            <Menubar
+              className={menubarCls}
+              items={items}
+              showSeparators
+              showIcons
+              showShortcuts
+              onSubmenuOpen={(id) => setSubmenuEvent(`open: ${id}`)}
+              onSubmenuClose={() => setSubmenuEvent('close')}
+            />
+            <span className="text-xs text-gray-500">
+              {submenuEvent
+                ? `Last submenu event: ${submenuEvent}`
+                : 'Open a submenu — onSubmenuOpen / onSubmenuClose fire as panels appear.'}
+            </span>
+          </div>
         </Demo>
       </section>
 

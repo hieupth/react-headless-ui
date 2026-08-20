@@ -33,6 +33,8 @@ const nodes = [
 
 export default function TreeViewPage() {
   const [selected, setSelected] = useState<string[]>([]);
+  const [multiSelected, setMultiSelected] = useState<string[]>([]);
+  const [activated, setActivated] = useState<string | null>(null);
 
   return (
     <div className="mx-auto max-w-3xl px-6 py-12 space-y-8">
@@ -96,9 +98,24 @@ export default function TreeViewPage() {
   onNodeActivate={(node) => console.log('open', node.id)}
 />`}
         >
-          <p className="text-sm text-gray-500">
-            Multi-select + expand-all + connector lines — see the snippet.
-          </p>
+          <div className="w-full max-w-xs mx-auto">
+            <TreeView
+              className={treeCls}
+              nodes={nodes}
+              selectionMode="multiple"
+              expandAll
+              showLines
+              onSelectionChange={setMultiSelected}
+              onNodeActivate={(node) => setActivated(node.id)}
+            />
+            <p className="mt-3 text-xs text-gray-500">
+              {multiSelected.length
+                ? `Selected: ${multiSelected.join(', ')}`
+                : activated
+                  ? `Activated: ${activated}`
+                  : 'Multiple branches start expanded — Ctrl/Cmd-click or arrow + Space to multi-select.'}
+            </p>
+          </div>
         </Demo>
       </section>
 

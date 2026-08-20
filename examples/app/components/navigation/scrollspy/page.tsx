@@ -94,9 +94,14 @@ export default function ScrollspyPage() {
   showProgress
 />`}
         >
-          <p className="text-sm text-gray-500">
-            Horizontal layout + progress/indicators — see the snippet.
-          </p>
+          <Scrollspy
+            className="flex flex-wrap items-center gap-2 rounded-lg border border-gray-200 bg-white p-2 text-sm dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300"
+            sections={sections}
+            orientation="horizontal"
+            position="top"
+            showIndicators
+            showProgress
+          />
         </Demo>
       </section>
 

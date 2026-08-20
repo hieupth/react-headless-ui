@@ -20,6 +20,7 @@
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
     "react-hook-form": "^7.65.0",
+    "remark-gfm": "^4.0.1",
     "shiki": "^1.29.0"
   },
   "devDependencies": {

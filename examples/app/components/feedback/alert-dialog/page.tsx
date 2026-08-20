@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { AlertDialog } from '@hieupth/react-headless-ui';
+import { AlertDialog, AlertDialogTrigger } from '@hieupth/react-headless-ui';
 import { Demo } from '@/components/demo';
 import { PropsTable } from '@/components/props-table';
 
@@ -10,6 +10,7 @@ import { PropsTable } from '@/components/props-table';
 // emitted overlay/content class hooks in your app.
 export default function AlertDialogPage() {
   const [open, setOpen] = useState(false);
+  const [publishOpen, setPublishOpen] = useState(false);
 
   return (
     <div className="mx-auto max-w-3xl px-6 py-12 space-y-8">
@@ -89,20 +90,88 @@ export default function AlertDialogPage() {
           promise resolves.
         </p>
         <Demo
-          code={`<AlertDialog title="Publish?" confirmText="Publish" onConfirm={publish}>
-  {({ confirmButtonProps, cancelButtonProps }) => (
-    <>
+          code={`const [publishOpen, setPublishOpen] = useState(false);
+
+<AlertDialogTrigger
+  onClick={() => setPublishOpen(true)}
+  className="inline-flex items-center justify-center rounded-md bg-indigo-600 px-4 py-2 text-sm font-medium text-white hover:bg-indigo-700"
+>
+  Publish release
+</AlertDialogTrigger>
+
+<AlertDialog
+  open={publishOpen}
+  onOpenChange={setPublishOpen}
+  title="Publish release?"
+  confirmText="Publish"
+  onConfirm={async () => {
+    await publishRelease(); // dialog stays open until the promise resolves
+    setPublishOpen(false);
+  }}
+>
+  {({ state, confirmButtonProps, cancelButtonProps }) => (
+    <div className="dialog-card">
+      <h3>Publish release?</h3>
       <button {...cancelButtonProps}>Cancel</button>
-      <button {...confirmButtonProps}>Publish</button>
-    </>
+      <button {...confirmButtonProps}>
+        {state.confirming ? 'Publishing…' : 'Publish'}
+      </button>
+    </div>
   )}
 </AlertDialog>`}
         >
-          <p className="text-sm text-gray-500">
-            The render-prop <code>children</code> receives{' '}
-            <code>confirmButtonProps</code> /{' '}
-            <code>cancelButtonProps</code> (aria + handlers) for custom layouts.
-          </p>
+          <div className="flex flex-col items-center gap-3">
+            <AlertDialogTrigger
+              onClick={() => setPublishOpen(true)}
+              className="inline-flex items-center justify-center rounded-md bg-indigo-600 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-indigo-700 dark:bg-indigo-600 dark:hover:bg-indigo-700"
+            >
+              Publish release
+            </AlertDialogTrigger>
+            <AlertDialog
+              open={publishOpen}
+              onOpenChange={setPublishOpen}
+              title="Publish release?"
+              description="The changelog becomes visible to everyone immediately."
+              confirmText="Publish"
+              cancelText="Cancel"
+              onConfirm={async () => {
+                await new Promise((resolve) => setTimeout(resolve, 800));
+                setPublishOpen(false);
+              }}
+            >
+              {({ state, confirmButtonProps, cancelButtonProps }) => (
+                <div className="w-full max-w-sm rounded-lg border border-gray-200 bg-white p-5 text-left shadow-lg dark:border-gray-700 dark:bg-gray-900">
+                  <h3 className="text-base font-semibold text-gray-900 dark:text-gray-100">
+                    Publish release?
+                  </h3>
+                  <p className="mt-1 text-sm text-gray-600 dark:text-gray-400">
+                    The changelog becomes visible to everyone immediately.
+                  </p>
+                  <div className="mt-4 flex justify-end gap-2">
+                    <button
+                      {...(cancelButtonProps as React.ButtonHTMLAttributes<HTMLButtonElement>)}
+                      className="rounded-md border border-gray-300 px-3 py-1.5 text-sm font-medium text-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:text-gray-200 dark:hover:bg-gray-800"
+                    >
+                      Cancel
+                    </button>
+                    <button
+                      {...(confirmButtonProps as React.ButtonHTMLAttributes<HTMLButtonElement>)}
+                      className="rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-medium text-white hover:bg-indigo-700 disabled:opacity-60"
+                    >
+                      {state.confirming ? 'Publishing…' : 'Publish'}
+                    </button>
+                  </div>
+                </div>
+              )}
+            </AlertDialog>
+            <span className="text-xs text-gray-500">
+              The render-prop <code>children</code> receives{' '}
+              <code>confirmButtonProps</code> /{' '}
+              <code>cancelButtonProps</code> (aria + handlers) for custom
+              layouts. <code>onConfirm</code> awaits an 800&nbsp;ms promise —
+              the confirm button shows the busy state until it resolves.
+            </span>
+          </div>
         </Demo>
       </section>
 

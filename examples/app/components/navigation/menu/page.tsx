@@ -99,8 +99,8 @@ export default function MenuPage() {
   trigger="hover"
   multiSelect
   items={[
-    { key: 'bold', label: 'Bold', selected: true },
-    { key: 'italic', label: 'Italic' },
+    { key: 'bold', label: 'Bold', selected: true, shortcut: '⌘B' },
+    { key: 'italic', label: 'Italic', shortcut: '⌘I' },
     { key: 'theme', label: 'Theme', submenu: [
       { key: 'light', label: 'Light' },
       { key: 'dark', label: 'Dark' }
@@ -112,10 +112,33 @@ export default function MenuPage() {
   </button>
 </Menu>`}
         >
-          <p className="text-sm text-gray-500">
-            Multi-select + submenu behavior is wired by the hook — see the
-            snippet for the data shape.
-          </p>
+          <div className="flex flex-col items-center gap-3">
+            <Menu
+              className={menuListCls}
+              trigger="hover"
+              multiSelect
+              items={[
+                { key: 'bold', label: 'Bold', selected: true, shortcut: '⌘B' },
+                { key: 'italic', label: 'Italic', shortcut: '⌘I' },
+                {
+                  key: 'theme',
+                  label: 'Theme',
+                  submenu: [
+                    { key: 'light', label: 'Light' },
+                    { key: 'dark', label: 'Dark' },
+                  ],
+                },
+              ]}
+            >
+              <button type="button" className={triggerBtn}>
+                Format <span aria-hidden>▾</span>
+              </button>
+            </Menu>
+            <span className="text-xs text-gray-500">
+              Hover the trigger — multi-select items keep the menu open, and the{' '}
+              <code>submenu</code> entries flatten into the panel.
+            </span>
+          </div>
         </Demo>
       </section>
 

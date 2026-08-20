@@ -2,6 +2,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { notFound } from 'next/navigation';
 import { MDXRemote } from 'next-mdx-remote/rsc';
+import remarkGfm from 'remark-gfm';
 import { Demo } from '@/components/demo';
 import { CodeBlock } from '@/components/code-block';
 import { InteractiveDemo } from '@/components/interactive-demo';
@@ -64,7 +65,11 @@ async function MDXPage({ params }: MDXPageProps) {
 
   return (
     <article className="prose dark:prose-invert max-w-3xl mx-auto px-6 py-10">
-      <MDXRemote source={source} components={mdxComponents} />
+      <MDXRemote
+        source={source}
+        components={mdxComponents}
+        options={{ mdxOptions: { remarkPlugins: [remarkGfm] } }}
+      />
     </article>
   );
 }

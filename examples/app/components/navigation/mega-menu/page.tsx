@@ -12,6 +12,10 @@ const megaCls =
   'flex items-center gap-1 rounded-lg border border-gray-200 bg-white px-2 py-1 text-sm ' +
   'dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100';
 
+const megaVerticalCls =
+  'flex flex-col items-stretch gap-1 rounded-lg border border-gray-200 bg-white px-2 py-1 text-sm ' +
+  'dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100';
+
 const items = [
   {
     id: 'products',
@@ -102,18 +106,28 @@ export default function MegaMenuPage() {
         </p>
         <Demo
           code={`<MegaMenu
-  className="flex items-center gap-1 rounded-lg border border-gray-200 bg-white px-2 py-1 text-sm dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100"
+  className="flex flex-col items-stretch gap-1 rounded-lg border border-gray-200 bg-white px-2 py-1 text-sm dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100"
   items={items}
   orientation="vertical"
-  animationDuration={200}
+  panelAnimationDuration={200}
   panelPosition="right"
   showPanelArrows
 />`}
         >
-          <p className="text-sm text-gray-500">
-            Vertical layout + animation knobs — see the snippet. (Animation
-            requires the framer-motion peer dep.)
-          </p>
+          <div className="flex flex-col items-center gap-3 w-full">
+            <MegaMenu
+              className={megaVerticalCls}
+              items={items}
+              orientation="vertical"
+              panelAnimationDuration={200}
+              panelPosition="right"
+              showPanelArrows
+            />
+            <span className="text-xs text-gray-500">
+              A vertical trigger row with side panels — arrows mark items that
+              carry a panel. (Panel transitions use the framer-motion peer dep.)
+            </span>
+          </div>
         </Demo>
       </section>
 
@@ -140,9 +154,9 @@ export default function MegaMenuPage() {
               description: 'Where the dropdown panel appears relative to its trigger.',
             },
             {
-              name: 'animationDuration',
+              name: 'panelAnimationDuration',
               type: 'number',
-              default: '—',
+              default: '300',
               description: 'Panel open/close transition duration in ms (framer-motion).',
             },
             {

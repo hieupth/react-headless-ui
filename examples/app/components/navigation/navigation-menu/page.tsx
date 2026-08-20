@@ -35,6 +35,7 @@ const items = [
 
 export default function NavigationMenuPage() {
   const [active, setActive] = useState<string | null>(null);
+  const [dropdownEvent, setDropdownEvent] = useState<string | null>(null);
 
   return (
     <div className="mx-auto max-w-3xl px-6 py-12 space-y-8">
@@ -96,9 +97,21 @@ export default function NavigationMenuPage() {
   onDropdownOpen={(id) => console.log('open', id)}
 />`}
         >
-          <p className="text-sm text-gray-500">
-            Search + auto-close are hook-level toggles — see the snippet.
-          </p>
+          <div className="flex flex-col items-center gap-3 w-full">
+            <NavigationMenu
+              className={navMenuCls}
+              items={items}
+              enableSearch
+              autoCloseDropdowns
+              onDropdownOpen={(id) => setDropdownEvent(`open: ${id}`)}
+              onDropdownClose={() => setDropdownEvent('close')}
+            />
+            <span className="text-xs text-gray-500">
+              {dropdownEvent
+                ? `Last dropdown event: ${dropdownEvent}`
+                : 'enableSearch filters mega panels; autoCloseDropdowns dismisses on blur.'}
+            </span>
+          </div>
         </Demo>
       </section>
 

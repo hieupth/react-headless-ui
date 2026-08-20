@@ -95,21 +95,53 @@ export default function TabsPage() {
           <code>orientation="vertical"</code> for a side tab list.
         </p>
         <Demo
-          code={`<Tabs defaultValue="overview" variant="pills">
-  <Tabs.List className="flex border-b border-gray-200 dark:border-gray-700 gap-1">
+          code={`<Tabs
+  defaultValue="overview"
+  variant="pills"
+  className="flex flex-wrap gap-2"
+>
+  <Tabs.List>
     <Tabs.Trigger value="overview">Overview</Tabs.Trigger>
     <Tabs.Trigger value="activity">Activity</Tabs.Trigger>
+    <Tabs.Trigger value="settings" disabled>Settings</Tabs.Trigger>
   </Tabs.List>
   <Tabs.Content value="overview">Overview panel</Tabs.Content>
   <Tabs.Content value="activity">Activity panel</Tabs.Content>
+  <Tabs.Content value="settings">Settings panel</Tabs.Content>
 </Tabs>`}
         >
-          <p className="text-sm text-gray-500">
-            The compound children are collected by the parent{' '}
-            <code>&lt;Tabs&gt;</code> and matched by <code>value</code> — theme{' '}
-            the list via <code>&lt;Tabs.List className&gt;</code>. See the snippet
-            for the API shape.
-          </p>
+          {/* The compound children are collected by the parent <Tabs> and
+              matched by value — the parent's className themes the list. */}
+          <div className="w-full">
+            <Tabs
+              defaultValue="overview"
+              variant="pills"
+              className="flex flex-wrap gap-2"
+            >
+              <Tabs.List>
+                <Tabs.Trigger value="overview">Overview</Tabs.Trigger>
+                <Tabs.Trigger value="activity">Activity</Tabs.Trigger>
+                <Tabs.Trigger value="settings" disabled>
+                  Settings
+                </Tabs.Trigger>
+              </Tabs.List>
+              <Tabs.Content value="overview">
+                <p className="pt-4 text-sm text-gray-700 dark:text-gray-300">
+                  Release overview and recent activity summaries.
+                </p>
+              </Tabs.Content>
+              <Tabs.Content value="activity">
+                <p className="pt-4 text-sm text-gray-700 dark:text-gray-300">
+                  A full audit trail of commits and publishes.
+                </p>
+              </Tabs.Content>
+              <Tabs.Content value="settings">
+                <p className="pt-4 text-sm text-gray-700 dark:text-gray-300">
+                  Workspace settings.
+                </p>
+              </Tabs.Content>
+            </Tabs>
+          </div>
         </Demo>
       </section>
 

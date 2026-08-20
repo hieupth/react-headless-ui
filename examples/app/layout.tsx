@@ -1,4 +1,5 @@
 import './globals.css';
+import './showcase.css';
 import type { Metadata } from 'next';
 import { Sidebar } from '@/components/sidebar';
 import { ThemeSwitcher } from '@/components/theme-switcher';

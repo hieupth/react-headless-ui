@@ -64,16 +64,44 @@ export default function ListPage() {
       <section className="space-y-4">
         <h2 className="text-xl font-semibold">Searchable</h2>
         <p className="text-sm text-gray-600 dark:text-gray-400">
-          <code>searchable</code> adds a filter input bound to the items. Use{' '}
-          <code>searchFields</code> to constrain which fields are matched.
+          <code>searchable</code> filters the items; the search field itself is
+          headless — supply a <code>renderSearch</code> that composes the{' '}
+          <code>value</code> / <code>onChange</code> / <code>placeholder</code>{' '}
+          props. Use <code>searchFields</code> to constrain which fields are
+          matched.
         </p>
         <Demo
-          code={`<List items={people} searchable searchFields={['label']} className="w-72 divide-y divide-gray-100 rounded-lg border border-gray-200 dark:divide-gray-800 dark:border-gray-700 [&_[role=option]]:px-3 [&_[role=option]]:py-2" />`}
+          code={`<List
+  items={people}
+  searchable
+  searchFields={['label']}
+  searchPlaceholder="Filter people…"
+  renderSearch={({ value, onChange, placeholder }) => (
+    <input
+      type="text"
+      value={value}
+      onChange={(e) => onChange(e.target.value)}
+      placeholder={placeholder}
+      className="block w-full border-b border-gray-200 px-3 py-2 text-sm outline-none dark:border-gray-700"
+    />
+  )}
+  className="w-72 divide-y divide-gray-100 rounded-lg border border-gray-200 dark:divide-gray-800 dark:border-gray-700 [&_[role=option]]:px-3 [&_[role=option]]:py-2"
+/>`}
         >
           <List
             items={people}
             searchable
             searchFields={['label']}
+            searchPlaceholder="Filter people…"
+            renderSearch={({ value, onChange, placeholder }) => (
+              <input
+                type="text"
+                value={value}
+                onChange={(e) => onChange(e.target.value)}
+                placeholder={placeholder}
+                className="block w-full rounded-t-lg border-b border-gray-200 px-3 py-2 text-sm outline-none dark:border-gray-700"
+              />
+            )}
             className="w-72 divide-y divide-gray-100 rounded-lg border border-gray-200 dark:divide-gray-800 dark:border-gray-700 [&_[role=option]]:px-3 [&_[role=option]]:py-2"
           />
         </Demo>
