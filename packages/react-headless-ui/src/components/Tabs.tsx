@@ -215,30 +215,30 @@ const TabsBase = forwardRef<HTMLDivElement, TabsProps>(({
 
   // Variant classes
   const variantClasses = {
-    default: ' ',
-    underline: ' ',
-    pills: '  ',
-    enclosed: '  '
+    default: 'tabs-default',
+    underline: 'tabs-underline',
+    pills: 'tabs-pills',
+    enclosed: 'tabs-enclosed'
   }[variant];
 
   // Default tab render function
   const defaultTabRender = (tab: TabItem, props: TabRenderProps) => {
-    const baseClasses = '         ';
-    const disabledClasses = tab.disabled ? ' ' : '';
+    const baseClasses = 'tab';
+    const disabledClasses = tab.disabled ? 'tab-disabled' : '';
 
     let variantSpecificClasses = '';
     if (variant === 'default' || variant === 'enclosed') {
       variantSpecificClasses = props.selected
-        ? '   -mb-px'
-        : '    -mb-px';
+        ? 'tab-selected -mb-px'
+        : '-mb-px';
     } else if (variant === 'underline') {
       variantSpecificClasses = props.selected
-        ? '  '
-        : '   ';
+        ? 'tab-selected'
+        : '';
     } else if (variant === 'pills') {
       variantSpecificClasses = props.selected
-        ? '   '
-        : '  ';
+        ? 'tab-selected'
+        : '';
     }
 
     return (

@@ -175,7 +175,9 @@ export const AccordionMenu = forwardRef<HTMLDivElement, AccordionMenuProps>((pro
                 className={`${isOpen ? '' : ''}
                 `}
               >
-                <svg fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                {/* The lib ships no CSS, so the default chevron carries explicit
+                    width/height or it expands to fill the section header. */}
+                <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" width={24} height={24}>
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                 </svg>
               </span>

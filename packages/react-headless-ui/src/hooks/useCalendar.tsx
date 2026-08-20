@@ -234,19 +234,23 @@ export const useCalendar = (props: UseCalendarProps = {}): UseCalendarReturns =>
     return grid;
   }, [weekStartsOn]);
 
-  // Get weekday names
+  // Get weekday names. Labels must be derived from the DISPLAYED month, not
+  // `new Date()`: anchor on the displayed month's first day and walk back to
+  // its weekStartsOn-aligned week start — the same offset createCalendarGrid
+  // uses — so header i always names the weekday of grid column i.
   const weekdays = useMemo(() => {
     const weekdays = [];
-    const date = new Date();
+    const anchor = new Date(month.getFullYear(), month.getMonth(), 1);
+    const startOffset = (anchor.getDay() - weekStartsOn + 7) % 7;
+    anchor.setDate(anchor.getDate() - startOffset);
 
     for (let i = 0; i < 7; i++) {
-      const dayIndex = (weekStartsOn + i) % 7;
-      date.setDate(1 + dayIndex);
-      weekdays.push(formatWeekday(date));
+      weekdays.push(formatWeekday(new Date(anchor)));
+      anchor.setDate(anchor.getDate() + 1);
     }
 
     return weekdays;
-  }, [weekStartsOn, formatWeekday]);
+  }, [month, weekStartsOn, formatWeekday]);
 
   // Get week numbers
   const weekNumbers = useMemo(() => {

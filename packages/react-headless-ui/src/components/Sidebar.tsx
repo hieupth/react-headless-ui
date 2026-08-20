@@ -260,16 +260,9 @@ export const SidebarItem = forwardRef<HTMLDivElement, SidebarItemProps>(({
   disabled = false
 }, ref) => {
   const itemClasses = `
-         
-     
-    ${active
-      ? '  '
-      : '  '
-    }
-    ${disabled
-      ? ' '
-      : ''
-    }
+    sidebar-item
+    ${active ? 'sidebar-item-active' : ''}
+    ${disabled ? 'sidebar-item-disabled' : ''}
     ${className || ''}
   `.trim().replace(/\s+/g, ' ');
 

@@ -44,11 +44,12 @@ export const AspectRatio: React.FC<AspectRatioProps> = ({
       className={containerClasses}
       {...props}
       style={{
-        ...props.style,
-        // Theme-aware styling
-        backgroundColor: theme.colors.background,
+        // Default chrome only; consumer props.style wins. No hardcoded
+        // backgroundColor — painting the surface is the consumer's call
+        // (an inline bg would defeat any consumer background class).
         borderRadius: theme.borderRadius.md,
         overflow: 'hidden',
+        ...props.style,
       }}
     >
       {/* Content container with absolute positioning */}

@@ -96,6 +96,8 @@ export const TreeView = forwardRef<HTMLDivElement, TreeViewProps>(({
       className="tree-view"
       fill="currentColor"
       viewBox="0 0 20 20"
+      width={16}
+      height={16}
     >
       <path
         fillRule="evenodd"
@@ -262,6 +264,8 @@ export const TreeView = forwardRef<HTMLDivElement, TreeViewProps>(({
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"
+            width={24}
+            height={24}
           >
             <path
               strokeLinecap="round"

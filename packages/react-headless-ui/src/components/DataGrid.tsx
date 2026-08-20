@@ -270,10 +270,14 @@ export const DataGrid = forwardRef<HTMLTableElement, DataGridProps>(
             <span className="data-grid">{column.header ?? column.title}</span>
             {column.sortable && (
               <div className="data-grid">
+                {/* The lib ships no CSS, so the default sort indicators carry
+                    explicit width/height or they expand to fill the header. */}
                 <svg
                   className={`${isSorted && sortDirection === 'asc' ? '' : ''}`}
                   fill="currentColor"
                   viewBox="0 0 20 20"
+                  width={16}
+                  height={16}
                 >
                   <path fillRule="evenodd" d="M14.707 12.707a1 1 0 01-1.414 0L10 9.414l-3.293 3.293a1 1 0 01-1.414-1.414l4-4a1 1 0 011.414 0l4 4a1 1 0 010 1.414z" clipRule="evenodd" />
                 </svg>
@@ -281,6 +285,8 @@ export const DataGrid = forwardRef<HTMLTableElement, DataGridProps>(
                   className={`${isSorted && sortDirection === 'desc' ? '' : ''}`}
                   fill="currentColor"
                   viewBox="0 0 20 20"
+                  width={16}
+                  height={16}
                 >
                   <path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" />
                 </svg>

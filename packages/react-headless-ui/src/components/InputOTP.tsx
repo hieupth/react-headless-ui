@@ -300,7 +300,12 @@ export const InputOTP = forwardRef<HTMLDivElement, InputOTPProps>(({
       </div>
 
       {/* OTP Input Slots */}
-      <div className="otp-slots">
+      {/* Inline-default flex row (overridable): the lib ships no CSS, so without
+          this the shrunken slot inputs wrap one-per-line into a vertical column. */}
+      <div
+        className="otp-slots"
+        style={{ display: 'flex', flexDirection: 'row', gap: '8px' }}
+      >
         {state.slots.map((slot, index) => (
           <div key={index} className="otp-slot-wrapper">
             {renderSlot

@@ -163,6 +163,14 @@ export const Scrollspy = forwardRef<HTMLDivElement, ScrollspyProps>(({
     );
   };
 
+  // Horizontal scroll-progress percentage. Guarded for SSR/static export:
+  // document/window are unavailable while prerendering, so progress reads
+  // 0% until the client mounts and the scroll listener reports a position.
+  const scrollRange = typeof document !== 'undefined'
+    ? Math.max(1, document.documentElement.scrollHeight - window.innerHeight)
+    : 1;
+  const progressPercent = Math.min((state.scrollPosition / scrollRange) * 100, 100);
+
   // Progress indicator
   const renderProgress = () => {
     if (!showProgress || orientation !== 'vertical') return null;
@@ -284,10 +292,10 @@ export const Scrollspy = forwardRef<HTMLDivElement, ScrollspyProps>(({
             <div className="scrollspy">
               <div
                 className="scrollspy"
-                style={{ width: `${Math.min((state.scrollPosition / (document.documentElement.scrollHeight - window.innerHeight)) * 100, 100)}%` }}
+                style={{ width: `${progressPercent}%` }}
               />
             </div>
-            <span>{Math.round((state.scrollPosition / (document.documentElement.scrollHeight - window.innerHeight)) * 100)}%</span>
+            <span>{Math.round(progressPercent)}%</span>
           </div>
         </div>
       )}
