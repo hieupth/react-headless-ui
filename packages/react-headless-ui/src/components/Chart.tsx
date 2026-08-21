@@ -387,16 +387,23 @@ export const Chart = forwardRef<SVGSVGElement, ChartProps>(
           let currentAngle = -90; // Start from top
 
           return (
-            <g transform={`translate(${width / 2}, ${height / 2})`}>
+            // width/height are the INNER chart dimensions; re-add the margin
+            // and padding offsets so the pie is centered in the full viewport
+            // instead of jammed into its top-left corner.
+            <g transform={`translate(${marginLeft + padding + width / 2}, ${marginTop + padding + height / 2})`}>
               {dataPoints.map((point, index) => {
                 const value = values[index];
                 const percentage = total > 0 ? (value / total) * 100 : 0;
                 const angle = (percentage / 100) * 360;
-                // reason: useChart pre-assigns a color to every flattened
-                // dataPoint (useChart.tsx color assignment), so point.color is
-                // always set here; the palette/fallback arms are unreachable.
-                /* c8 ignore next */
-                const color = point.color || colors[index % colors.length] || '#000000';
+                // Pie slices are categories, not series: when every point
+                // carries the same (dataset-level) color, that single color
+                // would paint all slices identically — fall back to the
+                // palette by index so slices stay distinguishable.
+                const singleColor = dataPoints[0]?.color;
+                const allSameColor = singleColor && dataPoints.every((p) => p.color === singleColor);
+                const color = allSameColor
+                  ? colors[index % colors.length]
+                  : /* c8 ignore next */ point.color || colors[index % colors.length] || '#000000';
 
                 const x1 = Math.cos((currentAngle * Math.PI) / 180) * radius;
                 const y1 = Math.sin((currentAngle * Math.PI) / 180) * radius;
@@ -576,7 +583,9 @@ export const Chart = forwardRef<SVGSVGElement, ChartProps>(
       );
     };
 
-    const backgroundColor = (props.backgroundColor as string | undefined) ?? '#ffffff';
+    // Transparent by default: a hardcoded white plate breaks charts placed on
+    // dark/colored sections. Consumers opt into a plate via backgroundColor.
+    const backgroundColor = (props.backgroundColor as string | undefined) ?? 'transparent';
     const borderColor = (props.borderColor as string | undefined) ?? '#e5e7eb';
     const borderWidth = (props.borderWidth as number | undefined) ?? 1;
     // Match the hook's showTooltips default (true) so tooltips work without

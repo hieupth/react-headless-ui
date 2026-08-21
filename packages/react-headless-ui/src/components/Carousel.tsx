@@ -5,7 +5,7 @@
  */
 
 import React from 'react';
-import { useCarousel, type UseCarouselProps } from '../hooks/index.js';
+import { useCarousel, DEFAULT_CAROUSEL_ARIA_LABELS, type UseCarouselProps } from '../hooks/index.js';
 
 export interface CarouselProps extends UseCarouselProps {
   /** Carousel items */
@@ -54,6 +54,7 @@ export const Carousel: React.FC<CarouselProps> = ({
   onSlideChange,
   onEnd,
   onStart,
+  carouselAriaLabels,
   ...semanticProps
 }) => {
   // `children` is typed as an array, but a dynamically built single child (or a
@@ -82,10 +83,18 @@ export const Carousel: React.FC<CarouselProps> = ({
     onSlideChange,
     onEnd,
     onStart,
+    carouselAriaLabels,
     totalItems: items.length,
     showArrows,
     showDots
   });
+
+  // Component-level screen-reader labels (dots group + auto-play status);
+  // the slide/dot/arrow/region labels are applied inside the hook.
+  const ariaLabels = {
+    ...DEFAULT_CAROUSEL_ARIA_LABELS,
+    ...carouselAriaLabels
+  };
 
   // Pause on hover
   React.useEffect(() => {
@@ -217,7 +226,7 @@ export const Carousel: React.FC<CarouselProps> = ({
 
       {/* Dot indicators */}
       {showDots && (
-        <div className={dotsClassName} role="group" aria-label="Carousel navigation">
+        <div className={dotsClassName} role="group" aria-label={ariaLabels.navigation}>
           {Array.from({ length: state.totalSlides }, (_, index) => (
             <Dot
               key={index}
@@ -232,7 +241,7 @@ export const Carousel: React.FC<CarouselProps> = ({
       {/* Auto-play status indicator */}
       {autoPlay && (
         <div className="carousel-status" aria-live="polite">
-          {state.isPlaying ? 'Playing' : 'Paused'} • Slide {state.currentSlide + 1} of {state.totalSlides}
+          {ariaLabels.status(state.isPlaying, state.currentSlide + 1, state.totalSlides)}
         </div>
       )}
     </div>

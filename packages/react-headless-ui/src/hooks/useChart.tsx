@@ -148,6 +148,12 @@ export interface UseChartProps extends
   colors?: string[];
   /** Custom theme */
   theme?: 'light' | 'dark';
+  /**
+   * Accessible name (aria-label) for the chart. Takes precedence over the
+   * generic `label`; defaults to 'Chart visualization'. Pass a localized
+   * string so screen-reader announcements match the page language.
+   */
+  chartAriaLabel?: string;
 }
 
 /**
@@ -233,6 +239,7 @@ export function useChart(props: UseChartProps = {}) {
     onMouseLeave,
     colors: propColors = ['#3b82f6', '#ef4444', '#10b981', '#f59e0b', '#8b5cf6', '#ec4899', '#06b6d4', '#84cc16'],
     theme = 'light',
+    chartAriaLabel,
     defaultFocused = false,
     focusable = true,
     focusStrategy = 'auto',
@@ -571,7 +578,7 @@ export function useChart(props: UseChartProps = {}) {
   // Generate semantic attributes
   const semanticAttributes = useMemo(() => ({
     ...semantic,
-    'aria-label': label || 'Chart visualization',
+    'aria-label': chartAriaLabel || label || 'Chart visualization',
     'aria-roledescription': 'chart',
     'data-chart-type': type,
     'data-animated': animated,
@@ -580,7 +587,7 @@ export function useChart(props: UseChartProps = {}) {
     onKeyDown: handleKeyDown,
     role: role,
     ref: chartRef
-  }), [semantic, label, type, animated, theme, focusable, handleKeyDown, role]);
+  }), [semantic, chartAriaLabel, label, type, animated, theme, focusable, handleKeyDown, role]);
 
   // Handlers object (memoized so the outer return can be referentially stable).
   const handlers = useMemo(() => ({

@@ -9,9 +9,49 @@ import { useSemanticMixin } from '../mixins/index.js';
 import { composeState } from '../utils/index.js';
 import type { SemanticMixinProps, FocusableMixinProps } from '../mixins/index.js';
 
+/**
+ * Screen-reader label surface of the carousel. All fields are functions or
+ * strings so consumers can fully localize the announcements; numbered fields
+ * receive 1-based positions. Consumers pass a Partial via
+ * `carouselAriaLabels` — every omitted field falls back to the English
+ * default in DEFAULT_CAROUSEL_ARIA_LABELS.
+ */
+export interface CarouselAriaLabels {
+  /** Region announcement for the whole carousel. */
+  region: (totalItems: number, currentItem: number) => string;
+  /** Label of one slide (1-based slide number). */
+  slide: (slideNumber: number, totalItems: number) => string;
+  /** Label of one dot button (1-based slide number). */
+  goToSlide: (slideNumber: number) => string;
+  /** Label of the previous-slide arrow button. */
+  previousSlide: string;
+  /** Label of the next-slide arrow button. */
+  nextSlide: string;
+  /** Label of the dot-navigation group. */
+  navigation: string;
+  /** Auto-play status announcement (1-based slide number). */
+  status: (isPlaying: boolean, slideNumber: number, totalSlides: number) => string;
+}
+
+/**
+ * Built-in English screen-reader labels. Exported so the Carousel component
+ * (and consumers) can compose overrides over the defaults.
+ */
+export const DEFAULT_CAROUSEL_ARIA_LABELS: CarouselAriaLabels = {
+  region: (totalItems, currentItem) => `${totalItems} items. Current item ${currentItem} of ${totalItems}.`,
+  slide: (slideNumber, totalItems) => `Slide ${slideNumber} of ${totalItems}`,
+  goToSlide: (slideNumber) => `Go to slide ${slideNumber}`,
+  previousSlide: 'Previous slide',
+  nextSlide: 'Next slide',
+  navigation: 'Carousel navigation',
+  status: (isPlaying, slideNumber, totalSlides) => `${isPlaying ? 'Playing' : 'Paused'} • Slide ${slideNumber} of ${totalSlides}`,
+};
+
 export interface UseCarouselProps extends
   SemanticMixinProps,
   FocusableMixinProps {
+  /** Overrides for the carousel's screen-reader labels (English defaults). */
+  carouselAriaLabels?: Partial<CarouselAriaLabels>;
   /** Number of items to show per view */
   itemsPerView?: number;
   /** Spacing between items */
@@ -108,6 +148,7 @@ export const useCarousel = (props: UseCarouselProps & { totalItems: number }) =>
     onSlideChange,
     onEnd,
     onStart,
+    carouselAriaLabels,
     ...semanticProps
   } = props;
 
@@ -129,6 +170,14 @@ export const useCarousel = (props: UseCarouselProps & { totalItems: number }) =>
 
   // Calculate total slides based on items per view
   const totalSlides = Math.max(1, Math.ceil(totalItems / itemsPerView));
+
+  // Merged screen-reader labels: consumer overrides on top of the English
+  // defaults. Memoized so the prop-bag generators below keep referential
+  // stability when no override (or a stable override) is passed.
+  const ariaLabels = useMemo(() => ({
+    ...DEFAULT_CAROUSEL_ARIA_LABELS,
+    ...carouselAriaLabels
+  }), [carouselAriaLabels]);
 
   // Semantic attributes
   const semantic = useSemanticMixin({
@@ -269,7 +318,7 @@ export const useCarousel = (props: UseCarouselProps & { totalItems: number }) =>
     return {
       role: 'group',
       'aria-roledescription': 'slide',
-      'aria-label': `Slide ${index + 1} of ${totalItems}`,
+      'aria-label': ariaLabels.slide(index + 1, totalItems),
       'aria-hidden': !isVisible,
       'data-active': isActive,
       'data-visible': isVisible,
@@ -278,7 +327,7 @@ export const useCarousel = (props: UseCarouselProps & { totalItems: number }) =>
         minWidth: 0,
       },
     };
-  }, [currentSlide, itemsPerView, totalItems, isSlideVisible]);
+  }, [currentSlide, itemsPerView, totalItems, isSlideVisible, ariaLabels]);
 
   // Dot navigation props generator
   const getDotProps = useCallback((index: number) => {
@@ -286,7 +335,7 @@ export const useCarousel = (props: UseCarouselProps & { totalItems: number }) =>
 
     return {
       role: 'button',
-      'aria-label': `Go to slide ${index + 1}`,
+      'aria-label': ariaLabels.goToSlide(index + 1),
       'aria-selected': isActive,
       'data-active': isActive,
       onClick: () => goToSlide(index),
@@ -297,23 +346,23 @@ export const useCarousel = (props: UseCarouselProps & { totalItems: number }) =>
         }
       },
     };
-  }, [currentSlide, goToSlide]);
+  }, [currentSlide, goToSlide, ariaLabels]);
 
   // Arrow navigation props
   const arrowProps = useMemo(() => ({
     previous: {
-      'aria-label': 'Previous slide',
+      'aria-label': ariaLabels.previousSlide,
       onClick: previous,
       disabled: !loop && isAtStart,
       'data-disabled': !loop && isAtStart,
     },
     next: {
-      'aria-label': 'Next slide',
+      'aria-label': ariaLabels.nextSlide,
       onClick: next,
       disabled: !loop && isAtEnd,
       'data-disabled': !loop && isAtEnd,
     },
-  }), [previous, next, loop, isAtStart, isAtEnd]);
+  }), [previous, next, loop, isAtStart, isAtEnd, ariaLabels]);
 
   // Composed state
   const state = useMemo(() => composeState<UseCarouselState>({
@@ -341,8 +390,8 @@ export const useCarousel = (props: UseCarouselProps & { totalItems: number }) =>
     ...semantic,
     role: 'region',
     'aria-roledescription': 'carousel',
-    'aria-label': `${totalItems} items. Current item ${Math.min(currentSlide * itemsPerView + 1, totalItems)} of ${totalItems}.`,
-  }), [semantic, totalItems, currentSlide, itemsPerView]);
+    'aria-label': ariaLabels.region(totalItems, Math.min(currentSlide * itemsPerView + 1, totalItems)),
+  }), [semantic, totalItems, currentSlide, itemsPerView, ariaLabels]);
 
   return useMemo(() => ({
     state,
