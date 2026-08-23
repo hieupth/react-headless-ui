@@ -16,12 +16,12 @@ const boxClasses =
 
 export default function ResizablePage() {
   return (
-    <div className="mx-auto max-w-3xl px-6 py-12 space-y-8">
-      <header className="space-y-3">
-        <h1 className="text-3xl font-bold">Resizable</h1>
-        <p className="text-gray-600 dark:text-gray-400">
+    <div className="docs-page">
+      <header className="docs-header">
+        <h1 className="docs-h1">Resizable</h1>
+        <p className="docs-lead">
           A draggable-resize container backed by the headless{' '}
-          <code className="font-mono text-sm">useResizable</code> hook. It tracks
+          <code className="docs-code">useResizable</code> hook. It tracks
           width/height, applies min/max constraints, optional aspect-ratio
           locking and grid snapping, and renders one handle per enabled edge or
           corner with the correct <code>aria-roledescription</code>. The
@@ -30,9 +30,9 @@ export default function ResizablePage() {
         </p>
       </header>
 
-      <section className="space-y-4">
-        <h2 className="text-xl font-semibold">Corner &amp; edge handles</h2>
-        <p className="text-sm text-gray-600 dark:text-gray-400">
+      <section className="docs-section">
+        <h2 className="docs-h2">Corner &amp; edge handles</h2>
+        <p className="docs-desc">
           All eight handles (four edges + four corners). Drag any handle to
           resize; the live dimensions are read from <code>state.width</code> /
           <code>state.height</code>.
@@ -60,9 +60,9 @@ export default function ResizablePage() {
         </Demo>
       </section>
 
-      <section className="space-y-4">
-        <h2 className="text-xl font-semibold">Constrained &amp; single axis</h2>
-        <p className="text-sm text-gray-600 dark:text-gray-400">
+      <section className="docs-section">
+        <h2 className="docs-h2">Constrained &amp; single axis</h2>
+        <p className="docs-desc">
           Restrict to the <code>right</code> handle for horizontal-only resizing,
           and clamp with <code>constraints</code> ({'{ min, max }'}) so the box
           can&apos;t collapse or run away.
@@ -92,9 +92,9 @@ export default function ResizablePage() {
         </Demo>
       </section>
 
-      <section className="space-y-4">
-        <h2 className="text-xl font-semibold">Aspect-ratio locked</h2>
-        <p className="text-sm text-gray-600 dark:text-gray-400">
+      <section className="docs-section">
+        <h2 className="docs-h2">Aspect-ratio locked</h2>
+        <p className="docs-desc">
           With <code>constraints.aspectRatio</code> set, height tracks width to
           keep the box square (or any ratio) as you drag.
         </p>
@@ -123,8 +123,8 @@ export default function ResizablePage() {
         </Demo>
       </section>
 
-      <section className="space-y-4">
-        <h2 className="text-xl font-semibold">Props</h2>
+      <section className="docs-section">
+        <h2 className="docs-h2">Props</h2>
         <PropsTable
           props={[
             { name: 'initialWidth / initialHeight', type: 'number', default: '—', description: 'Uncontrolled starting dimensions (px).' },

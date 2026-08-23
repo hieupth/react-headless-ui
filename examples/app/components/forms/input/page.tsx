@@ -12,29 +12,29 @@ import { PropsTable } from '@/components/props-table';
 const fieldBase =
   'w-full rounded-md border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-900 px-3 py-2 text-sm text-gray-900 dark:text-gray-100 shadow-sm dark:shadow-none ' +
   'placeholder:text-gray-400 transition-colors ' +
-  'focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 ' +
+  'focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 ' +
   'disabled:opacity-50 disabled:cursor-not-allowed';
 
 export default function InputPage() {
   return (
-    <div className="mx-auto max-w-3xl px-6 py-12 space-y-8">
-      <header className="space-y-3">
-        <h1 className="text-3xl font-bold">Input</h1>
-        <p className="text-gray-600 dark:text-gray-400">
+    <div className="docs-page">
+      <header className="docs-header">
+        <h1 className="docs-h1">Input</h1>
+        <p className="docs-lead">
           A text input backed by the headless{' '}
-          <code className="font-mono text-sm">useInput</code> hook. It composes
+          <code className="docs-code">useInput</code> hook. It composes
           focus, validation, character counting, and ARIA semantics — with no
-          styles baked in. Use the <code className="font-mono text-sm">render</code>{' '}
+          styles baked in. Use the <code className="docs-code">render</code>{' '}
           prop to draw your own markup and theme it with Tailwind.
         </p>
       </header>
 
-      <section className="space-y-4">
-        <h2 className="text-xl font-semibold">Basic</h2>
-        <p className="text-sm text-gray-600 dark:text-gray-400">
+      <section className="docs-section">
+        <h2 className="docs-h2">Basic</h2>
+        <p className="docs-desc">
           A controlled text input with a placeholder.
         </p>
-        <Demo code={`<Input aria-label="Email address" placeholder="you@example.com" className="w-full rounded-md border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-900 px-3 py-2 text-sm text-gray-900 dark:text-gray-100 shadow-sm dark:shadow-none placeholder:text-gray-400 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 disabled:opacity-50 disabled:cursor-not-allowed" />`}>
+        <Demo code={`<Input aria-label="Email address" placeholder="you@example.com" className="w-full rounded-md border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-900 px-3 py-2 text-sm text-gray-900 dark:text-gray-100 shadow-sm dark:shadow-none placeholder:text-gray-400 transition-colors focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 disabled:opacity-50 disabled:cursor-not-allowed" />`}>
           <Input
             aria-label="Email address"
             placeholder="you@example.com"
@@ -43,14 +43,14 @@ export default function InputPage() {
         </Demo>
       </section>
 
-      <section className="space-y-4">
-        <h2 className="text-xl font-semibold">States</h2>
-        <p className="text-sm text-gray-600 dark:text-gray-400">
+      <section className="docs-section">
+        <h2 className="docs-h2">States</h2>
+        <p className="docs-desc">
           Disabled and error states wire up <code>aria-disabled</code> /{' '}
           <code>aria-invalid</code> automatically.
         </p>
         <Demo
-          code={`<Input disabled aria-label="Display name" placeholder="Disabled" className="w-full rounded-md border border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-900 px-3 py-2 text-sm text-gray-900 dark:text-gray-100 shadow-sm dark:shadow-none placeholder:text-gray-400 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 disabled:opacity-50 disabled:cursor-not-allowed" />
+          code={`<Input disabled aria-label="Display name" placeholder="Disabled" className="w-full rounded-md border border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-900 px-3 py-2 text-sm text-gray-900 dark:text-gray-100 shadow-sm dark:shadow-none placeholder:text-gray-400 transition-colors focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 disabled:opacity-50 disabled:cursor-not-allowed" />
 <Input aria-label="Display name" error="This field is required" className="w-full rounded-md border border-red-500 bg-white dark:bg-gray-900 px-3 py-2 text-sm text-gray-900 dark:text-gray-100 shadow-sm dark:shadow-none placeholder:text-gray-400 transition-colors focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500 disabled:opacity-50 disabled:cursor-not-allowed" />`}
         >
           <div className="w-full max-w-sm space-y-3">
@@ -69,9 +69,9 @@ export default function InputPage() {
         </Demo>
       </section>
 
-      <section className="space-y-4">
-        <h2 className="text-xl font-semibold">With adornments &amp; helper text</h2>
-        <p className="text-sm text-gray-600 dark:text-gray-400">
+      <section className="docs-section">
+        <h2 className="docs-h2">With adornments &amp; helper text</h2>
+        <p className="docs-desc">
           Leading/trailing elements, helper text, label, and live character
           count (<code>showCharacterCount</code> + <code>maxLength</code>).
         </p>
@@ -80,10 +80,10 @@ export default function InputPage() {
   label="Username"
   helperText="3–20 characters"
   leadingElement={<span className="text-gray-400">@</span>}
-  trailingElement={<button className="text-xs text-blue-600">Check</button>}
+  trailingElement={<button className="text-xs text-indigo-600">Check</button>}
   showCharacterCount
   maxLength={20}
-  className="w-full rounded-md border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-900 px-3 py-2 text-sm text-gray-900 dark:text-gray-100 shadow-sm dark:shadow-none placeholder:text-gray-400 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 disabled:opacity-50 disabled:cursor-not-allowed"
+  className="w-full rounded-md border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-900 px-3 py-2 text-sm text-gray-900 dark:text-gray-100 shadow-sm dark:shadow-none placeholder:text-gray-400 transition-colors focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 disabled:opacity-50 disabled:cursor-not-allowed"
 />`}
         >
           <div className="w-full max-w-sm">
@@ -92,7 +92,7 @@ export default function InputPage() {
               helperText="3–20 characters"
               leadingElement={<span className="text-gray-400">@</span>}
               trailingElement={
-                <button className="text-xs text-blue-600">Check</button>
+                <button className="text-xs text-indigo-600">Check</button>
               }
               showCharacterCount
               maxLength={20}
@@ -102,8 +102,8 @@ export default function InputPage() {
         </Demo>
       </section>
 
-      <section className="space-y-4">
-        <h2 className="text-xl font-semibold">Props</h2>
+      <section className="docs-section">
+        <h2 className="docs-h2">Props</h2>
         <PropsTable
           props={[
             {

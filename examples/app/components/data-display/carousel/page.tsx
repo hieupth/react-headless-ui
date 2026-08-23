@@ -16,12 +16,12 @@ const slides = [
 
 export default function CarouselPage() {
   return (
-    <div className="mx-auto max-w-3xl px-6 py-12 space-y-8">
-      <header className="space-y-3">
-        <h1 className="text-3xl font-bold">Carousel</h1>
-        <p className="text-gray-600 dark:text-gray-400">
+    <div className="docs-page">
+      <header className="docs-header">
+        <h1 className="docs-h1">Carousel</h1>
+        <p className="docs-lead">
           A sliding-content carousel backed by the headless{' '}
-          <code className="font-mono text-sm">useCarousel</code> hook. It
+          <code className="docs-code">useCarousel</code> hook. It
           tracks the active slide, supports <code>itemsPerView</code>,{' '}
           <code>loop</code>, <code>autoPlay</code> (with{' '}
           <code>pauseOnHover</code>), and arrow-key navigation, and renders
@@ -30,9 +30,9 @@ export default function CarouselPage() {
         </p>
       </header>
 
-      <section className="space-y-4">
-        <h2 className="text-xl font-semibold">Basic carousel</h2>
-        <p className="text-sm text-gray-600 dark:text-gray-400">
+      <section className="docs-section">
+        <h2 className="docs-h2">Basic carousel</h2>
+        <p className="docs-desc">
           Pass slides as an array of children. Arrows and dots are on by
           default.
         </p>
@@ -53,9 +53,9 @@ export default function CarouselPage() {
         </Demo>
       </section>
 
-      <section className="space-y-4">
-        <h2 className="text-xl font-semibold">Looping &amp; auto-play</h2>
-        <p className="text-sm text-gray-600 dark:text-gray-400">
+      <section className="docs-section">
+        <h2 className="docs-h2">Looping &amp; auto-play</h2>
+        <p className="docs-desc">
           <code>loop</code> wraps the track end-to-start;{' '}
           <code>autoPlay</code> (ms) advances automatically.
         </p>
@@ -74,9 +74,9 @@ export default function CarouselPage() {
         </Demo>
       </section>
 
-      <section className="space-y-4">
-        <h2 className="text-xl font-semibold">Multiple per view</h2>
-        <p className="text-sm text-gray-600 dark:text-gray-400">
+      <section className="docs-section">
+        <h2 className="docs-h2">Multiple per view</h2>
+        <p className="docs-desc">
           <code>itemsPerView</code> shows several slides at once;{' '}
           <code>spacing</code> adds gutters between them.
         </p>
@@ -95,8 +95,8 @@ export default function CarouselPage() {
         </Demo>
       </section>
 
-      <section className="space-y-4">
-        <h2 className="text-xl font-semibold">Props</h2>
+      <section className="docs-section">
+        <h2 className="docs-h2">Props</h2>
         <PropsTable
           props={[
             { name: 'children', type: 'ReactNode[]', default: '—', description: 'Slides to render in the track.' },

@@ -8,12 +8,12 @@ import { PropsTable } from '@/components/props-table';
 // set). It is headless on CSS — theme it via Tailwind through className.
 export default function BadgePage() {
   return (
-    <div className="mx-auto max-w-3xl px-6 py-12 space-y-8">
-      <header className="space-y-3">
-        <h1 className="text-3xl font-bold">Badge</h1>
-        <p className="text-gray-600 dark:text-gray-400">
+    <div className="docs-page">
+      <header className="docs-header">
+        <h1 className="docs-h1">Badge</h1>
+        <p className="docs-lead">
           A small status label backed by the headless{' '}
-          <code className="font-mono text-sm">useBadge</code> hook. It supports
+          <code className="docs-code">useBadge</code> hook. It supports
           count indicators with a <code>maxCount</code> cap, a dot variant, four
           semantic variants, and a <code>BadgeWrapper</code> that positions a
           badge over another element. The default renderer emits the ARIA{' '}
@@ -22,9 +22,9 @@ export default function BadgePage() {
         </p>
       </header>
 
-      <section className="space-y-4">
-        <h2 className="text-xl font-semibold">Variants &amp; sizes</h2>
-        <p className="text-sm text-gray-600 dark:text-gray-400">
+      <section className="docs-section">
+        <h2 className="docs-h2">Variants &amp; sizes</h2>
+        <p className="docs-desc">
           <code>variant</code> selects the semantic tone; <code>size</code> sets
           the density. Pass children for free-form content.
         </p>
@@ -43,9 +43,9 @@ export default function BadgePage() {
         </Demo>
       </section>
 
-      <section className="space-y-4">
-        <h2 className="text-xl font-semibold">Count &amp; dot</h2>
-        <p className="text-sm text-gray-600 dark:text-gray-400">
+      <section className="docs-section">
+        <h2 className="docs-h2">Count &amp; dot</h2>
+        <p className="docs-desc">
           A numeric <code>count</code> caps at <code>maxCount</code> (default
           99). Set <code>dot</code> for a content-less indicator.
         </p>
@@ -62,9 +62,9 @@ export default function BadgePage() {
         </Demo>
       </section>
 
-      <section className="space-y-4">
-        <h2 className="text-xl font-semibold">Anchored with BadgeWrapper</h2>
-        <p className="text-sm text-gray-600 dark:text-gray-400">
+      <section className="docs-section">
+        <h2 className="docs-h2">Anchored with BadgeWrapper</h2>
+        <p className="docs-desc">
           <code>BadgeWrapper</code> overlays a badge at one of four corners of
           its child via <code>position</code>.
         </p>
@@ -82,8 +82,8 @@ export default function BadgePage() {
         </Demo>
       </section>
 
-      <section className="space-y-4">
-        <h2 className="text-xl font-semibold">Props</h2>
+      <section className="docs-section">
+        <h2 className="docs-h2">Props</h2>
         <PropsTable
           props={[
             { name: 'variant', type: "'default' | 'secondary' | 'destructive' | 'outline'", default: "'default'", description: 'Semantic tone of the badge.' },

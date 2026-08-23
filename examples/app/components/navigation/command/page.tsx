@@ -24,12 +24,12 @@ export default function CommandPage() {
   const [query, setQuery] = useState('');
 
   return (
-    <div className="mx-auto max-w-3xl px-6 py-12 space-y-8">
-      <header className="space-y-3">
-        <h1 className="text-3xl font-bold">Command</h1>
-        <p className="text-gray-600 dark:text-gray-400">
+    <div className="docs-page">
+      <header className="docs-header">
+        <h1 className="docs-h1">Command</h1>
+        <p className="docs-lead">
           A keyboard-first command palette backed by the headless{' '}
-          <code className="font-mono text-sm">useCommand</code> hook. It filters
+          <code className="docs-code">useCommand</code> hook. It filters
           items by a fuzzy search query, groups results, roves focus with full
           keyboard support (arrows, Enter, type-ahead), and{' '}
           <strong>virtualizes the list past ~100 items</strong> for constant
@@ -41,9 +41,9 @@ export default function CommandPage() {
         </p>
       </header>
 
-      <section className="space-y-4">
-        <h2 className="text-xl font-semibold">Data API</h2>
-        <p className="text-sm text-gray-600 dark:text-gray-400">
+      <section className="docs-section">
+        <h2 className="docs-h2">Data API</h2>
+        <p className="docs-desc">
           Pass <code>items</code> ({'{'}
           <code>id</code>, <code>label</code>, optional <code>shortcut</code>,{' '}
           <code>icon</code>, <code>disabled</code>) and drive the search query
@@ -78,9 +78,9 @@ export default function CommandPage() {
         </Demo>
       </section>
 
-      <section className="space-y-4">
-        <h2 className="text-xl font-semibold">Groups &amp; virtualization</h2>
-        <p className="text-sm text-gray-600 dark:text-gray-400">
+      <section className="docs-section">
+        <h2 className="docs-h2">Groups &amp; virtualization</h2>
+        <p className="docs-desc">
           Group items with <code>groups</code> ({'{'}
           <code>id</code>, <code>label</code>, <code>items</code>). For large
           lists the renderer virtualizes automatically past{' '}
@@ -104,8 +104,8 @@ export default function CommandPage() {
         </Demo>
       </section>
 
-      <section className="space-y-4">
-        <h2 className="text-xl font-semibold">Props</h2>
+      <section className="docs-section">
+        <h2 className="docs-h2">Props</h2>
         <PropsTable
           props={[
             {

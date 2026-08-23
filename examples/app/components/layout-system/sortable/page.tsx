@@ -26,12 +26,12 @@ export default function SortablePage() {
   const [order, setOrder] = useState('1 → 2 → 3 → 4');
 
   return (
-    <div className="mx-auto max-w-3xl px-6 py-12 space-y-8">
-      <header className="space-y-3">
-        <h1 className="text-3xl font-bold">Sortable</h1>
-        <p className="text-gray-600 dark:text-gray-400">
+    <div className="docs-page">
+      <header className="docs-header">
+        <h1 className="docs-h1">Sortable</h1>
+        <p className="docs-lead">
           A drag-and-drop reorderable list backed by the headless{' '}
-          <code className="font-mono text-sm">useSortable</code> hook. It wraps
+          <code className="docs-code">useSortable</code> hook. It wraps
           the native HTML drag-and-drop API — tracking the dragging item, the
           drop target, and animating transitions — while exposing{' '}
           <code>onReorder</code> with the old and new indices. Items are plain
@@ -41,9 +41,9 @@ export default function SortablePage() {
         </p>
       </header>
 
-      <section className="space-y-4">
-        <h2 className="text-xl font-semibold">Vertical list</h2>
-        <p className="text-sm text-gray-600 dark:text-gray-400">
+      <section className="docs-section">
+        <h2 className="docs-h2">Vertical list</h2>
+        <p className="docs-desc">
           Drag an item up or down to reorder. The disabled item stays put.
           Current order: <code className="font-mono">{order}</code>.
         </p>
@@ -74,9 +74,9 @@ export default function SortablePage() {
         </Demo>
       </section>
 
-      <section className="space-y-4">
-        <h2 className="text-xl font-semibold">Horizontal</h2>
-        <p className="text-sm text-gray-600 dark:text-gray-400">
+      <section className="docs-section">
+        <h2 className="docs-h2">Horizontal</h2>
+        <p className="docs-desc">
           <code>direction="horizontal"</code> lays items out in a row and drops
           a vertical separator between targets.
         </p>
@@ -97,9 +97,9 @@ export default function SortablePage() {
         </Demo>
       </section>
 
-      <section className="space-y-4">
-        <h2 className="text-xl font-semibold">Custom item renderer</h2>
-        <p className="text-sm text-gray-600 dark:text-gray-400">
+      <section className="docs-section">
+        <h2 className="docs-h2">Custom item renderer</h2>
+        <p className="docs-desc">
           <code>renderItem</code> receives the item, its index, and ready-made{' '}
           <code>dragProps</code> — spread them onto any element to make it
           draggable without touching the hook yourself.
@@ -115,7 +115,7 @@ export default function SortablePage() {
       className={
         'flex items-center gap-2 rounded-md border px-3 py-2 text-sm ' +
         (isDragging
-          ? 'border-blue-400 bg-blue-50 dark:bg-blue-950'
+          ? 'border-indigo-400 bg-indigo-50 dark:bg-indigo-950'
           : 'border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900')
       }
     >
@@ -137,7 +137,7 @@ export default function SortablePage() {
                   className={
                     'flex items-center gap-2 rounded-md border px-3 py-2 text-sm ' +
                     (isDragging
-                      ? 'border-blue-400 bg-blue-50 dark:bg-blue-950'
+                      ? 'border-indigo-400 bg-indigo-50 dark:bg-indigo-950'
                       : 'border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900')
                   }
                 >
@@ -153,8 +153,8 @@ export default function SortablePage() {
         </Demo>
       </section>
 
-      <section className="space-y-4">
-        <h2 className="text-xl font-semibold">Props</h2>
+      <section className="docs-section">
+        <h2 className="docs-h2">Props</h2>
         <PropsTable
           props={[
             { name: 'defaultItems', type: 'SortableItem[]', default: '[]', description: 'Uncontrolled initial items (id, value, label, index).' },

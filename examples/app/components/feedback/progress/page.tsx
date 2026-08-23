@@ -17,26 +17,26 @@ const trackSize: Record<string, string> = {
 };
 export default function ProgressPage() {
   return (
-    <div className="mx-auto max-w-3xl px-6 py-12 space-y-8">
-      <header className="space-y-3">
-        <h1 className="text-3xl font-bold">Progress</h1>
-        <p className="text-gray-600 dark:text-gray-400">
+    <div className="docs-page">
+      <header className="docs-header">
+        <h1 className="docs-h1">Progress</h1>
+        <p className="docs-lead">
           Determinate and indeterminate progress indicators backed by the
-          headless <code className="font-mono text-sm">useProgress</code> hook.
+          headless <code className="docs-code">useProgress</code> hook.
           It computes percentage, emits the{' '}
-          <code className="font-mono text-sm">progressbar</code> role with{' '}
-          <code className="font-mono text-sm">aria-valuenow/min/max</code>, and
+          <code className="docs-code">progressbar</code> role with{' '}
+          <code className="docs-code">aria-valuenow/min/max</code>, and
           drives an inline-width fill. Companions{' '}
-          <code className="font-mono text-sm">SimpleProgress</code>,{' '}
-          <code className="font-mono text-sm">CircularProgress</code>, and{' '}
-          <code className="font-mono text-sm">LoadingProgress</code> cover
+          <code className="docs-code">SimpleProgress</code>,{' '}
+          <code className="docs-code">CircularProgress</code>, and{' '}
+          <code className="docs-code">LoadingProgress</code> cover
           minimal, radial, and top-of-page variants.
         </p>
       </header>
 
-      <section className="space-y-4">
-        <h2 className="text-xl font-semibold">Determinate bar</h2>
-        <p className="text-sm text-gray-600 dark:text-gray-400">
+      <section className="docs-section">
+        <h2 className="docs-h2">Determinate bar</h2>
+        <p className="docs-desc">
           Pass <code>value</code> (0–100). With{' '}
           <code>showPercentage</code> the bar surfaces a numeric label.
         </p>
@@ -64,9 +64,9 @@ export default function ProgressPage() {
         </Demo>
       </section>
 
-      <section className="space-y-4">
-        <h2 className="text-xl font-semibold">Indeterminate &amp; reversed</h2>
-        <p className="text-sm text-gray-600 dark:text-gray-400">
+      <section className="docs-section">
+        <h2 className="docs-h2">Indeterminate &amp; reversed</h2>
+        <p className="docs-desc">
           <code>mode="indeterminate"</code> (or <code>value</code> omitted)
           renders an unknown-duration bar; <code>reversed</code> fills from the
           opposite end. Animate with <code>animated</code>.
@@ -90,8 +90,8 @@ export default function ProgressPage() {
         </Demo>
       </section>
 
-      <section className="space-y-4">
-        <h2 className="text-xl font-semibold">Props</h2>
+      <section className="docs-section">
+        <h2 className="docs-h2">Props</h2>
         <PropsTable
           props={[
             {

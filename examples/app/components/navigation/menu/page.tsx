@@ -23,23 +23,23 @@ export default function MenuPage() {
   const [open, setOpen] = useState(false);
 
   return (
-    <div className="mx-auto max-w-3xl px-6 py-12 space-y-8">
-      <header className="space-y-3">
-        <h1 className="text-3xl font-bold">Menu</h1>
-        <p className="text-gray-600 dark:text-gray-400">
+    <div className="docs-page">
+      <header className="docs-header">
+        <h1 className="docs-h1">Menu</h1>
+        <p className="docs-lead">
           A vertical menu backed by the headless{' '}
-          <code className="font-mono text-sm">useMenu</code> hook. It opens on
+          <code className="docs-code">useMenu</code> hook. It opens on
           click / hover / right-click, roves focus with arrow keys, supports
           single/multi selection, submenus, separators, and closes on
           outside-click / Escape / selection. The floating list renders through
-          a portal to <code className="font-mono text-sm">document.body</code> —
+          a portal to <code className="docs-code">document.body</code> —
           theme the <code>menu</code> / <code>menuitem</code> roles.
         </p>
       </header>
 
-      <section className="space-y-4">
-        <h2 className="text-xl font-semibold">Click-trigger menu</h2>
-        <p className="text-sm text-gray-600 dark:text-gray-400">
+      <section className="docs-section">
+        <h2 className="docs-h2">Click-trigger menu</h2>
+        <p className="docs-desc">
           Pass a trigger element as <code>children</code> and an{' '}
           <code>items</code> array. Default <code>trigger="click"</code> toggles
           the menu; <code>closeOnSelection</code> dismisses after a click.
@@ -86,9 +86,9 @@ export default function MenuPage() {
         </Demo>
       </section>
 
-      <section className="space-y-4">
-        <h2 className="text-xl font-semibold">Selection &amp; submenus</h2>
-        <p className="text-sm text-gray-600 dark:text-gray-400">
+      <section className="docs-section">
+        <h2 className="docs-h2">Selection &amp; submenus</h2>
+        <p className="docs-desc">
           Enable <code>multiSelect</code> to render check marks for more than
           one item; nest items under <code>submenu</code> for cascading menus.
           Hover-triggered menus open with <code>trigger="hover"</code>.
@@ -142,8 +142,8 @@ export default function MenuPage() {
         </Demo>
       </section>
 
-      <section className="space-y-4">
-        <h2 className="text-xl font-semibold">Props</h2>
+      <section className="docs-section">
+        <h2 className="docs-h2">Props</h2>
         <PropsTable
           props={[
             {

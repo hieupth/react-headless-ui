@@ -32,12 +32,12 @@ const accountItems = [
 
 export default function TabsPage() {
   return (
-    <div className="mx-auto max-w-3xl px-6 py-12 space-y-8">
-      <header className="space-y-3">
-        <h1 className="text-3xl font-bold">Tabs</h1>
-        <p className="text-gray-600 dark:text-gray-400">
+    <div className="docs-page">
+      <header className="docs-header">
+        <h1 className="docs-h1">Tabs</h1>
+        <p className="docs-lead">
           A tabbed panel switcher backed by the headless{' '}
-          <code className="font-mono text-sm">useTabs</code> hook. It handles
+          <code className="docs-code">useTabs</code> hook. It handles
           arrow-key navigation, roving tab focus, automatic/manual activation,
           and full ARIA wiring (<code>role="tablist"</code> /{' '}
           <code>tab</code> / <code>tabpanel</code> with{' '}
@@ -49,9 +49,9 @@ export default function TabsPage() {
         </p>
       </header>
 
-      <section className="space-y-4">
-        <h2 className="text-xl font-semibold">Items API</h2>
-        <p className="text-sm text-gray-600 dark:text-gray-400">
+      <section className="docs-section">
+        <h2 className="docs-h2">Items API</h2>
+        <p className="docs-desc">
           Pass an <code>items</code> array (each with <code>key</code>,{' '}
           <code>label</code>, <code>content</code>). Control selection with{' '}
           <code>value</code> / <code>defaultValue</code> +{' '}
@@ -84,9 +84,9 @@ export default function TabsPage() {
         </Demo>
       </section>
 
-      <section className="space-y-4">
-        <h2 className="text-xl font-semibold">Compound API &amp; variants</h2>
-        <p className="text-sm text-gray-600 dark:text-gray-400">
+      <section className="docs-section">
+        <h2 className="docs-h2">Compound API &amp; variants</h2>
+        <p className="docs-desc">
           Compose with <code>&lt;Tabs.List&gt;</code>,{' '}
           <code>&lt;Tabs.Trigger&gt;</code>, and{' '}
           <code>&lt;Tabs.Content&gt;</code>. Set{' '}
@@ -145,8 +145,8 @@ export default function TabsPage() {
         </Demo>
       </section>
 
-      <section className="space-y-4">
-        <h2 className="text-xl font-semibold">Props</h2>
+      <section className="docs-section">
+        <h2 className="docs-h2">Props</h2>
         <PropsTable
           props={[
             {

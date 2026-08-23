@@ -12,23 +12,23 @@ export default function OffcanvasPage() {
   const [open, setOpen] = useState(false);
 
   return (
-    <div className="mx-auto max-w-3xl px-6 py-12 space-y-8">
-      <header className="space-y-3">
-        <h1 className="text-3xl font-bold">Offcanvas</h1>
-        <p className="text-gray-600 dark:text-gray-400">
+    <div className="docs-page">
+      <header className="docs-header">
+        <h1 className="docs-h1">Offcanvas</h1>
+        <p className="docs-lead">
           A full-viewport slide-over panel backed by the headless{' '}
-          <code className="font-mono text-sm">useOffcanvas</code> hook — the
+          <code className="docs-code">useOffcanvas</code> hook — the
           mobile-first sibling of Drawer. It slides in from any edge, renders an
           optional backdrop, traps focus, prevents body scroll, and portals to{' '}
-          <code className="font-mono text-sm">document.body</code>. Pair it with{' '}
+          <code className="docs-code">document.body</code>. Pair it with{' '}
           <code>OffcanvasTrigger</code> for an uncontrolled open button, or drive{' '}
           <code>open</code> yourself.
         </p>
       </header>
 
-      <section className="space-y-4">
-        <h2 className="text-xl font-semibold">Left off-canvas menu</h2>
-        <p className="text-sm text-gray-600 dark:text-gray-400">
+      <section className="docs-section">
+        <h2 className="docs-h2">Left off-canvas menu</h2>
+        <p className="docs-desc">
           Default <code>position="left"</code> with a backdrop and body-scroll
           lock. <code>size</code> controls how far it covers the viewport.
         </p>
@@ -69,9 +69,9 @@ export default function OffcanvasPage() {
         </Demo>
       </section>
 
-      <section className="space-y-4">
-        <h2 className="text-xl font-semibold">Persistent &amp; positions</h2>
-        <p className="text-sm text-gray-600 dark:text-gray-400">
+      <section className="docs-section">
+        <h2 className="docs-h2">Persistent &amp; positions</h2>
+        <p className="docs-desc">
           <code>persistent</code> keeps the panel mounted without a backdrop;
           <code>position</code> picks the edge (<code>left</code> /{' '}
           <code>right</code> / <code>top</code> / <code>bottom</code>).
@@ -87,8 +87,8 @@ export default function OffcanvasPage() {
         </Demo>
       </section>
 
-      <section className="space-y-4">
-        <h2 className="text-xl font-semibold">Props</h2>
+      <section className="docs-section">
+        <h2 className="docs-h2">Props</h2>
         <PropsTable
           props={[
             {

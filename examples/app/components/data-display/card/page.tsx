@@ -9,12 +9,12 @@ import { PropsTable } from '@/components/props-table';
 // role="button" + keyboard activation via the underlying useCard hook.
 export default function CardPage() {
   return (
-    <div className="mx-auto max-w-3xl px-6 py-12 space-y-8">
-      <header className="space-y-3">
-        <h1 className="text-3xl font-bold">Card</h1>
-        <p className="text-gray-600 dark:text-gray-400">
+    <div className="docs-page">
+      <header className="docs-header">
+        <h1 className="docs-h1">Card</h1>
+        <p className="docs-lead">
           A surface container backed by the headless{' '}
-          <code className="font-mono text-sm">useCard</code> hook. It composes a
+          <code className="docs-code">useCard</code> hook. It composes a
           header (title + subtitle + actions), a body (description + children),
           and a footer, with four variants and interactive/hoverable/selected
           states. Pass <code>interactive</code> to make the whole card clickable
@@ -23,9 +23,9 @@ export default function CardPage() {
         </p>
       </header>
 
-      <section className="space-y-4">
-        <h2 className="text-xl font-semibold">Basic card</h2>
-        <p className="text-sm text-gray-600 dark:text-gray-400">
+      <section className="docs-section">
+        <h2 className="docs-h2">Basic card</h2>
+        <p className="docs-desc">
           <code>title</code>, <code>subtitle</code>, <code>description</code>,
           and <code>footer</code> populate the default sections.
         </p>
@@ -48,9 +48,9 @@ export default function CardPage() {
         </Demo>
       </section>
 
-      <section className="space-y-4">
-        <h2 className="text-xl font-semibold">Variants</h2>
-        <p className="text-sm text-gray-600 dark:text-gray-400">
+      <section className="docs-section">
+        <h2 className="docs-h2">Variants</h2>
+        <p className="docs-desc">
           <code>variant</code> selects <code>default</code>,{' '}
           <code>outlined</code>, <code>elevated</code>, or{' '}
           <code>filled</code>. Here the styling is supplied by Tailwind since
@@ -67,9 +67,9 @@ export default function CardPage() {
         </Demo>
       </section>
 
-      <section className="space-y-4">
-        <h2 className="text-xl font-semibold">Interactive card</h2>
-        <p className="text-sm text-gray-600 dark:text-gray-400">
+      <section className="docs-section">
+        <h2 className="docs-h2">Interactive card</h2>
+        <p className="docs-desc">
           Set <code>interactive</code> to make the card focusable and
           Enter/Space activatable. <code>actions</code> renders in the header.
         </p>
@@ -94,8 +94,8 @@ export default function CardPage() {
         </Demo>
       </section>
 
-      <section className="space-y-4">
-        <h2 className="text-xl font-semibold">Props</h2>
+      <section className="docs-section">
+        <h2 className="docs-h2">Props</h2>
         <PropsTable
           props={[
             { name: 'title', type: 'string', default: '—', description: 'Card heading.' },

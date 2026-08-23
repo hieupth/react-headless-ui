@@ -13,29 +13,29 @@ const panelClasses =
 
 export default function ParallaxScrollPage() {
   return (
-    <div className="mx-auto max-w-3xl px-6 py-12 space-y-8">
-      <header className="space-y-3">
-        <h1 className="text-3xl font-bold">ParallaxScroll</h1>
-        <p className="text-gray-600 dark:text-gray-400">
+    <div className="docs-page">
+      <header className="docs-header">
+        <h1 className="docs-h1">ParallaxScroll</h1>
+        <p className="docs-lead">
           A scroll-driven parallax effect backed by the headless{' '}
-          <code className="font-mono text-sm">useParallaxScroll</code> hook. As
+          <code className="docs-code">useParallaxScroll</code> hook. As
           the element scrolls through the viewport, it translates by up to{' '}
-          <code className="font-mono text-sm">speed</code> × its own height along a{' '}
-          <code className="font-mono text-sm">direction</code> (up / down / left /
+          <code className="docs-code">speed</code> × its own height along a{' '}
+          <code className="docs-code">direction</code> (up / down / left /
           right). The hook tracks scroll and intersection via{' '}
-          <code className="font-mono text-sm">IntersectionObserver</code> +{' '}
-          <code className="font-mono text-sm">requestAnimationFrame</code>,
+          <code className="docs-code">IntersectionObserver</code> +{' '}
+          <code className="docs-code">requestAnimationFrame</code>,
           optionally reacts to device orientation, and respects{' '}
-          <code className="font-mono text-sm">prefers-reduced-motion</code>.{' '}
+          <code className="docs-code">prefers-reduced-motion</code>.{' '}
           <strong>Scroll this page</strong> to see the demo below drift relative to
           its neighbors. Note: framer-motion is a peer dependency for the Motion
           category.
         </p>
       </header>
 
-      <section className="space-y-4">
-        <h2 className="text-xl font-semibold">Upward drift</h2>
-        <p className="text-sm text-gray-600 dark:text-gray-400">
+      <section className="docs-section">
+        <h2 className="docs-h2">Upward drift</h2>
+        <p className="docs-desc">
           <code>direction="up"</code> with <code>speed={0.4}</code> moves the
           element up as it scrolls into view. Scroll up and down to compare it
           against a static reference panel.
@@ -57,9 +57,9 @@ export default function ParallaxScrollPage() {
         </Demo>
       </section>
 
-      <section className="space-y-4">
-        <h2 className="text-xl font-semibold">Faster speed</h2>
-        <p className="text-sm text-gray-600 dark:text-gray-400">
+      <section className="docs-section">
+        <h2 className="docs-h2">Faster speed</h2>
+        <p className="docs-desc">
           A higher <code>speed</code> exaggerates the offset. Combine with{' '}
           <code>startOffset</code> / <code>endOffset</code> to gate the effect to
           a viewport band.
@@ -81,8 +81,8 @@ export default function ParallaxScrollPage() {
         </Demo>
       </section>
 
-      <section className="space-y-4">
-        <h2 className="text-xl font-semibold">Props</h2>
+      <section className="docs-section">
+        <h2 className="docs-h2">Props</h2>
         <PropsTable
           props={[
             {

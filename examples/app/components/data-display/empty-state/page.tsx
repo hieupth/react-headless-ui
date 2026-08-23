@@ -9,12 +9,12 @@ import { PropsTable } from '@/components/props-table';
 // (no-data, no-results, error…). Headless on CSS — theme through className.
 export default function EmptyStatePage() {
   return (
-    <div className="mx-auto max-w-3xl px-6 py-12 space-y-8">
-      <header className="space-y-3">
-        <h1 className="text-3xl font-bold">EmptyState</h1>
-        <p className="text-gray-600 dark:text-gray-400">
+    <div className="docs-page">
+      <header className="docs-header">
+        <h1 className="docs-h1">EmptyState</h1>
+        <p className="docs-lead">
           A placeholder for empty data, backed by the headless{' '}
-          <code className="font-mono text-sm">useEmptyState</code> hook. It
+          <code className="docs-code">useEmptyState</code> hook. It
           composes an <code>icon</code>, <code>title</code>,{' '}
           <code>description</code>, and optional primary/secondary actions, and
           carries a <code>variant</code> (<code>no-data</code>,{' '}
@@ -24,9 +24,9 @@ export default function EmptyStatePage() {
         </p>
       </header>
 
-      <section className="space-y-4">
-        <h2 className="text-xl font-semibold">Basic empty state</h2>
-        <p className="text-sm text-gray-600 dark:text-gray-400">
+      <section className="docs-section">
+        <h2 className="docs-h2">Basic empty state</h2>
+        <p className="docs-desc">
           <code>title</code>, <code>description</code>, and an{' '}
           <code>icon</code> convey the situation.
         </p>
@@ -49,9 +49,9 @@ export default function EmptyStatePage() {
         </Demo>
       </section>
 
-      <section className="space-y-4">
-        <h2 className="text-xl font-semibold">With actions</h2>
-        <p className="text-sm text-gray-600 dark:text-gray-400">
+      <section className="docs-section">
+        <h2 className="docs-h2">With actions</h2>
+        <p className="docs-desc">
           <code>primaryActionText</code> / <code>secondaryActionText</code>{' '}
           render action buttons wired to the hook's action callbacks.
         </p>
@@ -78,9 +78,9 @@ export default function EmptyStatePage() {
         </Demo>
       </section>
 
-      <section className="space-y-4">
-        <h2 className="text-xl font-semibold">Dismissible error</h2>
-        <p className="text-sm text-gray-600 dark:text-gray-400">
+      <section className="docs-section">
+        <h2 className="docs-h2">Dismissible error</h2>
+        <p className="docs-desc">
           <code>variant="error"</code> plus <code>dismissible</code> renders a
           close control; <code>onDismiss</code> fires on dismiss.
         </p>
@@ -105,8 +105,8 @@ export default function EmptyStatePage() {
         </Demo>
       </section>
 
-      <section className="space-y-4">
-        <h2 className="text-xl font-semibold">Props</h2>
+      <section className="docs-section">
+        <h2 className="docs-h2">Props</h2>
         <PropsTable
           props={[
             { name: 'title', type: 'string', default: '—', description: 'Heading text.' },

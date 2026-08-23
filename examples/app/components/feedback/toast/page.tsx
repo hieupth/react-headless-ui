@@ -15,7 +15,7 @@ const variantChip: Record<string, string> = {
   success: 'bg-emerald-50 text-emerald-800 border-emerald-200 dark:bg-emerald-950 dark:text-emerald-200 dark:border-emerald-900',
   error: 'bg-red-50 text-red-800 border-red-200 dark:bg-red-950 dark:text-red-200 dark:border-red-900',
   warning: 'bg-amber-50 text-amber-800 border-amber-200 dark:bg-amber-950 dark:text-amber-200 dark:border-amber-900',
-  info: 'bg-blue-50 text-blue-800 border-blue-200 dark:bg-blue-950 dark:text-blue-200 dark:border-blue-900',
+  info: 'bg-indigo-50 text-indigo-800 border-indigo-200 dark:bg-indigo-950 dark:text-indigo-200 dark:border-indigo-900',
 };
 
 function ToastPlayground() {
@@ -60,7 +60,7 @@ function ToastPlayground() {
               action: { label: 'View', onClick: () => {} },
             })
           }
-          className="rounded-md bg-blue-600 px-3 py-1.5 text-xs font-medium text-white hover:bg-blue-700"
+          className="rounded-md bg-indigo-600 px-3 py-1.5 text-xs font-medium text-white hover:bg-indigo-700"
         >
           With action
         </button>
@@ -113,26 +113,26 @@ function ToastPlayground() {
 
 export default function ToastPage() {
   return (
-    <div className="mx-auto max-w-3xl px-6 py-12 space-y-8">
-      <header className="space-y-3">
-        <h1 className="text-3xl font-bold">Toast</h1>
-        <p className="text-gray-600 dark:text-gray-400">
+    <div className="docs-page">
+      <header className="docs-header">
+        <h1 className="docs-h1">Toast</h1>
+        <p className="docs-lead">
           A queue-based notification system backed by the headless{' '}
-          <code className="font-mono text-sm">useToast</code> hook. It manages a
+          <code className="docs-code">useToast</code> hook. It manages a
           stack of messages with variants (<code>success</code> /{' '}
           <code>error</code> / <code>warning</code> / <code>info</code>),
           auto-dismiss timers, hover-to-pause, optional action buttons, six
           screen positions, and a max-stack cap. The{' '}
-          <code className="font-mono text-sm">Toast</code> component renders the
+          <code className="docs-code">Toast</code> component renders the
           same queue with positioning and{' '}
-          <code className="font-mono text-sm">aria-live</code>; drive it with the
+          <code className="docs-code">aria-live</code>; drive it with the
           hook's <code>actions</code> and variant helpers for an ergonomic API.
         </p>
       </header>
 
-      <section className="space-y-4">
-        <h2 className="text-xl font-semibold">Fire toasts</h2>
-        <p className="text-sm text-gray-600 dark:text-gray-400">
+      <section className="docs-section">
+        <h2 className="docs-h2">Fire toasts</h2>
+        <p className="docs-desc">
           The hook exposes <code>success</code> / <code>error</code> /{' '}
           <code>warning</code> / <code>info</code> helpers plus raw{' '}
           <code>addToast</code> for actions and custom durations. Hover a toast
@@ -160,15 +160,15 @@ actions.addToast({
   success → bg-emerald-50 border-emerald-200 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-200
   error   → bg-red-50 border-red-200 text-red-800 dark:bg-red-950 dark:text-red-200
   warning → bg-amber-50 border-amber-200 text-amber-800 dark:bg-amber-950 dark:text-amber-200
-  info    → bg-blue-50 border-blue-200 text-blue-800 dark:bg-blue-950 dark:text-blue-200 */}`}
+  info    → bg-indigo-50 border-indigo-200 text-indigo-800 dark:bg-indigo-950 dark:text-indigo-200 */}`}
         >
           <ToastPlayground />
         </Demo>
       </section>
 
-      <section className="space-y-4">
-        <h2 className="text-xl font-semibold">Container &amp; ARIA</h2>
-        <p className="text-sm text-gray-600 dark:text-gray-400">
+      <section className="docs-section">
+        <h2 className="docs-h2">Container &amp; ARIA</h2>
+        <p className="docs-desc">
           <code>&lt;Toast&gt;</code> / <code>&lt;ToastProvider&gt;</code> render
           the positioned queue with <code>role="status"</code> and{' '}
           <code>aria-live="polite"</code>. <code>showProgress</code> renders a
@@ -205,8 +205,8 @@ actions.addToast({
         </Demo>
       </section>
 
-      <section className="space-y-4">
-        <h2 className="text-xl font-semibold">Props</h2>
+      <section className="docs-section">
+        <h2 className="docs-h2">Props</h2>
         <PropsTable
           props={[
             {

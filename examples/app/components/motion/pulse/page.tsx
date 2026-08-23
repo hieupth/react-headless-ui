@@ -13,12 +13,12 @@ const boxClasses =
 
 export default function PulsePage() {
   return (
-    <div className="mx-auto max-w-3xl px-6 py-12 space-y-8">
-      <header className="space-y-3">
-        <h1 className="text-3xl font-bold">Pulse</h1>
-        <p className="text-gray-600 dark:text-gray-400">
+    <div className="docs-page">
+      <header className="docs-header">
+        <h1 className="docs-h1">Pulse</h1>
+        <p className="docs-lead">
           A continuous pulse animation backed by the headless{' '}
-          <code className="font-mono text-sm">usePulse</code> hook and rendered
+          <code className="docs-code">usePulse</code> hook and rendered
           with framer-motion. It oscillates scale and opacity by{' '}
           <code>intensity</code>, repeating <code>repeat</code> times (0 = loop
           forever). The hook exposes <code>start</code> / <code>stop</code> /{' '}
@@ -29,9 +29,9 @@ export default function PulsePage() {
         </p>
       </header>
 
-      <section className="space-y-4">
-        <h2 className="text-xl font-semibold">Continuous pulse</h2>
-        <p className="text-sm text-gray-600 dark:text-gray-400">
+      <section className="docs-section">
+        <h2 className="docs-h2">Continuous pulse</h2>
+        <p className="docs-desc">
           <code>initialActive</code> starts it on mount;{' '}
           <code>repeat={0}</code> (default) loops indefinitely.
         </p>
@@ -56,9 +56,9 @@ export default function PulsePage() {
         </Demo>
       </section>
 
-      <section className="space-y-4">
-        <h2 className="text-xl font-semibold">Stronger intensity</h2>
-        <p className="text-sm text-gray-600 dark:text-gray-400">
+      <section className="docs-section">
+        <h2 className="docs-h2">Stronger intensity</h2>
+        <p className="docs-desc">
           A higher <code>intensity</code> deepens the scale/opacity swing; a
           shorter <code>duration</code> speeds it up.
         </p>
@@ -83,8 +83,8 @@ export default function PulsePage() {
         </Demo>
       </section>
 
-      <section className="space-y-4">
-        <h2 className="text-xl font-semibold">Props</h2>
+      <section className="docs-section">
+        <h2 className="docs-h2">Props</h2>
         <PropsTable
           props={[
             {

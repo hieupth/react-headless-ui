@@ -28,12 +28,12 @@ export default function CalendarPage() {
   }, []);
 
   return (
-    <div className="mx-auto max-w-3xl px-6 py-12 space-y-8">
-      <header className="space-y-3">
-        <h1 className="text-3xl font-bold">Calendar</h1>
-        <p className="text-gray-600 dark:text-gray-400">
+    <div className="docs-page">
+      <header className="docs-header">
+        <h1 className="docs-h1">Calendar</h1>
+        <p className="docs-lead">
           A date picker backed by the headless{' '}
-          <code className="font-mono text-sm">useCalendar</code> hook. It
+          <code className="docs-code">useCalendar</code> hook. It
           supports <code>single</code>, <code>multiple</code>, and{' '}
           <code>range</code> selection modes, controlled month navigation,{' '}
           <code>fromDate</code>/<code>toDate</code> bounds, and arbitrary{' '}
@@ -42,9 +42,9 @@ export default function CalendarPage() {
         </p>
       </header>
 
-      <section className="space-y-4">
-        <h2 className="text-xl font-semibold">Single selection</h2>
-        <p className="text-sm text-gray-600 dark:text-gray-400">
+      <section className="docs-section">
+        <h2 className="docs-h2">Single selection</h2>
+        <p className="docs-desc">
           Drive <code>value</code> with state and listen to{' '}
           <code>onSelect</code>.
         </p>
@@ -84,9 +84,9 @@ useEffect(() => {
         </Demo>
       </section>
 
-      <section className="space-y-4">
-        <h2 className="text-xl font-semibold">Range selection</h2>
-        <p className="text-sm text-gray-600 dark:text-gray-400">
+      <section className="docs-section">
+        <h2 className="docs-h2">Range selection</h2>
+        <p className="docs-desc">
           <code>mode="range"</code> selects a start and end date; in-between
           days render as in-range.
         </p>
@@ -107,9 +107,9 @@ useEffect(() => {
         </Demo>
       </section>
 
-      <section className="space-y-4">
-        <h2 className="text-xl font-semibold">Bounded &amp; week start</h2>
-        <p className="text-sm text-gray-600 dark:text-gray-400">
+      <section className="docs-section">
+        <h2 className="docs-h2">Bounded &amp; week start</h2>
+        <p className="docs-desc">
           <code>fromDate</code>/<code>toDate</code> disable out-of-range days;
           <code>weekStartsOn</code> (0 = Sunday) shifts the first column.
         </p>
@@ -134,8 +134,8 @@ useEffect(() => {
         </Demo>
       </section>
 
-      <section className="space-y-4">
-        <h2 className="text-xl font-semibold">Props</h2>
+      <section className="docs-section">
+        <h2 className="docs-h2">Props</h2>
         <PropsTable
           props={[
             { name: 'mode', type: "'single' | 'multiple' | 'range'", default: "'single'", description: 'Selection semantics.' },

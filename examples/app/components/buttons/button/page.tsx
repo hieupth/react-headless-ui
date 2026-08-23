@@ -10,7 +10,7 @@ import { PropsTable } from '@/components/props-table';
 const variantClasses =
   'inline-flex items-center justify-center gap-2 rounded-md px-4 py-2 text-sm font-medium ' +
   'transition-colors disabled:opacity-50 disabled:pointer-events-none ' +
-  'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500';
+  'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500';
 
 const variantStyles: Record<string, string> = {
   default:
@@ -22,7 +22,7 @@ const variantStyles: Record<string, string> = {
   ghost:
     'text-gray-700 hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-800',
   destructive: 'bg-red-600 text-white hover:bg-red-700',
-  link: 'text-blue-600 underline-offset-4 hover:underline dark:text-blue-400',
+  link: 'text-indigo-600 underline-offset-4 hover:underline dark:text-indigo-400',
 };
 
 const sizeStyles: Record<string, string> = {
@@ -34,37 +34,37 @@ const sizeStyles: Record<string, string> = {
 
 export default function ButtonPage() {
   return (
-    <div className="mx-auto max-w-3xl px-6 py-12 space-y-8">
-      <header className="space-y-3">
-        <h1 className="text-3xl font-bold">Button</h1>
-        <p className="text-gray-600 dark:text-gray-400">
+    <div className="docs-page">
+      <header className="docs-header">
+        <h1 className="docs-h1">Button</h1>
+        <p className="docs-lead">
           A versatile trigger button backed by the headless{' '}
-          <code className="font-mono text-sm">useButton</code> hook. It composes
+          <code className="docs-code">useButton</code> hook. It composes
           focus, press, and semantic mixins to deliver complete keyboard, ARIA,
           loading, and icon behavior — with no styles baked in. Apply your own
-          classes (or target the emitted <code className="font-mono text-sm">data-variant</code>{' '}
-          / <code className="font-mono text-sm">data-size</code> attributes) to theme it.
+          classes (or target the emitted <code className="docs-code">data-variant</code>{' '}
+          / <code className="docs-code">data-size</code> attributes) to theme it.
         </p>
       </header>
 
-      <section className="space-y-4">
-        <h2 className="text-xl font-semibold">Variants</h2>
-        <p className="text-sm text-gray-600 dark:text-gray-400">
+      <section className="docs-section">
+        <h2 className="docs-h2">Variants</h2>
+        <p className="docs-desc">
           Six semantic variants: <code>default</code>, <code>secondary</code>,{' '}
           <code>outline</code>, <code>ghost</code>, <code>destructive</code>, and{' '}
           <code>link</code>.
         </p>
         <Demo
-          code={`<Button variant="default" className="inline-flex items-center justify-center gap-2 rounded-md px-4 py-2 text-sm font-medium transition-colors disabled:opacity-50 disabled:pointer-events-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 bg-gray-900 text-white hover:bg-gray-700 dark:bg-white dark:text-gray-900 dark:hover:bg-gray-200">
+          code={`<Button variant="default" className="inline-flex items-center justify-center gap-2 rounded-md px-4 py-2 text-sm font-medium transition-colors disabled:opacity-50 disabled:pointer-events-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 bg-gray-900 text-white hover:bg-gray-700 dark:bg-white dark:text-gray-900 dark:hover:bg-gray-200">
   Default
 </Button>
-<Button variant="secondary" className="inline-flex items-center justify-center gap-2 rounded-md px-4 py-2 text-sm font-medium transition-colors disabled:opacity-50 disabled:pointer-events-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 bg-gray-100 text-gray-900 hover:bg-gray-200 dark:bg-gray-800 dark:text-gray-100 dark:hover:bg-gray-700">
+<Button variant="secondary" className="inline-flex items-center justify-center gap-2 rounded-md px-4 py-2 text-sm font-medium transition-colors disabled:opacity-50 disabled:pointer-events-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 bg-gray-100 text-gray-900 hover:bg-gray-200 dark:bg-gray-800 dark:text-gray-100 dark:hover:bg-gray-700">
   Secondary
 </Button>
-<Button variant="outline" className="inline-flex items-center justify-center gap-2 rounded-md px-4 py-2 text-sm font-medium transition-colors disabled:opacity-50 disabled:pointer-events-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 border border-gray-300 text-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:text-gray-200 dark:hover:bg-gray-800">
+<Button variant="outline" className="inline-flex items-center justify-center gap-2 rounded-md px-4 py-2 text-sm font-medium transition-colors disabled:opacity-50 disabled:pointer-events-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 border border-gray-300 text-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:text-gray-200 dark:hover:bg-gray-800">
   Outline
 </Button>
-<Button variant="destructive" className="inline-flex items-center justify-center gap-2 rounded-md px-4 py-2 text-sm font-medium transition-colors disabled:opacity-50 disabled:pointer-events-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 bg-red-600 text-white hover:bg-red-700">
+<Button variant="destructive" className="inline-flex items-center justify-center gap-2 rounded-md px-4 py-2 text-sm font-medium transition-colors disabled:opacity-50 disabled:pointer-events-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 bg-red-600 text-white hover:bg-red-700">
   Delete
 </Button>`}
         >
@@ -85,25 +85,25 @@ export default function ButtonPage() {
         </Demo>
       </section>
 
-      <section className="space-y-4">
-        <h2 className="text-xl font-semibold">Sizes &amp; states</h2>
-        <p className="text-sm text-gray-600 dark:text-gray-400">
+      <section className="docs-section">
+        <h2 className="docs-h2">Sizes &amp; states</h2>
+        <p className="docs-desc">
           Sizes <code>sm</code> / <code>md</code> / <code>lg</code> /{' '}
           <code>icon</code>, plus <code>disabled</code> and{' '}
           <code>loading</code> states (the loader is swappable via{' '}
           <code>loadingIndicator</code>).
         </p>
         <Demo
-          code={`<Button size="sm" className="inline-flex items-center justify-center gap-2 rounded-md text-xs px-3 py-1.5 font-medium transition-colors disabled:opacity-50 disabled:pointer-events-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 bg-gray-900 text-white hover:bg-gray-700 dark:bg-white dark:text-gray-900 dark:hover:bg-gray-200">
+          code={`<Button size="sm" className="inline-flex items-center justify-center gap-2 rounded-md text-xs px-3 py-1.5 font-medium transition-colors disabled:opacity-50 disabled:pointer-events-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 bg-gray-900 text-white hover:bg-gray-700 dark:bg-white dark:text-gray-900 dark:hover:bg-gray-200">
   Small
 </Button>
-<Button size="lg" className="inline-flex items-center justify-center gap-2 rounded-md text-base px-5 py-2.5 font-medium transition-colors disabled:opacity-50 disabled:pointer-events-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 bg-gray-900 text-white hover:bg-gray-700 dark:bg-white dark:text-gray-900 dark:hover:bg-gray-200">
+<Button size="lg" className="inline-flex items-center justify-center gap-2 rounded-md text-base px-5 py-2.5 font-medium transition-colors disabled:opacity-50 disabled:pointer-events-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 bg-gray-900 text-white hover:bg-gray-700 dark:bg-white dark:text-gray-900 dark:hover:bg-gray-200">
   Large
 </Button>
-<Button disabled className="inline-flex items-center justify-center gap-2 rounded-md px-4 py-2 text-sm font-medium transition-colors disabled:opacity-50 disabled:pointer-events-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 bg-gray-900 text-white hover:bg-gray-700 dark:bg-white dark:text-gray-900 dark:hover:bg-gray-200">
+<Button disabled className="inline-flex items-center justify-center gap-2 rounded-md px-4 py-2 text-sm font-medium transition-colors disabled:opacity-50 disabled:pointer-events-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 bg-gray-900 text-white hover:bg-gray-700 dark:bg-white dark:text-gray-900 dark:hover:bg-gray-200">
   Disabled
 </Button>
-<Button loading className="inline-flex items-center justify-center gap-2 rounded-md px-4 py-2 text-sm font-medium transition-colors disabled:opacity-50 disabled:pointer-events-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 bg-gray-900 text-white hover:bg-gray-700 dark:bg-white dark:text-gray-900 dark:hover:bg-gray-200">
+<Button loading className="inline-flex items-center justify-center gap-2 rounded-md px-4 py-2 text-sm font-medium transition-colors disabled:opacity-50 disabled:pointer-events-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 bg-gray-900 text-white hover:bg-gray-700 dark:bg-white dark:text-gray-900 dark:hover:bg-gray-200">
   Saving…
 </Button>`}
         >
@@ -124,17 +124,17 @@ export default function ButtonPage() {
         </Demo>
       </section>
 
-      <section className="space-y-4">
-        <h2 className="text-xl font-semibold">With icons</h2>
-        <p className="text-sm text-gray-600 dark:text-gray-400">
+      <section className="docs-section">
+        <h2 className="docs-h2">With icons</h2>
+        <p className="docs-desc">
           Leading and trailing icon slots via <code>leadingIcon</code> and{' '}
           <code>trailingIcon</code>.
         </p>
         <Demo
-          code={`<Button leadingIcon={<PlusIcon />} className="inline-flex items-center justify-center gap-2 rounded-md px-4 py-2 text-sm font-medium transition-colors disabled:opacity-50 disabled:pointer-events-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 bg-gray-900 text-white hover:bg-gray-700 dark:bg-white dark:text-gray-900 dark:hover:bg-gray-200">
+          code={`<Button leadingIcon={<PlusIcon />} className="inline-flex items-center justify-center gap-2 rounded-md px-4 py-2 text-sm font-medium transition-colors disabled:opacity-50 disabled:pointer-events-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 bg-gray-900 text-white hover:bg-gray-700 dark:bg-white dark:text-gray-900 dark:hover:bg-gray-200">
   New item
 </Button>
-<Button variant="outline" trailingIcon={<ArrowIcon />} className="inline-flex items-center justify-center gap-2 rounded-md px-4 py-2 text-sm font-medium transition-colors disabled:opacity-50 disabled:pointer-events-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 border border-gray-300 text-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:text-gray-200 dark:hover:bg-gray-800">
+<Button variant="outline" trailingIcon={<ArrowIcon />} className="inline-flex items-center justify-center gap-2 rounded-md px-4 py-2 text-sm font-medium transition-colors disabled:opacity-50 disabled:pointer-events-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 border border-gray-300 text-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:text-gray-200 dark:hover:bg-gray-800">
   Next
 </Button>`}
         >
@@ -156,8 +156,8 @@ export default function ButtonPage() {
         </Demo>
       </section>
 
-      <section className="space-y-4">
-        <h2 className="text-xl font-semibold">Props</h2>
+      <section className="docs-section">
+        <h2 className="docs-h2">Props</h2>
         <PropsTable
           props={[
             {

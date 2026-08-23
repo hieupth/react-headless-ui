@@ -24,12 +24,12 @@ export default function DirectionProviderPage() {
   const [dir, setDir] = useState<'ltr' | 'rtl'>('ltr');
 
   return (
-    <div className="mx-auto max-w-3xl px-6 py-12 space-y-8">
-      <header className="space-y-3">
-        <h1 className="text-3xl font-bold">DirectionProvider</h1>
-        <p className="text-gray-600 dark:text-gray-400">
+    <div className="docs-page">
+      <header className="docs-header">
+        <h1 className="docs-h1">DirectionProvider</h1>
+        <p className="docs-lead">
           A direction context backed by the headless{' '}
-          <code className="font-mono text-sm">useDirectionProvider</code> hook.
+          <code className="docs-code">useDirectionProvider</code> hook.
           It manages text and layout direction —{' '}
           <code>ltr</code>, <code>rtl</code>, or <code>auto</code> — for
           internationalized UIs, publishes it via{' '}
@@ -42,9 +42,9 @@ export default function DirectionProviderPage() {
         </p>
       </header>
 
-      <section className="space-y-4">
-        <h2 className="text-xl font-semibold">Toggle LTR ↔ RTL</h2>
-        <p className="text-sm text-gray-600 dark:text-gray-400">
+      <section className="docs-section">
+        <h2 className="docs-h2">Toggle LTR ↔ RTL</h2>
+        <p className="docs-desc">
           A provider wraps a small card. The{' '}
           <code>DirectionToggle</code> flips the whole subtree;{' '}
           <code>DirectionalFlex</code> reverses its row order and{' '}
@@ -64,13 +64,13 @@ export default function DirectionProviderPage() {
   <div className="w-full space-y-4">
     <DirectionToggle className="px-3 py-1.5 rounded-md border border-gray-300 text-sm text-gray-700 dark:border-gray-600 dark:text-gray-200" />
     <DirectionalFlex gap="12px" className="rounded-md border border-gray-200 p-4 dark:border-gray-700">
-      <span className="rounded bg-blue-600 px-3 py-1 text-sm text-white">
+      <span className="rounded bg-indigo-600 px-3 py-1 text-sm text-white">
         <DirectionalText>First</DirectionalText>
       </span>
-      <span className="rounded bg-blue-500 px-3 py-1 text-sm text-white">
+      <span className="rounded bg-indigo-500 px-3 py-1 text-sm text-white">
         <DirectionalText>Second</DirectionalText>
       </span>
-      <span className="rounded bg-blue-400 px-3 py-1 text-sm text-white">
+      <span className="rounded bg-indigo-400 px-3 py-1 text-sm text-white">
         <DirectionalText>Third</DirectionalText>
       </span>
     </DirectionalFlex>
@@ -90,13 +90,13 @@ export default function DirectionProviderPage() {
                 gap="12px"
                 className="rounded-md border border-gray-200 bg-white p-4 shadow-sm dark:border-gray-700 dark:bg-gray-900"
               >
-                <span className="rounded bg-blue-600 px-3 py-1 text-sm font-medium text-white">
+                <span className="rounded bg-indigo-600 px-3 py-1 text-sm font-medium text-white">
                   <DirectionalText>First</DirectionalText>
                 </span>
-                <span className="rounded bg-blue-500 px-3 py-1 text-sm font-medium text-white">
+                <span className="rounded bg-indigo-500 px-3 py-1 text-sm font-medium text-white">
                   <DirectionalText>Second</DirectionalText>
                 </span>
-                <span className="rounded bg-blue-400 px-3 py-1 text-sm font-medium text-white">
+                <span className="rounded bg-indigo-400 px-3 py-1 text-sm font-medium text-white">
                   <DirectionalText>Third</DirectionalText>
                 </span>
               </DirectionalFlex>
@@ -121,9 +121,9 @@ export default function DirectionProviderPage() {
         </Demo>
       </section>
 
-      <section className="space-y-4">
-        <h2 className="text-xl font-semibold">Auto-detect from locale</h2>
-        <p className="text-sm text-gray-600 dark:text-gray-400">
+      <section className="docs-section">
+        <h2 className="docs-h2">Auto-detect from locale</h2>
+        <p className="docs-desc">
           With <code>textDirection="auto"</code> and{' '}
           <code>autoDetectFromLocale</code>, the provider picks the direction
           from the locale — Arabic (<code>ar</code>), Hebrew (<code>he</code>),
@@ -160,8 +160,8 @@ export default function DirectionProviderPage() {
         </Demo>
       </section>
 
-      <section className="space-y-4">
-        <h2 className="text-xl font-semibold">Props</h2>
+      <section className="docs-section">
+        <h2 className="docs-h2">Props</h2>
         <PropsTable
           props={[
             { name: 'defaultTextDirection', type: "'ltr' | 'rtl' | 'auto'", default: "'ltr'", description: 'Uncontrolled initial text direction.' },

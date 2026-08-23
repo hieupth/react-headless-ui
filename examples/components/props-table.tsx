@@ -14,43 +14,27 @@ interface PropsTableProps {
  */
 export function PropsTable({ props }: PropsTableProps) {
   if (props.length === 0) {
-    return <p className="text-sm text-gray-500 dark:text-gray-400">No props.</p>;
+    return <p className="docs-desc">No props.</p>;
   }
 
   return (
-    <div className="overflow-x-auto my-6">
-      <table className="w-full text-sm border-collapse border border-gray-200 dark:border-gray-700">
+    <div className="props-table-wrap">
+      <table className="props-table">
         <thead>
-          <tr className="bg-gray-50 dark:bg-gray-900/40 text-left">
-            <th scope="col" className="border border-gray-200 dark:border-gray-700 px-3 py-2 font-semibold">
-              Name
-            </th>
-            <th scope="col" className="border border-gray-200 dark:border-gray-700 px-3 py-2 font-semibold">
-              Type
-            </th>
-            <th scope="col" className="border border-gray-200 dark:border-gray-700 px-3 py-2 font-semibold">
-              Default
-            </th>
-            <th scope="col" className="border border-gray-200 dark:border-gray-700 px-3 py-2 font-semibold">
-              Description
-            </th>
+          <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Type</th>
+            <th scope="col">Default</th>
+            <th scope="col">Description</th>
           </tr>
         </thead>
         <tbody>
           {props.map((p) => (
-            <tr key={p.name} className="align-top">
-              <td className="border border-gray-200 dark:border-gray-700 px-3 py-2 font-mono text-purple-700 dark:text-purple-300">
-                {p.name}
-              </td>
-              <td className="border border-gray-200 dark:border-gray-700 px-3 py-2 font-mono text-blue-700 dark:text-blue-300">
-                {p.type}
-              </td>
-              <td className="border border-gray-200 dark:border-gray-700 px-3 py-2 font-mono text-gray-600 dark:text-gray-400">
-                {p.default ?? '—'}
-              </td>
-              <td className="border border-gray-200 dark:border-gray-700 px-3 py-2 text-gray-700 dark:text-gray-300">
-                {p.description}
-              </td>
+            <tr key={p.name}>
+              <td className="props-name">{p.name}</td>
+              <td className="props-type">{p.type}</td>
+              <td className="props-default">{p.default ?? '—'}</td>
+              <td>{p.description}</td>
             </tr>
           ))}
         </tbody>

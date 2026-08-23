@@ -14,34 +14,34 @@ const fieldBase =
   '[&_input]:w-full [&_input]:rounded-md [&_input]:border [&_input]:border-gray-300 dark:[&_input]:border-gray-600 ' +
   '[&_input]:bg-white dark:[&_input]:bg-gray-900 [&_input]:px-3 [&_input]:py-2 [&_input]:text-sm [&_input]:text-gray-900 dark:[&_input]:text-gray-100 ' +
   '[&_input]:shadow-sm dark:[&_input]:shadow-none [&_input]:placeholder:text-gray-400 ' +
-  '[&_input]:focus:outline-none [&_input]:focus:ring-2 [&_input]:focus:ring-blue-500 [&_input]:focus:border-blue-500 ' +
+  '[&_input]:focus:outline-none [&_input]:focus:ring-2 [&_input]:focus:ring-indigo-500 [&_input]:focus:border-indigo-500 ' +
   '[&_input]:disabled:opacity-50 ' +
   '[&_p]:mt-1 [&_p]:text-xs [&_p]:text-gray-500 dark:[&_p]:text-gray-400 ' +
   '[&_.field-container_error]:text-red-600';
 
 export default function FieldPage() {
   return (
-    <div className="mx-auto max-w-3xl px-6 py-12 space-y-8">
-      <header className="space-y-3">
-        <h1 className="text-3xl font-bold">Field</h1>
-        <p className="text-gray-600 dark:text-gray-400">
+    <div className="docs-page">
+      <header className="docs-header">
+        <h1 className="docs-h1">Field</h1>
+        <p className="docs-lead">
           A complete field wrapper backed by the headless{' '}
-          <code className="font-mono text-sm">useField</code> hook. It bundles a
+          <code className="docs-code">useField</code> hook. It bundles a
           label, the input, prefix/suffix and start/end adornments, a clear
           button, helper/error messaging, and a character count — all wired with
           proper ARIA. Ships no styles; theme it via descendant selectors on{' '}
-          <code className="font-mono text-sm">.field-container</code> and the
-          embedded <code className="font-mono text-sm">&lt;input&gt;</code>.
+          <code className="docs-code">.field-container</code> and the
+          embedded <code className="docs-code">&lt;input&gt;</code>.
         </p>
       </header>
 
-      <section className="space-y-4">
-        <h2 className="text-xl font-semibold">Basic</h2>
-        <p className="text-sm text-gray-600 dark:text-gray-400">
+      <section className="docs-section">
+        <h2 className="docs-h2">Basic</h2>
+        <p className="docs-desc">
           A labeled field with a placeholder and helper text.
         </p>
         <Demo
-          code={`<Field label="Full name" placeholder="Ada Lovelace" helperText="As it appears on your ID" className="w-full [&>label]:mb-1 [&>label]:block [&>label]:text-sm [&>label]:font-medium [&>label]:text-gray-700 dark:[&>label]:text-gray-200 [&_input]:w-full [&_input]:rounded-md [&_input]:border [&_input]:border-gray-300 dark:[&_input]:border-gray-600 [&_input]:bg-white dark:[&_input]:bg-gray-900 [&_input]:px-3 [&_input]:py-2 [&_input]:text-sm [&_input]:text-gray-900 dark:[&_input]:text-gray-100 [&_input]:shadow-sm dark:[&_input]:shadow-none [&_input]:placeholder:text-gray-400 [&_input]:focus:outline-none [&_input]:focus:ring-2 [&_input]:focus:ring-blue-500 [&_input]:focus:border-blue-500 [&_input]:disabled:opacity-50 [&_p]:mt-1 [&_p]:text-xs [&_p]:text-gray-500 dark:[&_p]:text-gray-400 [&_.field-container_error]:text-red-600" />`}
+          code={`<Field label="Full name" placeholder="Ada Lovelace" helperText="As it appears on your ID" className="w-full [&>label]:mb-1 [&>label]:block [&>label]:text-sm [&>label]:font-medium [&>label]:text-gray-700 dark:[&>label]:text-gray-200 [&_input]:w-full [&_input]:rounded-md [&_input]:border [&_input]:border-gray-300 dark:[&_input]:border-gray-600 [&_input]:bg-white dark:[&_input]:bg-gray-900 [&_input]:px-3 [&_input]:py-2 [&_input]:text-sm [&_input]:text-gray-900 dark:[&_input]:text-gray-100 [&_input]:shadow-sm dark:[&_input]:shadow-none [&_input]:placeholder:text-gray-400 [&_input]:focus:outline-none [&_input]:focus:ring-2 [&_input]:focus:ring-indigo-500 [&_input]:focus:border-indigo-500 [&_input]:disabled:opacity-50 [&_p]:mt-1 [&_p]:text-xs [&_p]:text-gray-500 dark:[&_p]:text-gray-400 [&_.field-container_error]:text-red-600" />`}
         >
           <div className="w-full max-w-sm">
             <Field
@@ -54,9 +54,9 @@ export default function FieldPage() {
         </Demo>
       </section>
 
-      <section className="space-y-4">
-        <h2 className="text-xl font-semibold">Adornments &amp; clear</h2>
-        <p className="text-sm text-gray-600 dark:text-gray-400">
+      <section className="docs-section">
+        <h2 className="docs-h2">Adornments &amp; clear</h2>
+        <p className="docs-desc">
           <code>prefix</code> / <code>suffix</code> and{' '}
           <code>startAdornment</code> / <code>endAdornment</code> decorate the
           field; <code>clearable</code> adds a clear button when filled.
@@ -67,7 +67,7 @@ export default function FieldPage() {
   prefix={<span className="text-gray-400">$</span>}
   suffix={<span className="text-gray-400 text-xs">USD</span>}
   clearable
-  className="w-full [&>label]:mb-1 [&>label]:block [&>label]:text-sm [&>label]:font-medium [&>label]:text-gray-700 dark:[&>label]:text-gray-200 [&_input]:w-full [&_input]:rounded-md [&_input]:border [&_input]:border-gray-300 dark:[&_input]:border-gray-600 [&_input]:bg-white dark:[&_input]:bg-gray-900 [&_input]:px-3 [&_input]:py-2 [&_input]:text-sm [&_input]:text-gray-900 dark:[&_input]:text-gray-100 [&_input]:shadow-sm dark:[&_input]:shadow-none [&_input]:placeholder:text-gray-400 [&_input]:focus:outline-none [&_input]:focus:ring-2 [&_input]:focus:ring-blue-500 [&_input]:focus:border-blue-500 [&_input]:disabled:opacity-50 [&_p]:mt-1 [&_p]:text-xs [&_p]:text-gray-500 dark:[&_p]:text-gray-400 [&_.field-container_error]:text-red-600"
+  className="w-full [&>label]:mb-1 [&>label]:block [&>label]:text-sm [&>label]:font-medium [&>label]:text-gray-700 dark:[&>label]:text-gray-200 [&_input]:w-full [&_input]:rounded-md [&_input]:border [&_input]:border-gray-300 dark:[&_input]:border-gray-600 [&_input]:bg-white dark:[&_input]:bg-gray-900 [&_input]:px-3 [&_input]:py-2 [&_input]:text-sm [&_input]:text-gray-900 dark:[&_input]:text-gray-100 [&_input]:shadow-sm dark:[&_input]:shadow-none [&_input]:placeholder:text-gray-400 [&_input]:focus:outline-none [&_input]:focus:ring-2 [&_input]:focus:ring-indigo-500 [&_input]:focus:border-indigo-500 [&_input]:disabled:opacity-50 [&_p]:mt-1 [&_p]:text-xs [&_p]:text-gray-500 dark:[&_p]:text-gray-400 [&_.field-container_error]:text-red-600"
 />`}
         >
           <div className="w-full max-w-sm">
@@ -82,9 +82,9 @@ export default function FieldPage() {
         </Demo>
       </section>
 
-      <section className="space-y-4">
-        <h2 className="text-xl font-semibold">Error &amp; character count</h2>
-        <p className="text-sm text-gray-600 dark:text-gray-400">
+      <section className="docs-section">
+        <h2 className="docs-h2">Error &amp; character count</h2>
+        <p className="docs-desc">
           <code>showCount</code> pairs with <code>maxLength</code> for a live
           counter; an error renders a <code>role="alert"</code> message.
         </p>
@@ -94,7 +94,7 @@ export default function FieldPage() {
   maxLength={20}
   showCount
   error="That username is taken"
-  className="w-full [&>label]:mb-1 [&>label]:block [&>label]:text-sm [&>label]:font-medium [&>label]:text-gray-700 dark:[&>label]:text-gray-200 [&_input]:w-full [&_input]:rounded-md [&_input]:border [&_input]:border-gray-300 dark:[&_input]:border-gray-600 [&_input]:bg-white dark:[&_input]:bg-gray-900 [&_input]:px-3 [&_input]:py-2 [&_input]:text-sm [&_input]:text-gray-900 dark:[&_input]:text-gray-100 [&_input]:shadow-sm dark:[&_input]:shadow-none [&_input]:placeholder:text-gray-400 [&_input]:focus:outline-none [&_input]:focus:ring-2 [&_input]:focus:ring-blue-500 [&_input]:focus:border-blue-500 [&_input]:disabled:opacity-50 [&_p]:mt-1 [&_p]:text-xs [&_p]:text-gray-500 dark:[&_p]:text-gray-400 [&_.field-container_error]:text-red-600"
+  className="w-full [&>label]:mb-1 [&>label]:block [&>label]:text-sm [&>label]:font-medium [&>label]:text-gray-700 dark:[&>label]:text-gray-200 [&_input]:w-full [&_input]:rounded-md [&_input]:border [&_input]:border-gray-300 dark:[&_input]:border-gray-600 [&_input]:bg-white dark:[&_input]:bg-gray-900 [&_input]:px-3 [&_input]:py-2 [&_input]:text-sm [&_input]:text-gray-900 dark:[&_input]:text-gray-100 [&_input]:shadow-sm dark:[&_input]:shadow-none [&_input]:placeholder:text-gray-400 [&_input]:focus:outline-none [&_input]:focus:ring-2 [&_input]:focus:ring-indigo-500 [&_input]:focus:border-indigo-500 [&_input]:disabled:opacity-50 [&_p]:mt-1 [&_p]:text-xs [&_p]:text-gray-500 dark:[&_p]:text-gray-400 [&_.field-container_error]:text-red-600"
 />`}
         >
           <div className="w-full max-w-sm">
@@ -109,8 +109,8 @@ export default function FieldPage() {
         </Demo>
       </section>
 
-      <section className="space-y-4">
-        <h2 className="text-xl font-semibold">Props</h2>
+      <section className="docs-section">
+        <h2 className="docs-h2">Props</h2>
         <PropsTable
           props={[
             {

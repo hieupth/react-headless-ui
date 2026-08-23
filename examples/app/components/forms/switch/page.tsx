@@ -43,8 +43,8 @@ function TailwindSwitch({
             ref={p.switchRef}
             type="button"
             className={`relative inline-flex ${s.track} items-center rounded-full transition-colors ` +
-              `focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 ` +
-              `${p.checked ? 'bg-blue-600' : 'bg-gray-300'} ${p.disabled ? 'opacity-50 cursor-not-allowed' : ''}`}
+              `focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 focus-visible:ring-offset-2 ` +
+              `${p.checked ? 'bg-indigo-600' : 'bg-gray-300'} ${p.disabled ? 'opacity-50 cursor-not-allowed' : ''}`}
             onClick={p.onClick}
             onKeyDown={p.onKeyDown}
             onFocus={p.onFocus}
@@ -76,38 +76,38 @@ export default function SwitchPage() {
   const [on, setOn] = useState(false);
 
   return (
-    <div className="mx-auto max-w-3xl px-6 py-12 space-y-8">
-      <header className="space-y-3">
-        <h1 className="text-3xl font-bold">Switch</h1>
-        <p className="text-gray-600 dark:text-gray-400">
+    <div className="docs-page">
+      <header className="docs-header">
+        <h1 className="docs-h1">Switch</h1>
+        <p className="docs-lead">
           A toggle switch backed by the headless{' '}
-          <code className="font-mono text-sm">useSwitch</code> hook. It provides
+          <code className="docs-code">useSwitch</code> hook. It provides
           checked state, Space/Enter toggling, mouse/hover tracking, and{' '}
-          <code className="font-mono text-sm">role="switch"</code> semantics.
+          <code className="docs-code">role="switch"</code> semantics.
           The default render ships empty classes, so theme it via the{' '}
-          <code className="font-mono text-sm">render</code> prop (as below).
+          <code className="docs-code">render</code> prop (as below).
         </p>
       </header>
 
-      <section className="space-y-4">
-        <h2 className="text-xl font-semibold">Sizes &amp; states</h2>
-        <p className="text-sm text-gray-600 dark:text-gray-400">
+      <section className="docs-section">
+        <h2 className="docs-h2">Sizes &amp; states</h2>
+        <p className="docs-desc">
           <code>sm</code> / <code>md</code> / <code>lg</code>, plus default-checked
           and disabled.
         </p>
         <Demo
           code={`<Switch size="sm" defaultChecked render={(p) => (
-  <button ref={p.switchRef} type="button" className={\`relative inline-flex h-5 w-9 items-center rounded-full transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 \${p.checked ? 'bg-blue-600' : 'bg-gray-300'}\`} {...p.ariaProps}>
+  <button ref={p.switchRef} type="button" className={\`relative inline-flex h-5 w-9 items-center rounded-full transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 \${p.checked ? 'bg-indigo-600' : 'bg-gray-300'}\`} {...p.ariaProps}>
     <span className={\`inline-block h-4 w-4 transform rounded-full bg-white shadow transition-transform \${p.checked ? 'translate-x-4' : 'translate-x-0.5'}\`} />
   </button>
 )} />
 <Switch size="md" defaultChecked render={(p) => (
-  <button ref={p.switchRef} type="button" className={\`relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 \${p.checked ? 'bg-blue-600' : 'bg-gray-300'}\`} {...p.ariaProps}>
+  <button ref={p.switchRef} type="button" className={\`relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 \${p.checked ? 'bg-indigo-600' : 'bg-gray-300'}\`} {...p.ariaProps}>
     <span className={\`inline-block h-5 w-5 transform rounded-full bg-white shadow transition-transform \${p.checked ? 'translate-x-5' : 'translate-x-0.5'}\`} />
   </button>
 )} />
 <Switch size="lg" disabled render={(p) => (
-  <button ref={p.switchRef} type="button" className={\`relative inline-flex h-7 w-14 items-center rounded-full transition-colors opacity-50 cursor-not-allowed focus:outline-none \${p.checked ? 'bg-blue-600' : 'bg-gray-300'}\`} {...p.ariaProps}>
+  <button ref={p.switchRef} type="button" className={\`relative inline-flex h-7 w-14 items-center rounded-full transition-colors opacity-50 cursor-not-allowed focus:outline-none \${p.checked ? 'bg-indigo-600' : 'bg-gray-300'}\`} {...p.ariaProps}>
     <span className={\`inline-block h-6 w-6 transform rounded-full bg-white shadow transition-transform \${p.checked ? 'translate-x-7' : 'translate-x-1'}\`} />
   </button>
 )} />`}
@@ -121,16 +121,16 @@ export default function SwitchPage() {
         </Demo>
       </section>
 
-      <section className="space-y-4">
-        <h2 className="text-xl font-semibold">Labeled</h2>
-        <p className="text-sm text-gray-600 dark:text-gray-400">
+      <section className="docs-section">
+        <h2 className="docs-h2">Labeled</h2>
+        <p className="docs-desc">
           <code>label</code> + <code>showLabel</code> render an accessible name;
           <code> labelPosition</code> places it left or right.
         </p>
         <Demo
           code={`<Switch label="Airplane mode" showLabel labelPosition="left" render={(p) => (
   <label className="inline-flex flex-row-reverse items-center gap-2 text-sm text-gray-700 dark:text-gray-200">
-    <button ref={p.switchRef} type="button" className={\`relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 \${p.checked ? 'bg-blue-600' : 'bg-gray-300'}\`} {...p.ariaProps}>
+    <button ref={p.switchRef} type="button" className={\`relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 \${p.checked ? 'bg-indigo-600' : 'bg-gray-300'}\`} {...p.ariaProps}>
       <span className={\`inline-block h-5 w-5 transform rounded-full bg-white shadow transition-transform \${p.checked ? 'translate-x-5' : 'translate-x-0.5'}\`} />
     </button>
     <span>Airplane mode</span>
@@ -141,16 +141,16 @@ export default function SwitchPage() {
         </Demo>
       </section>
 
-      <section className="space-y-4">
-        <h2 className="text-xl font-semibold">Controlled</h2>
-        <p className="text-sm text-gray-600 dark:text-gray-400">
+      <section className="docs-section">
+        <h2 className="docs-h2">Controlled</h2>
+        <p className="docs-desc">
           Drive state with <code>checked</code> /{' '}
           <code>onCheckedChange</code>.
         </p>
         <Demo
           code={`const [on, setOn] = useState(false);
 <Switch checked={on} onCheckedChange={setOn} render={(p) => (
-  <button ref={p.switchRef} type="button" className={\`relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 \${p.checked ? 'bg-blue-600' : 'bg-gray-300'}\`} onClick={p.onClick} {...p.switchAttributes} {...p.ariaProps}>
+  <button ref={p.switchRef} type="button" className={\`relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 \${p.checked ? 'bg-indigo-600' : 'bg-gray-300'}\`} onClick={p.onClick} {...p.switchAttributes} {...p.ariaProps}>
     <span className={\`inline-block h-5 w-5 transform rounded-full bg-white shadow transition-transform \${p.checked ? 'translate-x-5' : 'translate-x-0.5'}\`} />
   </button>
 )} />`}
@@ -164,8 +164,8 @@ export default function SwitchPage() {
                   ref={p.switchRef}
                   type="button"
                   className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ` +
-                    `focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 ` +
-                    `${p.checked ? 'bg-blue-600' : 'bg-gray-300'}`}
+                    `focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 ` +
+                    `${p.checked ? 'bg-indigo-600' : 'bg-gray-300'}`}
                   onClick={p.onClick}
                   onKeyDown={p.onKeyDown}
                   onFocus={p.onFocus}
@@ -185,8 +185,8 @@ export default function SwitchPage() {
         </Demo>
       </section>
 
-      <section className="space-y-4">
-        <h2 className="text-xl font-semibold">Props</h2>
+      <section className="docs-section">
+        <h2 className="docs-h2">Props</h2>
         <PropsTable
           props={[
             {

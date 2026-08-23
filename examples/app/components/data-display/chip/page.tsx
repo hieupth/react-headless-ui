@@ -11,12 +11,12 @@ export default function ChipPage() {
   const [selected, setSelected] = useState(false);
 
   return (
-    <div className="mx-auto max-w-3xl px-6 py-12 space-y-8">
-      <header className="space-y-3">
-        <h1 className="text-3xl font-bold">Chip</h1>
-        <p className="text-gray-600 dark:text-gray-400">
+    <div className="docs-page">
+      <header className="docs-header">
+        <h1 className="docs-h1">Chip</h1>
+        <p className="docs-lead">
           A compact tag backed by the headless{' '}
-          <code className="font-mono text-sm">useChip</code> hook. Chips come in{' '}
+          <code className="docs-code">useChip</code> hook. Chips come in{' '}
           <code>solid</code>, <code>outline</code>, and <code>soft</code>{' '}
           variants with six semantic colors, can be made{' '}
           <code>selectable</code> (toggle) or <code>deletable</code> (with an
@@ -25,9 +25,9 @@ export default function ChipPage() {
         </p>
       </header>
 
-      <section className="space-y-4">
-        <h2 className="text-xl font-semibold">Variants &amp; colors</h2>
-        <p className="text-sm text-gray-600 dark:text-gray-400">
+      <section className="docs-section">
+        <h2 className="docs-h2">Variants &amp; colors</h2>
+        <p className="docs-desc">
           <code>variant</code> sets the surface treatment; <code>color</code>{' '}
           sets the semantic hue.
         </p>
@@ -44,9 +44,9 @@ export default function ChipPage() {
         </Demo>
       </section>
 
-      <section className="space-y-4">
-        <h2 className="text-xl font-semibold">Selectable</h2>
-        <p className="text-sm text-gray-600 dark:text-gray-400">
+      <section className="docs-section">
+        <h2 className="docs-h2">Selectable</h2>
+        <p className="docs-desc">
           <code>selectable</code> chips toggle an ARIA-selected state. Drive them
           controlled via <code>selected</code> + <code>onSelectionChange</code>.
         </p>
@@ -76,9 +76,9 @@ export default function ChipPage() {
         </Demo>
       </section>
 
-      <section className="space-y-4">
-        <h2 className="text-xl font-semibold">Deletable</h2>
-        <p className="text-sm text-gray-600 dark:text-gray-400">
+      <section className="docs-section">
+        <h2 className="docs-h2">Deletable</h2>
+        <p className="docs-desc">
           <code>deletable</code> chips render a delete affordance; wire{' '}
           <code>onDelete</code> to remove them.
         </p>
@@ -93,8 +93,8 @@ export default function ChipPage() {
         </Demo>
       </section>
 
-      <section className="space-y-4">
-        <h2 className="text-xl font-semibold">Props</h2>
+      <section className="docs-section">
+        <h2 className="docs-h2">Props</h2>
         <PropsTable
           props={[
             { name: 'variant', type: "'solid' | 'outline' | 'soft'", default: "'solid'", description: 'Surface treatment.' },

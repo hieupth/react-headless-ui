@@ -15,33 +15,33 @@ const uploadBase =
   '[&>div:first-of-type]:border-2 [&>div:first-of-type]:border-dashed [&>div:first-of-type]:border-gray-300 dark:[&>div:first-of-type]:border-gray-600 ' +
   '[&>div:first-of-type]:bg-gray-50 dark:[&>div:first-of-type]:bg-gray-900 [&>div:first-of-type]:p-8 [&>div:first-of-type]:text-center ' +
   '[&>div:first-of-type]:transition-colors [&>div:first-of-type]:cursor-pointer ' +
-  '[&>div:first-of-type:hover]:border-blue-400 [&>div:first-of-type:hover]:bg-blue-50 dark:[&>div:first-of-type:hover]:bg-blue-950 ' +
+  '[&>div:first-of-type:hover]:border-indigo-400 [&>div:first-of-type:hover]:bg-indigo-50 dark:[&>div:first-of-type:hover]:bg-indigo-950 ' +
   '[&_svg]:h-8 [&_svg]:w-8 [&_svg]:text-gray-400 dark:[&_svg]:text-gray-500 ' +
   '[&_p]:text-sm [&_p]:text-gray-600 dark:[&_p]:text-gray-400 ' +
   '[&_p:first-of-type]:font-medium [&_p:first-of-type]:text-gray-900 dark:[&_p:first-of-type]:text-gray-100';
 
 export default function FileUploadPage() {
   return (
-    <div className="mx-auto max-w-3xl px-6 py-12 space-y-8">
-      <header className="space-y-3">
-        <h1 className="text-3xl font-bold">FileUpload</h1>
-        <p className="text-gray-600 dark:text-gray-400">
+    <div className="docs-page">
+      <header className="docs-header">
+        <h1 className="docs-h1">FileUpload</h1>
+        <p className="docs-lead">
           A drag-and-drop file upload backed by the headless{' '}
-          <code className="font-mono text-sm">useFileUpload</code> hook. It handles
+          <code className="docs-code">useFileUpload</code> hook. It handles
           drag-over/drop, click-to-browse, size/count/type validation, and file
           removal — all wired with ARIA. The component renders its own dropzone
           and file list with empty classes; theme them via descendant selectors
-          on <code className="font-mono text-sm">.file-upload-container</code>.
+          on <code className="docs-code">.file-upload-container</code>.
         </p>
       </header>
 
-      <section className="space-y-4">
-        <h2 className="text-xl font-semibold">Basic</h2>
-        <p className="text-sm text-gray-600 dark:text-gray-400">
+      <section className="docs-section">
+        <h2 className="docs-h2">Basic</h2>
+        <p className="docs-desc">
           A single-file dropzone. Click or drag a file onto it.
         </p>
         <Demo
-          code={`<FileUpload uploadText="Upload a file" dragText="Drag and drop, or click to browse" className="w-full [&>div:first-of-type]:flex [&>div:first-of-type]:flex-col [&>div:first-of-type]:items-center [&>div:first-of-type]:justify-center [&>div:first-of-type]:gap-2 [&>div:first-of-type]:rounded-lg [&>div:first-of-type]:border-2 [&>div:first-of-type]:border-dashed [&>div:first-of-type]:border-gray-300 dark:[&>div:first-of-type]:border-gray-600 [&>div:first-of-type]:bg-gray-50 dark:[&>div:first-of-type]:bg-gray-900 [&>div:first-of-type]:p-8 [&>div:first-of-type]:text-center [&>div:first-of-type]:transition-colors [&>div:first-of-type]:cursor-pointer [&>div:first-of-type:hover]:border-blue-400 [&>div:first-of-type:hover]:bg-blue-50 dark:[&>div:first-of-type:hover]:bg-blue-950 [&_svg]:h-8 [&_svg]:w-8 [&_svg]:text-gray-400 dark:[&_svg]:text-gray-500 [&_p]:text-sm [&_p]:text-gray-600 dark:[&_p]:text-gray-400 [&_p:first-of-type]:font-medium [&_p:first-of-type]:text-gray-900 dark:[&_p:first-of-type]:text-gray-100" />`}
+          code={`<FileUpload uploadText="Upload a file" dragText="Drag and drop, or click to browse" className="w-full [&>div:first-of-type]:flex [&>div:first-of-type]:flex-col [&>div:first-of-type]:items-center [&>div:first-of-type]:justify-center [&>div:first-of-type]:gap-2 [&>div:first-of-type]:rounded-lg [&>div:first-of-type]:border-2 [&>div:first-of-type]:border-dashed [&>div:first-of-type]:border-gray-300 dark:[&>div:first-of-type]:border-gray-600 [&>div:first-of-type]:bg-gray-50 dark:[&>div:first-of-type]:bg-gray-900 [&>div:first-of-type]:p-8 [&>div:first-of-type]:text-center [&>div:first-of-type]:transition-colors [&>div:first-of-type]:cursor-pointer [&>div:first-of-type:hover]:border-indigo-400 [&>div:first-of-type:hover]:bg-indigo-50 dark:[&>div:first-of-type:hover]:bg-indigo-950 [&_svg]:h-8 [&_svg]:w-8 [&_svg]:text-gray-400 dark:[&_svg]:text-gray-500 [&_p]:text-sm [&_p]:text-gray-600 dark:[&_p]:text-gray-400 [&_p:first-of-type]:font-medium [&_p:first-of-type]:text-gray-900 dark:[&_p:first-of-type]:text-gray-100" />`}
         >
           <div className="w-full max-w-md">
             <FileUpload
@@ -53,9 +53,9 @@ export default function FileUploadPage() {
         </Demo>
       </section>
 
-      <section className="space-y-4">
-        <h2 className="text-xl font-semibold">Multiple with constraints</h2>
-        <p className="text-sm text-gray-600 dark:text-gray-400">
+      <section className="docs-section">
+        <h2 className="docs-h2">Multiple with constraints</h2>
+        <p className="docs-desc">
           <code>multiple</code> + <code>maxFiles</code> + <code>maxSize</code>{' '}
           (bytes) + <code>accept</code> (MIME/glob) constrain the selection.
         </p>
@@ -67,7 +67,7 @@ export default function FileUploadPage() {
   accept="image/*"
   uploadText="Upload images"
   dragText="Up to 5 images, max 5MB each"
-  className="w-full [&>div:first-of-type]:flex [&>div:first-of-type]:flex-col [&>div:first-of-type]:items-center [&>div:first-of-type]:justify-center [&>div:first-of-type]:gap-2 [&>div:first-of-type]:rounded-lg [&>div:first-of-type]:border-2 [&>div:first-of-type]:border-dashed [&>div:first-of-type]:border-gray-300 dark:[&>div:first-of-type]:border-gray-600 [&>div:first-of-type]:bg-gray-50 dark:[&>div:first-of-type]:bg-gray-900 [&>div:first-of-type]:p-8 [&>div:first-of-type]:text-center [&>div:first-of-type]:transition-colors [&>div:first-of-type]:cursor-pointer [&>div:first-of-type:hover]:border-blue-400 [&>div:first-of-type:hover]:bg-blue-50 dark:[&>div:first-of-type:hover]:bg-blue-950 [&_svg]:h-8 [&_svg]:w-8 [&_svg]:text-gray-400 dark:[&_svg]:text-gray-500 [&_p]:text-sm [&_p]:text-gray-600 dark:[&_p]:text-gray-400 [&_p:first-of-type]:font-medium [&_p:first-of-type]:text-gray-900 dark:[&_p:first-of-type]:text-gray-100"
+  className="w-full [&>div:first-of-type]:flex [&>div:first-of-type]:flex-col [&>div:first-of-type]:items-center [&>div:first-of-type]:justify-center [&>div:first-of-type]:gap-2 [&>div:first-of-type]:rounded-lg [&>div:first-of-type]:border-2 [&>div:first-of-type]:border-dashed [&>div:first-of-type]:border-gray-300 dark:[&>div:first-of-type]:border-gray-600 [&>div:first-of-type]:bg-gray-50 dark:[&>div:first-of-type]:bg-gray-900 [&>div:first-of-type]:p-8 [&>div:first-of-type]:text-center [&>div:first-of-type]:transition-colors [&>div:first-of-type]:cursor-pointer [&>div:first-of-type:hover]:border-indigo-400 [&>div:first-of-type:hover]:bg-indigo-50 dark:[&>div:first-of-type:hover]:bg-indigo-950 [&_svg]:h-8 [&_svg]:w-8 [&_svg]:text-gray-400 dark:[&_svg]:text-gray-500 [&_p]:text-sm [&_p]:text-gray-600 dark:[&_p]:text-gray-400 [&_p:first-of-type]:font-medium [&_p:first-of-type]:text-gray-900 dark:[&_p:first-of-type]:text-gray-100"
 />`}
         >
           <div className="w-full max-w-md">
@@ -84,15 +84,15 @@ export default function FileUploadPage() {
         </Demo>
       </section>
 
-      <section className="space-y-4">
-        <h2 className="text-xl font-semibold">Controlled &amp; disabled</h2>
-        <p className="text-sm text-gray-600 dark:text-gray-400">
+      <section className="docs-section">
+        <h2 className="docs-h2">Controlled &amp; disabled</h2>
+        <p className="docs-desc">
           Drive files with <code>value</code> / <code>onChange</code>;{' '}
           <code>disabled</code> blocks interaction.
         </p>
         <Demo
-          code={`<FileUpload disabled uploadText="Uploads closed" className="w-full [&>div:first-of-type]:flex [&>div:first-of-type]:flex-col [&>div:first-of-type]:items-center [&>div:first-of-type]:justify-center [&>div:first-of-type]:gap-2 [&>div:first-of-type]:rounded-lg [&>div:first-of-type]:border-2 [&>div:first-of-type]:border-dashed [&>div:first-of-type]:border-gray-300 dark:[&>div:first-of-type]:border-gray-600 [&>div:first-of-type]:bg-gray-50 dark:[&>div:first-of-type]:bg-gray-900 [&>div:first-of-type]:p-8 [&>div:first-of-type]:text-center [&>div:first-of-type]:transition-colors [&>div:first-of-type]:cursor-pointer [&>div:first-of-type:hover]:border-blue-400 [&>div:first-of-type:hover]:bg-blue-50 dark:[&>div:first-of-type:hover]:bg-blue-950 [&_svg]:h-8 [&_svg]:w-8 [&_svg]:text-gray-400 dark:[&_svg]:text-gray-500 [&_p]:text-sm [&_p]:text-gray-600 dark:[&_p]:text-gray-400 [&_p:first-of-type]:font-medium [&_p:first-of-type]:text-gray-900 dark:[&_p:first-of-type]:text-gray-100" />
-<FileUpload value={files} onChange={setFiles} className="w-full [&>div:first-of-type]:flex [&>div:first-of-type]:flex-col [&>div:first-of-type]:items-center [&>div:first-of-type]:justify-center [&>div:first-of-type]:gap-2 [&>div:first-of-type]:rounded-lg [&>div:first-of-type]:border-2 [&>div:first-of-type]:border-dashed [&>div:first-of-type]:border-gray-300 dark:[&>div:first-of-type]:border-gray-600 [&>div:first-of-type]:bg-gray-50 dark:[&>div:first-of-type]:bg-gray-900 [&>div:first-of-type]:p-8 [&>div:first-of-type]:text-center [&>div:first-of-type]:transition-colors [&>div:first-of-type]:cursor-pointer [&>div:first-of-type:hover]:border-blue-400 [&>div:first-of-type:hover]:bg-blue-50 dark:[&>div:first-of-type:hover]:bg-blue-950 [&_svg]:h-8 [&_svg]:w-8 [&_svg]:text-gray-400 dark:[&_svg]:text-gray-500 [&_p]:text-sm [&_p]:text-gray-600 dark:[&_p]:text-gray-400 [&_p:first-of-type]:font-medium [&_p:first-of-type]:text-gray-900 dark:[&_p:first-of-type]:text-gray-100" />`}
+          code={`<FileUpload disabled uploadText="Uploads closed" className="w-full [&>div:first-of-type]:flex [&>div:first-of-type]:flex-col [&>div:first-of-type]:items-center [&>div:first-of-type]:justify-center [&>div:first-of-type]:gap-2 [&>div:first-of-type]:rounded-lg [&>div:first-of-type]:border-2 [&>div:first-of-type]:border-dashed [&>div:first-of-type]:border-gray-300 dark:[&>div:first-of-type]:border-gray-600 [&>div:first-of-type]:bg-gray-50 dark:[&>div:first-of-type]:bg-gray-900 [&>div:first-of-type]:p-8 [&>div:first-of-type]:text-center [&>div:first-of-type]:transition-colors [&>div:first-of-type]:cursor-pointer [&>div:first-of-type:hover]:border-indigo-400 [&>div:first-of-type:hover]:bg-indigo-50 dark:[&>div:first-of-type:hover]:bg-indigo-950 [&_svg]:h-8 [&_svg]:w-8 [&_svg]:text-gray-400 dark:[&_svg]:text-gray-500 [&_p]:text-sm [&_p]:text-gray-600 dark:[&_p]:text-gray-400 [&_p:first-of-type]:font-medium [&_p:first-of-type]:text-gray-900 dark:[&_p:first-of-type]:text-gray-100" />
+<FileUpload value={files} onChange={setFiles} className="w-full [&>div:first-of-type]:flex [&>div:first-of-type]:flex-col [&>div:first-of-type]:items-center [&>div:first-of-type]:justify-center [&>div:first-of-type]:gap-2 [&>div:first-of-type]:rounded-lg [&>div:first-of-type]:border-2 [&>div:first-of-type]:border-dashed [&>div:first-of-type]:border-gray-300 dark:[&>div:first-of-type]:border-gray-600 [&>div:first-of-type]:bg-gray-50 dark:[&>div:first-of-type]:bg-gray-900 [&>div:first-of-type]:p-8 [&>div:first-of-type]:text-center [&>div:first-of-type]:transition-colors [&>div:first-of-type]:cursor-pointer [&>div:first-of-type:hover]:border-indigo-400 [&>div:first-of-type:hover]:bg-indigo-50 dark:[&>div:first-of-type:hover]:bg-indigo-950 [&_svg]:h-8 [&_svg]:w-8 [&_svg]:text-gray-400 dark:[&_svg]:text-gray-500 [&_p]:text-sm [&_p]:text-gray-600 dark:[&_p]:text-gray-400 [&_p:first-of-type]:font-medium [&_p:first-of-type]:text-gray-900 dark:[&_p:first-of-type]:text-gray-100" />`}
         >
           <div className="w-full max-w-md">
             <FileUpload
@@ -105,8 +105,8 @@ export default function FileUploadPage() {
         </Demo>
       </section>
 
-      <section className="space-y-4">
-        <h2 className="text-xl font-semibold">Props</h2>
+      <section className="docs-section">
+        <h2 className="docs-h2">Props</h2>
         <PropsTable
           props={[
             {

@@ -37,7 +37,7 @@ function TailwindSlider({ isRange, ...props }: { isRange?: boolean } & Record<st
               <div className={`h-1.5 w-full rounded-full bg-gray-200 dark:bg-gray-700 ${p.disabled ? 'opacity-50' : ''}`} />
               {/* filled range */}
               <div
-                className="absolute h-1.5 rounded-full bg-blue-600"
+                className="absolute h-1.5 rounded-full bg-indigo-600"
                 style={{ left: `${min}%`, width: `${Math.max(0, max - min)}%` }}
               />
               {/* thumbs */}
@@ -47,9 +47,9 @@ function TailwindSlider({ isRange, ...props }: { isRange?: boolean } & Record<st
                   ref={(el) => {
                     if (p.thumbRefs[i]) (p.thumbRefs[i] as React.MutableRefObject<HTMLDivElement | null>).current = el;
                   }}
-                  className={`absolute h-4 w-4 -translate-x-1/2 rounded-full border-2 border-blue-600 bg-white shadow dark:bg-gray-100 ` +
+                  className={`absolute h-4 w-4 -translate-x-1/2 rounded-full border-2 border-indigo-600 bg-white shadow dark:bg-gray-100 ` +
                     `transition-transform ${p.activeThumb === i ? 'scale-110' : ''} ` +
-                    `focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500`}
+                    `focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500`}
                   style={{ left: `${p.percentages[i]}%` }}
                   {...p.getThumbAttributes(i)}
                 />
@@ -70,23 +70,23 @@ export default function SliderPage() {
   const [v, setV] = useState(40);
 
   return (
-    <div className="mx-auto max-w-3xl px-6 py-12 space-y-8">
-      <header className="space-y-3">
-        <h1 className="text-3xl font-bold">Slider</h1>
-        <p className="text-gray-600 dark:text-gray-400">
+    <div className="docs-page">
+      <header className="docs-header">
+        <h1 className="docs-h1">Slider</h1>
+        <p className="docs-lead">
           A range slider backed by the headless{' '}
-          <code className="font-mono text-sm">useSlider</code> hook. It handles
+          <code className="docs-code">useSlider</code> hook. It handles
           pointer and keyboard dragging, min/max/step snapping, single-value and
           range (two-thumb) modes, and full ARIA{' '}
-          <code className="font-mono text-sm">slider</code> semantics. The default
+          <code className="docs-code">slider</code> semantics. The default
           render ships empty classes — theme it via the{' '}
-          <code className="font-mono text-sm">render</code> prop.
+          <code className="docs-code">render</code> prop.
         </p>
       </header>
 
-      <section className="space-y-4">
-        <h2 className="text-xl font-semibold">Basic</h2>
-        <p className="text-sm text-gray-600 dark:text-gray-400">
+      <section className="docs-section">
+        <h2 className="docs-h2">Basic</h2>
+        <p className="docs-desc">
           A single-thumb slider with <code>min</code>, <code>max</code>, and{' '}
           <code>step</code>.
         </p>
@@ -102,12 +102,12 @@ export default function SliderPage() {
       <div ref={p.sliderRef} className="relative flex h-6 w-full items-center" {...p.sliderAttributes}>
         <div className="h-1.5 w-full rounded-full bg-gray-200 dark:bg-gray-700" />
         <div
-          className="absolute h-1.5 rounded-full bg-blue-600"
+          className="absolute h-1.5 rounded-full bg-indigo-600"
           style={{ left: '0%', width: \`\${p.percentages[0]}%\` }}
         />
         <div
           ref={(el) => { p.thumbRefs[0].current = el; }}
-          className="absolute h-4 w-4 -translate-x-1/2 rounded-full border-2 border-blue-600 bg-white shadow focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
+          className="absolute h-4 w-4 -translate-x-1/2 rounded-full border-2 border-indigo-600 bg-white shadow focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500"
           style={{ left: \`\${p.percentages[0]}%\` }}
           {...p.getThumbAttributes(0)}
         />
@@ -120,9 +120,9 @@ export default function SliderPage() {
         </Demo>
       </section>
 
-      <section className="space-y-4">
-        <h2 className="text-xl font-semibold">Range (two thumbs)</h2>
-        <p className="text-sm text-gray-600 dark:text-gray-400">
+      <section className="docs-section">
+        <h2 className="docs-h2">Range (two thumbs)</h2>
+        <p className="docs-desc">
           Set <code>isRange</code> for a min/max selection; the value is a{' '}
           <code>[number, number]</code> tuple.
         </p>
@@ -141,14 +141,14 @@ export default function SliderPage() {
         <div ref={p.sliderRef} className="relative flex h-6 w-full items-center" {...p.sliderAttributes}>
           <div className="h-1.5 w-full rounded-full bg-gray-200 dark:bg-gray-700" />
           <div
-            className="absolute h-1.5 rounded-full bg-blue-600"
+            className="absolute h-1.5 rounded-full bg-indigo-600"
             style={{ left: \`\${min}%\`, width: \`\${Math.max(0, max - min)}%\` }}
           />
           {[0, 1].map((i) => (
             <div
               key={i}
               ref={(el) => { p.thumbRefs[i].current = el; }}
-              className="absolute h-4 w-4 -translate-x-1/2 rounded-full border-2 border-blue-600 bg-white shadow focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
+              className="absolute h-4 w-4 -translate-x-1/2 rounded-full border-2 border-indigo-600 bg-white shadow focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500"
               style={{ left: \`\${p.percentages[i]}%\` }}
               {...p.getThumbAttributes(i)}
             />
@@ -163,9 +163,9 @@ export default function SliderPage() {
         </Demo>
       </section>
 
-      <section className="space-y-4">
-        <h2 className="text-xl font-semibold">Controlled &amp; disabled</h2>
-        <p className="text-sm text-gray-600 dark:text-gray-400">
+      <section className="docs-section">
+        <h2 className="docs-h2">Controlled &amp; disabled</h2>
+        <p className="docs-desc">
           Drive value with <code>value</code> / <code>onValueChange</code>;
           <code> disabled</code> blocks interaction.
         </p>
@@ -175,8 +175,8 @@ export default function SliderPage() {
   <div className="w-full">
     <div ref={p.sliderRef} className="relative flex h-6 w-full items-center" {...p.sliderAttributes}>
       <div className="h-1.5 w-full rounded-full bg-gray-200 dark:bg-gray-700" />
-      <div className="absolute h-1.5 rounded-full bg-blue-600" style={{ left: '0%', width: \`\${p.percentages[0]}%\` }} />
-      <div ref={(el) => { p.thumbRefs[0].current = el; }} className="absolute h-4 w-4 -translate-x-1/2 rounded-full border-2 border-blue-600 bg-white shadow focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500" style={{ left: \`\${p.percentages[0]}%\` }} {...p.getThumbAttributes(0)} />
+      <div className="absolute h-1.5 rounded-full bg-indigo-600" style={{ left: '0%', width: \`\${p.percentages[0]}%\` }} />
+      <div ref={(el) => { p.thumbRefs[0].current = el; }} className="absolute h-4 w-4 -translate-x-1/2 rounded-full border-2 border-indigo-600 bg-white shadow focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500" style={{ left: \`\${p.percentages[0]}%\` }} {...p.getThumbAttributes(0)} />
     </div>
   </div>
 )} />
@@ -184,8 +184,8 @@ export default function SliderPage() {
   <div className="w-full">
     <div ref={p.sliderRef} className="relative flex h-6 w-full items-center" {...p.sliderAttributes}>
       <div className="h-1.5 w-full rounded-full bg-gray-200 dark:bg-gray-700 opacity-50" />
-      <div className="absolute h-1.5 rounded-full bg-blue-600" style={{ left: '0%', width: \`\${p.percentages[0]}%\` }} />
-      <div ref={(el) => { p.thumbRefs[0].current = el; }} className="absolute h-4 w-4 -translate-x-1/2 rounded-full border-2 border-blue-600 bg-white shadow" style={{ left: \`\${p.percentages[0]}%\` }} {...p.getThumbAttributes(0)} />
+      <div className="absolute h-1.5 rounded-full bg-indigo-600" style={{ left: '0%', width: \`\${p.percentages[0]}%\` }} />
+      <div ref={(el) => { p.thumbRefs[0].current = el; }} className="absolute h-4 w-4 -translate-x-1/2 rounded-full border-2 border-indigo-600 bg-white shadow" style={{ left: \`\${p.percentages[0]}%\` }} {...p.getThumbAttributes(0)} />
     </div>
   </div>
 )} />`}
@@ -197,8 +197,8 @@ export default function SliderPage() {
         </Demo>
       </section>
 
-      <section className="space-y-4">
-        <h2 className="text-xl font-semibold">Props</h2>
+      <section className="docs-section">
+        <h2 className="docs-h2">Props</h2>
         <PropsTable
           props={[
             {

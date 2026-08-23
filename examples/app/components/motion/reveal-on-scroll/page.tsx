@@ -13,12 +13,12 @@ const panelClasses =
 
 export default function RevealOnScrollPage() {
   return (
-    <div className="mx-auto max-w-3xl px-6 py-12 space-y-8">
-      <header className="space-y-3">
-        <h1 className="text-3xl font-bold">RevealOnScroll</h1>
-        <p className="text-gray-600 dark:text-gray-400">
+    <div className="docs-page">
+      <header className="docs-header">
+        <h1 className="docs-h1">RevealOnScroll</h1>
+        <p className="docs-lead">
           A scroll-triggered reveal backed by the headless{' '}
-          <code className="font-mono text-sm">useRevealOnScroll</code> hook. When
+          <code className="docs-code">useRevealOnScroll</code> hook. When
           the element intersects the viewport (configurable{' '}
           <code>threshold</code> and <code>rootMargin</code>), it animates opacity
           and a transform defined by <code>direction</code> (up / down / left /
@@ -31,9 +31,9 @@ export default function RevealOnScrollPage() {
         </p>
       </header>
 
-      <section className="space-y-4">
-        <h2 className="text-xl font-semibold">Reveal from below</h2>
-        <p className="text-sm text-gray-600 dark:text-gray-400">
+      <section className="docs-section">
+        <h2 className="docs-h2">Reveal from below</h2>
+        <p className="docs-desc">
           <code>direction="up"</code> rises + fades in when scrolled into view;
           <code> once</code> keeps it shown. This demo is placed below a spacer so
           it starts off-screen — scroll to reveal it.
@@ -56,9 +56,9 @@ export default function RevealOnScrollPage() {
         </Demo>
       </section>
 
-      <section className="space-y-4">
-        <h2 className="text-xl font-semibold">Scale reveal</h2>
-        <p className="text-sm text-gray-600 dark:text-gray-400">
+      <section className="docs-section">
+        <h2 className="docs-h2">Scale reveal</h2>
+        <p className="docs-desc">
           <code>direction="scale"</code> grows the element into view from{' '}
           <code>initialOpacity</code> + a 0.8 scale.
         </p>
@@ -80,8 +80,8 @@ export default function RevealOnScrollPage() {
         </Demo>
       </section>
 
-      <section className="space-y-4">
-        <h2 className="text-xl font-semibold">Props</h2>
+      <section className="docs-section">
+        <h2 className="docs-h2">Props</h2>
         <PropsTable
           props={[
             {

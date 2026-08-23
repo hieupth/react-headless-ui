@@ -57,41 +57,38 @@ export function Sidebar() {
     setCollapsed((c) => ({ ...c, [title]: !c[title] }));
 
   return (
-    <nav
-      aria-label="Documentation"
-      className="h-full w-64 shrink-0 overflow-y-auto border-r border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-950 px-3 py-4"
-    >
+    <nav aria-label="Documentation" className="app-sidebar">
       {sections.map((section) => {
         const isCollapsed = collapsed[section.title];
         // Stable per-section id so the disclosure button references its list
         // region (aria-controls ↔ id), letting assistive tech jump to it.
         const listId = `sidebar-section-${section.title.toLowerCase().replace(/\s+/g, '-')}`;
         return (
-          <div key={section.title} className="mb-4">
+          <div key={section.title} className="app-sidebar-section">
             <button
               type="button"
               onClick={() => toggle(section.title)}
-              className="flex w-full items-center justify-between px-2 py-1 text-xs font-semibold uppercase tracking-wide text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200"
+              className="app-sidebar-label"
               aria-expanded={!isCollapsed}
               aria-controls={listId}
             >
               <span>{section.title}</span>
-              <span aria-hidden="true" className="transition-transform" style={{ transform: isCollapsed ? 'rotate(-90deg)' : 'none' }}>
+              <span
+                aria-hidden="true"
+                className="app-sidebar-chevron"
+                style={{ transform: isCollapsed ? 'rotate(-90deg)' : 'none' }}
+              >
                 ▾
               </span>
             </button>
-            <ul id={listId} className="mt-1 space-y-0.5" hidden={isCollapsed}>
+            <ul id={listId} className="app-sidebar-list" hidden={isCollapsed}>
               {section.links.map((link) => {
                   const active = isActive(pathname, link.href);
                   return (
                     <li key={link.href}>
                       <Link
                         href={link.href}
-                        className={`block rounded-md px-3 py-1.5 text-sm transition-colors ${
-                          active
-                            ? 'bg-gray-100 dark:bg-gray-800 font-medium text-gray-900 dark:text-white'
-                            : 'text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-900 hover:text-gray-900 dark:hover:text-gray-200'
-                        }`}
+                        className={`app-sidebar-link${active ? ' app-sidebar-link-active' : ''}`}
                       >
                         {link.label}
                       </Link>

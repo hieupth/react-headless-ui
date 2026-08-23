@@ -37,12 +37,12 @@ export default function AccordionMenuPage() {
   const [open, setOpen] = useState<string[]>(['getting-started']);
 
   return (
-    <div className="mx-auto max-w-3xl px-6 py-12 space-y-8">
-      <header className="space-y-3">
-        <h1 className="text-3xl font-bold">AccordionMenu</h1>
-        <p className="text-gray-600 dark:text-gray-400">
+    <div className="docs-page">
+      <header className="docs-header">
+        <h1 className="docs-h1">AccordionMenu</h1>
+        <p className="docs-lead">
           A nested, accordion-style menu backed by the headless{' '}
-          <code className="font-mono text-sm">useAccordionMenu</code> hook. It
+          <code className="docs-code">useAccordionMenu</code> hook. It
           expands sections to reveal child items, supports exclusive
           (one-open) mode, nested groups, icons, badges, animated transitions,
           and full keyboard navigation — ideal for documentation sidebars and
@@ -51,9 +51,9 @@ export default function AccordionMenuPage() {
         </p>
       </header>
 
-      <section className="space-y-4">
-        <h2 className="text-xl font-semibold">Expandable sections</h2>
-        <p className="text-sm text-gray-600 dark:text-gray-400">
+      <section className="docs-section">
+        <h2 className="docs-h2">Expandable sections</h2>
+        <p className="docs-desc">
           Top-level <code>items</code> carry <code>label</code>, optional{' '}
           <code>icon</code> / <code>badge</code>, and <code>children</code> for
           the nested rows. Control open sections with{' '}
@@ -77,9 +77,9 @@ export default function AccordionMenuPage() {
         </Demo>
       </section>
 
-      <section className="space-y-4">
-        <h2 className="text-xl font-semibold">Exclusive &amp; nested</h2>
-        <p className="text-sm text-gray-600 dark:text-gray-400">
+      <section className="docs-section">
+        <h2 className="docs-h2">Exclusive &amp; nested</h2>
+        <p className="docs-desc">
           <code>exclusive</code> keeps a single section open at a time;{' '}
           <code>allowNested</code> permits deeper nesting.{' '}
           <code>animationDuration</code> tunes the expand transition.
@@ -105,8 +105,8 @@ export default function AccordionMenuPage() {
         </Demo>
       </section>
 
-      <section className="space-y-4">
-        <h2 className="text-xl font-semibold">Props</h2>
+      <section className="docs-section">
+        <h2 className="docs-h2">Props</h2>
         <PropsTable
           props={[
             {

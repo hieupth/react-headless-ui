@@ -64,7 +64,7 @@ async function MDXPage({ params }: MDXPageProps) {
   const source = fs.readFileSync(filePath, 'utf8');
 
   return (
-    <article className="prose dark:prose-invert max-w-3xl mx-auto px-6 py-10">
+    <article className="docs-prose prose dark:prose-invert">
       <MDXRemote
         source={source}
         components={mdxComponents}

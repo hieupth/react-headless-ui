@@ -37,12 +37,12 @@ export default function TreeViewPage() {
   const [activated, setActivated] = useState<string | null>(null);
 
   return (
-    <div className="mx-auto max-w-3xl px-6 py-12 space-y-8">
-      <header className="space-y-3">
-        <h1 className="text-3xl font-bold">TreeView</h1>
-        <p className="text-gray-600 dark:text-gray-400">
+    <div className="docs-page">
+      <header className="docs-header">
+        <h1 className="docs-h1">TreeView</h1>
+        <p className="docs-lead">
           A collapsible hierarchical node tree backed by the headless{' '}
-          <code className="font-mono text-sm">useTreeView</code> hook. It expands
+          <code className="docs-code">useTreeView</code> hook. It expands
           and collapses branches, supports single / multiple / none selection,
           full keyboard navigation (arrows, Enter, Home/End, type-ahead),
           <code>aria-expanded</code> / <code>aria-selected</code> wiring, and
@@ -51,9 +51,9 @@ export default function TreeViewPage() {
         </p>
       </header>
 
-      <section className="space-y-4">
-        <h2 className="text-xl font-semibold">Hierarchical data</h2>
-        <p className="text-sm text-gray-600 dark:text-gray-400">
+      <section className="docs-section">
+        <h2 className="docs-h2">Hierarchical data</h2>
+        <p className="docs-desc">
           Pass a <code>nodes</code> tree (each node: <code>id</code>,{' '}
           <code>label</code>, optional <code>children</code>,{' '}
           <code>defaultExpanded</code>, <code>disabled</code>). Track selection
@@ -81,9 +81,9 @@ export default function TreeViewPage() {
         </Demo>
       </section>
 
-      <section className="space-y-4">
-        <h2 className="text-xl font-semibold">Multi-select &amp; expand-all</h2>
-        <p className="text-sm text-gray-600 dark:text-gray-400">
+      <section className="docs-section">
+        <h2 className="docs-h2">Multi-select &amp; expand-all</h2>
+        <p className="docs-desc">
           <code>selectionMode="multiple"</code> enables checkbox-style
           selection; <code>expandAll</code> opens every branch initially.{' '}
           <code>onNodeActivate</code> fires on double-click / Enter.
@@ -119,8 +119,8 @@ export default function TreeViewPage() {
         </Demo>
       </section>
 
-      <section className="space-y-4">
-        <h2 className="text-xl font-semibold">Props</h2>
+      <section className="docs-section">
+        <h2 className="docs-h2">Props</h2>
         <PropsTable
           props={[
             {

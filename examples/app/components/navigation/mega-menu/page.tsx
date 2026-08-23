@@ -52,12 +52,12 @@ export default function MegaMenuPage() {
   const [active, setActive] = useState<string | null>(null);
 
   return (
-    <div className="mx-auto max-w-3xl px-6 py-12 space-y-8">
-      <header className="space-y-3">
-        <h1 className="text-3xl font-bold">MegaMenu</h1>
-        <p className="text-gray-600 dark:text-gray-400">
+    <div className="docs-page">
+      <header className="docs-header">
+        <h1 className="docs-h1">MegaMenu</h1>
+        <p className="docs-lead">
           A large multi-column navigation panel backed by the headless{' '}
-          <code className="font-mono text-sm">useMegaMenu</code> hook. Each
+          <code className="docs-code">useMegaMenu</code> hook. Each
           top-level item can carry a rich <code>panel</code> (any ReactNode) or
           nested <code>children</code>. It supports horizontal/vertical layouts,
           configurable open/close animations, panel positioning, arrow
@@ -67,9 +67,9 @@ export default function MegaMenuPage() {
         </p>
       </header>
 
-      <section className="space-y-4">
-        <h2 className="text-xl font-semibold">Rich panels</h2>
-        <p className="text-sm text-gray-600 dark:text-gray-400">
+      <section className="docs-section">
+        <h2 className="docs-h2">Rich panels</h2>
+        <p className="docs-desc">
           Give an item a <code>panel</code> node to render arbitrary content
           (grids, images, promo cards). Track the open item via{' '}
           <code>onActiveChange</code>.
@@ -96,9 +96,9 @@ export default function MegaMenuPage() {
         </Demo>
       </section>
 
-      <section className="space-y-4">
-        <h2 className="text-xl font-semibold">Layout &amp; animation</h2>
-        <p className="text-sm text-gray-600 dark:text-gray-400">
+      <section className="docs-section">
+        <h2 className="docs-h2">Layout &amp; animation</h2>
+        <p className="docs-desc">
           Set <code>orientation="vertical"</code> for a side-stacked menu.
           <code>animationDuration</code> tunes the panel transition;{' '}
           <code>panelPosition</code> controls where the panel appears relative
@@ -131,8 +131,8 @@ export default function MegaMenuPage() {
         </Demo>
       </section>
 
-      <section className="space-y-4">
-        <h2 className="text-xl font-semibold">Props</h2>
+      <section className="docs-section">
+        <h2 className="docs-h2">Props</h2>
         <PropsTable
           props={[
             {

@@ -11,7 +11,7 @@ import { PropsTable } from '@/components/props-table';
 // own fields with Tailwind.
 const inputCls =
   'mt-1 w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm text-gray-900 shadow-sm ' +
-  'focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 ' +
+  'focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 ' +
   'dark:border-gray-600 dark:bg-gray-900 dark:text-gray-100';
 const labelCls = 'block text-sm font-medium text-gray-700 dark:text-gray-200';
 const errCls = 'mt-1 text-xs text-red-600';
@@ -115,24 +115,24 @@ function ControlledSubmitForm() {
 
 export default function FormPage() {
   return (
-    <div className="mx-auto max-w-3xl px-6 py-12 space-y-8">
-      <header className="space-y-3">
-        <h1 className="text-3xl font-bold">Form</h1>
-        <p className="text-gray-600 dark:text-gray-400">
+    <div className="docs-page">
+      <header className="docs-header">
+        <h1 className="docs-h1">Form</h1>
+        <p className="docs-lead">
           A form component built on{' '}
           <a className="font-mono text-sm underline" href="https://react-hook-form.com" target="_blank" rel="noreferrer">React Hook Form</a>{' '}
-          via the headless <code className="font-mono text-sm">useForm</code> hook.
+          via the headless <code className="docs-code">useForm</code> hook.
           It manages registration, validation, submit/reset, loading state, and
           multi-step flows. The default render ships empty classes, so use the{' '}
-          <code className="font-mono text-sm">children</code> render prop —{' '}
-          <code className="font-mono text-sm">(rhf, state, actions) =&gt; …</code>{' '}
+          <code className="docs-code">children</code> render prop —{' '}
+          <code className="docs-code">(rhf, state, actions) =&gt; …</code>{' '}
           — to register inputs and theme them with Tailwind.
         </p>
       </header>
 
-      <section className="space-y-4">
-        <h2 className="text-xl font-semibold">Sign-in form</h2>
-        <p className="text-sm text-gray-600 dark:text-gray-400">
+      <section className="docs-section">
+        <h2 className="docs-h2">Sign-in form</h2>
+        <p className="docs-desc">
           Validation runs on submit; errors appear inline. Submit a valid form
           to see the serialized data.
         </p>
@@ -146,7 +146,7 @@ export default function FormPage() {
           <label className="block text-sm font-medium text-gray-700 dark:text-gray-200" htmlFor="email">Email</label>
           <input
             id="email"
-            className="mt-1 w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm text-gray-900 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:border-gray-600 dark:bg-gray-900 dark:text-gray-100"
+            className="mt-1 w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm text-gray-900 shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 dark:border-gray-600 dark:bg-gray-900 dark:text-gray-100"
             placeholder="you@example.com"
             {...register('email', { required: 'Email is required' })}
           />
@@ -157,7 +157,7 @@ export default function FormPage() {
           <input
             id="password"
             type="password"
-            className="mt-1 w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm text-gray-900 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:border-gray-600 dark:bg-gray-900 dark:text-gray-100"
+            className="mt-1 w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm text-gray-900 shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 dark:border-gray-600 dark:bg-gray-900 dark:text-gray-100"
             placeholder="••••••••"
             {...register('password', { required: 'Password is required', minLength: { value: 6, message: 'Min 6 characters' } })}
           />
@@ -178,9 +178,9 @@ export default function FormPage() {
         </Demo>
       </section>
 
-      <section className="space-y-4">
-        <h2 className="text-xl font-semibold">Controlled submit &amp; reset</h2>
-        <p className="text-sm text-gray-600 dark:text-gray-400">
+      <section className="docs-section">
+        <h2 className="docs-h2">Controlled submit &amp; reset</h2>
+        <p className="docs-desc">
           The actions from the render prop (<code>submit</code>,{' '}
           <code>reset</code>) plus <code>isSubmitting</code> drive async submits
           and a loading state.
@@ -193,7 +193,7 @@ export default function FormPage() {
         <label className="block text-sm font-medium text-gray-700 dark:text-gray-200" htmlFor="username">Username</label>
         <input
           id="username"
-          className="w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:border-gray-600 dark:bg-gray-900 dark:text-gray-100"
+          className="w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 dark:border-gray-600 dark:bg-gray-900 dark:text-gray-100"
           {...rhf.register('username')}
         />
       </div>
@@ -211,8 +211,8 @@ export default function FormPage() {
         </Demo>
       </section>
 
-      <section className="space-y-4">
-        <h2 className="text-xl font-semibold">Props</h2>
+      <section className="docs-section">
+        <h2 className="docs-h2">Props</h2>
         <PropsTable
           props={[
             {

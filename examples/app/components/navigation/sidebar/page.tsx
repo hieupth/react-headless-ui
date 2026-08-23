@@ -13,12 +13,12 @@ const sidebarCls =
 
 export default function SidebarPage() {
   return (
-    <div className="mx-auto max-w-3xl px-6 py-12 space-y-8">
-      <header className="space-y-3">
-        <h1 className="text-3xl font-bold">Sidebar</h1>
-        <p className="text-gray-600 dark:text-gray-400">
+    <div className="docs-page">
+      <header className="docs-header">
+        <h1 className="docs-h1">Sidebar</h1>
+        <p className="docs-lead">
           An application navigation rail backed by the headless{' '}
-          <code className="font-mono text-sm">useSidebar</code> hook. It supports
+          <code className="docs-code">useSidebar</code> hook. It supports
           three variants — <code>permanent</code> (always visible),{' '}
           <code>persistent</code> (toggleable, pushes content), and{' '}
           <code>temporary</code> (overlay on mobile) — plus left/right
@@ -30,9 +30,9 @@ export default function SidebarPage() {
         </p>
       </header>
 
-      <section className="space-y-4">
-        <h2 className="text-xl font-semibold">Persistent sidebar</h2>
-        <p className="text-sm text-gray-600 dark:text-gray-400">
+      <section className="docs-section">
+        <h2 className="docs-h2">Persistent sidebar</h2>
+        <p className="docs-desc">
           Start open with <code>defaultOpen</code>; the rail manages its own
           open/collapse state internally. Pass <code>header</code>,{' '}
           <code>footer</code>, and <code>children</code> slots.
@@ -84,9 +84,9 @@ export default function SidebarPage() {
         </Demo>
       </section>
 
-      <section className="space-y-4">
-        <h2 className="text-xl font-semibold">Temporary + responsive</h2>
-        <p className="text-sm text-gray-600 dark:text-gray-400">
+      <section className="docs-section">
+        <h2 className="docs-h2">Temporary + responsive</h2>
+        <p className="docs-desc">
           <code>variant="temporary"</code> slides over an overlay;{' '}
           <code>responsive</code> + <code>breakpoint</code> auto-switch to
           temporary on narrow screens. <code>closeOnOverlayClick</code> dismisses
@@ -148,8 +148,8 @@ export default function SidebarPage() {
         </Demo>
       </section>
 
-      <section className="space-y-4">
-        <h2 className="text-xl font-semibold">Props</h2>
+      <section className="docs-section">
+        <h2 className="docs-h2">Props</h2>
         <PropsTable
           props={[
             {

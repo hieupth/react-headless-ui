@@ -41,22 +41,22 @@ export function CodeBlock({ code, language = 'tsx' }: CodeBlockProps) {
   }
 
   return (
-    <div className="relative group rounded-lg overflow-hidden border border-gray-200 dark:border-gray-700">
+    <div className="code-block">
       <button
         type="button"
         onClick={handleCopy}
-        className="absolute top-2 right-2 z-10 px-2 py-1 text-xs rounded bg-gray-800/80 text-gray-100 opacity-0 group-hover:opacity-100 focus-visible:opacity-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-400 transition-opacity hover:bg-gray-700"
+        className="code-copy"
         aria-label="Copy code"
       >
         {copied ? 'Copied!' : 'Copy'}
       </button>
       {html ? (
         <div
-          className="overflow-x-auto text-sm [&>pre]:!m-0 [&>pre]:!bg-transparent [&>pre]:p-4"
+          className="overflow-x-auto [&>pre]:!m-0 [&>pre]:!bg-transparent [&>pre]:p-4"
           dangerouslySetInnerHTML={{ __html: html }}
         />
       ) : (
-        <pre className="overflow-x-auto text-sm p-4 bg-gray-900 text-gray-100">
+        <pre className="overflow-x-auto p-4" style={{ background: '#0d1117', color: '#f3f4f6' }}>
           <code>{code}</code>
         </pre>
       )}

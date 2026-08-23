@@ -23,10 +23,9 @@ export function InteractiveDemo({ label = 'Click me', className }: InteractiveDe
   return (
     <Button
       onPress={() => alert('Hello!')}
-      className={
-        className ??
-        'inline-flex items-center justify-center rounded-md bg-blue-500 px-4 py-2 text-sm font-medium text-white hover:bg-blue-600'
-      }
+      // With no consumer className the lib's own vocabulary classes
+      // (.button .button-default) apply — painted by showcase.css.
+      className={className}
     >
       {label}
     </Button>

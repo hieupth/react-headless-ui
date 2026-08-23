@@ -13,12 +13,12 @@ const itemClasses =
 
 export default function StaggerChildrenPage() {
   return (
-    <div className="mx-auto max-w-3xl px-6 py-12 space-y-8">
-      <header className="space-y-3">
-        <h1 className="text-3xl font-bold">StaggerChildren</h1>
-        <p className="text-gray-600 dark:text-gray-400">
+    <div className="docs-page">
+      <header className="docs-header">
+        <h1 className="docs-h1">StaggerChildren</h1>
+        <p className="docs-lead">
           A container that animates each child in sequence, backed by the headless{' '}
-          <code className="font-mono text-sm">useStaggerChildren</code> hook and
+          <code className="docs-code">useStaggerChildren</code> hook and
           rendered with framer-motion. <code>staggerDelay</code> spaces each
           child; <code>direction</code> reorders the cascade (normal, reverse, or
           center-out); <code>duration</code> sets each child's transition. The
@@ -30,9 +30,9 @@ export default function StaggerChildrenPage() {
         </p>
       </header>
 
-      <section className="space-y-4">
-        <h2 className="text-xl font-semibold">Normal cascade</h2>
-        <p className="text-sm text-gray-600 dark:text-gray-400">
+      <section className="docs-section">
+        <h2 className="docs-h2">Normal cascade</h2>
+        <p className="docs-desc">
           <code>initialActive</code> starts it on mount; each child fades and
           rises <code>staggerDelay</code> ms after the previous.
         </p>
@@ -63,9 +63,9 @@ export default function StaggerChildrenPage() {
         </Demo>
       </section>
 
-      <section className="space-y-4">
-        <h2 className="text-xl font-semibold">Center-out</h2>
-        <p className="text-sm text-gray-600 dark:text-gray-400">
+      <section className="docs-section">
+        <h2 className="docs-h2">Center-out</h2>
+        <p className="docs-desc">
           <code>direction="center-out"</code> animates the middle child first,
           expanding outward.
         </p>
@@ -98,8 +98,8 @@ export default function StaggerChildrenPage() {
         </Demo>
       </section>
 
-      <section className="space-y-4">
-        <h2 className="text-xl font-semibold">Props</h2>
+      <section className="docs-section">
+        <h2 className="docs-h2">Props</h2>
         <PropsTable
           props={[
             {

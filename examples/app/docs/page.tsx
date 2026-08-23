@@ -31,7 +31,7 @@ export default function DocsIndexPage() {
     : [];
 
   return (
-    <article className="prose dark:prose-invert max-w-3xl mx-auto px-6 py-10">
+    <article className="docs-prose prose dark:prose-invert">
       <h1>Docs</h1>
       <p>Guides for <code>@hieupth/react-headless-ui</code>.</p>
       <ul>

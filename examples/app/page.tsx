@@ -46,83 +46,67 @@ const docLinks = [
 
 export default function Home() {
   return (
-    <div className="mx-auto max-w-5xl px-6 py-16">
+    <div className="home-page">
       {/* Hero */}
-      <section className="flex flex-col items-center text-center">
-        <span className="mb-4 inline-block rounded-full border border-gray-200 px-3 py-1 text-xs font-medium text-gray-600 dark:border-gray-700 dark:text-gray-400">
-          Headless React UI primitives
-        </span>
-        <h1 className="text-5xl font-bold tracking-tight sm:text-6xl">@hieupth/react-headless-ui</h1>
-        <p className="mt-4 max-w-2xl text-lg text-gray-600 dark:text-gray-400">
+      <section className="home-hero">
+        <span className="home-badge">Headless React UI primitives</span>
+        <h1 className="home-title">@hieupth/react-headless-ui</h1>
+        <p className="home-lead">
           Composition over inheritance. Fully accessible, unstyled React components,
           hooks, and mixins — themable via design tokens and tree-shakeable to the byte.
         </p>
-        <div className="mt-8 w-full max-w-xl text-left">
+        <div className="home-install">
           <CodeBlock code={installCommand} language="bash" />
         </div>
-        <div className="mt-6 flex flex-wrap items-center justify-center gap-3">
-          <Link
-            href="/docs/getting-started/"
-            className="rounded-md bg-gray-900 px-4 py-2 text-sm font-medium text-white hover:bg-gray-700 dark:bg-white dark:text-gray-900 dark:hover:bg-gray-200"
-          >
+        <div className="home-actions">
+          <Link href="/docs/getting-started/" className="button button-default button-lg">
             Get Started
           </Link>
-          <Link
-            href="/docs/theming/"
-            className="rounded-md border border-gray-300 px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100 dark:border-gray-700 dark:text-gray-200 dark:hover:bg-gray-800"
-          >
+          <Link href="/docs/theming/" className="button button-outline button-lg">
             Theming
           </Link>
         </div>
       </section>
 
       {/* Features */}
-      <section className="mt-20">
-        <h2 className="text-2xl font-semibold">Why react-headless-ui?</h2>
-        <div className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      <section className="home-section">
+        <h2 className="docs-h2">Why react-headless-ui?</h2>
+        <div className="home-grid">
           {features.map((feature) => (
-            <div
-              key={feature.title}
-              className="rounded-lg border border-gray-200 p-5 dark:border-gray-700"
-            >
-              <h3 className="font-semibold">{feature.title}</h3>
-              <p className="mt-2 text-sm text-gray-600 dark:text-gray-400">
-                {feature.description}
-              </p>
+            <div key={feature.title} className="home-card">
+              <h3>{feature.title}</h3>
+              <p>{feature.description}</p>
             </div>
           ))}
         </div>
       </section>
 
       {/* Quick links */}
-      <section className="mt-16 grid grid-cols-1 gap-4 sm:grid-cols-2">
-        <div className="rounded-lg border border-gray-200 p-5 dark:border-gray-700">
-          <h2 className="text-lg font-semibold">Documentation</h2>
-          <ul className="mt-3 space-y-2 text-sm">
-            {docLinks.map((link) => (
-              <li key={link.href}>
-                <Link
-                  href={link.href}
-                  className="text-gray-700 underline-offset-2 hover:underline dark:text-gray-200"
-                >
-                  {link.label}
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </div>
-        <div className="rounded-lg border border-gray-200 p-5 dark:border-gray-700">
-          <h2 className="text-lg font-semibold">Components</h2>
-          <ul className="mt-3 space-y-2 text-sm">
-            {componentCategories.map((category) => (
-              <li key={category}>
-                <span className="font-medium text-gray-900 dark:text-white">{category}</span>
-                <span className="ml-2 text-gray-500 dark:text-gray-400">
-                  {getComponentsByCategory(category).length}
-                </span>
-              </li>
-            ))}
-          </ul>
+      <section className="home-section">
+        <div className="home-grid">
+          <div className="home-card">
+            <h2 className="docs-h3">Documentation</h2>
+            <ul className="home-list">
+              {docLinks.map((link) => (
+                <li key={link.href}>
+                  <Link href={link.href}>{link.label}</Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div className="home-card">
+            <h2 className="docs-h3">Components</h2>
+            <ul className="home-list">
+              {componentCategories.map((category) => (
+                <li key={category}>
+                  <span className="home-cat">{category}</span>
+                  <span className="home-count">
+                    {getComponentsByCategory(category).length}
+                  </span>
+                </li>
+              ))}
+            </ul>
+          </div>
         </div>
       </section>
     </div>

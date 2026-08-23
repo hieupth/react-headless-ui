@@ -12,12 +12,12 @@ export default function RatingPage() {
   const [value, setValue] = useState(3);
 
   return (
-    <div className="mx-auto max-w-3xl px-6 py-12 space-y-8">
-      <header className="space-y-3">
-        <h1 className="text-3xl font-bold">Rating</h1>
-        <p className="text-gray-600 dark:text-gray-400">
+    <div className="docs-page">
+      <header className="docs-header">
+        <h1 className="docs-h1">Rating</h1>
+        <p className="docs-lead">
           A star-rating input backed by the headless{' '}
-          <code className="font-mono text-sm">useRating</code> hook. It supports{' '}
+          <code className="docs-code">useRating</code> hook. It supports{' '}
           <code>star</code>, <code>heart</code>, <code>thumbs</code>, and{' '}
           <code>custom</code> variants, fractional values via{' '}
           <code>allowHalf</code>, read-only and disabled states, hover preview,
@@ -27,9 +27,9 @@ export default function RatingPage() {
         </p>
       </header>
 
-      <section className="space-y-4">
-        <h2 className="text-xl font-semibold">Controlled rating</h2>
-        <p className="text-sm text-gray-600 dark:text-gray-400">
+      <section className="docs-section">
+        <h2 className="docs-h2">Controlled rating</h2>
+        <p className="docs-desc">
           Drive <code>value</code> with state and listen to{' '}
           <code>onChange</code>. <code>showValue</code> prints the number beside
           the stars.
@@ -51,9 +51,9 @@ export default function RatingPage() {
         </Demo>
       </section>
 
-      <section className="space-y-4">
-        <h2 className="text-xl font-semibold">Half values &amp; read-only</h2>
-        <p className="text-sm text-gray-600 dark:text-gray-400">
+      <section className="docs-section">
+        <h2 className="docs-h2">Half values &amp; read-only</h2>
+        <p className="docs-desc">
           <code>allowHalf</code> enables fractional selection.{' '}
           <code>readonly</code> makes the rating display-only.
         </p>
@@ -64,9 +64,9 @@ export default function RatingPage() {
         </Demo>
       </section>
 
-      <section className="space-y-4">
-        <h2 className="text-xl font-semibold">Heart variant</h2>
-        <p className="text-sm text-gray-600 dark:text-gray-400">
+      <section className="docs-section">
+        <h2 className="docs-h2">Heart variant</h2>
+        <p className="docs-desc">
           Swap the glyph family with <code>variant</code>.
         </p>
         <Demo
@@ -76,8 +76,8 @@ export default function RatingPage() {
         </Demo>
       </section>
 
-      <section className="space-y-4">
-        <h2 className="text-xl font-semibold">Props</h2>
+      <section className="docs-section">
+        <h2 className="docs-h2">Props</h2>
         <PropsTable
           props={[
             { name: 'value / defaultValue', type: 'number', default: '—', description: 'Controlled / initial rating value.' },

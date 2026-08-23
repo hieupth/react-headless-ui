@@ -13,21 +13,21 @@ export default function PopoverPage() {
   const [open, setOpen] = useState(false);
 
   return (
-    <div className="mx-auto max-w-3xl px-6 py-12 space-y-8">
-      <header className="space-y-3">
-        <h1 className="text-3xl font-bold">Popover</h1>
-        <p className="text-gray-600 dark:text-gray-400">
+    <div className="docs-page">
+      <header className="docs-header">
+        <h1 className="docs-h1">Popover</h1>
+        <p className="docs-lead">
           Floating, anchored content backed by the headless{' '}
-          <code className="font-mono text-sm">usePopover</code> hook. It
+          <code className="docs-code">usePopover</code> hook. It
           positions relative to a trigger (12 placements), opens on click or
           hover, closes on outside-click / Escape / blur, and supports open/close
           delays. Unlike Dialog it is non-modal and stays in the layer stack.
         </p>
       </header>
 
-      <section className="space-y-4">
-        <h2 className="text-xl font-semibold">Click trigger</h2>
-        <p className="text-sm text-gray-600 dark:text-gray-400">
+      <section className="docs-section">
+        <h2 className="docs-h2">Click trigger</h2>
+        <p className="docs-desc">
           Default <code>trigger="click"</code> toggles the popover;{' '}
           <code>position</code> sets placement (<code>top</code> /{' '}
           <code>bottom</code> / <code>left</code> / <code>right</code> +{' '}
@@ -78,9 +78,9 @@ export default function PopoverPage() {
         </Demo>
       </section>
 
-      <section className="space-y-4">
-        <h2 className="text-xl font-semibold">Hover trigger &amp; delays</h2>
-        <p className="text-sm text-gray-600 dark:text-gray-400">
+      <section className="docs-section">
+        <h2 className="docs-h2">Hover trigger &amp; delays</h2>
+        <p className="docs-desc">
           <code>trigger="hover"</code> opens on hover with{' '}
           <code>openDelay</code> / <code>closeDelay</code> to prevent flicker;
           <code>closeOnTriggerBlur</code> dismisses when focus leaves.
@@ -101,8 +101,8 @@ export default function PopoverPage() {
         </Demo>
       </section>
 
-      <section className="space-y-4">
-        <h2 className="text-xl font-semibold">Props</h2>
+      <section className="docs-section">
+        <h2 className="docs-h2">Props</h2>
         <PropsTable
           props={[
             {

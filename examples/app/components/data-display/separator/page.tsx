@@ -9,12 +9,12 @@ import { PropsTable } from '@/components/props-table';
 // className. A decorative separator omits the semantic role.
 export default function SeparatorPage() {
   return (
-    <div className="mx-auto max-w-3xl px-6 py-12 space-y-8">
-      <header className="space-y-3">
-        <h1 className="text-3xl font-bold">Separator</h1>
-        <p className="text-gray-600 dark:text-gray-400">
+    <div className="docs-page">
+      <header className="docs-header">
+        <h1 className="docs-h1">Separator</h1>
+        <p className="docs-lead">
           A visual divider backed by the headless{' '}
-          <code className="font-mono text-sm">useSeparator</code> hook. It
+          <code className="docs-code">useSeparator</code> hook. It
           renders an <code>&lt;hr&gt;</code> (or a <code>&lt;div&gt;</code> when
           given content) with the correct <code>separator</code> role and{' '}
           <code>aria-orientation</code>. <code>decorative</code> separators
@@ -23,9 +23,9 @@ export default function SeparatorPage() {
         </p>
       </header>
 
-      <section className="space-y-4">
-        <h2 className="text-xl font-semibold">Horizontal rule</h2>
-        <p className="text-sm text-gray-600 dark:text-gray-400">
+      <section className="docs-section">
+        <h2 className="docs-h2">Horizontal rule</h2>
+        <p className="docs-desc">
           The default renders a horizontal divider between blocks.
         </p>
         <Demo
@@ -41,9 +41,9 @@ export default function SeparatorPage() {
         </Demo>
       </section>
 
-      <section className="space-y-4">
-        <h2 className="text-xl font-semibold">With content</h2>
-        <p className="text-sm text-gray-600 dark:text-gray-400">
+      <section className="docs-section">
+        <h2 className="docs-h2">With content</h2>
+        <p className="docs-desc">
           Pass children to render a labeled divider (the element becomes a{' '}
           <code>div</code>).
         </p>
@@ -58,9 +58,9 @@ export default function SeparatorPage() {
         </Demo>
       </section>
 
-      <section className="space-y-4">
-        <h2 className="text-xl font-semibold">Vertical &amp; decorative</h2>
-        <p className="text-sm text-gray-600 dark:text-gray-400">
+      <section className="docs-section">
+        <h2 className="docs-h2">Vertical &amp; decorative</h2>
+        <p className="docs-desc">
           <code>orientation="vertical"</code> divides adjacent items;{' '}
           <code>decorative</code> hides it from assistive tech.
         </p>
@@ -79,8 +79,8 @@ export default function SeparatorPage() {
         </Demo>
       </section>
 
-      <section className="space-y-4">
-        <h2 className="text-xl font-semibold">Props</h2>
+      <section className="docs-section">
+        <h2 className="docs-h2">Props</h2>
         <PropsTable
           props={[
             { name: 'orientation', type: "'horizontal' | 'vertical'", default: "'horizontal'", description: 'Divider direction (sets aria-orientation).' },

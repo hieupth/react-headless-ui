@@ -29,12 +29,12 @@ export default function BreadcrumbPage() {
   ];
 
   return (
-    <div className="mx-auto max-w-3xl px-6 py-12 space-y-8">
-      <header className="space-y-3">
-        <h1 className="text-3xl font-bold">Breadcrumb</h1>
-        <p className="text-gray-600 dark:text-gray-400">
+    <div className="docs-page">
+      <header className="docs-header">
+        <h1 className="docs-h1">Breadcrumb</h1>
+        <p className="docs-lead">
           A navigation trail backed by the headless{' '}
-          <code className="font-mono text-sm">useBreadcrumb</code> hook. It
+          <code className="docs-code">useBreadcrumb</code> hook. It
           collapses long trails past <code>maxItems</code>, renders an optional
           home item, supports custom separators, and wires{' '}
           <code>aria-current="page"</code> on the active crumb. The default
@@ -42,9 +42,9 @@ export default function BreadcrumbPage() {
         </p>
       </header>
 
-      <section className="space-y-4">
-        <h2 className="text-xl font-semibold">Basic trail</h2>
-        <p className="text-sm text-gray-600 dark:text-gray-400">
+      <section className="docs-section">
+        <h2 className="docs-h2">Basic trail</h2>
+        <p className="docs-desc">
           Each item takes a <code>label</code>, optional <code>href</code>, and
           <code>current</code> to mark the last crumb.
         </p>
@@ -63,9 +63,9 @@ export default function BreadcrumbPage() {
         </Demo>
       </section>
 
-      <section className="space-y-4">
-        <h2 className="text-xl font-semibold">Custom separator &amp; navigation</h2>
-        <p className="text-sm text-gray-600 dark:text-gray-400">
+      <section className="docs-section">
+        <h2 className="docs-h2">Custom separator &amp; navigation</h2>
+        <p className="docs-desc">
           Override <code>separator</code> with any node and handle clicks via{' '}
           <code>navigate</code> (exposed by the hook). The active item carries{' '}
           <code>aria-current</code>.
@@ -94,8 +94,8 @@ export default function BreadcrumbPage() {
         </Demo>
       </section>
 
-      <section className="space-y-4">
-        <h2 className="text-xl font-semibold">Props</h2>
+      <section className="docs-section">
+        <h2 className="docs-h2">Props</h2>
         <PropsTable
           props={[
             {

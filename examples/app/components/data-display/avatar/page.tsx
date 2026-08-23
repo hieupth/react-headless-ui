@@ -18,12 +18,12 @@ const BROKEN_SRC = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUg';
 
 export default function AvatarPage() {
   return (
-    <div className="mx-auto max-w-3xl px-6 py-12 space-y-8">
-      <header className="space-y-3">
-        <h1 className="text-3xl font-bold">Avatar</h1>
-        <p className="text-gray-600 dark:text-gray-400">
+    <div className="docs-page">
+      <header className="docs-header">
+        <h1 className="docs-h1">Avatar</h1>
+        <p className="docs-lead">
           A user-image component backed by the headless{' '}
-          <code className="font-mono text-sm">useAvatar</code> hook. It loads an
+          <code className="docs-code">useAvatar</code> hook. It loads an
           image from <code>src</code>, tracks loading/error states, and falls
           back to initials from <code>fallback</code> when the image is missing
           or fails. Sizes range from <code>sm</code> to <code>2xl</code>; pass{' '}
@@ -31,9 +31,9 @@ export default function AvatarPage() {
         </p>
       </header>
 
-      <section className="space-y-4">
-        <h2 className="text-xl font-semibold">Image with fallback</h2>
-        <p className="text-sm text-gray-600 dark:text-gray-400">
+      <section className="docs-section">
+        <h2 className="docs-h2">Image with fallback</h2>
+        <p className="docs-desc">
           When <code>src</code> fails, the initials derived from{' '}
           <code>fallback</code> are shown instead.
         </p>
@@ -58,9 +58,9 @@ export default function AvatarPage() {
         </Demo>
       </section>
 
-      <section className="space-y-4">
-        <h2 className="text-xl font-semibold">Sizes</h2>
-        <p className="text-sm text-gray-600 dark:text-gray-400">
+      <section className="docs-section">
+        <h2 className="docs-h2">Sizes</h2>
+        <p className="docs-desc">
           <code>size</code> drives the size-class hook on the underlying hook;
           here Tailwind supplies the actual dimensions.
         </p>
@@ -79,9 +79,9 @@ export default function AvatarPage() {
         </Demo>
       </section>
 
-      <section className="space-y-4">
-        <h2 className="text-xl font-semibold">Clickable avatar</h2>
-        <p className="text-sm text-gray-600 dark:text-gray-400">
+      <section className="docs-section">
+        <h2 className="docs-h2">Clickable avatar</h2>
+        <p className="docs-desc">
           Pass <code>onClick</code> to make the avatar focusable and activatable
           via keyboard.
         </p>
@@ -100,8 +100,8 @@ export default function AvatarPage() {
         </Demo>
       </section>
 
-      <section className="space-y-4">
-        <h2 className="text-xl font-semibold">Props</h2>
+      <section className="docs-section">
+        <h2 className="docs-h2">Props</h2>
         <PropsTable
           props={[
             { name: 'src', type: 'string', default: '—', description: 'Image source URL.' },

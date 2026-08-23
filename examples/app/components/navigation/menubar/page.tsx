@@ -39,12 +39,12 @@ export default function MenubarPage() {
   const [submenuEvent, setSubmenuEvent] = useState<string | null>(null);
 
   return (
-    <div className="mx-auto max-w-3xl px-6 py-12 space-y-8">
-      <header className="space-y-3">
-        <h1 className="text-3xl font-bold">Menubar</h1>
-        <p className="text-gray-600 dark:text-gray-400">
+    <div className="docs-page">
+      <header className="docs-header">
+        <h1 className="docs-h1">Menubar</h1>
+        <p className="docs-lead">
           A horizontal (or vertical) top-level menu bar backed by the headless{' '}
-          <code className="font-mono text-sm">useMenubar</code> hook. It manages
+          <code className="docs-code">useMenubar</code> hook. It manages
           the application-menu keyboard model — arrow keys move between
           top-level items, Up/Down open and traverse a submenu, Esc closes — and
           wires <code>role="menubar"</code> / <code>menuitem</code>. The
@@ -52,9 +52,9 @@ export default function MenubarPage() {
         </p>
       </header>
 
-      <section className="space-y-4">
-        <h2 className="text-xl font-semibold">Top-level menus + submenus</h2>
-        <p className="text-sm text-gray-600 dark:text-gray-400">
+      <section className="docs-section">
+        <h2 className="docs-h2">Top-level menus + submenus</h2>
+        <p className="docs-desc">
           Nest items under <code>children</code> to define submenus. Track the
           active item via <code>onItemActivate</code>;{' '}
           <code>orientation</code> switches the bar axis and arrow-key model.
@@ -81,9 +81,9 @@ export default function MenubarPage() {
         </Demo>
       </section>
 
-      <section className="space-y-4">
-        <h2 className="text-xl font-semibold">Toggles &amp; lifecycle hooks</h2>
-        <p className="text-sm text-gray-600 dark:text-gray-400">
+      <section className="docs-section">
+        <h2 className="docs-h2">Toggles &amp; lifecycle hooks</h2>
+        <p className="docs-desc">
           <code>showSeparators</code> / <code>showIcons</code> /{' '}
           <code>showShortcuts</code> control affordances;{' '}
           <code>onSubmenuOpen</code> / <code>onSubmenuClose</code> fire as panels
@@ -119,8 +119,8 @@ export default function MenubarPage() {
         </Demo>
       </section>
 
-      <section className="space-y-4">
-        <h2 className="text-xl font-semibold">Props</h2>
+      <section className="docs-section">
+        <h2 className="docs-h2">Props</h2>
         <PropsTable
           props={[
             {

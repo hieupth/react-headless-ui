@@ -13,26 +13,26 @@ export default function DialogPage() {
   const [open, setOpen] = useState(false);
 
   return (
-    <div className="mx-auto max-w-3xl px-6 py-12 space-y-8">
-      <header className="space-y-3">
-        <h1 className="text-3xl font-bold">Dialog</h1>
-        <p className="text-gray-600 dark:text-gray-400">
+    <div className="docs-page">
+      <header className="docs-header">
+        <h1 className="docs-h1">Dialog</h1>
+        <p className="docs-lead">
           A modal dialog backed by the headless{' '}
-          <code className="font-mono text-sm">useDialog</code> hook. It traps
+          <code className="docs-code">useDialog</code> hook. It traps
           focus, restores it on close, closes on Escape and overlay click, and
-          wires <code className="font-mono text-sm">aria-modal</code> plus
+          wires <code className="docs-code">aria-modal</code> plus
           labelled title/description. The overlay and content render through a
-          portal to <code className="font-mono text-sm">document.body</code> —
-          theme the <code className="font-mono text-sm">dialog-overlay</code>{' '}
-          / <code className="font-mono text-sm">dialog-content</code> class
+          portal to <code className="docs-code">document.body</code> —
+          theme the <code className="docs-code">dialog-overlay</code>{' '}
+          / <code className="docs-code">dialog-content</code> class
           hooks (or pass <code>renderOverlay</code> /{' '}
           <code>renderContent</code>).
         </p>
       </header>
 
-      <section className="space-y-4">
-        <h2 className="text-xl font-semibold">Basic modal</h2>
-        <p className="text-sm text-gray-600 dark:text-gray-400">
+      <section className="docs-section">
+        <h2 className="docs-h2">Basic modal</h2>
+        <p className="docs-desc">
           Control visibility with <code>open</code> /{' '}
           <code>onOpenChange</code>. <code>title</code> and{' '}
           <code>description</code> are auto-announced.
@@ -83,9 +83,9 @@ export default function DialogPage() {
         </Demo>
       </section>
 
-      <section className="space-y-4">
-        <h2 className="text-xl font-semibold">Non-modal &amp; focus</h2>
-        <p className="text-sm text-gray-600 dark:text-gray-400">
+      <section className="docs-section">
+        <h2 className="docs-h2">Non-modal &amp; focus</h2>
+        <p className="docs-desc">
           Set <code>modal={false}</code> to skip the focus trap;{' '}
           <code>initialFocus</code> accepts a selector or element to focus on
           open. Disable overlay/escape close with{' '}
@@ -109,8 +109,8 @@ export default function DialogPage() {
         </Demo>
       </section>
 
-      <section className="space-y-4">
-        <h2 className="text-xl font-semibold">Props</h2>
+      <section className="docs-section">
+        <h2 className="docs-h2">Props</h2>
         <PropsTable
           props={[
             {

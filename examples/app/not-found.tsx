@@ -5,18 +5,13 @@ import Link from 'next/link';
 // leaves the long sidebar-driven page ~84% blank below the message.
 export default function NotFound() {
   return (
-    <div className="flex min-h-[60vh] flex-col items-center justify-center gap-4 px-6 py-24 text-center">
-      <p className="text-sm font-semibold uppercase tracking-widest text-indigo-600 dark:text-indigo-400">
-        404
-      </p>
-      <h1 className="text-3xl font-bold">Page not found</h1>
-      <p className="max-w-md text-sm text-gray-600 dark:text-gray-400">
+    <div className="nf-page">
+      <p className="nf-code">404</p>
+      <h1 className="docs-h1">Page not found</h1>
+      <p className="docs-desc">
         The page you are looking for does not exist or has been moved.
       </p>
-      <Link
-        href="/"
-        className="rounded-md bg-indigo-600 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-indigo-700"
-      >
+      <Link href="/" className="button button-default button-lg nf-back">
         Back to overview
       </Link>
     </div>

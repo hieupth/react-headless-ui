@@ -38,11 +38,7 @@ export function ThemeSwitcher() {
   // Avoid hydration mismatch: render a stable placeholder until mounted.
   if (!mounted) {
     return (
-      <button
-        type="button"
-        className="p-2 rounded-md border border-gray-300 dark:border-gray-600"
-        aria-label="Toggle theme"
-      >
+      <button type="button" className="app-icon-button" aria-label="Toggle theme">
         <ThemeIcon which="light" />
       </button>
     );
@@ -52,7 +48,7 @@ export function ThemeSwitcher() {
     <button
       type="button"
       onClick={toggle}
-      className="p-2 rounded-md border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+      className="app-icon-button"
       aria-label={`Switch to ${theme === 'dark' ? 'light' : 'dark'} theme`}
       title={`Switch to ${theme === 'dark' ? 'light' : 'dark'} theme`}
     >
@@ -67,8 +63,8 @@ function ThemeIcon({ which }: { which: 'light' | 'dark' }) {
     return (
       <svg
         xmlns="http://www.w3.org/2000/svg"
-        width="18"
-        height="18"
+        width="16"
+        height="16"
         viewBox="0 0 24 24"
         fill="none"
         stroke="currentColor"
@@ -85,8 +81,8 @@ function ThemeIcon({ which }: { which: 'light' | 'dark' }) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      width="18"
-      height="18"
+      width="16"
+      height="16"
       viewBox="0 0 24 24"
       fill="none"
       stroke="currentColor"

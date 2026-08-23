@@ -9,23 +9,23 @@ import { PropsTable } from '@/components/props-table';
 
 export default function ContextMenuPage() {
   return (
-    <div className="mx-auto max-w-3xl px-6 py-12 space-y-8">
-      <header className="space-y-3">
-        <h1 className="text-3xl font-bold">ContextMenu</h1>
-        <p className="text-gray-600 dark:text-gray-400">
+    <div className="docs-page">
+      <header className="docs-header">
+        <h1 className="docs-h1">ContextMenu</h1>
+        <p className="docs-lead">
           A right-click menu backed by the headless{' '}
-          <code className="font-mono text-sm">useContextMenu</code> hook. It
+          <code className="docs-code">useContextMenu</code> hook. It
           opens at the cursor position, supports action / checkbox / radio /
           separator / submenu item types, roves focus with the keyboard, and
           closes on outside-click / Escape / select. The list portals to{' '}
-          <code className="font-mono text-sm">document.body</code> at a fixed{' '}
+          <code className="docs-code">document.body</code> at a fixed{' '}
           <code>{'{ x, y }'}</code> — theme the rendered items in your app.
         </p>
       </header>
 
-      <section className="space-y-4">
-        <h2 className="text-xl font-semibold">Right-click trigger</h2>
-        <p className="text-sm text-gray-600 dark:text-gray-400">
+      <section className="docs-section">
+        <h2 className="docs-h2">Right-click trigger</h2>
+        <p className="docs-desc">
           Wrap a region with <code>&lt;ContextMenuTrigger&gt;</code>; the hook
           suppresses the native menu and reports the cursor{' '}
           <code>position</code>. Control open state with{' '}
@@ -48,9 +48,9 @@ export default function ContextMenuPage() {
         </Demo>
       </section>
 
-      <section className="space-y-4">
-        <h2 className="text-xl font-semibold">Item types</h2>
-        <p className="text-sm text-gray-600 dark:text-gray-400">
+      <section className="docs-section">
+        <h2 className="docs-h2">Item types</h2>
+        <p className="docs-desc">
           Set <code>type</code> per item: <code>action</code>,{' '}
           <code>checkbox</code>, <code>radio</code>, <code>separator</code>, or{' '}
           <code>submenu</code>. Checkbox/radio items render a checked state.
@@ -73,8 +73,8 @@ export default function ContextMenuPage() {
         </Demo>
       </section>
 
-      <section className="space-y-4">
-        <h2 className="text-xl font-semibold">Props</h2>
+      <section className="docs-section">
+        <h2 className="docs-h2">Props</h2>
         <PropsTable
           props={[
             {

@@ -9,22 +9,22 @@ import { PropsTable } from '@/components/props-table';
 // layout shift. Headless on CSS — it sets the box; style the child.
 export default function AspectRatioPage() {
   return (
-    <div className="mx-auto max-w-3xl px-6 py-12 space-y-8">
-      <header className="space-y-3">
-        <h1 className="text-3xl font-bold">AspectRatio</h1>
-        <p className="text-gray-600 dark:text-gray-400">
+    <div className="docs-page">
+      <header className="docs-header">
+        <h1 className="docs-h1">AspectRatio</h1>
+        <p className="docs-lead">
           A container that locks its children to a fixed width/height ratio,
           backed by the headless{' '}
-          <code className="font-mono text-sm">useAspectRatio</code> hook. The
+          <code className="docs-code">useAspectRatio</code> hook. The
           default ratio is <code>16/9</code>; pass <code>ratio</code> to change
           it. The hook measures the container width and computes the matching
           height to prevent layout shift while media loads.
         </p>
       </header>
 
-      <section className="space-y-4">
-        <h2 className="text-xl font-semibold">16:9 (default)</h2>
-        <p className="text-sm text-gray-600 dark:text-gray-400">
+      <section className="docs-section">
+        <h2 className="docs-h2">16:9 (default)</h2>
+        <p className="docs-desc">
           Without a fixed ratio, images and embeds cause cumulative layout
           shift; AspectRatio reserves the space up front.
         </p>
@@ -43,9 +43,9 @@ export default function AspectRatioPage() {
         </Demo>
       </section>
 
-      <section className="space-y-4">
-        <h2 className="text-xl font-semibold">Custom ratios</h2>
-        <p className="text-sm text-gray-600 dark:text-gray-400">
+      <section className="docs-section">
+        <h2 className="docs-h2">Custom ratios</h2>
+        <p className="docs-desc">
           <code>ratio</code> is width divided by height — 1 for a square, 4/3
           for classic video, 21/9 for cinematic.
         </p>
@@ -72,9 +72,9 @@ export default function AspectRatioPage() {
         </Demo>
       </section>
 
-      <section className="space-y-4">
-        <h2 className="text-xl font-semibold">Responsive media</h2>
-        <p className="text-sm text-gray-600 dark:text-gray-400">
+      <section className="docs-section">
+        <h2 className="docs-h2">Responsive media</h2>
+        <p className="docs-desc">
           Embed videos and maps so they scale with the column width while
           keeping their shape.
         </p>
@@ -93,8 +93,8 @@ export default function AspectRatioPage() {
         </Demo>
       </section>
 
-      <section className="space-y-4">
-        <h2 className="text-xl font-semibold">Props</h2>
+      <section className="docs-section">
+        <h2 className="docs-h2">Props</h2>
         <PropsTable
           props={[
             { name: 'ratio', type: 'number', default: '16 / 9', description: 'Width / height ratio (e.g. 1, 4/3, 21/9).' },

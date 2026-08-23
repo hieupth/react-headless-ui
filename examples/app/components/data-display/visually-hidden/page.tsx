@@ -10,12 +10,12 @@ import { PropsTable } from '@/components/props-table';
 // supports a focusable mode (visible-on-focus) and live-region announcements.
 export default function VisuallyHiddenPage() {
   return (
-    <div className="mx-auto max-w-3xl px-6 py-12 space-y-8">
-      <header className="space-y-3">
-        <h1 className="text-3xl font-bold">VisuallyHidden</h1>
-        <p className="text-gray-600 dark:text-gray-400">
+    <div className="docs-page">
+      <header className="docs-header">
+        <h1 className="docs-h1">VisuallyHidden</h1>
+        <p className="docs-lead">
           Screen-reader-only content backed by the headless{' '}
-          <code className="font-mono text-sm">useVisuallyHidden</code> hook. It
+          <code className="docs-code">useVisuallyHidden</code> hook. It
           applies the standard visually-hidden inline styles (clipped, 1px,
           absolutely positioned) so content is invisible on screen but read by
           assistive technology. A <code>focusable</code> mode reveals the
@@ -24,9 +24,9 @@ export default function VisuallyHiddenPage() {
         </p>
       </header>
 
-      <section className="space-y-4">
-        <h2 className="text-xl font-semibold">Extra context for screen readers</h2>
-        <p className="text-sm text-gray-600 dark:text-gray-400">
+      <section className="docs-section">
+        <h2 className="docs-h2">Extra context for screen readers</h2>
+        <p className="docs-desc">
           The icon below has no visible label; the visually-hidden text gives
           screen-reader users the meaning. The text is in the DOM but clipped
           off-screen.
@@ -44,9 +44,9 @@ export default function VisuallyHiddenPage() {
         </Demo>
       </section>
 
-      <section className="space-y-4">
-        <h2 className="text-xl font-semibold">Focusable (skip link)</h2>
-        <p className="text-sm text-gray-600 dark:text-gray-400">
+      <section className="docs-section">
+        <h2 className="docs-h2">Focusable (skip link)</h2>
+        <p className="docs-desc">
           Set <code>focusable</code> so the content becomes visible when
           focused — the standard pattern for a &quot;skip to content&quot; link.
           Tab into the demo to reveal it.
@@ -65,9 +65,9 @@ export default function VisuallyHiddenPage() {
         </Demo>
       </section>
 
-      <section className="space-y-4">
-        <h2 className="text-xl font-semibold">Live-region announcement</h2>
-        <p className="text-sm text-gray-600 dark:text-gray-400">
+      <section className="docs-section">
+        <h2 className="docs-h2">Live-region announcement</h2>
+        <p className="docs-desc">
           The hook exposes a polite/assertive live region;{' '}
           <code>autoAnnounce</code> reads children that change. Screen readers
           re-announce the updated text without moving focus.
@@ -87,8 +87,8 @@ export default function VisuallyHiddenPage() {
         </Demo>
       </section>
 
-      <section className="space-y-4">
-        <h2 className="text-xl font-semibold">Props</h2>
+      <section className="docs-section">
+        <h2 className="docs-h2">Props</h2>
         <PropsTable
           props={[
             { name: 'children', type: 'ReactNode', default: '—', description: 'Content read by screen readers.' },

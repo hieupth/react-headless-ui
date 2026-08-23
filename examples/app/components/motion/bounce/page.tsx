@@ -13,12 +13,12 @@ const boxClasses =
 
 export default function BouncePage() {
   return (
-    <div className="mx-auto max-w-3xl px-6 py-12 space-y-8">
-      <header className="space-y-3">
-        <h1 className="text-3xl font-bold">Bounce</h1>
-        <p className="text-gray-600 dark:text-gray-400">
+    <div className="docs-page">
+      <header className="docs-header">
+        <h1 className="docs-h1">Bounce</h1>
+        <p className="docs-lead">
           A bounce animation backed by the headless{' '}
-          <code className="font-mono text-sm">useBounce</code> hook and rendered
+          <code className="docs-code">useBounce</code> hook and rendered
           with framer-motion. It translates the element along a{' '}
           <code>direction</code> (up / down / left / right) scaled by{' '}
           <code>intensity</code>, repeating <code>repeat</code> times (0 = loop
@@ -30,9 +30,9 @@ export default function BouncePage() {
         </p>
       </header>
 
-      <section className="space-y-4">
-        <h2 className="text-xl font-semibold">Bounce up</h2>
-        <p className="text-sm text-gray-600 dark:text-gray-400">
+      <section className="docs-section">
+        <h2 className="docs-h2">Bounce up</h2>
+        <p className="docs-desc">
           <code>initialActive</code> starts it on mount;{' '}
           <code>repeat={0}</code> (default) loops indefinitely.
         </p>
@@ -57,9 +57,9 @@ export default function BouncePage() {
         </Demo>
       </section>
 
-      <section className="space-y-4">
-        <h2 className="text-xl font-semibold">Horizontal, higher intensity</h2>
-        <p className="text-sm text-gray-600 dark:text-gray-400">
+      <section className="docs-section">
+        <h2 className="docs-h2">Horizontal, higher intensity</h2>
+        <p className="docs-desc">
           <code>direction="right"</code> bounces sideways;{' '}
           <code>intensity</code> multiplies the travel distance.
         </p>
@@ -86,8 +86,8 @@ export default function BouncePage() {
         </Demo>
       </section>
 
-      <section className="space-y-4">
-        <h2 className="text-xl font-semibold">Props</h2>
+      <section className="docs-section">
+        <h2 className="docs-h2">Props</h2>
         <PropsTable
           props={[
             {

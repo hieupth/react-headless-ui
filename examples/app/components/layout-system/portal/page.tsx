@@ -17,12 +17,12 @@ export default function PortalPage() {
   const [openModal, setOpenModal] = useState(false);
 
   return (
-    <div className="mx-auto max-w-3xl px-6 py-12 space-y-8">
-      <header className="space-y-3">
-        <h1 className="text-3xl font-bold">Portal</h1>
-        <p className="text-gray-600 dark:text-gray-400">
+    <div className="docs-page">
+      <header className="docs-header">
+        <h1 className="docs-h1">Portal</h1>
+        <p className="docs-lead">
           A portal renderer backed by the headless{' '}
-          <code className="font-mono text-sm">usePortal</code> hook. It lifts
+          <code className="docs-code">usePortal</code> hook. It lifts
           children out of the current React tree into{' '}
           <code>document.body</code> (or a custom container) via React&apos;s{' '}
           <code>createPortal</code>, then adds the overlay ergonomics you usually
@@ -32,9 +32,9 @@ export default function PortalPage() {
         </p>
       </header>
 
-      <section className="space-y-4">
-        <h2 className="text-xl font-semibold">Basic portal</h2>
-        <p className="text-sm text-gray-600 dark:text-gray-400">
+      <section className="docs-section">
+        <h2 className="docs-h2">Basic portal</h2>
+        <p className="docs-desc">
           The simplest case: open controlled with{' '}
           <code>open</code> and the content renders above everything else. Close
           with the button or press <kbd className="font-mono">Escape</kbd>.
@@ -60,7 +60,7 @@ export default function PortalPage() {
 <button
   type="button"
   onClick={() => setOpen(true)}
-  className="inline-flex items-center justify-center gap-2 rounded-md bg-blue-600 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-blue-700"
+  className="inline-flex items-center justify-center gap-2 rounded-md bg-indigo-600 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-indigo-700"
 >
   Open portal
 </button>`}
@@ -68,7 +68,7 @@ export default function PortalPage() {
           <button
             type="button"
             onClick={() => setOpenBasic(true)}
-            className="inline-flex items-center justify-center gap-2 rounded-md bg-blue-600 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-blue-700"
+            className="inline-flex items-center justify-center gap-2 rounded-md bg-indigo-600 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-indigo-700"
           >
             Open portal
           </button>
@@ -94,9 +94,9 @@ export default function PortalPage() {
         </Demo>
       </section>
 
-      <section className="space-y-4">
-        <h2 className="text-xl font-semibold">Modal with backdrop</h2>
-        <p className="text-sm text-gray-600 dark:text-gray-400">
+      <section className="docs-section">
+        <h2 className="docs-h2">Modal with backdrop</h2>
+        <p className="docs-desc">
           <code>showBackdrop</code> adds a dimmed/blurred layer behind the
           content; <code>onBackdropClick</code> closes it.{' '}
           <code>trapFocus</code> keeps Tab cycling inside the portal.
@@ -117,7 +117,7 @@ export default function PortalPage() {
     aria-label="Confirm"
     className="mx-auto mt-32 max-w-sm rounded-lg border border-gray-200 bg-white p-6 shadow-2xl dark:border-gray-700 dark:bg-gray-900"
   >
-    <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100">
+    <h3 className="docs-h3">
       Are you sure?
     </h3>
     <p className="mt-1 text-sm text-gray-600 dark:text-gray-400">
@@ -134,7 +134,7 @@ export default function PortalPage() {
       <button
         type="button"
         onClick={() => setOpen(false)}
-        className="inline-flex items-center justify-center rounded-md bg-blue-600 px-3 py-1.5 text-sm font-medium text-white transition-colors hover:bg-blue-700"
+        className="inline-flex items-center justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-medium text-white transition-colors hover:bg-indigo-700"
       >
         Confirm
       </button>
@@ -172,7 +172,7 @@ export default function PortalPage() {
               aria-label="Confirm"
               className="mx-auto mt-32 max-w-sm rounded-lg border border-gray-200 bg-white p-6 shadow-2xl dark:border-gray-700 dark:bg-gray-900"
             >
-              <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100">
+              <h3 className="docs-h3">
                 Are you sure?
               </h3>
               <p className="mt-1 text-sm text-gray-600 dark:text-gray-400">
@@ -189,7 +189,7 @@ export default function PortalPage() {
                 <button
                   type="button"
                   onClick={() => setOpenModal(false)}
-                  className="inline-flex items-center justify-center rounded-md bg-blue-600 px-3 py-1.5 text-sm font-medium text-white transition-colors hover:bg-blue-700"
+                  className="inline-flex items-center justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-medium text-white transition-colors hover:bg-indigo-700"
                 >
                   Confirm
                 </button>
@@ -199,8 +199,8 @@ export default function PortalPage() {
         </Demo>
       </section>
 
-      <section className="space-y-4">
-        <h2 className="text-xl font-semibold">Props</h2>
+      <section className="docs-section">
+        <h2 className="docs-h2">Props</h2>
         <PropsTable
           props={[
             { name: 'open', type: 'boolean', default: '—', description: 'Controlled visibility of the portal.' },

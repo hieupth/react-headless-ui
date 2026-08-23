@@ -26,7 +26,7 @@ function TailwindSelect({ options: opts = options, ...rest }: { options?: Select
           ref={p.triggerRef}
           type="button"
           className={`inline-flex w-full items-center justify-between rounded-md border border-gray-300 bg-white px-3 py-2 text-sm shadow-sm dark:border-gray-600 dark:bg-gray-900 dark:text-gray-100 dark:shadow-none ` +
-            `focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 ` +
+            `focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 ` +
             `${p.className} ${p.triggerAttributes['data-disabled'] ? 'opacity-50' : ''}`}
           onClick={p.handleTriggerClick}
           onKeyDown={p.handleKeyDown}
@@ -61,14 +61,14 @@ function TailwindSelect({ options: opts = options, ...rest }: { options?: Select
                     <li
                       key={option.key}
                       className={`flex cursor-pointer items-center justify-between px-3 py-2 text-sm ` +
-                        `${isHighlighted ? 'bg-blue-50 text-blue-700 dark:bg-blue-900/40 dark:text-blue-300' : 'text-gray-700 dark:text-gray-200'} `}
+                        `${isHighlighted ? 'bg-indigo-50 text-indigo-700 dark:bg-indigo-900/40 dark:text-indigo-300' : 'text-gray-700 dark:text-gray-200'} `}
                       onClick={() => p.selectOption(option.value)}
                       onMouseEnter={() => p.highlightOption(index)}
                       {...p.getOptionAttributes(option, index)}
                     >
                       <span>{option.label}</span>
                       {isSelected && (
-                        <svg className="h-4 w-4 text-blue-600" fill="currentColor" viewBox="0 0 20 20">
+                        <svg className="h-4 w-4 text-indigo-600" fill="currentColor" viewBox="0 0 20 20">
                           <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                         </svg>
                       )}
@@ -89,26 +89,26 @@ export default function SelectPage() {
   const [fruit, setFruit] = useState('apple');
 
   return (
-    <div className="mx-auto max-w-3xl px-6 py-12 space-y-8">
-      <header className="space-y-3">
-        <h1 className="text-3xl font-bold">Select</h1>
-        <p className="text-gray-600 dark:text-gray-400">
+    <div className="docs-page">
+      <header className="docs-header">
+        <h1 className="docs-h1">Select</h1>
+        <p className="docs-lead">
           A dropdown select backed by the headless{' '}
-          <code className="font-mono text-sm">useSelect</code> hook. It handles
+          <code className="docs-code">useSelect</code> hook. It handles
           open/close, roving arrow-key navigation, optional search, single
           selection, and full ARIA{' '}
-          <code className="font-mono text-sm">combobox</code> /{' '}
-          <code className="font-mono text-sm">listbox</code> roles. The listbox is
-          portaled to <code className="font-mono text-sm">document.body</code>, so
+          <code className="docs-code">combobox</code> /{' '}
+          <code className="docs-code">listbox</code> roles. The listbox is
+          portaled to <code className="docs-code">document.body</code>, so
           theme the trigger and dropdown via the{' '}
-          <code className="font-mono text-sm">renderTrigger</code> /{' '}
-          <code className="font-mono text-sm">renderListbox</code> render props.
+          <code className="docs-code">renderTrigger</code> /{' '}
+          <code className="docs-code">renderListbox</code> render props.
         </p>
       </header>
 
-      <section className="space-y-4">
-        <h2 className="text-xl font-semibold">Basic</h2>
-        <p className="text-sm text-gray-600 dark:text-gray-400">
+      <section className="docs-section">
+        <h2 className="docs-h2">Basic</h2>
+        <p className="docs-desc">
           A controlled select. Click the trigger, then arrow-key or click an
           option.
         </p>
@@ -120,7 +120,7 @@ export default function SelectPage() {
     <button
       ref={p.triggerRef}
       type="button"
-      className="inline-flex w-full items-center justify-between rounded-md border border-gray-300 bg-white px-3 py-2 text-sm shadow-sm dark:border-gray-600 dark:bg-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
+      className="inline-flex w-full items-center justify-between rounded-md border border-gray-300 bg-white px-3 py-2 text-sm shadow-sm dark:border-gray-600 dark:bg-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-indigo-500"
       onClick={p.handleTriggerClick}
       {...p.triggerAttributes}
     >
@@ -135,9 +135,9 @@ export default function SelectPage() {
         </Demo>
       </section>
 
-      <section className="space-y-4">
-        <h2 className="text-xl font-semibold">Controlled</h2>
-        <p className="text-sm text-gray-600 dark:text-gray-400">
+      <section className="docs-section">
+        <h2 className="docs-h2">Controlled</h2>
+        <p className="docs-desc">
           Drive selection with <code>value</code> / <code>onValueChange</code>.
         </p>
         <Demo
@@ -150,7 +150,7 @@ export default function SelectPage() {
     <button
       ref={p.triggerRef}
       type="button"
-      className="inline-flex w-full items-center justify-between rounded-md border border-gray-300 bg-white px-3 py-2 text-sm shadow-sm dark:border-gray-600 dark:bg-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
+      className="inline-flex w-full items-center justify-between rounded-md border border-gray-300 bg-white px-3 py-2 text-sm shadow-sm dark:border-gray-600 dark:bg-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-indigo-500"
       onClick={p.handleTriggerClick}
       {...p.triggerAttributes}
     >
@@ -169,9 +169,9 @@ export default function SelectPage() {
         </Demo>
       </section>
 
-      <section className="space-y-4">
-        <h2 className="text-xl font-semibold">Searchable &amp; clearable</h2>
-        <p className="text-sm text-gray-600 dark:text-gray-400">
+      <section className="docs-section">
+        <h2 className="docs-h2">Searchable &amp; clearable</h2>
+        <p className="docs-desc">
           <code>searchable</code> adds a filter input;{' '}
           <code>allowClear</code> adds a clear affordance.
         </p>
@@ -184,7 +184,7 @@ export default function SelectPage() {
     <button
       ref={p.triggerRef}
       type="button"
-      className="inline-flex w-full items-center justify-between rounded-md border border-gray-300 bg-white px-3 py-2 text-sm shadow-sm dark:border-gray-600 dark:bg-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
+      className="inline-flex w-full items-center justify-between rounded-md border border-gray-300 bg-white px-3 py-2 text-sm shadow-sm dark:border-gray-600 dark:bg-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-indigo-500"
       onClick={p.handleTriggerClick}
       {...p.triggerAttributes}
     >
@@ -199,8 +199,8 @@ export default function SelectPage() {
         </Demo>
       </section>
 
-      <section className="space-y-4">
-        <h2 className="text-xl font-semibold">Props</h2>
+      <section className="docs-section">
+        <h2 className="docs-h2">Props</h2>
         <PropsTable
           props={[
             {

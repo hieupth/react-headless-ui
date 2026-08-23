@@ -17,12 +17,12 @@ const items = [
   {
     id: 'item-1',
     trigger: 'What is react-headless-ui?',
-    content: <p className="text-sm text-gray-600 dark:text-gray-400">Headless React UI primitives — behavior + a11y, no styles.</p>,
+    content: <p className="docs-desc">Headless React UI primitives — behavior + a11y, no styles.</p>,
   },
   {
     id: 'item-2',
     trigger: 'Is it accessible?',
-    content: <p className="text-sm text-gray-600 dark:text-gray-400">Yes — keyboard nav and ARIA out of the box.</p>,
+    content: <p className="docs-desc">Yes — keyboard nav and ARIA out of the box.</p>,
   },
 ];
 
@@ -30,12 +30,12 @@ export default function AccordionPage() {
   const [open, setOpen] = useState<string[]>(['item-1']);
 
   return (
-    <div className="mx-auto max-w-3xl px-6 py-12 space-y-8">
-      <header className="space-y-3">
-        <h1 className="text-3xl font-bold">Accordion</h1>
-        <p className="text-gray-600 dark:text-gray-400">
+    <div className="docs-page">
+      <header className="docs-header">
+        <h1 className="docs-h1">Accordion</h1>
+        <p className="docs-lead">
           A stack of collapsible disclosure panels backed by the headless{' '}
-          <code className="font-mono text-sm">useAccordion</code> hook. It wires{' '}
+          <code className="docs-code">useAccordion</code> hook. It wires{' '}
           <code>aria-expanded</code> / <code>aria-controls</code> on each
           trigger, supports single (exclusive) or multiple open panels,
           horizontal/vertical orientation, and full keyboard support. Pass an{' '}
@@ -44,9 +44,9 @@ export default function AccordionPage() {
         </p>
       </header>
 
-      <section className="space-y-4">
-        <h2 className="text-xl font-semibold">Items API</h2>
-        <p className="text-sm text-gray-600 dark:text-gray-400">
+      <section className="docs-section">
+        <h2 className="docs-h2">Items API</h2>
+        <p className="docs-desc">
           Each item takes an <code>id</code>, a <code>trigger</code> (toggle
           label), and <code>content</code>. Control open panels with{' '}
           <code>openItems</code> / <code>onOpenChange</code>.
@@ -74,9 +74,9 @@ export default function AccordionPage() {
         </Demo>
       </section>
 
-      <section className="space-y-4">
-        <h2 className="text-xl font-semibold">Exclusive mode &amp; disabled</h2>
-        <p className="text-sm text-gray-600 dark:text-gray-400">
+      <section className="docs-section">
+        <h2 className="docs-h2">Exclusive mode &amp; disabled</h2>
+        <p className="docs-desc">
           <code>collapsible</code> lets every panel close;{' '}
           <code>orientation="horizontal"</code> lays panels side by side. Mark
           individual items <code>disabled</code> to opt them out. Use{' '}
@@ -99,15 +99,15 @@ export default function AccordionPage() {
             collapsible
             defaultOpenItems={['a']}
             items={[
-              { id: 'a', trigger: 'Section A', content: <p className="text-sm text-gray-600 dark:text-gray-400">Only one open at a time.</p> },
-              { id: 'b', trigger: 'Section B (locked)', disabled: true, content: <p className="text-sm text-gray-600 dark:text-gray-400">Cannot open.</p> },
+              { id: 'a', trigger: 'Section A', content: <p className="docs-desc">Only one open at a time.</p> },
+              { id: 'b', trigger: 'Section B (locked)', disabled: true, content: <p className="docs-desc">Cannot open.</p> },
             ]}
           />
         </Demo>
       </section>
 
-      <section className="space-y-4">
-        <h2 className="text-xl font-semibold">Props</h2>
+      <section className="docs-section">
+        <h2 className="docs-h2">Props</h2>
         <PropsTable
           props={[
             {

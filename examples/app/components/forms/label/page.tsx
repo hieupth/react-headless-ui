@@ -9,22 +9,22 @@ import { PropsTable } from '@/components/props-table';
 // and error colors, and a configurable required indicator.
 export default function LabelPage() {
   return (
-    <div className="mx-auto max-w-3xl px-6 py-12 space-y-8">
-      <header className="space-y-3">
-        <h1 className="text-3xl font-bold">Label</h1>
-        <p className="text-gray-600 dark:text-gray-400">
+    <div className="docs-page">
+      <header className="docs-header">
+        <h1 className="docs-h1">Label</h1>
+        <p className="docs-lead">
           An accessible form label backed by the headless{' '}
-          <code className="font-mono text-sm">useLabel</code> hook. It manages{' '}
-          <code className="font-mono text-sm">htmlFor</code> association, disabled
+          <code className="docs-code">useLabel</code> hook. It manages{' '}
+          <code className="docs-code">htmlFor</code> association, disabled
           and error coloring, and a configurable required indicator (position
           and custom render). Unlike most react-headless-ui components it applies inline theme
           styles, so it renders visibly out of the box.
         </p>
       </header>
 
-      <section className="space-y-4">
-        <h2 className="text-xl font-semibold">Basic</h2>
-        <p className="text-sm text-gray-600 dark:text-gray-400">
+      <section className="docs-section">
+        <h2 className="docs-h2">Basic</h2>
+        <p className="docs-desc">
           A simple label associated with a field by <code>htmlFor</code>.
         </p>
         <Demo code={`<Label htmlFor="email" className="text-sm font-medium text-gray-700 dark:text-gray-200">Email</Label>`}>
@@ -33,16 +33,16 @@ export default function LabelPage() {
             <input
               id="email-demo"
               type="email"
-              className="rounded-md border border-gray-300 px-3 py-2 text-sm shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-900 dark:text-gray-100 dark:shadow-none"
+              className="rounded-md border border-gray-300 px-3 py-2 text-sm shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 dark:border-gray-600 dark:bg-gray-900 dark:text-gray-100 dark:shadow-none"
               placeholder="you@example.com"
             />
           </div>
         </Demo>
       </section>
 
-      <section className="space-y-4">
-        <h2 className="text-xl font-semibold">Required indicator</h2>
-        <p className="text-sm text-gray-600 dark:text-gray-400">
+      <section className="docs-section">
+        <h2 className="docs-h2">Required indicator</h2>
+        <p className="docs-desc">
           Set <code>required</code> to show an indicator; control its position
           with <code>requiredPosition</code> (<code>start</code> /{' '}
           <code>end</code>) and its glyph with{' '}
@@ -59,9 +59,9 @@ export default function LabelPage() {
         </Demo>
       </section>
 
-      <section className="space-y-4">
-        <h2 className="text-xl font-semibold">Error &amp; disabled</h2>
-        <p className="text-sm text-gray-600 dark:text-gray-400">
+      <section className="docs-section">
+        <h2 className="docs-h2">Error &amp; disabled</h2>
+        <p className="docs-desc">
           <code>error</code> tints the label destructive;{' '}
           <code>disabled</code> mutes it and switches the cursor.
         </p>
@@ -76,8 +76,8 @@ export default function LabelPage() {
         </Demo>
       </section>
 
-      <section className="space-y-4">
-        <h2 className="text-xl font-semibold">Props</h2>
+      <section className="docs-section">
+        <h2 className="docs-h2">Props</h2>
         <PropsTable
           props={[
             {

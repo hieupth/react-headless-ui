@@ -13,12 +13,12 @@ const boxClasses =
 
 export default function ScaleInOutPage() {
   return (
-    <div className="mx-auto max-w-3xl px-6 py-12 space-y-8">
-      <header className="space-y-3">
-        <h1 className="text-3xl font-bold">ScaleInOut</h1>
-        <p className="text-gray-600 dark:text-gray-400">
+    <div className="docs-page">
+      <header className="docs-header">
+        <h1 className="docs-h1">ScaleInOut</h1>
+        <p className="docs-lead">
           A scale animation backed by the headless{' '}
-          <code className="font-mono text-sm">useScaleInOut</code> hook and
+          <code className="docs-code">useScaleInOut</code> hook and
           rendered with framer-motion. It transitions the element from{' '}
           <code>initialScale</code> to <code>finalScale</code> (with a fade),
           anchored at <code>origin</code> (center or a corner). The hook exposes{' '}
@@ -29,9 +29,9 @@ export default function ScaleInOutPage() {
         </p>
       </header>
 
-      <section className="space-y-4">
-        <h2 className="text-xl font-semibold">Scale in from center</h2>
-        <p className="text-sm text-gray-600 dark:text-gray-400">
+      <section className="docs-section">
+        <h2 className="docs-h2">Scale in from center</h2>
+        <p className="docs-desc">
           <code>initialActive</code> runs it on mount; the element grows from{' '}
           <code>initialScale</code> to <code>finalScale</code>.
         </p>
@@ -58,9 +58,9 @@ export default function ScaleInOutPage() {
         </Demo>
       </section>
 
-      <section className="space-y-4">
-        <h2 className="text-xl font-semibold">Corner origin</h2>
-        <p className="text-sm text-gray-600 dark:text-gray-400">
+      <section className="docs-section">
+        <h2 className="docs-h2">Corner origin</h2>
+        <p className="docs-desc">
           Set <code>origin</code> to a corner so the scale radiates from that
           edge.
         </p>
@@ -85,8 +85,8 @@ export default function ScaleInOutPage() {
         </Demo>
       </section>
 
-      <section className="space-y-4">
-        <h2 className="text-xl font-semibold">Props</h2>
+      <section className="docs-section">
+        <h2 className="docs-h2">Props</h2>
         <PropsTable
           props={[
             {

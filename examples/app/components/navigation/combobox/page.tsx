@@ -10,7 +10,7 @@ import { PropsTable } from '@/components/props-table';
 // themes the root wrapper (input + dropdown are portal-rendered).
 const comboboxCls =
   'w-full rounded-md border border-gray-300 bg-white text-sm ' +
-  'focus-within:ring-2 focus-within:ring-blue-500 focus-within:border-transparent ' +
+  'focus-within:ring-2 focus-within:ring-indigo-500 focus-within:border-transparent ' +
   'dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100';
 
 const options = [
@@ -26,12 +26,12 @@ export default function ComboboxPage() {
   const [input, setInput] = useState('');
 
   return (
-    <div className="mx-auto max-w-3xl px-6 py-12 space-y-8">
-      <header className="space-y-3">
-        <h1 className="text-3xl font-bold">Combobox</h1>
-        <p className="text-gray-600 dark:text-gray-400">
+    <div className="docs-page">
+      <header className="docs-header">
+        <h1 className="docs-h1">Combobox</h1>
+        <p className="docs-lead">
           A searchable select backed by the headless{' '}
-          <code className="font-mono text-sm">useCombobox</code> hook. It
+          <code className="docs-code">useCombobox</code> hook. It
           filters options by the input query, supports grouped options and
           free-text entry, roves focus with full keyboard support (arrows,
           Enter, Escape), and{' '}
@@ -43,9 +43,9 @@ export default function ComboboxPage() {
         </p>
       </header>
 
-      <section className="space-y-4">
-        <h2 className="text-xl font-semibold">Data API</h2>
-        <p className="text-sm text-gray-600 dark:text-gray-400">
+      <section className="docs-section">
+        <h2 className="docs-h2">Data API</h2>
+        <p className="docs-desc">
           Pass <code>options</code> ({'{'}
           <code>id</code>, <code>label</code>, <code>value</code>, optional{' '}
           <code>description</code>, <code>disabled</code>). Track selection with{' '}
@@ -54,7 +54,7 @@ export default function ComboboxPage() {
         </p>
         <Demo
           code={`<Combobox
-  className="w-full rounded-md border border-gray-300 bg-white text-sm focus-within:ring-2 focus-within:ring-blue-500 focus-within:border-transparent dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100"
+  className="w-full rounded-md border border-gray-300 bg-white text-sm focus-within:ring-2 focus-within:ring-indigo-500 focus-within:border-transparent dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100"
   options={[
     { id: 'react', label: 'React', value: 'react' },
     { id: 'vue', label: 'Vue', value: 'vue' },
@@ -84,9 +84,9 @@ export default function ComboboxPage() {
         </Demo>
       </section>
 
-      <section className="space-y-4">
-        <h2 className="text-xl font-semibold">Groups, loading &amp; virtualization</h2>
-        <p className="text-sm text-gray-600 dark:text-gray-400">
+      <section className="docs-section">
+        <h2 className="docs-h2">Groups, loading &amp; virtualization</h2>
+        <p className="docs-desc">
           Group options with <code>groups</code>; show a loading state with{' '}
           <code>loading</code> (or a custom <code>loadingRenderer</code>). For
           large option sets the dropdown virtualizes past{' '}
@@ -94,7 +94,7 @@ export default function ComboboxPage() {
         </p>
         <Demo
           code={`<Combobox
-  className="w-full rounded-md border border-gray-300 bg-white text-sm focus-within:ring-2 focus-within:ring-blue-500 focus-within:border-transparent dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100"
+  className="w-full rounded-md border border-gray-300 bg-white text-sm focus-within:ring-2 focus-within:ring-indigo-500 focus-within:border-transparent dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100"
   groups={[
     { id: 'frontend', label: 'Frontend', options: frontendOpts },
     { id: 'backend', label: 'Backend', options: backendOpts }
@@ -110,8 +110,8 @@ export default function ComboboxPage() {
         </Demo>
       </section>
 
-      <section className="space-y-4">
-        <h2 className="text-xl font-semibold">Props</h2>
+      <section className="docs-section">
+        <h2 className="docs-h2">Props</h2>
         <PropsTable
           props={[
             {

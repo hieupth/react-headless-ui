@@ -16,12 +16,12 @@ export default function CollapsiblePage() {
   const [open, setOpen] = useState(false);
 
   return (
-    <div className="mx-auto max-w-3xl px-6 py-12 space-y-8">
-      <header className="space-y-3">
-        <h1 className="text-3xl font-bold">Collapsible</h1>
-        <p className="text-gray-600 dark:text-gray-400">
+    <div className="docs-page">
+      <header className="docs-header">
+        <h1 className="docs-h1">Collapsible</h1>
+        <p className="docs-lead">
           A single expand/collapse disclosure widget backed by the headless{' '}
-          <code className="font-mono text-sm">useCollapsible</code> hook. It
+          <code className="docs-code">useCollapsible</code> hook. It
           animates the content height, wires <code>aria-expanded</code> /{' '}
           <code>aria-controls</code>, and supports controlled or uncontrolled
           open state. Use it for one-off disclosures (vs. Accordion for grouped
@@ -30,9 +30,9 @@ export default function CollapsiblePage() {
         </p>
       </header>
 
-      <section className="space-y-4">
-        <h2 className="text-xl font-semibold">Controlled disclosure</h2>
-        <p className="text-sm text-gray-600 dark:text-gray-400">
+      <section className="docs-section">
+        <h2 className="docs-h2">Controlled disclosure</h2>
+        <p className="docs-desc">
           Pass <code>trigger</code> (the toggle label) and <code>content</code>;
           drive <code>open</code> with state. <code>animated</code> toggles the
           height transition.
@@ -56,7 +56,7 @@ export default function CollapsiblePage() {
               trigger="Show details"
               animated
             >
-              <p className="text-sm text-gray-600 dark:text-gray-400">
+              <p className="docs-desc">
                 Here are the hidden details.
               </p>
             </Collapsible>
@@ -68,9 +68,9 @@ export default function CollapsiblePage() {
         </Demo>
       </section>
 
-      <section className="space-y-4">
-        <h2 className="text-xl font-semibold">Uncontrolled + disabled</h2>
-        <p className="text-sm text-gray-600 dark:text-gray-400">
+      <section className="docs-section">
+        <h2 className="docs-h2">Uncontrolled + disabled</h2>
+        <p className="docs-desc">
           Omit <code>open</code> for an uncontrolled widget started by{' '}
           <code>defaultOpen</code>. A <code>disabled</code> collapsible is
           non-interactive.
@@ -86,7 +86,7 @@ export default function CollapsiblePage() {
         >
           <div className="w-full max-w-sm mx-auto">
             <Collapsible className={collapsibleCls} defaultOpen trigger="Expand me">
-              <p className="text-sm text-gray-600 dark:text-gray-400">
+              <p className="docs-desc">
                 Uncontrolled content.
               </p>
             </Collapsible>
@@ -94,8 +94,8 @@ export default function CollapsiblePage() {
         </Demo>
       </section>
 
-      <section className="space-y-4">
-        <h2 className="text-xl font-semibold">Props</h2>
+      <section className="docs-section">
+        <h2 className="docs-h2">Props</h2>
         <PropsTable
           props={[
             {

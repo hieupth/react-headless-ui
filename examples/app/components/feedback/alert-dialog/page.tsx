@@ -13,26 +13,26 @@ export default function AlertDialogPage() {
   const [publishOpen, setPublishOpen] = useState(false);
 
   return (
-    <div className="mx-auto max-w-3xl px-6 py-12 space-y-8">
-      <header className="space-y-3">
-        <h1 className="text-3xl font-bold">AlertDialog</h1>
-        <p className="text-gray-600 dark:text-gray-400">
+    <div className="docs-page">
+      <header className="docs-header">
+        <h1 className="docs-h1">AlertDialog</h1>
+        <p className="docs-lead">
           A confirmation dialog backed by the headless{' '}
-          <code className="font-mono text-sm">useAlertDialog</code> hook. Unlike
+          <code className="docs-code">useAlertDialog</code> hook. Unlike
           a plain Dialog it is purpose-built for destructive or blocking
           decisions: it forces attention with three severity variants —{' '}
           <code>default</code>, <code>warning</code>,{' '}
           <code>destructive</code> — supports an async{' '}
           <code>onConfirm</code>, and renders through a portal to{' '}
-          <code className="font-mono text-sm">document.body</code>. Theme the
+          <code className="docs-code">document.body</code>. Theme the
           emitted class hooks or pass a <code>children</code> render function
           for full control.
         </p>
       </header>
 
-      <section className="space-y-4">
-        <h2 className="text-xl font-semibold">Destructive confirmation</h2>
-        <p className="text-sm text-gray-600 dark:text-gray-400">
+      <section className="docs-section">
+        <h2 className="docs-h2">Destructive confirmation</h2>
+        <p className="docs-desc">
           <code>variant="destructive"</code> styles the confirm action as a
           danger button; <code>showCancel</code> toggles the cancel affordance.
         </p>
@@ -82,9 +82,9 @@ export default function AlertDialogPage() {
         </Demo>
       </section>
 
-      <section className="space-y-4">
-        <h2 className="text-xl font-semibold">With trigger &amp; async confirm</h2>
-        <p className="text-sm text-gray-600 dark:text-gray-400">
+      <section className="docs-section">
+        <h2 className="docs-h2">With trigger &amp; async confirm</h2>
+        <p className="docs-desc">
           <code>AlertDialogTrigger</code> wires a button to open the dialog.
           <code>onConfirm</code> may be async — the dialog stays open until the
           promise resolves.
@@ -141,7 +141,7 @@ export default function AlertDialogPage() {
             >
               {({ state, confirmButtonProps, cancelButtonProps }) => (
                 <div className="w-full max-w-sm rounded-lg border border-gray-200 bg-white p-5 text-left shadow-lg dark:border-gray-700 dark:bg-gray-900">
-                  <h3 className="text-base font-semibold text-gray-900 dark:text-gray-100">
+                  <h3 className="docs-h3">
                     Publish release?
                   </h3>
                   <p className="mt-1 text-sm text-gray-600 dark:text-gray-400">
@@ -175,8 +175,8 @@ export default function AlertDialogPage() {
         </Demo>
       </section>
 
-      <section className="space-y-4">
-        <h2 className="text-xl font-semibold">Props</h2>
+      <section className="docs-section">
+        <h2 className="docs-h2">Props</h2>
         <PropsTable
           props={[
             {

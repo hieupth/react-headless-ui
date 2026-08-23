@@ -12,12 +12,12 @@ export default function HoverCardPage() {
   const [open, setOpen] = useState(false);
 
   return (
-    <div className="mx-auto max-w-3xl px-6 py-12 space-y-8">
-      <header className="space-y-3">
-        <h1 className="text-3xl font-bold">HoverCard</h1>
-        <p className="text-gray-600 dark:text-gray-400">
+    <div className="docs-page">
+      <header className="docs-header">
+        <h1 className="docs-h1">HoverCard</h1>
+        <p className="docs-lead">
           A hover-revealed detail card backed by the headless{' '}
-          <code className="font-mono text-sm">useHoverCard</code> hook — think
+          <code className="docs-code">useHoverCard</code> hook — think
           Twitter-style user previews. Unlike a Tooltip it holds richer content
           and stays open with a grace period (<code>hoverDelay</code> /{' '}
           <code>leaveDelay</code>) so the pointer can travel into the card. It
@@ -25,9 +25,9 @@ export default function HoverCardPage() {
         </p>
       </header>
 
-      <section className="space-y-4">
-        <h2 className="text-xl font-semibold">User preview</h2>
-        <p className="text-sm text-gray-600 dark:text-gray-400">
+      <section className="docs-section">
+        <h2 className="docs-h2">User preview</h2>
+        <p className="docs-desc">
           Hover the link to reveal a profile card. <code>placement</code> sets
           the side; <code>offset</code> the gap.
         </p>
@@ -42,14 +42,14 @@ export default function HoverCardPage() {
   leaveDelay={200}
   offset={6}
   trigger={
-    <a href="/u/ada" className="font-medium text-blue-600 underline-offset-4 hover:underline dark:text-blue-400">
+    <a href="/u/ada" className="font-medium text-indigo-600 underline-offset-4 hover:underline dark:text-indigo-400">
       @ada
     </a>
   }
 >
   <div className="w-56 rounded-lg border border-gray-200 bg-white p-4 text-sm shadow-lg dark:border-gray-700 dark:bg-gray-900 dark:text-gray-200">
     <div className="flex items-center gap-3">
-      <div className="h-10 w-10 rounded-full bg-gradient-to-br from-blue-500 to-purple-500" />
+      <div className="h-10 w-10 rounded-full bg-gradient-to-br from-indigo-500 to-purple-500" />
       <div>
         <p className="font-semibold">Ada Lovelace</p>
         <p className="text-gray-500">@ada</p>
@@ -73,7 +73,7 @@ export default function HoverCardPage() {
             trigger={
               <a
                 href="#hovercard-ada"
-                className="font-medium text-blue-600 underline-offset-4 hover:underline dark:text-blue-400"
+                className="font-medium text-indigo-600 underline-offset-4 hover:underline dark:text-indigo-400"
               >
                 @ada
               </a>
@@ -81,7 +81,7 @@ export default function HoverCardPage() {
           >
             <div className="w-56 rounded-lg border border-gray-200 bg-white p-4 text-sm shadow-lg dark:border-gray-700 dark:bg-gray-900 dark:text-gray-200">
               <div className="flex items-center gap-3">
-                <div className="h-10 w-10 rounded-full bg-gradient-to-br from-blue-500 to-purple-500" />
+                <div className="h-10 w-10 rounded-full bg-gradient-to-br from-indigo-500 to-purple-500" />
                 <div>
                   <p className="font-semibold">Ada Lovelace</p>
                   <p className="text-gray-500">@ada</p>
@@ -95,9 +95,9 @@ export default function HoverCardPage() {
         </Demo>
       </section>
 
-      <section className="space-y-4">
-        <h2 className="text-xl font-semibold">Placements &amp; timing</h2>
-        <p className="text-sm text-gray-600 dark:text-gray-400">
+      <section className="docs-section">
+        <h2 className="docs-h2">Placements &amp; timing</h2>
+        <p className="docs-desc">
           <code>placement</code> supports <code>top</code>/<code>bottom</code>/
           <code>left</code>/<code>right</code> with <code>-start</code> /
           <code>-end</code> alignment. Tune <code>hoverDelay</code> to avoid
@@ -115,8 +115,8 @@ export default function HoverCardPage() {
         </Demo>
       </section>
 
-      <section className="space-y-4">
-        <h2 className="text-xl font-semibold">Props</h2>
+      <section className="docs-section">
+        <h2 className="docs-h2">Props</h2>
         <PropsTable
           props={[
             {

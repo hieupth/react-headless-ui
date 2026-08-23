@@ -11,16 +11,16 @@ import { PropsTable } from '@/components/props-table';
 // and color the selected (exclusive) segment.
 const btnBase =
   'px-4 py-2 text-sm font-medium transition-colors ' +
-  'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500';
+  'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500';
 
 const variantStyle: Record<string, { rest: string; selected: string }> = {
   primary: {
     rest: 'bg-gray-900 text-white hover:bg-gray-700 dark:bg-white dark:text-gray-900 dark:hover:bg-gray-200',
-    selected: 'bg-blue-600 text-white',
+    selected: 'bg-indigo-600 text-white',
   },
   outline: {
     rest: 'border border-gray-300 text-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:text-gray-200 dark:hover:bg-gray-800',
-    selected: 'border-blue-600 bg-blue-600 text-white',
+    selected: 'border-indigo-600 bg-indigo-600 text-white',
   },
   ghost: {
     rest: 'text-gray-700 hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-800',
@@ -30,23 +30,23 @@ const variantStyle: Record<string, { rest: string; selected: string }> = {
 
 export default function ButtonGroupPage() {
   return (
-    <div className="mx-auto max-w-3xl px-6 py-12 space-y-8">
-      <header className="space-y-3">
-        <h1 className="text-3xl font-bold">ButtonGroup</h1>
-        <p className="text-gray-600 dark:text-gray-400">
+    <div className="docs-page">
+      <header className="docs-header">
+        <h1 className="docs-h1">ButtonGroup</h1>
+        <p className="docs-lead">
           Groups related buttons into a connected segmented control, backed by
-          the headless <code className="font-mono text-sm">useButtonGroup</code>{' '}
+          the headless <code className="docs-code">useButtonGroup</code>{' '}
           hook. Supports horizontal/vertical orientation, attached edges, and
           exclusive (radio-like) or multi selection — all wired with proper ARIA
           roles. Like every react-headless-ui component it ships no styles; theme the
           container and each item via classes or the{' '}
-          <code className="font-mono text-sm">children</code> render prop.
+          <code className="docs-code">children</code> render prop.
         </p>
       </header>
 
-      <section className="space-y-4">
-        <h2 className="text-xl font-semibold">Attached segments</h2>
-        <p className="text-sm text-gray-600 dark:text-gray-400">
+      <section className="docs-section">
+        <h2 className="docs-h2">Attached segments</h2>
+        <p className="docs-desc">
           A connected toolbar of actions using{' '}
           <code>attached</code>. Each item is themed through the{' '}
           <code>children</code> render prop (the headless build leaves internal
@@ -101,9 +101,9 @@ export default function ButtonGroupPage() {
         </Demo>
       </section>
 
-      <section className="space-y-4">
-        <h2 className="text-xl font-semibold">Exclusive selection</h2>
-        <p className="text-sm text-gray-600 dark:text-gray-400">
+      <section className="docs-section">
+        <h2 className="docs-h2">Exclusive selection</h2>
+        <p className="docs-desc">
           With <code>exclusive</code>, the group behaves like a radio control:
           a single selected index, controlled via{' '}
           <code>selectedIndex</code> / <code>onSelectionChange</code>.
@@ -155,9 +155,9 @@ export default function ButtonGroupPage() {
         </Demo>
       </section>
 
-      <section className="space-y-4">
-        <h2 className="text-xl font-semibold">Vertical &amp; disabled</h2>
-        <p className="text-sm text-gray-600 dark:text-gray-400">
+      <section className="docs-section">
+        <h2 className="docs-h2">Vertical &amp; disabled</h2>
+        <p className="docs-desc">
           Set <code>orientation="vertical"</code> for stacked groups, and{' '}
           <code>disabled</code> to disable every item at once.
         </p>
@@ -208,8 +208,8 @@ export default function ButtonGroupPage() {
         </Demo>
       </section>
 
-      <section className="space-y-4">
-        <h2 className="text-xl font-semibold">Props</h2>
+      <section className="docs-section">
+        <h2 className="docs-h2">Props</h2>
         <PropsTable
           props={[
             {

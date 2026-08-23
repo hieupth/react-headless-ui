@@ -29,12 +29,12 @@ function HeartSvg() {
 
 export default function AccessibleIconPage() {
   return (
-    <div className="mx-auto max-w-3xl px-6 py-12 space-y-8">
-      <header className="space-y-3">
-        <h1 className="text-3xl font-bold">AccessibleIcon</h1>
-        <p className="text-gray-600 dark:text-gray-400">
+    <div className="docs-page">
+      <header className="docs-header">
+        <h1 className="docs-h1">AccessibleIcon</h1>
+        <p className="docs-lead">
           An icon wrapper backed by the headless{' '}
-          <code className="font-mono text-sm">useAccessibleIcon</code> hook that
+          <code className="docs-code">useAccessibleIcon</code> hook that
           gets the ARIA right for you. A meaningful icon is announced via{' '}
           <code>role="img"</code> + <code>aria-label</code>; a purely decorative
           one is hidden from assistive tech with <code>aria-hidden</code>. The
@@ -45,9 +45,9 @@ export default function AccessibleIconPage() {
         </p>
       </header>
 
-      <section className="space-y-4">
-        <h2 className="text-xl font-semibold">Meaningful vs decorative</h2>
-        <p className="text-sm text-gray-600 dark:text-gray-400">
+      <section className="docs-section">
+        <h2 className="docs-h2">Meaningful vs decorative</h2>
+        <p className="docs-desc">
           The star is meaningful (it has a label screen readers announce); the
           heart is <code>decorative</code> and therefore <code>aria-hidden</code>.
           Inspect the markup to see the difference.
@@ -75,21 +75,21 @@ export default function AccessibleIconPage() {
         </Demo>
       </section>
 
-      <section className="space-y-4">
-        <h2 className="text-xl font-semibold">Sizes &amp; colors</h2>
-        <p className="text-sm text-gray-600 dark:text-gray-400">
+      <section className="docs-section">
+        <h2 className="docs-h2">Sizes &amp; colors</h2>
+        <p className="docs-desc">
           <code>size</code> sets the font-size the icon inherits;{' '}
           <code>color</code> sets the foreground. Rotation state is also
           available via the hook&apos;s <code>rotate()</code> action.
         </p>
         <Demo
-          code={`<div className="flex items-end gap-8 rounded-lg border border-gray-200 bg-white p-6 text-blue-600 shadow-sm dark:border-gray-700 dark:bg-gray-900 dark:text-blue-400">
+          code={`<div className="flex items-end gap-8 rounded-lg border border-gray-200 bg-white p-6 text-indigo-600 shadow-sm dark:border-gray-700 dark:bg-gray-900 dark:text-indigo-400">
   <AccessibleIcon icon={<StarSvg />} label="Small" size={16} color="#3b82f6" />
   <AccessibleIcon icon={<StarSvg />} label="Medium" size={28} color="#3b82f6" />
   <AccessibleIcon icon={<StarSvg />} label="Large" size={44} color="#3b82f6" />
 </div>`}
         >
-          <div className="flex items-end gap-8 rounded-lg border border-gray-200 bg-white p-6 text-blue-600 shadow-sm dark:border-gray-700 dark:bg-gray-900 dark:text-blue-400">
+          <div className="flex items-end gap-8 rounded-lg border border-gray-200 bg-white p-6 text-indigo-600 shadow-sm dark:border-gray-700 dark:bg-gray-900 dark:text-indigo-400">
             <AccessibleIcon icon={<StarSvg />} label="Small star" size={16} color="#3b82f6" />
             <AccessibleIcon icon={<StarSvg />} label="Medium star" size={28} color="#3b82f6" />
             <AccessibleIcon icon={<StarSvg />} label="Large star" size={44} color="#3b82f6" />
@@ -97,9 +97,9 @@ export default function AccessibleIconPage() {
         </Demo>
       </section>
 
-      <section className="space-y-4">
-        <h2 className="text-xl font-semibold">Interactive</h2>
-        <p className="text-sm text-gray-600 dark:text-gray-400">
+      <section className="docs-section">
+        <h2 className="docs-h2">Interactive</h2>
+        <p className="docs-desc">
           Set <code>interactive</code> to make the icon focusable and operable —
           it gains <code>tabIndex</code> and fires <code>onClick</code> on Enter
           / Space, so an icon-only control stays keyboard accessible.
@@ -127,8 +127,8 @@ export default function AccessibleIconPage() {
         </Demo>
       </section>
 
-      <section className="space-y-4">
-        <h2 className="text-xl font-semibold">Props</h2>
+      <section className="docs-section">
+        <h2 className="docs-h2">Props</h2>
         <PropsTable
           props={[
             { name: 'icon', type: 'string | ReactNode', default: '—', description: 'Icon to render — a Font Awesome class string (e.g. "star") or a React element.' },

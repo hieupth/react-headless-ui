@@ -13,12 +13,12 @@ export default function PanelPage() {
   const [expanded, setExpanded] = useState(true);
 
   return (
-    <div className="mx-auto max-w-3xl px-6 py-12 space-y-8">
-      <header className="space-y-3">
-        <h1 className="text-3xl font-bold">Panel</h1>
-        <p className="text-gray-600 dark:text-gray-400">
+    <div className="docs-page">
+      <header className="docs-header">
+        <h1 className="docs-h1">Panel</h1>
+        <p className="docs-lead">
           A content surface backed by the headless{' '}
-          <code className="font-mono text-sm">usePanel</code> hook. Panel
+          <code className="docs-code">usePanel</code> hook. Panel
           composes a header (<code>title</code>, <code>subtitle</code>,{' '}
           <code>icon</code>, <code>actions</code>), a body, and an optional
           footer. Set <code>collapsible</code> to let the header toggle the body
@@ -27,9 +27,9 @@ export default function PanelPage() {
         </p>
       </header>
 
-      <section className="space-y-4">
-        <h2 className="text-xl font-semibold">Basic panel</h2>
-        <p className="text-sm text-gray-600 dark:text-gray-400">
+      <section className="docs-section">
+        <h2 className="docs-h2">Basic panel</h2>
+        <p className="docs-desc">
           <code>title</code> and <code>footer</code> populate the surrounding
           sections; children fill the body.
         </p>
@@ -52,9 +52,9 @@ export default function PanelPage() {
         </Demo>
       </section>
 
-      <section className="space-y-4">
-        <h2 className="text-xl font-semibold">Collapsible</h2>
-        <p className="text-sm text-gray-600 dark:text-gray-400">
+      <section className="docs-section">
+        <h2 className="docs-h2">Collapsible</h2>
+        <p className="docs-desc">
           With <code>collapsible</code>, the header toggles the body. Drive it
           controlled via <code>expanded</code> + <code>onToggle</code>.
         </p>
@@ -83,9 +83,9 @@ export default function PanelPage() {
         </Demo>
       </section>
 
-      <section className="space-y-4">
-        <h2 className="text-xl font-semibold">With actions</h2>
-        <p className="text-sm text-gray-600 dark:text-gray-400">
+      <section className="docs-section">
+        <h2 className="docs-h2">With actions</h2>
+        <p className="docs-desc">
           <code>actions</code> renders in the header next to the title.
         </p>
         <Demo
@@ -107,8 +107,8 @@ export default function PanelPage() {
         </Demo>
       </section>
 
-      <section className="space-y-4">
-        <h2 className="text-xl font-semibold">Props</h2>
+      <section className="docs-section">
+        <h2 className="docs-h2">Props</h2>
         <PropsTable
           props={[
             { name: 'title / subtitle', type: 'string', default: '—', description: 'Header heading and secondary text.' },

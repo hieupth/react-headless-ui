@@ -16,12 +16,12 @@ const steps = [
 
 export default function StepperPage() {
   return (
-    <div className="mx-auto max-w-3xl px-6 py-12 space-y-8">
-      <header className="space-y-3">
-        <h1 className="text-3xl font-bold">Stepper</h1>
-        <p className="text-gray-600 dark:text-gray-400">
+    <div className="docs-page">
+      <header className="docs-header">
+        <h1 className="docs-h1">Stepper</h1>
+        <p className="docs-lead">
           A multi-step progress indicator backed by the headless{' '}
-          <code className="font-mono text-sm">useStepper</code> hook. It tracks
+          <code className="docs-code">useStepper</code> hook. It tracks
           the current step, completed and invalid steps, supports{' '}
           <code>linear</code> ordering, per-step <code>validate</code>{' '}
           callbacks, and horizontal / vertical orientations. Variants include{' '}
@@ -30,9 +30,9 @@ export default function StepperPage() {
         </p>
       </header>
 
-      <section className="space-y-4">
-        <h2 className="text-xl font-semibold">Horizontal flow</h2>
-        <p className="text-sm text-gray-600 dark:text-gray-400">
+      <section className="docs-section">
+        <h2 className="docs-h2">Horizontal flow</h2>
+        <p className="docs-desc">
           Each step needs a unique <code>key</code> and a <code>title</code>.
           <code>showNavigation</code> renders Back / Next buttons.
         </p>
@@ -53,9 +53,9 @@ export default function StepperPage() {
         </Demo>
       </section>
 
-      <section className="space-y-4">
-        <h2 className="text-xl font-semibold">Vertical &amp; dots variant</h2>
-        <p className="text-sm text-gray-600 dark:text-gray-400">
+      <section className="docs-section">
+        <h2 className="docs-h2">Vertical &amp; dots variant</h2>
+        <p className="docs-desc">
           <code>orientation="vertical"</code> stacks the steps;{' '}
           <code>variant="dots"</code> swaps numbered markers for dots.
         </p>
@@ -78,8 +78,8 @@ export default function StepperPage() {
         </Demo>
       </section>
 
-      <section className="space-y-4">
-        <h2 className="text-xl font-semibold">Props</h2>
+      <section className="docs-section">
+        <h2 className="docs-h2">Props</h2>
         <PropsTable
           props={[
             { name: 'steps', type: 'StepperStep[]', default: '—', description: 'Step config: { key, title, description?, validate?, optional? }.' },

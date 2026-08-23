@@ -20,12 +20,12 @@ export default function ListPage() {
   const [selected, setSelected] = useState<(string | number)[]>([]);
 
   return (
-    <div className="mx-auto max-w-3xl px-6 py-12 space-y-8">
-      <header className="space-y-3">
-        <h1 className="text-3xl font-bold">List</h1>
-        <p className="text-gray-600 dark:text-gray-400">
+    <div className="docs-page">
+      <header className="docs-header">
+        <h1 className="docs-h1">List</h1>
+        <p className="docs-lead">
           A vertical collection backed by the headless{' '}
-          <code className="font-mono text-sm">useList</code> hook. It renders an{' '}
+          <code className="docs-code">useList</code> hook. It renders an{' '}
           array of <code>ListItem</code>s (label, description, icon, metadata)
           and owns selection (single or <code>multiSelect</code>), full keyboard
           navigation, optional <code>searchable</code> filtering, sorting,
@@ -34,9 +34,9 @@ export default function ListPage() {
         </p>
       </header>
 
-      <section className="space-y-4">
-        <h2 className="text-xl font-semibold">Selectable list</h2>
-        <p className="text-sm text-gray-600 dark:text-gray-400">
+      <section className="docs-section">
+        <h2 className="docs-h2">Selectable list</h2>
+        <p className="docs-desc">
           Drive <code>selectedKeys</code> with state;{' '}
           <code>onSelectionChange</code> returns the selected id array.
         </p>
@@ -61,9 +61,9 @@ export default function ListPage() {
         </Demo>
       </section>
 
-      <section className="space-y-4">
-        <h2 className="text-xl font-semibold">Searchable</h2>
-        <p className="text-sm text-gray-600 dark:text-gray-400">
+      <section className="docs-section">
+        <h2 className="docs-h2">Searchable</h2>
+        <p className="docs-desc">
           <code>searchable</code> filters the items; the search field itself is
           headless — supply a <code>renderSearch</code> that composes the{' '}
           <code>value</code> / <code>onChange</code> / <code>placeholder</code>{' '}
@@ -107,8 +107,8 @@ export default function ListPage() {
         </Demo>
       </section>
 
-      <section className="space-y-4">
-        <h2 className="text-xl font-semibold">Props</h2>
+      <section className="docs-section">
+        <h2 className="docs-h2">Props</h2>
         <PropsTable
           props={[
             { name: 'items / defaultItems', type: 'ListItem[]', default: '—', description: 'Controlled / initial list rows: { id, value, label, description?, icon?, timestamp? }.' },

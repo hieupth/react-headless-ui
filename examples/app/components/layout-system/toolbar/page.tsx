@@ -34,12 +34,12 @@ export default function ToolbarPage() {
   const [lastActivated, setLastActivated] = useState<string>('—');
 
   return (
-    <div className="mx-auto max-w-3xl px-6 py-12 space-y-8">
-      <header className="space-y-3">
-        <h1 className="text-3xl font-bold">Toolbar</h1>
-        <p className="text-gray-600 dark:text-gray-400">
+    <div className="docs-page">
+      <header className="docs-header">
+        <h1 className="docs-h1">Toolbar</h1>
+        <p className="docs-lead">
           A grouped set of action buttons backed by the headless{' '}
-          <code className="font-mono text-sm">useToolbar</code> hook. It manages
+          <code className="docs-code">useToolbar</code> hook. It manages
           item activation, keyboard navigation (Arrow / Home / End), and the{' '}
           <code>toolbar</code> role with <code>aria-orientation</code>. Items are
           declared as data — <code>button</code>, <code>separator</code>,{' '}
@@ -49,9 +49,9 @@ export default function ToolbarPage() {
         </p>
       </header>
 
-      <section className="space-y-4">
-        <h2 className="text-xl font-semibold">Horizontal toolbar</h2>
-        <p className="text-sm text-gray-600 dark:text-gray-400">
+      <section className="docs-section">
+        <h2 className="docs-h2">Horizontal toolbar</h2>
+        <p className="docs-desc">
           A file-style toolbar: a primary action, regular buttons, a separator,
           and a disabled item. Last activated:{' '}
           <code className="font-mono">{lastActivated}</code>.
@@ -83,9 +83,9 @@ export default function ToolbarPage() {
         </Demo>
       </section>
 
-      <section className="space-y-4">
-        <h2 className="text-xl font-semibold">Icon-only &amp; vertical</h2>
-        <p className="text-sm text-gray-600 dark:text-gray-400">
+      <section className="docs-section">
+        <h2 className="docs-h2">Icon-only &amp; vertical</h2>
+        <p className="docs-desc">
           With <code>showLabels</code> off, only icons render.{' '}
           <code>orientation="vertical"</code> stacks the items and flips{' '}
           <code>aria-orientation</code>.
@@ -110,9 +110,9 @@ export default function ToolbarPage() {
         </Demo>
       </section>
 
-      <section className="space-y-4">
-        <h2 className="text-xl font-semibold">Custom item renderer</h2>
-        <p className="text-sm text-gray-600 dark:text-gray-400">
+      <section className="docs-section">
+        <h2 className="docs-h2">Custom item renderer</h2>
+        <p className="docs-desc">
           Pass <code>renderItem</code> to take full control of how each item is
           drawn — useful for toggles, dropdowns, or brand-styled buttons.
         </p>
@@ -133,7 +133,7 @@ export default function ToolbarPage() {
       className={
         'rounded-md px-3 py-1.5 text-sm font-medium transition-colors ' +
         (isActive
-          ? 'bg-blue-600 text-white'
+          ? 'bg-indigo-600 text-white'
           : 'text-gray-700 hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-800')
       }
     >
@@ -158,7 +158,7 @@ export default function ToolbarPage() {
                 className={
                   'rounded-md px-3 py-1.5 text-sm font-medium transition-colors ' +
                   (isActive
-                    ? 'bg-blue-600 text-white'
+                    ? 'bg-indigo-600 text-white'
                     : 'text-gray-700 hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-800')
                 }
               >
@@ -169,8 +169,8 @@ export default function ToolbarPage() {
         </Demo>
       </section>
 
-      <section className="space-y-4">
-        <h2 className="text-xl font-semibold">Props</h2>
+      <section className="docs-section">
+        <h2 className="docs-h2">Props</h2>
         <PropsTable
           props={[
             { name: 'defaultItems', type: 'ToolbarItem[]', default: '[]', description: 'Uncontrolled initial items (button | separator | spacer | group).' },

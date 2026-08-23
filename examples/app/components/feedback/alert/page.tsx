@@ -22,22 +22,22 @@ const variantClasses: Record<string, string> = {
 
 export default function AlertPage() {
   return (
-    <div className="mx-auto max-w-3xl px-6 py-12 space-y-8">
-      <header className="space-y-3">
-        <h1 className="text-3xl font-bold">Alert</h1>
-        <p className="text-gray-600 dark:text-gray-400">
+    <div className="docs-page">
+      <header className="docs-header">
+        <h1 className="docs-h1">Alert</h1>
+        <p className="docs-lead">
           An inline feedback banner backed by the headless{' '}
-          <code className="font-mono text-sm">useAlert</code> hook. It composes
+          <code className="docs-code">useAlert</code> hook. It composes
           focus, press, and semantic mixins to deliver four severity variants,
           an optional dismiss button, and auto-dismiss — all driven by ARIA
-          roles. Style the emitted <code className="font-mono text-sm">data-variant</code>{' '}
+          roles. Style the emitted <code className="docs-code">data-variant</code>{' '}
           / class hooks to theme it.
         </p>
       </header>
 
-      <section className="space-y-4">
-        <h2 className="text-xl font-semibold">Variants</h2>
-        <p className="text-sm text-gray-600 dark:text-gray-400">
+      <section className="docs-section">
+        <h2 className="docs-h2">Variants</h2>
+        <p className="docs-desc">
           Four severity variants: <code>default</code> (info),{' '}
           <code>success</code>, <code>warning</code>, and{' '}
           <code>destructive</code>.
@@ -93,9 +93,9 @@ export default function AlertPage() {
         </Demo>
       </section>
 
-      <section className="space-y-4">
-        <h2 className="text-xl font-semibold">Dismissible</h2>
-        <p className="text-sm text-gray-600 dark:text-gray-400">
+      <section className="docs-section">
+        <h2 className="docs-h2">Dismissible</h2>
+        <p className="docs-desc">
           Set <code>dismissible</code> to render a close affordance; wire{' '}
           <code>onDismiss</code> / <code>onOpenChange</code> to update state.
           Use <code>autoDismiss</code> (ms) to self-close.
@@ -124,8 +124,8 @@ export default function AlertPage() {
         </Demo>
       </section>
 
-      <section className="space-y-4">
-        <h2 className="text-xl font-semibold">Props</h2>
+      <section className="docs-section">
+        <h2 className="docs-h2">Props</h2>
         <PropsTable
           props={[
             {

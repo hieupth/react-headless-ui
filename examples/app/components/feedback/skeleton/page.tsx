@@ -9,12 +9,12 @@ import { PropsTable } from '@/components/props-table';
 // rectangular, and rounded placeholders; `lines` stacks text rows.
 export default function SkeletonPage() {
   return (
-    <div className="mx-auto max-w-3xl px-6 py-12 space-y-8">
-      <header className="space-y-3">
-        <h1 className="text-3xl font-bold">Skeleton</h1>
-        <p className="text-gray-600 dark:text-gray-400">
+    <div className="docs-page">
+      <header className="docs-header">
+        <h1 className="docs-h1">Skeleton</h1>
+        <p className="docs-lead">
           A loading placeholder backed by the headless{' '}
-          <code className="font-mono text-sm">useSkeleton</code> hook. It ships
+          <code className="docs-code">useSkeleton</code> hook. It ships
           four shapes — <code>text</code>, <code>circular</code>,{' '}
           <code>rectangular</code>, and <code>rounded</code> — plus an{' '}
           <code>animated</code> pulse and a <code>shimmer</code> sweep. Unlike
@@ -23,9 +23,9 @@ export default function SkeletonPage() {
         </p>
       </header>
 
-      <section className="space-y-4">
-        <h2 className="text-xl font-semibold">Shapes</h2>
-        <p className="text-sm text-gray-600 dark:text-gray-400">
+      <section className="docs-section">
+        <h2 className="docs-h2">Shapes</h2>
+        <p className="docs-desc">
           Pick a <code>variant</code> for the placeholder shape; use{' '}
           <code>width</code> / <code>height</code> for exact dimensions.
         </p>
@@ -42,9 +42,9 @@ export default function SkeletonPage() {
         </Demo>
       </section>
 
-      <section className="space-y-4">
-        <h2 className="text-xl font-semibold">Animated &amp; multi-line</h2>
-        <p className="text-sm text-gray-600 dark:text-gray-400">
+      <section className="docs-section">
+        <h2 className="docs-h2">Animated &amp; multi-line</h2>
+        <p className="docs-desc">
           <code>animated</code> pulses the placeholder;{' '}
           <code>shimmer</code> adds a sweeping highlight. For body copy, set{' '}
           <code>variant="text"</code> with <code>lines</code>.
@@ -60,9 +60,9 @@ export default function SkeletonPage() {
         </Demo>
       </section>
 
-      <section className="space-y-4">
-        <h2 className="text-xl font-semibold">Profile card layout</h2>
-        <p className="text-sm text-gray-600 dark:text-gray-400">
+      <section className="docs-section">
+        <h2 className="docs-h2">Profile card layout</h2>
+        <p className="docs-desc">
           Combine shapes to preview a loading card while real data fetches.
         </p>
         <Demo
@@ -82,8 +82,8 @@ export default function SkeletonPage() {
         </Demo>
       </section>
 
-      <section className="space-y-4">
-        <h2 className="text-xl font-semibold">Props</h2>
+      <section className="docs-section">
+        <h2 className="docs-h2">Props</h2>
         <PropsTable
           props={[
             {

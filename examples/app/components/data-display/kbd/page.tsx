@@ -9,12 +9,12 @@ import { PropsTable } from '@/components/props-table';
 // through className.
 export default function KbdPage() {
   return (
-    <div className="mx-auto max-w-3xl px-6 py-12 space-y-8">
-      <header className="space-y-3">
-        <h1 className="text-3xl font-bold">Kbd</h1>
-        <p className="text-gray-600 dark:text-gray-400">
+    <div className="docs-page">
+      <header className="docs-header">
+        <h1 className="docs-h1">Kbd</h1>
+        <p className="docs-lead">
           A keyboard-key display backed by the headless{' '}
-          <code className="font-mono text-sm">useKbd</code> hook. Use{' '}
+          <code className="docs-code">useKbd</code> hook. Use{' '}
           <code>Kbd</code> to show a single key (e.g. <kbd>Enter</kbd>) and{' '}
           <code>KbdShortcut</code> to render a parsed{" "}
           <code>modifier+key</code> combination such as{" "}
@@ -24,9 +24,9 @@ export default function KbdPage() {
         </p>
       </header>
 
-      <section className="space-y-4">
-        <h2 className="text-xl font-semibold">Single keys</h2>
-        <p className="text-sm text-gray-600 dark:text-gray-400">
+      <section className="docs-section">
+        <h2 className="docs-h2">Single keys</h2>
+        <p className="docs-desc">
           Pass the key name as <code>value</code> or children.
         </p>
         <Demo
@@ -42,9 +42,9 @@ export default function KbdPage() {
         </Demo>
       </section>
 
-      <section className="space-y-4">
-        <h2 className="text-xl font-semibold">Shortcuts</h2>
-        <p className="text-sm text-gray-600 dark:text-gray-400">
+      <section className="docs-section">
+        <h2 className="docs-h2">Shortcuts</h2>
+        <p className="docs-desc">
           <code>KbdShortcut</code> parses a <code>value</code> string into
           individual modifier + key badges.
         </p>
@@ -59,9 +59,9 @@ export default function KbdPage() {
         </Demo>
       </section>
 
-      <section className="space-y-4">
-        <h2 className="text-xl font-semibold">Interactive</h2>
-        <p className="text-sm text-gray-600 dark:text-gray-400">
+      <section className="docs-section">
+        <h2 className="docs-h2">Interactive</h2>
+        <p className="docs-desc">
           Set <code>interactive</code> to make the key clickable (it fires{' '}
           <code>onPress</code> on press with an <code>aria-pressed</code> state).
         </p>
@@ -72,8 +72,8 @@ export default function KbdPage() {
         </Demo>
       </section>
 
-      <section className="space-y-4">
-        <h2 className="text-xl font-semibold">Props</h2>
+      <section className="docs-section">
+        <h2 className="docs-h2">Props</h2>
         <PropsTable
           props={[
             { name: 'value / defaultValue', type: 'string', default: '—', description: 'Controlled / initial key value.' },

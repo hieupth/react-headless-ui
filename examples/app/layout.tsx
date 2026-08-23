@@ -20,17 +20,15 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <head>
         <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
       </head>
-      <body className="bg-white text-gray-900 dark:bg-gray-950 dark:text-gray-100">
-        <div className="flex min-h-screen">
+      <body>
+        <div className="app-shell">
           <Sidebar />
-          <div className="flex flex-1 min-w-0 flex-col">
-            <header className="sticky top-0 z-20 flex items-center justify-between border-b border-gray-200 dark:border-gray-800 bg-white/80 dark:bg-gray-950/80 backdrop-blur px-4 py-3">
-              <span className="text-sm font-semibold text-gray-700 dark:text-gray-200">
-                @hieupth/react-headless-ui
-              </span>
+          <div className="app-content">
+            <header className="app-header">
+              <span className="app-brand">@hieupth/react-headless-ui</span>
               <ThemeSwitcher />
             </header>
-            <main className="flex-1">{children}</main>
+            <main className="app-main">{children}</main>
           </div>
         </div>
       </body>

@@ -13,12 +13,12 @@ const boxClasses =
 
 export default function RotateInPage() {
   return (
-    <div className="mx-auto max-w-3xl px-6 py-12 space-y-8">
-      <header className="space-y-3">
-        <h1 className="text-3xl font-bold">RotateIn</h1>
-        <p className="text-gray-600 dark:text-gray-400">
+    <div className="docs-page">
+      <header className="docs-header">
+        <h1 className="docs-h1">RotateIn</h1>
+        <p className="docs-lead">
           A rotation animation backed by the headless{' '}
-          <code className="font-mono text-sm">useRotateIn</code> hook and rendered
+          <code className="docs-code">useRotateIn</code> hook and rendered
           with framer-motion. It rotates from <code>initialAngle</code> to{' '}
           <code>finalAngle</code> (degrees) in a <code>direction</code> (clockwise
           or counter-clockwise), repeating <code>repeat</code> times (0 = loop
@@ -30,9 +30,9 @@ export default function RotateInPage() {
         </p>
       </header>
 
-      <section className="space-y-4">
-        <h2 className="text-xl font-semibold">Full rotation</h2>
-        <p className="text-sm text-gray-600 dark:text-gray-400">
+      <section className="docs-section">
+        <h2 className="docs-h2">Full rotation</h2>
+        <p className="docs-desc">
           <code>initialActive</code> starts it on mount;{' '}
           <code>repeat={0}</code> (default) loops indefinitely.
         </p>
@@ -57,9 +57,9 @@ export default function RotateInPage() {
         </Demo>
       </section>
 
-      <section className="space-y-4">
-        <h2 className="text-xl font-semibold">Single quarter turn</h2>
-        <p className="text-sm text-gray-600 dark:text-gray-400">
+      <section className="docs-section">
+        <h2 className="docs-h2">Single quarter turn</h2>
+        <p className="docs-desc">
           A bounded <code>finalAngle</code> with <code>repeat=1</code> runs once
           and stops.
         </p>
@@ -88,8 +88,8 @@ export default function RotateInPage() {
         </Demo>
       </section>
 
-      <section className="space-y-4">
-        <h2 className="text-xl font-semibold">Props</h2>
+      <section className="docs-section">
+        <h2 className="docs-h2">Props</h2>
         <PropsTable
           props={[
             {

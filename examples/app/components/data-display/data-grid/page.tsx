@@ -24,12 +24,12 @@ const data = [
 
 export default function DataGridPage() {
   return (
-    <div className="mx-auto max-w-3xl px-6 py-12 space-y-8">
-      <header className="space-y-3">
-        <h1 className="text-3xl font-bold">DataGrid</h1>
-        <p className="text-gray-600 dark:text-gray-400">
+    <div className="docs-page">
+      <header className="docs-header">
+        <h1 className="docs-h1">DataGrid</h1>
+        <p className="docs-lead">
           A feature-rich grid backed by the headless{' '}
-          <code className="font-mono text-sm">useDataGrid</code> hook and{' '}
+          <code className="docs-code">useDataGrid</code> hook and{' '}
           <code>useVirtualList</code>. Beyond a plain table it offers
           client-side sorting, filtering, pagination, row selection, column
           visibility/resizing, and automatic body virtualization once the row
@@ -40,9 +40,9 @@ export default function DataGridPage() {
         </p>
       </header>
 
-      <section className="space-y-4">
-        <h2 className="text-xl font-semibold">Basic grid</h2>
-        <p className="text-sm text-gray-600 dark:text-gray-400">
+      <section className="docs-section">
+        <h2 className="docs-h2">Basic grid</h2>
+        <p className="docs-desc">
           Rows are flat records with a unique <code>id</code>; column ids map
           to record keys.
         </p>
@@ -65,9 +65,9 @@ export default function DataGridPage() {
         </Demo>
       </section>
 
-      <section className="space-y-4">
-        <h2 className="text-xl font-semibold">Selection &amp; pagination</h2>
-        <p className="text-sm text-gray-600 dark:text-gray-400">
+      <section className="docs-section">
+        <h2 className="docs-h2">Selection &amp; pagination</h2>
+        <p className="docs-desc">
           <code>showSelection</code> adds a checkbox column;{' '}
           <code>showPagination</code> renders paging controls driven by{' '}
           <code>pageSizeOptions</code>.
@@ -95,9 +95,9 @@ export default function DataGridPage() {
         </Demo>
       </section>
 
-      <section className="space-y-4">
-        <h2 className="text-xl font-semibold">Virtualized</h2>
-        <p className="text-sm text-gray-600 dark:text-gray-400">
+      <section className="docs-section">
+        <h2 className="docs-h2">Virtualized</h2>
+        <p className="docs-desc">
           Set <code>virtualize</code> to window the body so large grids render
           only the visible rows. It kicks in automatically once{' '}
           <code>data</code> grows past <code>virtualizeThreshold</code> (default{' '}
@@ -119,8 +119,8 @@ export default function DataGridPage() {
         </Demo>
       </section>
 
-      <section className="space-y-4">
-        <h2 className="text-xl font-semibold">Props</h2>
+      <section className="docs-section">
+        <h2 className="docs-h2">Props</h2>
         <PropsTable
           props={[
             { name: 'columns', type: 'GridColumn[]', default: '—', description: 'Column config: { id, header, sortable?, filterable?, resizable?, accessor?, cellRenderer? }.' },

@@ -4,9 +4,6 @@
 
 @custom-variant dark (&:where(.dark, .dark *));
 
-/* Background/foreground colors are applied via Tailwind utilities on <body>
-   in app/layout.tsx (bg-white/dark:bg-gray-950 etc.), which override any
-   element-selector rule here — so no CSS-variable color block is defined. */
-body {
-  font-family: system-ui, -apple-system, sans-serif;
-}
+/* Base typography, colors, and the design-token system live in
+   showcase.css (tokens + body styles). Tailwind utilities remain available
+   for demo files; the `dark` variant is class-driven, flipped on <html>. */

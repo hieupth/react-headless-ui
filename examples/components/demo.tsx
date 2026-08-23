@@ -28,18 +28,16 @@ export function Demo({ code, children }: DemoProps) {
   const panelId = useId();
 
   return (
-    <div className="my-6 rounded-lg border border-gray-200 dark:border-gray-700 overflow-hidden">
-      <div className="flex items-center justify-between border-b border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-900/40 px-3 py-2">
-        <span className="text-xs font-medium uppercase tracking-wide text-gray-500 dark:text-gray-400">
-          Preview
-        </span>
+    <div className="demo-frame">
+      <div className="demo-toolbar">
+        <span className="demo-label">Preview</span>
         <button
           type="button"
           onClick={() => {
             setShowCode((v) => !v);
             setCodeMounted(true);
           }}
-          className="px-2 py-1 text-xs rounded border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+          className="demo-toggle"
           aria-expanded={showCode}
           aria-controls={panelId}
         >
@@ -47,15 +45,11 @@ export function Demo({ code, children }: DemoProps) {
         </button>
       </div>
 
-      <div className="p-6 flex items-center justify-center min-h-[120px] bg-white dark:bg-gray-950">
+      <div className="demo-canvas">
         {children}
       </div>
 
-      <div
-        id={panelId}
-        className="border-t border-gray-200 dark:border-gray-700"
-        hidden={!showCode}
-      >
+      <div id={panelId} className="demo-code-panel" hidden={!showCode}>
         {codeMounted && <CodeBlock code={code} />}
       </div>
     </div>

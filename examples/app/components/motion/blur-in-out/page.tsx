@@ -13,12 +13,12 @@ const boxClasses =
 
 export default function BlurInOutPage() {
   return (
-    <div className="mx-auto max-w-3xl px-6 py-12 space-y-8">
-      <header className="space-y-3">
-        <h1 className="text-3xl font-bold">BlurInOut</h1>
-        <p className="text-gray-600 dark:text-gray-400">
+    <div className="docs-page">
+      <header className="docs-header">
+        <h1 className="docs-h1">BlurInOut</h1>
+        <p className="docs-lead">
           A blur animation backed by the headless{' '}
-          <code className="font-mono text-sm">useBlurInOut</code> hook and
+          <code className="docs-code">useBlurInOut</code> hook and
           rendered with framer-motion. It animates a CSS{' '}
           <code>filter: blur()</code> from <code>initialBlur</code> to{' '}
           <code>finalBlur</code>, repeating <code>repeat</code> times (0 = loop
@@ -30,9 +30,9 @@ export default function BlurInOutPage() {
         </p>
       </header>
 
-      <section className="space-y-4">
-        <h2 className="text-xl font-semibold">Blur in</h2>
-        <p className="text-sm text-gray-600 dark:text-gray-400">
+      <section className="docs-section">
+        <h2 className="docs-h2">Blur in</h2>
+        <p className="docs-desc">
           <code>initialActive</code> starts it on mount; the element resolves
           from <code>finalBlur</code> down to <code>initialBlur</code> (0 = sharp).
         </p>
@@ -59,9 +59,9 @@ export default function BlurInOutPage() {
         </Demo>
       </section>
 
-      <section className="space-y-4">
-        <h2 className="text-xl font-semibold">Heavier blur</h2>
-        <p className="text-sm text-gray-600 dark:text-gray-400">
+      <section className="docs-section">
+        <h2 className="docs-h2">Heavier blur</h2>
+        <p className="docs-desc">
           A larger <code>finalBlur</code> deepens the effect;{' '}
           <code>repeat={0}</code> (default) keeps it looping.
         </p>
@@ -86,8 +86,8 @@ export default function BlurInOutPage() {
         </Demo>
       </section>
 
-      <section className="space-y-4">
-        <h2 className="text-xl font-semibold">Props</h2>
+      <section className="docs-section">
+        <h2 className="docs-h2">Props</h2>
         <PropsTable
           props={[
             {

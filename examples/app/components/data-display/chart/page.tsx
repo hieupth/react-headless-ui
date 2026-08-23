@@ -38,12 +38,12 @@ const barDatasets = [
 
 export default function ChartPage() {
   return (
-    <div className="mx-auto max-w-3xl px-6 py-12 space-y-8">
-      <header className="space-y-3">
-        <h1 className="text-3xl font-bold">Chart</h1>
-        <p className="text-gray-600 dark:text-gray-400">
+    <div className="docs-page">
+      <header className="docs-header">
+        <h1 className="docs-h1">Chart</h1>
+        <p className="docs-lead">
           Lightweight SVG charts backed by the headless{' '}
-          <code className="font-mono text-sm">useChart</code> hook. It draws{' '}
+          <code className="docs-code">useChart</code> hook. It draws{' '}
           <code>line</code>, <code>bar</code>, <code>area</code>,{' '}
           <code>pie</code>, and <code>scatter</code> charts from one or more{' '}
           <code>datasets</code>, computing scales, axes, legends, and optional
@@ -52,9 +52,9 @@ export default function ChartPage() {
         </p>
       </header>
 
-      <section className="space-y-4">
-        <h2 className="text-xl font-semibold">Line chart</h2>
-        <p className="text-sm text-gray-600 dark:text-gray-400">
+      <section className="docs-section">
+        <h2 className="docs-h2">Line chart</h2>
+        <p className="docs-desc">
           Each dataset is <code>{'{ label, data, color }'}</code> where data
           points are <code>{'{ x, y }'}</code>.
         </p>
@@ -81,9 +81,9 @@ export default function ChartPage() {
         </Demo>
       </section>
 
-      <section className="space-y-4">
-        <h2 className="text-xl font-semibold">Bar chart</h2>
-        <p className="text-sm text-gray-600 dark:text-gray-400">
+      <section className="docs-section">
+        <h2 className="docs-h2">Bar chart</h2>
+        <p className="docs-desc">
           Switch <code>type</code> to <code>bar</code> for categorical values.
         </p>
         <Demo
@@ -109,8 +109,8 @@ export default function ChartPage() {
         </Demo>
       </section>
 
-      <section className="space-y-4">
-        <h2 className="text-xl font-semibold">Props</h2>
+      <section className="docs-section">
+        <h2 className="docs-h2">Props</h2>
         <PropsTable
           props={[
             { name: 'type', type: "'line' | 'bar' | 'pie' | 'area' | 'scatter'", default: "'line'", description: 'Chart kind.' },

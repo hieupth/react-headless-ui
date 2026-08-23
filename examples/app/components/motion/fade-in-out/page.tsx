@@ -13,12 +13,12 @@ const boxClasses =
 
 export default function FadeInOutPage() {
   return (
-    <div className="mx-auto max-w-3xl px-6 py-12 space-y-8">
-      <header className="space-y-3">
-        <h1 className="text-3xl font-bold">FadeInOut</h1>
-        <p className="text-gray-600 dark:text-gray-400">
+    <div className="docs-page">
+      <header className="docs-header">
+        <h1 className="docs-h1">FadeInOut</h1>
+        <p className="docs-lead">
           A fade in/out animation backed by the headless{' '}
-          <code className="font-mono text-sm">useFadeInOut</code> hook and
+          <code className="docs-code">useFadeInOut</code> hook and
           rendered with framer-motion. It drives opacity from{' '}
           <code>initialOpacity</code> to <code>finalOpacity</code> over{' '}
           <code>duration</code>, supports multiple <code>trigger</code> modes
@@ -30,9 +30,9 @@ export default function FadeInOutPage() {
         </p>
       </header>
 
-      <section className="space-y-4">
-        <h2 className="text-xl font-semibold">Fade in on mount</h2>
-        <p className="text-sm text-gray-600 dark:text-gray-400">
+      <section className="docs-section">
+        <h2 className="docs-h2">Fade in on mount</h2>
+        <p className="docs-desc">
           With <code>trigger="on-mount"</code> and{' '}
           <code>initialVisible</code>, the content fades from{' '}
           <code>initialOpacity</code> (0) to <code>finalOpacity</code> (1) when
@@ -59,9 +59,9 @@ export default function FadeInOutPage() {
         </Demo>
       </section>
 
-      <section className="space-y-4">
-        <h2 className="text-xl font-semibold">Duration &amp; delay</h2>
-        <p className="text-sm text-gray-600 dark:text-gray-400">
+      <section className="docs-section">
+        <h2 className="docs-h2">Duration &amp; delay</h2>
+        <p className="docs-desc">
           A longer <code>duration</code> with a <code>delay</code> slows the
           transition; <code>easing</code> maps to a named framer-motion easing.
         </p>
@@ -90,8 +90,8 @@ export default function FadeInOutPage() {
         </Demo>
       </section>
 
-      <section className="space-y-4">
-        <h2 className="text-xl font-semibold">Props</h2>
+      <section className="docs-section">
+        <h2 className="docs-h2">Props</h2>
         <PropsTable
           props={[
             {

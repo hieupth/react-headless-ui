@@ -13,12 +13,12 @@ const pillClasses =
 
 export default function MagneticHoverPage() {
   return (
-    <div className="mx-auto max-w-3xl px-6 py-12 space-y-8">
-      <header className="space-y-3">
-        <h1 className="text-3xl font-bold">MagneticHover</h1>
-        <p className="text-gray-600 dark:text-gray-400">
+    <div className="docs-page">
+      <header className="docs-header">
+        <h1 className="docs-h1">MagneticHover</h1>
+        <p className="docs-lead">
           A magnetic effect that pulls the element toward the cursor, backed by
-          the headless <code className="font-mono text-sm">useMagneticHover</code>{' '}
+          the headless <code className="docs-code">useMagneticHover</code>{' '}
           hook and rendered with framer-motion. As the pointer moves over the
           element, it translates by up to <code>strength</code> pixels toward the
           cursor (clamped by <code>boundary</code>), optionally scaling by{' '}
@@ -30,9 +30,9 @@ export default function MagneticHoverPage() {
         </p>
       </header>
 
-      <section className="space-y-4">
-        <h2 className="text-xl font-semibold">Default magnetism</h2>
-        <p className="text-sm text-gray-600 dark:text-gray-400">
+      <section className="docs-section">
+        <h2 className="docs-h2">Default magnetism</h2>
+        <p className="docs-desc">
           The defaults follow the cursor by up to 20px and scale to 1.05. Move
           the mouse around inside the demo to see it track.
         </p>
@@ -47,9 +47,9 @@ export default function MagneticHoverPage() {
         </Demo>
       </section>
 
-      <section className="space-y-4">
-        <h2 className="text-xl font-semibold">Stronger pull</h2>
-        <p className="text-sm text-gray-600 dark:text-gray-400">
+      <section className="docs-section">
+        <h2 className="docs-h2">Stronger pull</h2>
+        <p className="docs-desc">
           A larger <code>strength</code> widens the travel; <code>scale=false</code>{' '}
           disables the grow so only the follow remains.
         </p>
@@ -68,8 +68,8 @@ export default function MagneticHoverPage() {
         </Demo>
       </section>
 
-      <section className="space-y-4">
-        <h2 className="text-xl font-semibold">Props</h2>
+      <section className="docs-section">
+        <h2 className="docs-h2">Props</h2>
         <PropsTable
           props={[
             {

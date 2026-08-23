@@ -10,25 +10,25 @@ import { PropsTable } from '@/components/props-table';
 const fieldBase =
   'w-full rounded-md border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-900 px-3 py-2 text-sm text-gray-900 dark:text-gray-100 ' +
   'shadow-sm dark:shadow-none placeholder:text-gray-400 transition-colors ' +
-  'focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 ' +
+  'focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 ' +
   'disabled:opacity-50 disabled:cursor-not-allowed';
 
 export default function TextareaPage() {
   return (
-    <div className="mx-auto max-w-3xl px-6 py-12 space-y-8">
-      <header className="space-y-3">
-        <h1 className="text-3xl font-bold">Textarea</h1>
-        <p className="text-gray-600 dark:text-gray-400">
+    <div className="docs-page">
+      <header className="docs-header">
+        <h1 className="docs-h1">Textarea</h1>
+        <p className="docs-lead">
           A multi-line text input backed by the headless{' '}
-          <code className="font-mono text-sm">useTextarea</code> hook. It adds
+          <code className="docs-code">useTextarea</code> hook. It adds
           auto-resize, character counting, validation, and full ARIA semantics
           on top of the base input behavior — with no styles baked in.
         </p>
       </header>
 
-      <section className="space-y-4">
-        <h2 className="text-xl font-semibold">Basic</h2>
-        <p className="text-sm text-gray-600 dark:text-gray-400">
+      <section className="docs-section">
+        <h2 className="docs-h2">Basic</h2>
+        <p className="docs-desc">
           A simple textarea with a label and helper text.
         </p>
         <Demo
@@ -37,7 +37,7 @@ export default function TextareaPage() {
   label="Bio"
   helperText="Tell us a little about yourself"
   placeholder="I'm a designer who…"
-  className="w-full rounded-md border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-900 px-3 py-2 text-sm text-gray-900 dark:text-gray-100 shadow-sm dark:shadow-none placeholder:text-gray-400 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 disabled:opacity-50 disabled:cursor-not-allowed"
+  className="w-full rounded-md border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-900 px-3 py-2 text-sm text-gray-900 dark:text-gray-100 shadow-sm dark:shadow-none placeholder:text-gray-400 transition-colors focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 disabled:opacity-50 disabled:cursor-not-allowed"
 />`}
         >
           <div className="w-full max-w-sm">
@@ -52,9 +52,9 @@ export default function TextareaPage() {
         </Demo>
       </section>
 
-      <section className="space-y-4">
-        <h2 className="text-xl font-semibold">Character count &amp; limit</h2>
-        <p className="text-sm text-gray-600 dark:text-gray-400">
+      <section className="docs-section">
+        <h2 className="docs-h2">Character count &amp; limit</h2>
+        <p className="docs-desc">
           Pair <code>showCharCount</code> with <code>maxLength</code> for a live
           counter; reaching the limit flips an <code>aria-live</code> state.
         </p>
@@ -65,7 +65,7 @@ export default function TextareaPage() {
   showCharCount
   maxLength={140}
   placeholder="Max 140 characters…"
-  className="w-full rounded-md border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-900 px-3 py-2 text-sm text-gray-900 dark:text-gray-100 shadow-sm dark:shadow-none placeholder:text-gray-400 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 disabled:opacity-50 disabled:cursor-not-allowed"
+  className="w-full rounded-md border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-900 px-3 py-2 text-sm text-gray-900 dark:text-gray-100 shadow-sm dark:shadow-none placeholder:text-gray-400 transition-colors focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 disabled:opacity-50 disabled:cursor-not-allowed"
 />`}
         >
           <div className="w-full max-w-sm">
@@ -81,9 +81,9 @@ export default function TextareaPage() {
         </Demo>
       </section>
 
-      <section className="space-y-4">
-        <h2 className="text-xl font-semibold">Auto-resize &amp; error</h2>
-        <p className="text-sm text-gray-600 dark:text-gray-400">
+      <section className="docs-section">
+        <h2 className="docs-h2">Auto-resize &amp; error</h2>
+        <p className="docs-desc">
           Set <code>autoResize</code> to grow with content; an{' '}
           <code>error</code> sets <code>aria-invalid</code> and a{' '}
           <code>role="alert"</code> message.
@@ -103,8 +103,8 @@ export default function TextareaPage() {
         </Demo>
       </section>
 
-      <section className="space-y-4">
-        <h2 className="text-xl font-semibold">Props</h2>
+      <section className="docs-section">
+        <h2 className="docs-h2">Props</h2>
         <PropsTable
           props={[
             {

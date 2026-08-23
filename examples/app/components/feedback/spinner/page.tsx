@@ -15,46 +15,46 @@ function Ring({ size = 'md' }: { size?: 'sm' | 'md' | 'lg' }) {
       variant="spin"
       size={size === 'sm' ? 'sm' : size === 'lg' ? 'lg' : 'md'}
       showLabel={false}
-      className={`inline-block animate-spin rounded-full border-gray-200 border-t-blue-600 ${dim}`}
+      className={`inline-block animate-spin rounded-full border-gray-200 border-t-indigo-600 ${dim}`}
     />
   );
 }
 
 export default function SpinnerPage() {
   return (
-    <div className="mx-auto max-w-3xl px-6 py-12 space-y-8">
-      <header className="space-y-3">
-        <h1 className="text-3xl font-bold">Spinner</h1>
-        <p className="text-gray-600 dark:text-gray-400">
+    <div className="docs-page">
+      <header className="docs-header">
+        <h1 className="docs-h1">Spinner</h1>
+        <p className="docs-lead">
           A loading indicator backed by the headless{' '}
-          <code className="font-mono text-sm">useSpinner</code> hook. It manages
-          active state, emits <code className="font-mono text-sm">aria-busy</code>{' '}
+          <code className="docs-code">useSpinner</code> hook. It manages
+          active state, emits <code className="docs-code">aria-busy</code>{' '}
           and a status label, and offers six animation variants —{' '}
           <code>spin</code>, <code>pulse</code>, <code>bounce</code>,{' '}
           <code>dots</code>, <code>bars</code>, and <code>ring</code>. Companions{' '}
-          <code className="font-mono text-sm">SimpleSpinner</code>,{' '}
-          <code className="font-mono text-sm">DotsSpinner</code>, and{' '}
-          <code className="font-mono text-sm">BarsSpinner</code> ship preset
+          <code className="docs-code">SimpleSpinner</code>,{' '}
+          <code className="docs-code">DotsSpinner</code>, and{' '}
+          <code className="docs-code">BarsSpinner</code> ship preset
           looks. The library ships no CSS — apply your own animation.
         </p>
       </header>
 
-      <section className="space-y-4">
-        <h2 className="text-xl font-semibold">Sizes</h2>
-        <p className="text-sm text-gray-600 dark:text-gray-400">
+      <section className="docs-section">
+        <h2 className="docs-h2">Sizes</h2>
+        <p className="docs-desc">
           Eight density steps from <code>xs</code> to <code>4xl</code>.
         </p>
         <Demo
           code={`const dim = { sm: 'h-4 w-4 border-2', md: 'h-6 w-6 border-2', lg: 'h-9 w-9 border-[3px]' };
 
 <Spinner active variant="spin" size="sm" showLabel={false}
-  className={\`inline-block animate-spin rounded-full border-gray-200 border-t-blue-600 \${dim.sm}\`} />
+  className={\`inline-block animate-spin rounded-full border-gray-200 border-t-indigo-600 \${dim.sm}\`} />
 <Spinner active variant="spin" size="md" showLabel={false}
-  className={\`inline-block animate-spin rounded-full border-gray-200 border-t-blue-600 \${dim.md}\`} />
+  className={\`inline-block animate-spin rounded-full border-gray-200 border-t-indigo-600 \${dim.md}\`} />
 <Spinner active variant="spin" size="lg" showLabel={false}
-  className={\`inline-block animate-spin rounded-full border-gray-200 border-t-blue-600 \${dim.lg}\`} />`}
+  className={\`inline-block animate-spin rounded-full border-gray-200 border-t-indigo-600 \${dim.lg}\`} />`}
         >
-          <div className="flex items-center justify-center gap-6 text-blue-600">
+          <div className="flex items-center justify-center gap-6 text-indigo-600">
             <Ring size="sm" />
             <Ring size="md" />
             <Ring size="lg" />
@@ -62,9 +62,9 @@ export default function SpinnerPage() {
         </Demo>
       </section>
 
-      <section className="space-y-4">
-        <h2 className="text-xl font-semibold">Variants &amp; label</h2>
-        <p className="text-sm text-gray-600 dark:text-gray-400">
+      <section className="docs-section">
+        <h2 className="docs-h2">Variants &amp; label</h2>
+        <p className="docs-desc">
           Switch the animation with <code>variant</code>; control speed via{' '}
           <code>speed</code> (<code>slow</code> / <code>normal</code> /{' '}
           <code>fast</code>). Set <code>showLabel</code> to announce a status.
@@ -74,18 +74,18 @@ export default function SpinnerPage() {
 <div className="flex items-center gap-1">
   {[0, 0.15, 0.3, 0.45].map((d, i) => (
     <span key={i}
-      className="h-5 w-1.5 animate-bounce rounded-full bg-blue-600"
+      className="h-5 w-1.5 animate-bounce rounded-full bg-indigo-600"
       style={{ animationDelay: \`\${d}s\` }} />
   ))}
 </div>
 <span className="text-xs text-gray-500">Loading data</span>`}
         >
-          <div className="flex flex-col items-center justify-center gap-4 text-blue-600">
+          <div className="flex flex-col items-center justify-center gap-4 text-indigo-600">
             <div className="flex items-center gap-1">
               {[0, 0.15, 0.3, 0.45].map((d, i) => (
                 <span
                   key={i}
-                  className="h-5 w-1.5 animate-bounce rounded-full bg-blue-600"
+                  className="h-5 w-1.5 animate-bounce rounded-full bg-indigo-600"
                   style={{ animationDelay: `${d}s` }}
                 />
               ))}
@@ -95,8 +95,8 @@ export default function SpinnerPage() {
         </Demo>
       </section>
 
-      <section className="space-y-4">
-        <h2 className="text-xl font-semibold">Props</h2>
+      <section className="docs-section">
+        <h2 className="docs-h2">Props</h2>
         <PropsTable
           props={[
             {

@@ -21,12 +21,12 @@ const data = [
 
 export default function TablePage() {
   return (
-    <div className="mx-auto max-w-3xl px-6 py-12 space-y-8">
-      <header className="space-y-3">
-        <h1 className="text-3xl font-bold">Table</h1>
-        <p className="text-gray-600 dark:text-gray-400">
+    <div className="docs-page">
+      <header className="docs-header">
+        <h1 className="docs-h1">Table</h1>
+        <p className="docs-lead">
           A styled data table backed by the headless{' '}
-          <code className="font-mono text-sm">useTable</code> hook. Pass a{' '}
+          <code className="docs-code">useTable</code> hook. Pass a{' '}
           <code>columns</code> config and a <code>data</code> array; the hook
           drives client-side sorting (<code>defaultSort</code>), filtering
           (<code>defaultFilters</code>), pagination, row selection, and row
@@ -36,9 +36,9 @@ export default function TablePage() {
         </p>
       </header>
 
-      <section className="space-y-4">
-        <h2 className="text-xl font-semibold">Basic table</h2>
-        <p className="text-sm text-gray-600 dark:text-gray-400">
+      <section className="docs-section">
+        <h2 className="docs-h2">Basic table</h2>
+        <p className="docs-desc">
           Columns map to row keys; mark <code>sortable</code> columns to get
           clickable headers.
         </p>
@@ -63,9 +63,9 @@ export default function TablePage() {
         </Demo>
       </section>
 
-      <section className="space-y-4">
-        <h2 className="text-xl font-semibold">Striped &amp; compact</h2>
-        <p className="text-sm text-gray-600 dark:text-gray-400">
+      <section className="docs-section">
+        <h2 className="docs-h2">Striped &amp; compact</h2>
+        <p className="docs-desc">
           <code>variant="striped"</code> and <code>compact</code> are density
           hooks (style them through your theme).
         </p>
@@ -88,9 +88,9 @@ export default function TablePage() {
         </Demo>
       </section>
 
-      <section className="space-y-4">
-        <h2 className="text-xl font-semibold">With selection</h2>
-        <p className="text-sm text-gray-600 dark:text-gray-400">
+      <section className="docs-section">
+        <h2 className="docs-h2">With selection</h2>
+        <p className="docs-desc">
           <code>enableSelection</code> adds a checkbox column; listen via{' '}
           <code>onSelectionChange</code>.
         </p>
@@ -113,8 +113,8 @@ export default function TablePage() {
         </Demo>
       </section>
 
-      <section className="space-y-4">
-        <h2 className="text-xl font-semibold">Props</h2>
+      <section className="docs-section">
+        <h2 className="docs-h2">Props</h2>
         <PropsTable
           props={[
             { name: 'columns', type: 'TableColumn[]', default: '—', description: 'Column config: { key, title, sortable?, filterable?, align?, render?, dataType? }.' },

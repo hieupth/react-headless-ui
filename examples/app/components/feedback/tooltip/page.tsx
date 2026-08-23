@@ -13,24 +13,24 @@ const tooltipClassName =
 
 export default function TooltipPage() {
   return (
-    <div className="mx-auto max-w-3xl px-6 py-12 space-y-8">
-      <header className="space-y-3">
-        <h1 className="text-3xl font-bold">Tooltip</h1>
-        <p className="text-gray-600 dark:text-gray-400">
+    <div className="docs-page">
+      <header className="docs-header">
+        <h1 className="docs-h1">Tooltip</h1>
+        <p className="docs-lead">
           A small contextual label backed by the headless{' '}
-          <code className="font-mono text-sm">useTooltip</code> hook. It shows on
+          <code className="docs-code">useTooltip</code> hook. It shows on
           hover and/or focus (configurable via <code>trigger</code>), positions
           to any side with flip/shift to stay in the viewport, supports an arrow,
           and renders through a portal to{' '}
-          <code className="font-mono text-sm">document.body</code>. Use{' '}
+          <code className="docs-code">document.body</code>. Use{' '}
           <code>SimpleTooltip</code> for the zero-config case and{' '}
           <code>RichTooltip</code> for titled, richer content.
         </p>
       </header>
 
-      <section className="space-y-4">
-        <h2 className="text-xl font-semibold">Simple tooltip</h2>
-        <p className="text-sm text-gray-600 dark:text-gray-400">
+      <section className="docs-section">
+        <h2 className="docs-h2">Simple tooltip</h2>
+        <p className="docs-desc">
           <code>SimpleTooltip</code> wraps a trigger and shows{' '}
           <code>content</code> on hover/focus. Delays via{' '}
           <code>delayShow</code> / <code>delayHide</code> prevent flicker.
@@ -61,9 +61,9 @@ export default function TooltipPage() {
         </Demo>
       </section>
 
-      <section className="space-y-4">
-        <h2 className="text-xl font-semibold">Positions &amp; arrow</h2>
-        <p className="text-sm text-gray-600 dark:text-gray-400">
+      <section className="docs-section">
+        <h2 className="docs-h2">Positions &amp; arrow</h2>
+        <p className="docs-desc">
           <code>position</code> picks the side; <code>arrow</code> renders a
           pointer; <code>flip</code> / <code>shift</code> keep it on-screen;
           <code>offset</code> sets the gap.
@@ -107,8 +107,8 @@ export default function TooltipPage() {
         </Demo>
       </section>
 
-      <section className="space-y-4">
-        <h2 className="text-xl font-semibold">Props</h2>
+      <section className="docs-section">
+        <h2 className="docs-h2">Props</h2>
         <PropsTable
           props={[
             {

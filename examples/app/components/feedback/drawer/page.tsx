@@ -13,25 +13,25 @@ export default function DrawerPage() {
   const [open, setOpen] = useState(false);
 
   return (
-    <div className="mx-auto max-w-3xl px-6 py-12 space-y-8">
-      <header className="space-y-3">
-        <h1 className="text-3xl font-bold">Drawer</h1>
-        <p className="text-gray-600 dark:text-gray-400">
+    <div className="docs-page">
+      <header className="docs-header">
+        <h1 className="docs-h1">Drawer</h1>
+        <p className="docs-lead">
           A side panel backed by the headless{' '}
-          <code className="font-mono text-sm">useDrawer</code> hook. It slides in
+          <code className="docs-code">useDrawer</code> hook. It slides in
           from <code>left</code> / <code>right</code> / <code>top</code> /{' '}
           <code>bottom</code>, supports modal (backdrop + focus trap) and
           persistent variants, and exposes a compound API —{' '}
           <code>Drawer</code>, <code>DrawerTrigger</code>,{' '}
           <code>DrawerContent</code>, <code>DrawerHeader</code>,{' '}
           <code>DrawerFooter</code>. Modal drawers portal a backdrop to{' '}
-          <code className="font-mono text-sm">document.body</code>.
+          <code className="docs-code">document.body</code>.
         </p>
       </header>
 
-      <section className="space-y-4">
-        <h2 className="text-xl font-semibold">Right side, modal</h2>
-        <p className="text-sm text-gray-600 dark:text-gray-400">
+      <section className="docs-section">
+        <h2 className="docs-h2">Right side, modal</h2>
+        <p className="docs-desc">
           Default <code>side="right"</code> with a backdrop and focus trap. Use{' '}
           <code>size</code> (<code>sm</code>–<code>full</code>) to set panel
           width.
@@ -62,7 +62,7 @@ export default function DrawerPage() {
       <button
         type="button"
         onClick={() => setOpen(false)}
-        className="inline-flex items-center justify-center gap-2 rounded-md bg-blue-600 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-blue-700"
+        className="inline-flex items-center justify-center gap-2 rounded-md bg-indigo-600 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-indigo-700"
       >
         Apply
       </button>
@@ -94,7 +94,7 @@ export default function DrawerPage() {
                 <button
                   type="button"
                   onClick={() => setOpen(false)}
-                  className="inline-flex items-center justify-center gap-2 rounded-md bg-blue-600 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-blue-700"
+                  className="inline-flex items-center justify-center gap-2 rounded-md bg-indigo-600 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-indigo-700"
                 >
                   Apply
                 </button>
@@ -104,9 +104,9 @@ export default function DrawerPage() {
         </Demo>
       </section>
 
-      <section className="space-y-4">
-        <h2 className="text-xl font-semibold">Persistent &amp; sides</h2>
-        <p className="text-sm text-gray-600 dark:text-gray-400">
+      <section className="docs-section">
+        <h2 className="docs-h2">Persistent &amp; sides</h2>
+        <p className="docs-desc">
           <code>variant="persistent"</code> omits the backdrop (useful for
           app-shell navigation). <code>side</code> picks the slide direction;
           <code>trapFocus</code> / <code>restoreFocus</code> tune focus behavior.
@@ -124,8 +124,8 @@ export default function DrawerPage() {
         </Demo>
       </section>
 
-      <section className="space-y-4">
-        <h2 className="text-xl font-semibold">Props</h2>
+      <section className="docs-section">
+        <h2 className="docs-h2">Props</h2>
         <PropsTable
           props={[
             {

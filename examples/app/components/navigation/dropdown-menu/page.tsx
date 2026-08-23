@@ -25,12 +25,12 @@ export default function DropdownMenuPage() {
   const [typesOpen, setTypesOpen] = useState(false);
 
   return (
-    <div className="mx-auto max-w-3xl px-6 py-12 space-y-8">
-      <header className="space-y-3">
-        <h1 className="text-3xl font-bold">DropdownMenu</h1>
-        <p className="text-gray-600 dark:text-gray-400">
+    <div className="docs-page">
+      <header className="docs-header">
+        <h1 className="docs-h1">DropdownMenu</h1>
+        <p className="docs-lead">
           A button-triggered contextual menu backed by the headless{' '}
-          <code className="font-mono text-sm">useDropdownMenu</code> hook. It
+          <code className="docs-code">useDropdownMenu</code> hook. It
           renders its own trigger, positions the panel with 6 placements, roves
           focus with full keyboard support (arrows, Home/End, type-ahead),
           renders icons / shortcuts / badges / checkmarks, and closes on
@@ -39,9 +39,9 @@ export default function DropdownMenuPage() {
         </p>
       </header>
 
-      <section className="space-y-4">
-        <h2 className="text-xl font-semibold">Controlled open + placement</h2>
-        <p className="text-sm text-gray-600 dark:text-gray-400">
+      <section className="docs-section">
+        <h2 className="docs-h2">Controlled open + placement</h2>
+        <p className="docs-desc">
           Drive <code>open</code> with state and pass{' '}
           <code>placement</code> (<code>bottom</code> /{' '}
           <code>bottom-start</code> / <code>bottom-end</code> +{' '}
@@ -77,9 +77,9 @@ export default function DropdownMenuPage() {
         </Demo>
       </section>
 
-      <section className="space-y-4">
-        <h2 className="text-xl font-semibold">Item types &amp; render-prop</h2>
-        <p className="text-sm text-gray-600 dark:text-gray-400">
+      <section className="docs-section">
+        <h2 className="docs-h2">Item types &amp; render-prop</h2>
+        <p className="docs-desc">
           Each <code>DropdownMenuItem</code> supports <code>icon</code>,{' '}
           <code>shortcut</code>, <code>badge</code>, <code>disabled</code>, and a
           <code>checked</code> state. Pass a <code>children</code> render-prop
@@ -144,8 +144,8 @@ export default function DropdownMenuPage() {
         </Demo>
       </section>
 
-      <section className="space-y-4">
-        <h2 className="text-xl font-semibold">Props</h2>
+      <section className="docs-section">
+        <h2 className="docs-h2">Props</h2>
         <PropsTable
           props={[
             {
